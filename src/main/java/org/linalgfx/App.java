@@ -22,6 +22,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         VBox root = new VBox();
         Button btn = new Button();
+
         root.getChildren().addAll(btn);
         btn.onActionProperty();
 
