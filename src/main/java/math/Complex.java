@@ -1,21 +1,30 @@
 package math;
 
-public class Complex {
+public class Complex{
     private double re;
     private double im;
     private double length;
     private double angle;
 
-    public Complex(double re, double im) {
+    public Complex(double re, double im){
         this.re = re;
         this.im = im;
+        setPolarFromStandard();
     }
+
+    public void add(Complex other){
+        re += other.re;
+        im += other.im;
+    }
+
+
 
     public String asPolar(){
-        return re + "e^i*" + angle;
+
+        return length + "e^i*" + angle;
     }
 
-    private void setPolar(){
+    public void setPolarFromStandard(){
         length = Math.sqrt(Math.abs(re) + Math.abs(im));
         if(re >= 0)
             angle = Math.atan(im / re);
@@ -23,7 +32,7 @@ public class Complex {
             angle = Math.atan(im / re) + Math.PI;
     }
 
-    private void setStandard(){
+    public void setStandardFromPolar(){
         re = length * Math.cos(angle);
         im = length * Math.sin(angle);
     }

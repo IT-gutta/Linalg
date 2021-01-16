@@ -6,6 +6,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import math.Complex;
+import math.Matrix;
 
 import java.io.IOException;
 
@@ -27,6 +29,8 @@ public class App extends Application {
         scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("stylesheets/style.css").toExternalForm());
         stage.setScene(scene);
+
+        System.out.println(new Complex(0, 0));
         stage.show();
     }
 
