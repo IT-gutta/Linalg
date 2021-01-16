@@ -18,6 +18,10 @@ public class ComplexNumbers {
         return c;
     }
 
+    public Complex multiply(Complex c1, Complex c2){
+        return new Complex(c1.getRe()*c2.getRe() - c1.getIm()*c2.getIm(), c1.getRe()*c2.getIm() + c1.getIm()*c2.getRe());
+    }
+
     public Complex add(Complex c1, Complex c2){
         return new Complex(c1.getRe() + c2.getRe(), c1.getIm() + c2.getIm());
     }
