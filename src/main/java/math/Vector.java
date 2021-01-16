@@ -1,5 +1,9 @@
 package math;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Vector {
     private double[] vector;
     public static void main(String[] args) {
@@ -17,7 +21,7 @@ public class Vector {
         for(double element:vector){
             s+=Double.toString(element)+", ";
         }
-        return "("+s.substring(0,s.length()-1)+")";
+        return "("+s.substring(0,s.length()-2)+")";
     }
 
     public double getElement(int index){
@@ -57,9 +61,47 @@ public class Vector {
         }
     }
 
-    public void add(Vector v){
-        if(v.getDimensions()!=this.getDimensions());
+    public void add(Vector v) throws IllegalArgumentException{
+        if(v.getDimensions()!=this.getDimensions())
+            throw new IllegalArgumentException("The number of dimensions must be 2");
+        else{
+            for(int i = 0; i<vector.length; i++){
+                vector[i]+=v.getElement(i);
+            }
+        }
     }
 
+    public int factorize() throws IllegalArgumentException{
+        for(double element:vector){
+            if(!Utils.isWhole(element)) throw new IllegalArgumentException("Vector must contain integers");
+        }
+        int gcd = Utils.gcd((int)vector[0],(int)vector[1]);
+        for(int i = 2; i< vector.length; i++){
+            gcd = Utils.gcd(gcd, (int)vector[i]);
+        }
+        return gcd;
+    }
 
+    public double dot(Vector v) throws IllegalArgumentException{
+        if(this.getDimensions()!=v.getDimensions()) throw new IllegalArgumentException("Vectors must have the same dimensions");
+        double dot = 0;
+        for(int i = 0; i< vector.length; i++){
+            dot+=(vector[i]*v.getElement(i));
+        }
+        return dot;
+    }
+
+    public double cross(Vector v){
+        return 0;
+    }
+
+    public void addDimensions(double... args){
+        double[] v = new double[this.getDimensions()+args.length];
+        for(int i = 0; i<this.getDimensions(); i++){
+            v[i] = vector[i];
+        }
+        for(int i = 0; i<args.length; i++){
+            v[i+this.getDimensions()] = args[i];
+        }
+    }
 }
