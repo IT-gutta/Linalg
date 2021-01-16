@@ -5,10 +5,10 @@ public class Point {
     public Point(double... args){
         point = args;
     }
-    double[] getList(){
+    public double[] getPoint(){
         return point;
     }
-    double getElement(int i){
+    public double getElement(int i){
         return point[i];
     }
 }

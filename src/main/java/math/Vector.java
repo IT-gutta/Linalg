@@ -8,8 +8,8 @@ public class Vector {
     private double[] vector;
     public static void main(String[] args) {
         Vector v1 = new Vector(1,2,3);
-        v1.setMagnitude(1);
-        System.out.println(v1.toString());
+        Vector v2 = new Vector(5,-1,3);
+        System.out.println(v1.cross(v2).toString());
     }
 
     public Vector(double... args){
@@ -91,8 +91,16 @@ public class Vector {
         return dot;
     }
 
-    public double cross(Vector v){
-        return 0;
+    public Vector cross(Vector v)throws IllegalArgumentException{
+        if(!(v.getDimensions()==3 && this.getDimensions()==3)){
+            throw new IllegalArgumentException("Both vectors must be of dimension 3");
+        }
+        double[] u = {vector[1]*v.getElement(2)-vector[2]*v.getElement(1),vector[2]*v.getElement(0)-vector[0]*v.getElement(2),vector[0]*v.getElement(1)-vector[1]*v.getElement(0)};
+        return new Vector(u);
+    }
+
+    public double[] getVector(){
+        return vector;
     }
 
     public void addDimensions(double... args){
