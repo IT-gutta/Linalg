@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -20,12 +21,14 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        VBox root = new VBox();
+        Canvas canvas = new Canvas(300,300);
         Button btn = new Button();
-        root.getChildren().addAll(btn);
+        VBox root = new VBox();
+        root.getChildren().addAll(btn, canvas);
         btn.onActionProperty();
 
         scene = new Scene(root);
+        scene.getStylesheets().add("src/main/java/stylesheets/style.css");
         stage.setScene(scene);
         stage.show();
     }
