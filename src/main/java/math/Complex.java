@@ -17,6 +17,11 @@ public class Complex{
         im += other.im;
     }
 
+    public void multiply(Complex other){
+        re = re*other.re - im*other.im;
+        im = re*other.im + im*other.re;
+    }
+
 
 
     public String asPolar(){
