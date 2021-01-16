@@ -37,7 +37,6 @@
                 <version>0.0.5</version>
                 <configuration>
                     <mainClass>org.linalgfx.App</mainClass>
-                    <executable>/path/to/jdk-15/bin/java</executable>
                 </configuration>
             </plugin>
         </plugins>
