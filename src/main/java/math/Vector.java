@@ -57,5 +57,9 @@ public class Vector {
         }
     }
 
+    public void add(Vector v){
+        if(v.getDimensions()!=this.getDimensions());
+    }
+
 
 }

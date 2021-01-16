@@ -28,7 +28,7 @@ public class App extends Application {
         btn.onActionProperty();
 
         scene = new Scene(root);
-        scene.getStylesheets().add("src/main/java/stylesheets/style.css");
+        scene.getStylesheets().add("stylesheets/style.css");
         stage.setScene(scene);
         stage.show();
     }
