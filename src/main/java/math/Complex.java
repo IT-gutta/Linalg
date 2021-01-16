@@ -6,14 +6,9 @@ public class Complex {
     private double length;
     private double angle;
 
-    public Complex(double re, double im){
+    public Complex(double re, double im) {
         this.re = re;
         this.im = im;
-    }
-
-    public Complex(boolean fromAngle, double length, double angle){
-        this.length = length;
-        this.angle = angle;
     }
 
     public String asPolar(){
