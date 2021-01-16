@@ -1,9 +1,6 @@
 package org.linalgfx;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -28,7 +25,7 @@ public class App extends Application {
         btn.onActionProperty();
 
         scene = new Scene(root);
-        scene.getStylesheets().add("stylesheets/style.css");
+        scene.getStylesheets().add(getClass().getResource("stylesheets/style.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
