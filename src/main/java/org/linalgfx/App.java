@@ -31,13 +31,10 @@ public class App extends Application {
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-
         Button btn = new Button();
         btn.setOnAction(ev -> {
             gc.strokeLine(0, 0, 100, 100);
         });
-
-
 
         VBox root = new VBox();
         root.getChildren().addAll(btn, canvas);
