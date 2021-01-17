@@ -25,4 +25,14 @@ public class ComplexNumbers {
     public Complex add(Complex c1, Complex c2){
         return new Complex(c1.getRe() + c2.getRe(), c1.getIm() + c2.getIm());
     }
+
+    public Complex copyOf(Complex z){
+        return new Complex(z.getRe(), z.getIm());
+    }
+
+    public Complex pow(Complex z, int exponent){
+        var c = copyOf(z);
+        c.pow(exponent);
+        return c;
+    }
 }
