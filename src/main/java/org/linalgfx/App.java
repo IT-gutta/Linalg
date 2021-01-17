@@ -1,13 +1,16 @@
 package org.linalgfx;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
+import javafx.event.*;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.skin.ContextMenuSkin;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.transform.Affine;
 import javafx.stage.Stage;
 import math.Complex;
 import math.Matrix;
@@ -28,10 +31,14 @@ public class App extends Application {
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
+
         Button btn = new Button();
         btn.setOnAction(ev -> {
             gc.strokeLine(0, 0, 100, 100);
         });
+
+
+
         VBox root = new VBox();
         root.getChildren().addAll(btn, canvas);
         btn.onActionProperty();

@@ -1,6 +1,7 @@
 package graphics;
 
 import exceptions.IllegalNumberOfDimensionsException;
+import javafx.scene.canvas.GraphicsContext;
 import math.Matrix;
 import math.Line;
 import math.Point;
@@ -10,9 +11,9 @@ public class CoordinateSystem implements Renderable {
     private Vector iHat;
     private Vector jHat;
     private Line[] lines;
-    int verticalLines;
-    int horizontalLines;
-    int unitSize;
+    private int verticalLines;
+    private int horizontalLines;
+    private static int unitSize;
 
     public CoordinateSystem(Vector iHat, Vector jHat, int verticalLines, int horizontalLines, int unitSize){
         this.iHat = iHat;
@@ -45,6 +46,11 @@ public class CoordinateSystem implements Renderable {
         }
     }
 
+    public void transform(Matrix matrix) throws IllegalNumberOfDimensionsException{
+        iHat.applyTransformation(matrix);
+        jHat.applyTransformation(matrix);
+    }
+
     public Vector getI(){
         return iHat;
     }
@@ -65,14 +71,17 @@ public class CoordinateSystem implements Renderable {
         jHat = v;
     }
 
-    public void transform(Matrix matrix) throws IllegalNumberOfDimensionsException{
-        iHat.applyTransformation(matrix);
-        jHat.applyTransformation(matrix);
+    public static int getUnitSize(){
+        return unitSize;
     }
+
+    public static void setUnitSize(int i){
+        unitSize = i;
+    }
+
 
     @Override
-    public void render(CoordinateSystem cs) {
-        //...
-    }
+    public void render(GraphicsContext gc) {
 
+    }
 }
