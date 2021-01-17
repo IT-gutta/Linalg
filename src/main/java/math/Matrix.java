@@ -1,6 +1,8 @@
 package math;
 
-import java.util.Arrays;
+import exceptions.IllegalNumberOfDimensionsException;
+
+import java.util.ArrayList;
 
 public class Matrix {
     private double[][] matrix;
@@ -17,9 +19,9 @@ public class Matrix {
         matrix = new double[height][width];
     }
 
-    public Vector linearTransformation(Vector vector){
+    public Vector transformVector(Vector vector) throws IllegalNumberOfDimensionsException {
         if(vector.getDimensions() != width)
-            throw new IllegalArgumentException("The vectors number of dimensions doesnt match the matrix width");
+            throw new IllegalNumberOfDimensionsException("The vectors number of dimensions doesnt match the matrix width");
         Vector newVec = new Vector(vector.getDimensions());
         for(int y = 0; y < height; y++){
             for(int x = 0; x < width; x++){
@@ -27,6 +29,28 @@ public class Matrix {
             }
         }
         return newVec;
+    }
+
+    public ArrayList<Vector> getBasisVectors(){
+        ArrayList<Vector> vectors = new ArrayList<>();
+        for(int x = 0; x < width; x++){
+            var vec = new Vector();
+            for(int y = 0; y < height; y++){
+                vec.setElement(y, get(y, x));
+            }
+            vectors.add(vec);
+        }
+
+        return vectors;
+    }
+
+
+    public double get(int y, int x){
+        return matrix[y][x];
+    }
+
+    public void set(int y, int x, double value){
+        matrix[y][x] = value;
     }
 
 
@@ -56,7 +80,7 @@ public class Matrix {
 
         Matrix m = new Matrix(arr);
 
-        System.out.println(m.linearTransformation(new Vector(2, 4)));
+        System.out.println(m.transformVector(new Vector(2, 4)));
         System.out.println(m);
     }
 
