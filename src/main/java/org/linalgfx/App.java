@@ -20,10 +20,12 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    private Canvas canvas;
 
     @Override
     public void start(Stage stage) throws IOException {
-        final Canvas canvas = new Canvas(500,500);
+        canvas = new Canvas(1000,600);
+
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         Button btn = new Button();
