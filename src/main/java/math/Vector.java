@@ -9,7 +9,8 @@ public class Vector {
     public static void main(String[] args) {
         Vector v1 = new Vector(1,2,3);
         Vector v2 = new Vector(5,-1,3);
-        System.out.println(v1.angle(v2));
+        Vector v3 = new Vector(-5,6,1);
+        System.out.println(Vectors.add(v1,v2,v3).toString());
     }
 
     public Vector(double... args){
