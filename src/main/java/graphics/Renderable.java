@@ -1,5 +1,7 @@
 package graphics;
 
+import javafx.scene.canvas.GraphicsContext;
+
 public interface Renderable {
-    void render(CoordinateSystem cs);
+    void render(GraphicsContext gc);
 }

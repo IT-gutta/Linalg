@@ -1,13 +1,17 @@
 package math;
 
 import exceptions.IllegalNumberOfDimensionsException;
+import exceptions.RenderException;
+import graphics.CoordinateSystem;
+import graphics.Renderable;
+import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.DoubleStream;
 
-public class Vector {
+public class Vector implements Renderable {
     private double[] vector;
     public static void main(String[] args) {
         Vector v1 = new Vector(1,2,3);
@@ -154,5 +158,21 @@ public class Vector {
 
     public Vector transform(Matrix matrix){
         return matrix.transformVector(this);
+    }
+
+    public double getX(){
+        return getX()*CoordinateSystem.getUnitSize();
+    }
+
+    public double getY(){
+        return getY()*CoordinateSystem.getUnitSize();
+    }
+
+    @Override
+    public void render(GraphicsContext gc) throws RenderException {
+        if(getDimensions() != 2)
+            throw new RenderException("Has to be a 2-dimensional vector to render");
+        gc.strokeLine(0, 0, getX(), getY());
+        gc.fillOval(getX(), getY(), 10, 10);
     }
 }
