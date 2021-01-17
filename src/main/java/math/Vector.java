@@ -28,6 +28,7 @@ public class Vector implements Renderable {
         this(DoubleStream.generate(() -> 0).limit(length).toArray());
     }
 
+    @Override
     public String toString(){
         String s = "";
         for(double element:vector){
@@ -154,6 +155,7 @@ public class Vector implements Renderable {
 
     public void applyTransformation(Matrix matrix){
         vector = matrix.transformVector(this).getVector();
+        System.out.println(matrix.transformVector(this).toString());
     }
 
     public Vector transform(Matrix matrix){
@@ -161,18 +163,22 @@ public class Vector implements Renderable {
     }
 
     public double getX(){
-        return getX()*CoordinateSystem.getUnitSize();
+       return getCanvasPoint().getElement(0);
     }
 
     public double getY(){
-        return getY()*CoordinateSystem.getUnitSize();
+        return getCanvasPoint().getElement(1);
+    }
+
+    public Point getCanvasPoint(){
+        return CoordinateSystem.toCanvas(new Point(getElement(0)*CoordinateSystem.getUnitSize(), getElement(1)*CoordinateSystem.getUnitSize()));
     }
 
     @Override
     public void render(GraphicsContext gc) throws RenderException {
         if(getDimensions() != 2)
             throw new RenderException("Has to be a 2-dimensional vector to render");
-        gc.strokeLine(0, 0, getX(), getY());
+        gc.strokeLine(CoordinateSystem.getCanvasWidth() / 2, CoordinateSystem.getCanvasHeight() / 2, getX(), getY());
         gc.fillOval(getX(), getY(), 10, 10);
     }
 }
