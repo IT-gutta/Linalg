@@ -3,37 +3,46 @@ package graphics;
 import exceptions.IllegalNumberOfDimensionsException;
 import math.Matrix;
 import math.Line;
+import math.Point;
 import math.Vector;
 
 public class CoordinateSystem implements Renderable {
     private Vector iHat;
     private Vector jHat;
-    private Vector iHat = new Vector(0,1);
-    private Vector jHat = new Vector(1,0);
     private Line[] lines;
     int verticalLines;
     int horizontalLines;
     int unitSize;
 
-    public CoordinateSystem(int verticalLines, int horizontalLines, int unitSize){
+    public CoordinateSystem(Vector iHat, Vector jHat, int verticalLines, int horizontalLines, int unitSize){
+        this.iHat = iHat;
+        this.jHat = jHat;
         this.verticalLines = verticalLines;
         this.horizontalLines = horizontalLines;
         this.unitSize = unitSize;
-        lines = new Line[verticalLines*2+horizontalLines*2-2];
-        for(int i = -verticalLines+1; i<verticalLines; i++){
+        updateLines();
+    }
 
     public CoordinateSystem(){
-        this.iHat = new Vector(0,1);
-        this.jHat = new Vector(1,0);
+        iHat = new Vector(1,0);
+        jHat = new Vector(0,1);
+        verticalLines = 20;
+        horizontalLines = 15;
+        unitSize = 40;
+        updateLines();
     }
+
+    private void updateLines(){
+        int j = 0;
+        lines = new Line[verticalLines*2+horizontalLines*2-2];
+        for(int i = -verticalLines+1; i<verticalLines; i++){
+            lines[j] = new Line(new Point(iHat.getElement(0)*i,iHat.getElement(1)*i),jHat);
+            j++;
         }
-    }
-
-    public void updateLines(){
-
-    public CoordinateSystem(Vector iHat, Vector jHat){
-        this.iHat = iHat;
-        this.jHat = jHat;
+        for(int i = -horizontalLines+1; i<horizontalLines; i++){
+            lines[j] = new Line(new Point(jHat.getElement(0)*i,jHat.getElement(1)*i),iHat);
+            j++;
+        }
     }
 
     public Vector getI(){
