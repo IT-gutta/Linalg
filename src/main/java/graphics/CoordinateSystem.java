@@ -14,6 +14,8 @@ public class CoordinateSystem implements Renderable {
     private int verticalLines;
     private int horizontalLines;
     private static int unitSize;
+    private int canvasWidth;
+    private int canvasHeight;
 
     public CoordinateSystem(Vector iHat, Vector jHat, int verticalLines, int horizontalLines, int unitSize){
         this.iHat = iHat;
