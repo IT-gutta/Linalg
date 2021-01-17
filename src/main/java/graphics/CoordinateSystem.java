@@ -4,7 +4,7 @@ import exceptions.IllegalNumberOfDimensionsException;
 import math.Matrix;
 import math.Vector;
 
-public class CoordinateSystem {
+public class CoordinateSystem implements Renderable {
     private Vector iHat;
     private Vector jHat;
 
@@ -41,5 +41,10 @@ public class CoordinateSystem {
     public void transform(Matrix matrix) throws IllegalNumberOfDimensionsException{
         iHat.applyTransformation(matrix);
         jHat.applyTransformation(matrix);
+    }
+
+    @Override
+    public void render(CoordinateSystem cs) {
+        //...
     }
 }
