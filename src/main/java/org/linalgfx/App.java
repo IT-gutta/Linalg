@@ -1,5 +1,6 @@
 package org.linalgfx;
 
+import graphics.Renderable;
 import javafx.application.Application;
 import javafx.event.*;
 import javafx.scene.Scene;
