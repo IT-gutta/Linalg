@@ -3,6 +3,7 @@ package org.linalgfx;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -20,7 +21,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Canvas canvas = new Canvas(300,300);
+        final Canvas canvas = new Canvas(500,500);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
         Button btn = new Button();
         VBox root = new VBox();
         root.getChildren().addAll(btn, canvas);
