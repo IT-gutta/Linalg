@@ -9,7 +9,7 @@ public class Vector {
     public static void main(String[] args) {
         Vector v1 = new Vector(1,2,3);
         Vector v2 = new Vector(5,-1,3);
-        System.out.println(v1.cross(v2).toString());
+        System.out.println(v1.angle(v2));
     }
 
     public Vector(double... args){
@@ -111,5 +111,32 @@ public class Vector {
         for(int i = 0; i<args.length; i++){
             v[i+this.getDimensions()] = args[i];
         }
+        vector = v;
+    }
+
+    public boolean hasSameDimensions(Vector v){
+        return this.getDimensions()==v.getDimensions();
+    }
+
+    public double angle(Vector v){
+        return Math.acos(this.dot(v)/(this.getMagnitude()*v.getMagnitude()));
+    }
+    public boolean equals(Vector v) throws IllegalArgumentException{
+        if(this.getDimensions()!=v.getDimensions())
+            throw new IllegalArgumentException("Vectors must have the same dimensions");
+        for(int i = 0; i<vector.length; i++){
+            if(vector[i]!=v.getElement(i)) return false;
+        }
+        return true;
+    }
+
+    public boolean isParallel(Vector v) throws IllegalArgumentException{
+        if(!this.hasSameDimensions(v))
+            throw new IllegalArgumentException("Vectors must have same dimensions");
+        double scale = vector[0]/v.getElement(0);
+        for(int i = 1; i<this.getDimensions(); i++){
+            if(scale*v.getElement(i)==vector[i]) return false;
+        }
+        return true;
     }
 }
