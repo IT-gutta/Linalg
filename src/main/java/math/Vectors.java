@@ -36,6 +36,7 @@ public class Vectors {
 
 
     public static Vector parseVector(String string){
-        return new Vector(Arrays.stream(string.replaceAll("^[,.0-9]", "").split(",")).mapToDouble(d -> Double.valueOf(d)).toArray());
+        String keep = string.replaceAll("[{}()\\sa-zA-Z\\[\\]]", "");
+        return new Vector(Arrays.stream(keep.split(",")).mapToDouble(s -> Double.valueOf(s)).toArray());
     }
 }
