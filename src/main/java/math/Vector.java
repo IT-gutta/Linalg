@@ -152,7 +152,6 @@ public class Vector implements Renderable {
 
     public void applyTransformation(Matrix matrix){
         vector = matrix.transformVector(this).getVector();
-        System.out.println(matrix.transformVector(this).toString());
     }
 
     public Vector transform(Matrix matrix){

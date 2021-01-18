@@ -8,10 +8,10 @@ import math.Vector;
 import math.Vectors;
 import org.linalgfx.App;
 
-public class AddVariableEvent implements EventHandler<ActionEvent> {
+public class TextInputEvent implements EventHandler<ActionEvent> {
     private TextField inputField;
 
-    public AddVariableEvent(TextField inputField) {
+    public TextInputEvent(TextField inputField) {
         this.inputField = inputField;
     }
 
@@ -21,6 +21,6 @@ public class AddVariableEvent implements EventHandler<ActionEvent> {
         String name = inp.split("=")[0];
         Vector vector = Vectors.parseVector(inp.split("=")[1]);
 
-        App.addVariables(new Variable<Vector>(vector, name));
+        DefinedVariables.addVariables(new Variable<>(vector, name));
     }
 }

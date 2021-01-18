@@ -1,22 +1,13 @@
 package org.linalgfx;
 
-import graphics.AddVariableEvent;
-import graphics.CoordinateSystem;
-import graphics.Renderable;
-import graphics.Variable;
+import graphics.*;
 import javafx.application.Application;
-import javafx.event.*;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
-import javafx.scene.control.skin.ContextMenuSkin;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.scene.transform.Affine;
 import javafx.stage.Stage;
-import math.Complex;
 import math.Matrix;
 import math.Vector;
 
@@ -24,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * JavaFX App
@@ -73,14 +63,13 @@ public class App extends Application {
         TextField textField = new TextField();
 
 
-        root.getChildren().addAll(label, textField, definedVariablesDiv, canvas);
-        textField.setOnAction(new AddVariableEvent(textField));
+        root.getChildren().addAll(label, textField, DefinedVariables.getVBox(), canvas);
+        textField.setOnAction(new TextInputEvent(textField));
 
         scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("stylesheets/style.css").toExternalForm());
         stage.setScene(scene);
 
-        System.out.println(new Complex(0, 0));
         stage.show();
     }
 
@@ -91,10 +80,5 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
-    }
-
-
-    public static void addVariables(Variable... variable){
-        definedVariablesDiv.getChildren().addAll(variable);
     }
 }
