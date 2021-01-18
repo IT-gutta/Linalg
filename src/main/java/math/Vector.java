@@ -176,6 +176,6 @@ public class Vector implements Renderable {
         if(getDimensions() != 2)
             throw new RenderException("Has to be a 2-dimensional vector to render");
         gc.strokeLine(CoordinateSystem.getCanvasWidth() / 2, CoordinateSystem.getCanvasHeight() / 2, getCanvasX(), getCanvasY());
-        gc.fillOval(getCanvasX(), getCanvasY(), 10, 10);
+        gc.fillOval(getCanvasX() - 5, getCanvasY() - 5, 10, 10);
     }
 }

@@ -41,7 +41,7 @@ public class App extends Application {
         List<Renderable> list = new ArrayList<>();
         Vector vector = new Vector(2, 3);
         double[][] dArr = {
-                {0, 1},
+                {0, -1},
                 {1, 0}
         };
         Matrix matrix = new Matrix(dArr);
@@ -72,6 +72,11 @@ public class App extends Application {
 
         System.out.println(new Complex(0, 0));
         stage.show();
+    }
+
+    @Override
+    public void stop(){
+        System.exit(0);
     }
 
     public static void main(String[] args) {
