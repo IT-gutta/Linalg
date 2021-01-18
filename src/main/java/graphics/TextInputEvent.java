@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import math.Matrix;
+import math.Vector;
 import math.Vectors;
 
 import java.util.Arrays;
@@ -19,6 +20,22 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
     public Renderable handleCommand(String command){
         String[] params = command.substring(command.indexOf("(") + 1, command.indexOf(")")).split(",");
         String commandName = command.substring(0, command.indexOf("("));
+
+
+        if(commandName.toLowerCase().equals("transform")){
+            String vectorName = params[0];
+            String matrixName = params[1];
+
+            if(!DefinedVariables.contains(vectorName) || !DefinedVariables.contains(matrixName))
+                return null;
+
+            Vector vector = (Vector) DefinedVariables.get(vectorName).getVariable();
+            Matrix matrix = (Matrix) DefinedVariables.get(matrixName).getVariable();
+
+            vector.applyTransformation(matrix);
+
+            return null;
+        }
 
         if(commandName.toLowerCase().equals("matrix")){
             int matrixWidth = params[0].split("_").length;
@@ -73,7 +90,6 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
             }
             DefinedVariables.addAnonymous(renderable);
         }
-
 
         inputField.clear();
     }

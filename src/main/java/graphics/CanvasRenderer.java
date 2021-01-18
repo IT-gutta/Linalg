@@ -25,7 +25,7 @@ public abstract class CanvasRenderer {
         Matrix matrix = new Matrix(dArr);
 
         DefinedVariables.add(matrix, "Rotasjonsmatrix");
-        DefinedVariables.add(new Variable(vector, "roterendeVektor"));
+        //DefinedVariables.add(new Variable(vector, "roterendeVektor"));
         DefinedVariables.addAnonymous(new CoordinateSystem(canvas.getWidth(), canvas.getHeight()));
 
         new Timer().scheduleAtFixedRate(
