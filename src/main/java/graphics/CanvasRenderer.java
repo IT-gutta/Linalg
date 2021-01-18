@@ -2,13 +2,17 @@ package graphics;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import math.Line;
 import math.Matrix;
+import math.Point;
 import math.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+
 
 public abstract class CanvasRenderer {
     private static List<Renderable> list = new ArrayList<>();
@@ -17,6 +21,11 @@ public abstract class CanvasRenderer {
 
 
     public static void start(){
+        //viktig å kjøre først
+        CoordinateSystem cs = new CoordinateSystem(canvas.getWidth(), canvas.getHeight());
+        add(cs);
+
+
         Vector vector = new Vector(2, 3);
         double[][] dArr = {
                 {0, -1},
@@ -24,23 +33,21 @@ public abstract class CanvasRenderer {
         };
         Matrix matrix = new Matrix(dArr);
 
-        DefinedVariables.add(matrix, "Rotasjonsmatrix");
-        //DefinedVariables.add(new Variable(vector, "roterendeVektor"));
-        DefinedVariables.addAnonymous(new CoordinateSystem(canvas.getWidth(), canvas.getHeight()));
+
+        DefinedVariables.add(matrix, "RM");
+//        DefinedVariables.add(new Variable(vector, "roterendeVektor"));
 
         new Timer().scheduleAtFixedRate(
                 new TimerTask() {
                     @Override
                     public void run() {
-                        vector.applyTransformation(matrix);
                         graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                         list.forEach( r -> r.render(graphicsContext));
                     }
                 },
                 0,
-                1000
+                100
         );
-
     }
 
     public static void add(Renderable r){

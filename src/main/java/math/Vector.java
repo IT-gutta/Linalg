@@ -158,6 +158,10 @@ public class Vector implements Renderable {
         return matrix.transformVector(this);
     }
 
+    public Point toPoint(){
+        return Points.fromVector(this);
+    }
+
     public double getCanvasX(){
        return getCanvasPoint().getElement(0);
     }
@@ -169,7 +173,6 @@ public class Vector implements Renderable {
     public Point getCanvasPoint(){
         return CoordinateSystem.toCanvasPoint(Points.fromVector(this));
     }
-
     @Override
     public void render(GraphicsContext gc) throws RenderException {
         if(getDimensions() != 2)

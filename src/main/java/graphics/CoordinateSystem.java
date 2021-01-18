@@ -7,6 +7,10 @@ import math.Line;
 import math.Point;
 import math.Vector;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class CoordinateSystem implements Renderable {
     private Vector iHat;
     private Vector jHat;
@@ -42,7 +46,7 @@ public class CoordinateSystem implements Renderable {
         updateLines();
     }
 
-    private void updateLines(){
+    public void updateLines(){
         int j = 0;
         lines = new Line[verticalLines*2+horizontalLines*2-2];
         for(int i = -verticalLines+1; i<verticalLines; i++){
@@ -58,6 +62,7 @@ public class CoordinateSystem implements Renderable {
     public void transform(Matrix matrix) throws IllegalNumberOfDimensionsException{
         iHat.applyTransformation(matrix);
         jHat.applyTransformation(matrix);
+        updateLines();
     }
 
     public Vector getI(){
@@ -102,9 +107,24 @@ public class CoordinateSystem implements Renderable {
         return new Point(point.getElement(0)*getUnitSize() + canvasWidth / 2, -point.getElement(1)*getUnitSize() + canvasHeight / 2);
     }
 
+    public static Point fromCanvasPoint(Point point) throws IllegalNumberOfDimensionsException{
+        if(point.getPoint().length != 2)
+            throw new IllegalNumberOfDimensionsException("Point has to be 2D");
+        return new Point((point.getElement(0) - canvasWidth / 2) / getUnitSize(), (point.getElement(0) - canvasWidth / 2) / -getUnitSize());
+    }
+
+    public static boolean insideCanvas(Point point){
+        Point actual = toCanvasPoint(point);
+        if(actual.getElement(0) < 0 || actual.getElement(0) > getCanvasWidth() || actual.getElement(1) < 0 || actual.getElement(1) > getCanvasHeight())
+            return false;
+        return true;
+    }
+
 
     @Override
     public void render(GraphicsContext gc) {
-
+        for(Line line : lines){
+            line.render(gc);
+        }
     }
 }
