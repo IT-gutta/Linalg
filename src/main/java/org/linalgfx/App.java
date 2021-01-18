@@ -1,18 +1,19 @@
 package org.linalgfx;
 
-import graphics.Renderable;
+import graphics.AddVariableEvent;
 import graphics.CoordinateSystem;
 import graphics.Renderable;
+import graphics.Variable;
 import javafx.application.Application;
 import javafx.event.*;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
+import javafx.scene.control.*;
 import javafx.scene.control.skin.ContextMenuSkin;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Affine;
 import javafx.stage.Stage;
 import math.Complex;
@@ -32,17 +33,19 @@ public class App extends Application {
 
     private static Scene scene;
     private static Canvas canvas;
+    private static VBox definedVariablesDiv;
 
     @Override
     public void start(Stage stage) throws IOException {
         canvas = new Canvas(1000,600);
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        definedVariablesDiv = new VBox();
 
         List<Renderable> list = new ArrayList<>();
         Vector vector = new Vector(2, 3);
         double[][] dArr = {
-                {0, 1},
+                {0, -1},
                 {1, 0}
         };
         Matrix matrix = new Matrix(dArr);
@@ -65,7 +68,13 @@ public class App extends Application {
         );
 
         VBox root = new VBox();
-        root.getChildren().addAll(canvas);
+
+        Label label = new Label("Input");
+        TextField textField = new TextField();
+
+
+        root.getChildren().addAll(label, textField, definedVariablesDiv, canvas);
+        textField.setOnAction(new AddVariableEvent(textField));
 
         scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("stylesheets/style.css").toExternalForm());
@@ -75,7 +84,17 @@ public class App extends Application {
         stage.show();
     }
 
+    @Override
+    public void stop(){
+        System.exit(0);
+    }
+
     public static void main(String[] args) {
         launch();
+    }
+
+
+    public static void addVariables(Variable... variable){
+        definedVariablesDiv.getChildren().addAll(variable);
     }
 }
