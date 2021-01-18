@@ -168,7 +168,7 @@ public class Vector implements Renderable {
     }
 
     public Point getCanvasPoint(){
-        return CoordinateSystem.toCanvas(Points.fromVector(this));
+        return CoordinateSystem.toCanvasPoint(Points.fromVector(this));
     }
 
     @Override
