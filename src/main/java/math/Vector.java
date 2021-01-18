@@ -6,9 +6,6 @@ import graphics.CoordinateSystem;
 import graphics.Renderable;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.DoubleStream;
 
 public class Vector implements Renderable {
@@ -162,23 +159,23 @@ public class Vector implements Renderable {
         return matrix.transformVector(this);
     }
 
-    public double getX(){
+    public double getCanvasX(){
        return getCanvasPoint().getElement(0);
     }
 
-    public double getY(){
+    public double getCanvasY(){
         return getCanvasPoint().getElement(1);
     }
 
     public Point getCanvasPoint(){
-        return CoordinateSystem.toCanvas(new Point(getElement(0)*CoordinateSystem.getUnitSize(), getElement(1)*CoordinateSystem.getUnitSize()));
+        return CoordinateSystem.toCanvas(Points.fromVector(this));
     }
 
     @Override
     public void render(GraphicsContext gc) throws RenderException {
         if(getDimensions() != 2)
             throw new RenderException("Has to be a 2-dimensional vector to render");
-        gc.strokeLine(CoordinateSystem.getCanvasWidth() / 2, CoordinateSystem.getCanvasHeight() / 2, getX(), getY());
-        gc.fillOval(getX(), getY(), 10, 10);
+        gc.strokeLine(CoordinateSystem.getCanvasWidth() / 2, CoordinateSystem.getCanvasHeight() / 2, getCanvasX(), getCanvasY());
+        gc.fillOval(getCanvasX(), getCanvasY(), 10, 10);
     }
 }

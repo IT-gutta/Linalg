@@ -99,7 +99,7 @@ public class CoordinateSystem implements Renderable {
     public static Point toCanvas(Point point) throws IllegalNumberOfDimensionsException{
         if(point.getPoint().length != 2)
             throw new IllegalNumberOfDimensionsException("Point has to be 2D");
-        return new Point(point.getElement(0) + canvasWidth / 2, -point.getElement(1) + canvasHeight / 2);
+        return new Point(point.getElement(0)*getUnitSize() + canvasWidth / 2, -point.getElement(1)*getUnitSize() + canvasHeight / 2);
     }
 
 
