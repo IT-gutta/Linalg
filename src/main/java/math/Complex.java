@@ -1,5 +1,10 @@
 package math;
 
+import java.util.function.Function;
+import java.util.function.IntToDoubleFunction;
+import java.util.function.IntUnaryOperator;
+import java.util.stream.IntStream;
+
 public class Complex{
     private double re;
     private double im;
@@ -22,6 +27,11 @@ public class Complex{
         im = re*other.im + im*other.re;
     }
 
+    public void pow(int exponent){
+        length = Math.pow(length, exponent);
+        angle = angle * exponent;
+        setStandardFromPolar();
+    }
 
 
     public String asPolar(){
