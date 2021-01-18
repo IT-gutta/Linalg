@@ -1,12 +1,17 @@
 package math;
 
 import exceptions.IllegalNumberOfDimensionsException;
+import graphics.Variable;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Vectors {
-    public Vector fromPoint(Point p){
+    public static Vector fromPoint(Point p){
         return new Vector(p.getPoint());
     }
-    public Point toPoint(Vector v){
+    public static Point toPoint(Vector v){
         return new Point(v.getVector());
     }
     public static Vector add(Vector... args) throws IllegalNumberOfDimensionsException{
@@ -21,12 +26,21 @@ public class Vectors {
         }
         return new Vector(u);
     }
-    public Complex toComplex(Vector v) throws IllegalNumberOfDimensionsException{
+    public static Complex toComplex(Vector v) throws IllegalNumberOfDimensionsException{
         if(v.getDimensions()!=2)
             throw new IllegalNumberOfDimensionsException("Vector must be two dimensional");
         return new Complex(v.getElement(0),v.getElement(1));
     }
-    public Vector fromComplex(Complex c){
+    public static Vector fromComplex(Complex c){
         return new Vector(c.getRe(), c.getIm());
+    }
+
+
+    public static Vector parseVector(String... args){
+        return new Vector(Stream.of(args).mapToDouble(Double::parseDouble).toArray());
+    }
+
+    public static Variable<Vector> of(String name, double... args){
+        return new Variable<Vector>(new Vector(args), name);
     }
 }

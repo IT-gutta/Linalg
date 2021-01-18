@@ -1,10 +1,12 @@
 package math;
 
 import exceptions.IllegalNumberOfDimensionsException;
+import graphics.Renderable;
+import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
 
-public class Matrix {
+public class Matrix implements Renderable{
     private double[][] matrix;
     private int width;
     private int height;
@@ -22,13 +24,27 @@ public class Matrix {
     public Vector transformVector(Vector vector) throws IllegalNumberOfDimensionsException {
         if(vector.getDimensions() != width)
             throw new IllegalNumberOfDimensionsException("The vectors number of dimensions doesnt match the matrix width");
-        Vector newVec = new Vector(vector.getDimensions());
-        for(int y = 0; y < height; y++){
-            for(int x = 0; x < width; x++){
-                newVec.setElement(y, newVec.getElement(y) + vector.getElement(y) * matrix[y][x]);
-            }
+        Vector[] allColumns = getAllColumns();
+        for(int i = 0; i < width; i++){
+            allColumns[i].scale(vector.getElement(i));
         }
-        return newVec;
+        return Vectors.add(allColumns);
+    }
+
+    private Vector getColumn(int columnNumber){
+        double[] col = new double[height];
+        for(int i = 0; i < height; i++){
+            col[i] = get(i, columnNumber);
+        }
+        return new Vector(col);
+    }
+
+    public Vector[] getAllColumns(){
+        var vecs = new Vector[width];
+        for(int column = 0; column < width; column++){
+            vecs[column] = getColumn(column);
+        }
+        return vecs;
     }
 
     public ArrayList<Vector> getBasisVectors(){
@@ -68,7 +84,6 @@ public class Matrix {
         }
 
         s += "]";
-
         return s;
     }
 
@@ -84,4 +99,8 @@ public class Matrix {
         System.out.println(m);
     }
 
+    @Override
+    public void render(GraphicsContext gc) {
+        
+    }
 }
