@@ -105,6 +105,6 @@ public class CoordinateSystem implements Renderable {
 
     @Override
     public void render(GraphicsContext gc) {
-        for(Line line:lines) line.render(gc);
+
     }
 }

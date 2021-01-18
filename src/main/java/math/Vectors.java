@@ -1,6 +1,7 @@
 package math;
 
 import exceptions.IllegalNumberOfDimensionsException;
+import graphics.Variable;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -35,8 +36,11 @@ public class Vectors {
     }
 
 
-    public static Vector parseVector(String string){
-        String keep = string.replaceAll("[{}()\\sa-zA-Z\\[\\]]", "");
-        return new Vector(Arrays.stream(keep.split(",")).mapToDouble(s -> Double.valueOf(s)).toArray());
+    public static Vector parseVector(String... args){
+        return new Vector(Stream.of(args).mapToDouble(Double::parseDouble).toArray());
+    }
+
+    public static Variable<Vector> of(String name, double... args){
+        return new Variable<Vector>(new Vector(args), name);
     }
 }

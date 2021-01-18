@@ -177,4 +177,8 @@ public class Vector implements Renderable {
         gc.strokeLine(CoordinateSystem.getCanvasWidth() / 2, CoordinateSystem.getCanvasHeight() / 2, getCanvasX(), getCanvasY());
         gc.fillOval(getCanvasX() - 5, getCanvasY() - 5, 10, 10);
     }
+
+
+
+
 }

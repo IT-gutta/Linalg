@@ -3,7 +3,7 @@ package graphics;
 
 import javafx.scene.text.Text;
 
-public class Variable<T> extends Text {
+public class Variable<T extends Renderable> extends Text {
     private T variable;
     private String name;
     public Variable(T variable, String name){
@@ -24,5 +24,9 @@ public class Variable<T> extends Text {
 
     public String getName(){
         return name;
+    }
+
+    public T getVariable(){
+        return variable;
     }
 }
