@@ -1,10 +1,10 @@
 package math;
 
-import graphics.CoordinateSystem;
+import graphics.CanvasRenderer;
 import graphics.Renderable;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.util.Arrays;
+import java.util.function.Function;
 
 public class Line implements Renderable {
     private Point start;
@@ -14,9 +14,11 @@ public class Line implements Renderable {
     public Line(Point p, Vector v){
         start = p;
         direction = v;
-        calculatAbsoluteEndpoint();
     }
+
+
     public Line(Point start, Point end){
+
         this.start = start;
         this.end = end;
 //        direction = Points.toVector(Points.subtract(end, start));
@@ -36,24 +38,16 @@ public class Line implements Renderable {
     }
 
 
-
+    private double getEdgeParameter(){
+        return Math.sqrt(Math.pow(CanvasRenderer.getCanvasWidth(), 2) + Math.pow(CanvasRenderer.getCanvasHeight(), 2)) / (2 * direction.getMagnitude());
+    }
     public Point getAbsoluteStart(){
-        return CoordinateSystem.toCanvasPoint(start);
+        return CanvasRenderer.toCanvasPoint(getPoint(getEdgeParameter()));
     }
     public Point getAbsoluteEnd(){
-        return CoordinateSystem.toCanvasPoint(end);
+        return CanvasRenderer.toCanvasPoint(getPoint(- getEdgeParameter()));
     }
 
-    private void calculatAbsoluteEndpoint(){
-        end = getPoint(20);
-//        int t = 1;
-//        while(true){
-//            end = getPoint(t);
-//            if(CoordinateSystem.insideCanvas(end))
-//                break;
-//            t+=100;
-//        }
-    }
 
     public Point getStart(){
         return start;
@@ -70,8 +64,6 @@ public class Line implements Renderable {
 
     @Override
     public void render(GraphicsContext gc){
-        //end = getPoint(-100);
-        //start = getPoint(100);
         gc.strokeLine(getAbsoluteStart().getElement(0), getAbsoluteStart().getElement(1), getAbsoluteEnd().getElement(0), getAbsoluteEnd().getElement(1));
     }
 }

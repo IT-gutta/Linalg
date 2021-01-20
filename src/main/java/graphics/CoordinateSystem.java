@@ -7,31 +7,22 @@ import math.Line;
 import math.Point;
 import math.Vector;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class CoordinateSystem implements Renderable {
     private Vector iHat;
     private Vector jHat;
     private Line[] lines;
     private int verticalLines;
     private int horizontalLines;
-    private static int unitSize;
 
-
-
-    private static double canvasWidth;
-    private static double canvasHeight;
 
     public CoordinateSystem(double width, double height, Vector iHat, Vector jHat, int verticalLines, int horizontalLines, int unitSize){
         this.iHat = iHat;
         this.jHat = jHat;
         this.verticalLines = verticalLines;
         this.horizontalLines = horizontalLines;
-        this.unitSize = unitSize;
-        canvasWidth = width;
-        canvasHeight = height;
+        CanvasRenderer.unitSize = unitSize;
+        CanvasRenderer.canvasWidth = width;
+        CanvasRenderer.canvasHeight = height;
         updateLines();
     }
 
@@ -40,9 +31,9 @@ public class CoordinateSystem implements Renderable {
         jHat = new Vector(0,1);
         verticalLines = 20;
         horizontalLines = 15;
-        unitSize = 40;
-        canvasWidth = width;
-        canvasHeight = height;
+        CanvasRenderer.unitSize = 40;
+        CanvasRenderer.canvasWidth = width;
+        CanvasRenderer.canvasHeight = height;
         updateLines();
     }
 
@@ -65,6 +56,7 @@ public class CoordinateSystem implements Renderable {
         updateLines();
     }
 
+
     public Vector getI(){
         return iHat;
     }
@@ -85,37 +77,9 @@ public class CoordinateSystem implements Renderable {
         jHat = v;
     }
 
-    public static int getUnitSize(){
-        return unitSize;
-    }
-
-    public static void setUnitSize(int i){
-        unitSize = i;
-    }
-
-    public static double getCanvasWidth() {
-        return canvasWidth;
-    }
-
-    public static double getCanvasHeight() {
-        return canvasHeight;
-    }
-
-    public static Point toCanvasPoint(Point point) throws IllegalNumberOfDimensionsException{
-        if(point.getPoint().length != 2)
-            throw new IllegalNumberOfDimensionsException("Point has to be 2D");
-        return new Point(point.getElement(0)*getUnitSize() + canvasWidth / 2, -point.getElement(1)*getUnitSize() + canvasHeight / 2);
-    }
-
-    public static Point fromCanvasPoint(Point point) throws IllegalNumberOfDimensionsException{
-        if(point.getPoint().length != 2)
-            throw new IllegalNumberOfDimensionsException("Point has to be 2D");
-        return new Point((point.getElement(0) - canvasWidth / 2) / getUnitSize(), (point.getElement(0) - canvasWidth / 2) / -getUnitSize());
-    }
-
     public static boolean insideCanvas(Point point){
-        Point actual = toCanvasPoint(point);
-        if(actual.getElement(0) < 0 || actual.getElement(0) > getCanvasWidth() || actual.getElement(1) < 0 || actual.getElement(1) > getCanvasHeight())
+        Point actual = CanvasRenderer.toCanvasPoint(point);
+        if(actual.getElement(0) < 0 || actual.getElement(0) > CanvasRenderer.getCanvasWidth() || actual.getElement(1) < 0 || actual.getElement(1) > CanvasRenderer.getCanvasHeight())
             return false;
         return true;
     }
@@ -123,6 +87,7 @@ public class CoordinateSystem implements Renderable {
 
     @Override
     public void render(GraphicsContext gc) {
+        gc.setLineWidth(0.5);
         for(Line line : lines){
             line.render(gc);
         }

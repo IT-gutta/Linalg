@@ -2,7 +2,7 @@ package math;
 
 import exceptions.IllegalNumberOfDimensionsException;
 import exceptions.RenderException;
-import graphics.CoordinateSystem;
+import graphics.CanvasRenderer;
 import graphics.Renderable;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -71,7 +71,7 @@ public class Vector implements Renderable {
         }
     }
 
-    public void add(Vector v) throws IllegalNumberOfDimensionsException {
+    public Vector add(Vector v) throws IllegalNumberOfDimensionsException {
         if(v.getDimensions()!=this.getDimensions())
             throw new IllegalNumberOfDimensionsException("The number of dimensions must be 2");
         else{
@@ -79,6 +79,8 @@ public class Vector implements Renderable {
                 vector[i]+=v.getElement(i);
             }
         }
+
+        return this;
     }
 
     public int factorize() throws IllegalNumberOfDimensionsException{
@@ -171,13 +173,13 @@ public class Vector implements Renderable {
     }
 
     public Point getCanvasPoint(){
-        return CoordinateSystem.toCanvasPoint(Points.fromVector(this));
+        return CanvasRenderer.toCanvasPoint(Points.fromVector(this));
     }
     @Override
     public void render(GraphicsContext gc) throws RenderException {
         if(getDimensions() != 2)
             throw new RenderException("Has to be a 2-dimensional vector to render");
-        gc.strokeLine(CoordinateSystem.getCanvasWidth() / 2, CoordinateSystem.getCanvasHeight() / 2, getCanvasX(), getCanvasY());
+        gc.strokeLine(CanvasRenderer.getCanvasWidth() / 2, CanvasRenderer.getCanvasHeight() / 2, getCanvasX(), getCanvasY());
         gc.fillOval(getCanvasX() - 5, getCanvasY() - 5, 10, 10);
     }
 

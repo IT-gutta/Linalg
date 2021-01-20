@@ -1,5 +1,6 @@
 package graphics;
 
+import exceptions.IllegalNumberOfDimensionsException;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import math.Line;
@@ -18,6 +19,9 @@ public abstract class CanvasRenderer {
     private static List<Renderable> list = new ArrayList<>();
     private static Canvas canvas;
     private static GraphicsContext graphicsContext;
+    static int unitSize;
+    static double canvasWidth;
+    static double canvasHeight;
 
 
     public static void start(){
@@ -80,4 +84,31 @@ public abstract class CanvasRenderer {
         return list;
     }
 
+    public static int getUnitSize(){
+        return unitSize;
+    }
+
+    public static void setUnitSize(int i){
+        unitSize = i;
+    }
+
+    public static double getCanvasWidth() {
+        return canvasWidth;
+    }
+
+    public static double getCanvasHeight() {
+        return canvasHeight;
+    }
+
+    public static Point toCanvasPoint(Point point) throws IllegalNumberOfDimensionsException {
+        if(point.getPoint().length != 2)
+            throw new IllegalNumberOfDimensionsException("Point has to be 2D");
+        return new Point(point.getElement(0)*getUnitSize() + canvasWidth / 2, -point.getElement(1)*getUnitSize() + canvasHeight / 2);
+    }
+
+    public static Point fromCanvasPoint(Point point) throws IllegalNumberOfDimensionsException{
+        if(point.getPoint().length != 2)
+            throw new IllegalNumberOfDimensionsException("Point has to be 2D");
+        return new Point((point.getElement(0) - canvasWidth / 2) / getUnitSize(), (point.getElement(0) - canvasWidth / 2) / -getUnitSize());
+    }
 }
