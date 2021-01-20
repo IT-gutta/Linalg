@@ -14,7 +14,6 @@ public class ComplexNumbers {
         c.setLength(length);
         c.setAngle(angle);
         c.setStandardFromPolar();
-
         return c;
     }
 

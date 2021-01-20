@@ -1,8 +1,12 @@
 package math;
 
+import graphics.CoordinateSystem;
+import graphics.Renderable;
+import javafx.scene.canvas.GraphicsContext;
+
 import java.util.Arrays;
 
-public class Point{
+public class Point implements Renderable {
     private double[] point;
     public Point(double... args){
         point = args;
@@ -28,6 +32,12 @@ public class Point{
 
     public Vector toVector(){
         return Vectors.fromPoint(this);
+    }
+
+    @Override
+    public void render(GraphicsContext gc){
+        Point p = CoordinateSystem.toCanvasPoint(new Point(point));
+        gc.fillOval(p.getElement(0) - 5, p.getElement(1)- 5, 10,10);
     }
 
 

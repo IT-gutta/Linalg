@@ -1,11 +1,15 @@
 package math;
 
+import graphics.CoordinateSystem;
+import graphics.Renderable;
+import javafx.scene.canvas.GraphicsContext;
+
 import java.util.function.Function;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.IntUnaryOperator;
 import java.util.stream.IntStream;
 
-public class Complex{
+public class Complex implements Renderable {
     private double re;
     private double im;
     private double length;
@@ -89,6 +93,16 @@ public class Complex{
 
     public void setAngle(double angle) {
         this.angle = angle;
+    }
+
+    public Point getCanvasPoint(){
+        return CoordinateSystem.toCanvasPoint(new Point(re, im));
+    }
+
+    @Override
+    public void render(GraphicsContext gc){
+        Point p = getCanvasPoint();
+        gc.fillRect(p.getElement(0) - 5, p.getElement(1)- 5, 10,10);
     }
 }
 
