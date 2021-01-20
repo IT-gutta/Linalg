@@ -45,7 +45,7 @@ public class Line implements Renderable {
     }
 
     private void calculatAbsoluteEndpoint(){
-        end = getPoint(2000);
+        end = getPoint(20);
 //        int t = 1;
 //        while(true){
 //            end = getPoint(t);
@@ -70,6 +70,8 @@ public class Line implements Renderable {
 
     @Override
     public void render(GraphicsContext gc){
+        //end = getPoint(-100);
+        //start = getPoint(100);
         gc.strokeLine(getAbsoluteStart().getElement(0), getAbsoluteStart().getElement(1), getAbsoluteEnd().getElement(0), getAbsoluteEnd().getElement(1));
     }
 }
