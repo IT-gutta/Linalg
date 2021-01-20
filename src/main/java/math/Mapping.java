@@ -16,5 +16,7 @@ public class Mapping {
         start = -10;
         end = 10;
     }
-
+    public double evaluate(double x){
+        return mapping.apply(x);
+    }
 }
