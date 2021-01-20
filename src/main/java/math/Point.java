@@ -1,5 +1,6 @@
 package math;
 
+import graphics.CanvasRenderer;
 import graphics.CoordinateSystem;
 import graphics.Renderable;
 import javafx.scene.canvas.GraphicsContext;
@@ -36,7 +37,7 @@ public class Point implements Renderable {
 
     @Override
     public void render(GraphicsContext gc){
-        Point p = CoordinateSystem.toCanvasPoint(new Point(point));
+        Point p = CanvasRenderer.toCanvasPoint(new Point(point));
         gc.fillOval(p.getElement(0) - 5, p.getElement(1)- 5, 10,10);
     }
 

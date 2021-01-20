@@ -1,5 +1,6 @@
 package math;
 
+import graphics.CanvasRenderer;
 import graphics.CoordinateSystem;
 import graphics.Renderable;
 import javafx.scene.canvas.GraphicsContext;
@@ -96,7 +97,7 @@ public class Complex implements Renderable {
     }
 
     public Point getCanvasPoint(){
-        return CoordinateSystem.toCanvasPoint(new Point(re, im));
+        return CanvasRenderer.toCanvasPoint(new Point(re, im));
     }
 
     @Override
