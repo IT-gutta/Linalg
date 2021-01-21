@@ -24,7 +24,7 @@ public abstract class CanvasRenderer {
     public static void start(){
         //viktig å kjøre først
         CoordinateSystem cs = new CoordinateSystem(canvas.getWidth(), canvas.getHeight());
-
+        add(cs);
 
         Vector vector = new Vector(2, 3);
         double[][] dArr = {
@@ -47,7 +47,6 @@ public abstract class CanvasRenderer {
                     public void run() {
                         graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                         list.forEach( r -> r.render(graphicsContext));
-                        System.out.println(list);
                     }
                 },
                 100,
