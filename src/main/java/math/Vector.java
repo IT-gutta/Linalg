@@ -31,7 +31,7 @@ public class Vector implements Renderable {
         for(double element:vector){
             s+=Double.toString(element)+", ";
         }
-        return "("+s.substring(0,s.length()-2)+")";
+        return "["+s.substring(0,s.length()-2)+"]";
     }
 
     public double getElement(int index){
