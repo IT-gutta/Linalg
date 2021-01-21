@@ -1,3 +1,10 @@
 .root{
     /*-fx-background-color: green;*/
 }
+
+.popupWindow{
+    -fx-background-color: beige;
+    -fx-border-radius: 5px;
+    -fx-border-color: black;
+    -fx-border-width: 3px;
+}

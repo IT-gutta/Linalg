@@ -1,6 +1,7 @@
 package org.linalgfx;
 
 import graphics.*;
+import graphics.toolbar.ToolBar;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -8,15 +9,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import math.Matrix;
-import math.Vector;
-import math.Vectors;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * JavaFX App
@@ -35,8 +29,9 @@ public class App extends Application {
         VBox root = new VBox();
         Label label = new Label("Input");
         TextField textField = new TextField();
+        ToolBar toolBar = new ToolBar();
 
-        root.getChildren().addAll(label, textField, DefinedVariables.getVBox(), canvas);
+        root.getChildren().addAll(toolBar, label, textField, DefinedVariables.getVBox(), canvas);
         textField.setOnAction(new TextInputEvent(textField));
 
         scene = new Scene(root);
@@ -53,5 +48,12 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public static double getWidth(){
+        return scene.getWidth();
+    }
+    public static double getHeight(){
+        return scene.getHeight();
     }
 }
