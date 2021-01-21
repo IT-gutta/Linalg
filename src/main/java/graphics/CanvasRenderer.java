@@ -3,10 +3,7 @@ package graphics;
 import exceptions.IllegalNumberOfDimensionsException;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import math.Line;
-import math.Matrix;
-import math.Point;
-import math.Vector;
+import math.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +28,18 @@ public abstract class CanvasRenderer {
 
         Vector vector = new Vector(2, 3);
         double[][] dArr = {
-                {0, -1},
+                {1, -1},
                 {1, 0}
         };
         Matrix matrix = new Matrix(dArr);
-
+        Mapping m = new Mapping(Math::cos, "cos(x)");
+        m.transform(matrix);
+        Vector v = new Vector(1,2);
 
         DefinedVariables.add(matrix, "RM");
-//        DefinedVariables.add(new Variable(vector, "roterendeVektor"));
+        DefinedVariables.add(m, "a");
+        DefinedVariables.add(v, "v");
+//      DefinedVariables.add(new Variable(vector, "roterendeVektor"));
 
         new Timer().scheduleAtFixedRate(
                 new TimerTask() {
@@ -46,10 +47,11 @@ public abstract class CanvasRenderer {
                     public void run() {
                         graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                         list.forEach( r -> r.render(graphicsContext));
+                        System.out.println(list);
                     }
                 },
-                0,
-                100
+                100,
+                1000
         );
     }
 
@@ -57,9 +59,9 @@ public abstract class CanvasRenderer {
         list.add(r);
     }
 
-    //public static void addAll(Renderable... rs){
-    //    list.addAll(List.of(rs));
-    //}
+    public static void addAll(Renderable... rs){
+        list.addAll(List.of(rs));
+    }
 
     public static boolean contains(Renderable r){
         return list.contains(r);

@@ -4,93 +4,40 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import math.Matrix;
+import math.Point;
 import math.Vector;
 import math.Vectors;
 
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.DoubleStream;
 
 public class TextInputEvent implements EventHandler<ActionEvent> {
     private TextField inputField;
-
+    private Matcher m;
+    private final Pattern vector = Pattern.compile("(\\w[0-9a-zA-Z_]*)(\\s*=\\s*\\[\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*,\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*])");
+    private final Pattern point = Pattern.compile("(\\w[0-9a-zA-Z_]*)(\\s*=\\s*\\(\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*,\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*\\))");
     public TextInputEvent(TextField inputField) {
         this.inputField = inputField;
-    }
-
-    public Renderable handleCommand(String command){
-        String[] params = command.substring(command.indexOf("(") + 1, command.indexOf(")")).split(",");
-        String commandName = command.substring(0, command.indexOf("("));
-
-
-        if(commandName.toLowerCase().equals("transform")){
-            String vectorName = params[0];
-            String matrixName = params[1];
-
-            if(!DefinedVariables.contains(vectorName) || !DefinedVariables.contains(matrixName))
-                return null;
-
-            Vector vector = (Vector) DefinedVariables.get(vectorName).getVariable();
-            Matrix matrix = (Matrix) DefinedVariables.get(matrixName).getVariable();
-
-            vector.applyTransformation(matrix);
-
-            return null;
-        }
-
-        if(commandName.toLowerCase().equals("matrix")){
-            int matrixWidth = params[0].split("_").length;
-            double[][] matrixDoubleArr = new double[params.length][matrixWidth];
-
-            System.out.println(Arrays.toString(params));
-
-            for(int i = 0; i < params.length; i++){
-                double[] dArr = new double[matrixWidth];
-                String[] row = params[i].split("_");
-                for(int j = 0; j < matrixWidth; j++){
-                    dArr[j] = Double.parseDouble(row[j]);
-                }
-
-
-                matrixDoubleArr[i] = dArr;
-            }
-
-            return new Matrix(matrixDoubleArr);
-        }
-
-        if(commandName.toLowerCase().equals("vector")){
-            return Vectors.parseVector(params);
-        }
-
-        return null;
     }
 
     @Override
     public void handle(ActionEvent actionEvent) {
         String inp = inputField.getText().replace(" ", "");
-
-        if(inp.contains("=")){
-            //named variable
-            String name = inp.split("=")[0].strip();
-            String command = inp.split("=")[1].strip();
-
-            Renderable renderable = handleCommand(command);
-            if(renderable == null){
-                System.out.println("Input not accepted");
-                return;
+        if(Pattern.matches(vector.toString(), inp)){
+            m = vector.matcher(inp);
+            if(m.find()){
+                System.out.println("found vector");
+                DefinedVariables.add(new Vector(Double.parseDouble(m.group(3)), Double.parseDouble(m.group(6))), m.group(1));
             }
-            DefinedVariables.add(renderable, name);
         }
-
-        else{
-            //anonymous
-            Renderable renderable = handleCommand(inp);
-            if(renderable == null){
-                System.out.println("Input not accepted");
-                return;
+        if(Pattern.matches(point.toString(), inp)){
+            m = point.matcher(inp);
+            if(m.find()){
+                DefinedVariables.add(new Point(Double.parseDouble(m.group(3)), Double.parseDouble(m.group(6))), m.group(1));
             }
-            DefinedVariables.addAnonymous(renderable);
         }
-
         inputField.clear();
     }
 }

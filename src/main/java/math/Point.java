@@ -28,7 +28,11 @@ public class Point implements Renderable {
 
     @Override
     public String toString(){
-        return Arrays.toString(point);
+        String s = "";
+        for(double element:point){
+            s+=Double.toString(element)+", ";
+        }
+        return "("+s.substring(0,s.length()-2)+")";
     }
 
     public Vector toVector(){

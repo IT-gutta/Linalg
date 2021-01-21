@@ -1,4 +1,4 @@
-math\ComplexNumbers.class
 math\Complex.class
 math\Matrix.class
 exceptions\RenderException.class
+math\ComplexNumbers.class
