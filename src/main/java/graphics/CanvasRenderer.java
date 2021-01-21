@@ -27,7 +27,6 @@ public abstract class CanvasRenderer {
     public static void start(){
         //viktig å kjøre først
         CoordinateSystem cs = new CoordinateSystem(canvas.getWidth(), canvas.getHeight());
-        add(cs);
 
 
         Vector vector = new Vector(2, 3);
