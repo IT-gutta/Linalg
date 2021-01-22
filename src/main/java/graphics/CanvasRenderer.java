@@ -5,6 +5,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import math.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -12,7 +13,7 @@ import java.util.TimerTask;
 
 
 
-public abstract class CanvasRenderer {
+public abstract class CanvasRenderer implements Serializable {
     private static List<Renderable> list = new ArrayList<>();
     private static Canvas canvas;
     private static GraphicsContext graphicsContext;
@@ -70,6 +71,10 @@ public abstract class CanvasRenderer {
         list.removeAll(renderables);
     }
 
+    public static boolean remove(Renderable renderable){
+        return list.remove(renderable);
+    }
+
 
     public static void setGraphicsContext(GraphicsContext graphicsContext) {
         CanvasRenderer.graphicsContext = graphicsContext;
@@ -82,6 +87,10 @@ public abstract class CanvasRenderer {
 
     public static List<Renderable> getList(){
         return list;
+    }
+
+    public static void setList(List<Renderable> list){
+        CanvasRenderer.list = list;
     }
 
     public static int getUnitSize(){

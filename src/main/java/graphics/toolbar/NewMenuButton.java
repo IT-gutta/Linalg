@@ -2,6 +2,7 @@ package graphics.toolbar;
 
 import graphics.CanvasRenderer;
 import graphics.DefinedVariables;
+import graphics.Variable;
 import javafx.event.ActionEvent;
 import javafx.event.EventDispatchChain;
 import javafx.event.EventHandler;
@@ -24,8 +25,7 @@ import java.util.List;
 
 public class NewMenuButton extends MenuButton {
     private Popup popup = new Popup();
-    private TextInputDialog dialog = new TextInputDialog("name");
-    private Button mongoOppleggButton = new Button();
+    private TextInputDialog dialog = new TextInputDialog("");
 
     public NewMenuButton() {
         super("Add New");
@@ -72,7 +72,7 @@ public class NewMenuButton extends MenuButton {
         MenuItem line = new MenuItem("Line");
         line.setOnAction(actionEvent -> {
 
-            var matrixInputRows = new VBox();
+            var lineInputRows = new VBox();
             var aRow = new HBox();
             var bRow = new HBox();
 
@@ -84,8 +84,8 @@ public class NewMenuButton extends MenuButton {
             aRow.getChildren().addAll(aInput, bInput);
             bRow.getChildren().addAll(cInput, dInput);
 
-            matrixInputRows.getChildren().addAll(new Text("Enter point:   "), aRow, new Text("Enter directional vector:   "), bRow);
-            dialog.setGraphic(matrixInputRows);
+            lineInputRows.getChildren().addAll(new Text("Enter point:   "), aRow, new Text("Enter directional vector:   "), bRow);
+            dialog.setGraphic(lineInputRows);
             dialog.setHeaderText("Line");
             dialog.setContentText("Enter name:");
             dialog.showAndWait().ifPresent(response ->{
@@ -97,12 +97,12 @@ public class NewMenuButton extends MenuButton {
 
         MenuItem complex = new MenuItem("Complex");
         complex.setOnAction(actionEvent -> {
-            var vectorInput = new HBox();
+            var complexInputBox = new HBox();
             TextField xInput = DoubleFormatter.getTextField();
             TextField yInput = DoubleFormatter.getTextField();
 
-            vectorInput.getChildren().addAll(new Text("Enter a, b:   "), xInput, yInput);
-            dialog.setGraphic(vectorInput);
+            complexInputBox.getChildren().addAll(new Text("Enter a, b:   "), xInput, yInput);
+            dialog.setGraphic(complexInputBox);
             dialog.setHeaderText("Complex");
             dialog.setContentText("Enter name:");
             dialog.showAndWait().ifPresent(response ->{
@@ -111,8 +111,40 @@ public class NewMenuButton extends MenuButton {
         });
 
 
+        MenuItem point = new MenuItem("Point");
+        point.setOnAction(actionEvent -> {
+            var pointInputBox = new HBox();
+            TextField xInput = DoubleFormatter.getTextField();
+            TextField yInput = DoubleFormatter.getTextField();
 
-        getItems().addAll(vector, complex, matrix, line);
+            pointInputBox.getChildren().addAll(new Text("Enter x, y:   "), xInput, yInput);
+            dialog.setGraphic(pointInputBox);
+            dialog.setHeaderText("Point");
+            dialog.setContentText("Enter name:");
+            dialog.showAndWait().ifPresent(response ->{
+                DefinedVariables.add(new Point((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
+            });
+        });
+
+
+
+        MenuItem number = new MenuItem("Number");
+        number.setOnAction(actionEvent -> {
+            var numberInputBox = new HBox();
+            TextField input = DoubleFormatter.getTextField();
+
+            numberInputBox.getChildren().addAll(new Text("Enter the number:   "), input);
+            dialog.setGraphic(numberInputBox);
+            dialog.setHeaderText("Point");
+            dialog.setContentText("Enter name:");
+            dialog.showAndWait().ifPresent(response ->{
+                DefinedVariables.add(new Variable<>((Double) input.getTextFormatter().getValue(), dialog.getEditor().getText()));
+            });
+        });
+
+
+
+        getItems().addAll(vector, complex, matrix, line, point);
     }
 
 }

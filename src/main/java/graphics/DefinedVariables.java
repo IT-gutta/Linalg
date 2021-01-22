@@ -60,7 +60,18 @@ public abstract class DefinedVariables {
             map.remove(v.getName());
         }
 
-        CanvasRenderer.removeAll(removedVariables.stream().map(Variable::getVariable).collect(Collectors.toList()));
+        if(removedVariables.stream()
+                .filter(v -> v instanceof Renderable)
+                .anyMatch(v -> CanvasRenderer.remove((Renderable) v.getVariable())))
+            {return true;}
+
+
+        removedVariables.stream()
+                .filter(v -> v instanceof Renderable)
+                .forEach(v ->{
+                    CanvasRenderer.remove((Renderable) v.getVariable());
+        });
+
 
         return removedVariables.size() > 0;
     }
@@ -101,7 +112,9 @@ public abstract class DefinedVariables {
             return;
         vbox.getChildren().add(variable);
         map.put(variable.getName(), variable);
-        CanvasRenderer.add(variable.getVariable());
+
+        if(variable.getVariable() instanceof Renderable)
+            CanvasRenderer.add((Renderable) variable.getVariable());
     }
 
     public static void add(Renderable r, String name){
