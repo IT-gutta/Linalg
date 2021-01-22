@@ -36,6 +36,8 @@ public class App extends Application {
         Label label = new Label("Input");
         TextField textField = new TextField();
 
+        TextInputEvent.fillOpMaps();
+
         root.getChildren().addAll(label, textField, DefinedVariables.getVBox(), canvas);
         textField.setOnAction(new TextInputEvent(textField));
 
