@@ -20,7 +20,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Canvas canvas = new Canvas(1000,600);
+        Canvas canvas = new Canvas(1000,500);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         CanvasRenderer.setCanvas(canvas);
         CanvasRenderer.setGraphicsContext(gc);

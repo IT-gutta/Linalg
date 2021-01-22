@@ -11,6 +11,8 @@ import math.Vectors;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -21,11 +23,13 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
     private TextField inputField;
     private Matcher m;
 
-    private final String varDec = "(\\w[0-9a-zA-z])*\\s*=\\s*";
-    private final String vecCon =  "\\[\\s*([0-9]+(\\.?[0-9+]+)?)(\\s*,\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*])";
+    private final String varName = "(\\w[0-9a-zA-Z_]*)";
+    private final String varDec = "(\\w[0-9a-zA-Z_]*)=";
+    private final String vecCon = "\\[([0-9]+(\\.?[0-9+]+)?),([0-9]+(\\.?[0-9+]+)?)]";
+    private final String poiCon = "\\(([0-9]+(\\.?[0-9+]+)?),([0-9]+(\\.?[0-9+]+)?)\\)";
 
-    private final Pattern vector = Pattern.compile("(\\w[0-9a-zA-Z_]*)(\\s*=\\s*\\[\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*,\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*])");
-    private final Pattern point = Pattern.compile("(\\w[0-9a-zA-Z_]*)(\\s*=\\s*\\(\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*,\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*\\))");
+//    private final Pattern vector = Pattern.compile("(\\w[0-9a-zA-Z_]*)(\\s*=\\s*\\[\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*,\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*])");
+//    private final Pattern point = Pattern.compile("(\\w[0-9a-zA-Z_]*)(\\s*=\\s*\\(\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*,\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*\\))");
 
     private static HashMap<String, BiFunction<Vector, Vector, Vector>> vvvOps = new HashMap<>();
     private static HashMap<String, BiFunction<Vector, Vector, Double>> vvdOps = new HashMap<>();
@@ -44,18 +48,40 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         String inp = inputField.getText().replace(" ", "");
-        //if(Pattern.matches("\\w[a-zA-Z_]*\\s*=.*", inp))
-        if(Pattern.matches(varDec+vecCon, inp)){
-            m = Pattern.compile(varDec+vecCon).matcher(inp);
-            if(m.find()){
-                System.out.println("found vector");
-                DefinedVariables.add(new Vector(Double.parseDouble(m.group(3)), Double.parseDouble(m.group(6))), m.group(1));
+
+        //Check for declaration statement
+        if(Pattern.matches(varDec+".*", inp)){
+
+            //VectorConstructor
+            if(Pattern.matches(varDec+vecCon, inp)){
+                m = Pattern.compile(varDec+vecCon).matcher(inp);
+                if(m.find()){
+                    DefinedVariables.add(new Vector(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4))), m.group(1));
+                }
             }
-        }
-        if(Pattern.matches(point.toString(), inp)){
-            m = point.matcher(inp);
-            if(m.find()){
-                DefinedVariables.add(new Point(Double.parseDouble(m.group(3)), Double.parseDouble(m.group(6))), m.group(1));
+
+            //PointConstructor
+            if(Pattern.matches(varDec+poiCon, inp)){
+                m = Pattern.compile(varDec+poiCon).matcher(inp);
+                if(m.find()){
+                    DefinedVariables.add(new Point(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4))), m.group(1));
+                }
+            }
+
+            //Vector,Vector to Double functions
+            for (String f : vvdOps.keySet()) {
+                String func = varDec+f+"\\("+varName+","+varName+"\\)";
+                if(Pattern.matches(func, inp)){
+                    m = Pattern.compile(func).matcher(inp);
+                    if(m.find()){
+                        Variable a = DefinedVariables.get(m.group(2));
+                        Variable b = DefinedVariables.get(m.group(3));
+                        if(a.getVariable() instanceof java.util.Vector && b.getVariable() instanceof java.util.Vector){
+//                            Variable<Double> var;
+//                            DefinedVariables.add(new Variable<Double>(Vectors.dot((Vector)a.getVariable(), (Vector)b.getVariable()),m.group(1)));
+                        }
+                    }
+                }
             }
         }
         inputField.clear();
