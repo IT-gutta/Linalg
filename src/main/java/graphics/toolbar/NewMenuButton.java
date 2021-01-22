@@ -24,7 +24,6 @@ import org.linalgfx.App;
 import java.util.List;
 
 public class NewMenuButton extends MenuButton {
-    private Popup popup = new Popup();
     private TextInputDialog dialog = new TextInputDialog("");
 
     public NewMenuButton() {

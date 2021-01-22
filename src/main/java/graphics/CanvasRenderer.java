@@ -37,9 +37,9 @@ public abstract class CanvasRenderer implements Serializable {
         m.transform(matrix);
         Vector v = new Vector(1,2);
 
-        DefinedVariables.add(matrix, "RM");
-        DefinedVariables.add(m, "a");
-        DefinedVariables.add(v, "v");
+//        DefinedVariables.add(matrix, "RM");
+//        DefinedVariables.add(m, "a");
+//        DefinedVariables.add(v, "v");
 //      DefinedVariables.add(new Variable(vector, "roterendeVektor"));
 
         new Timer().scheduleAtFixedRate(

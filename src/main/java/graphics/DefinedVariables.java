@@ -78,12 +78,13 @@ public abstract class DefinedVariables {
 
 
     public static boolean remove(Variable variable){
-        boolean didRemove = vbox.getChildren().remove(variable);
-        if(didRemove){
-            map.remove(variable.getName());
-            return true;
-        }
-        return false;
+        return remove(variable.getName());
+//        boolean didRemove = vbox.getChildren().remove(variable);
+//        if(didRemove){
+//            map.remove(variable.getName());
+//            return true;
+//        }
+//        return false;
     }
 
     public static void addAnonymous(Renderable renderable){
