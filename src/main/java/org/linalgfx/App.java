@@ -31,6 +31,9 @@ public class App extends Application {
         TextField textField = new TextField();
         ToolBar toolBar = new ToolBar();
 
+        TextInputEvent.fillOpMaps();
+
+        root.getChildren().addAll(label, textField, DefinedVariables.getVBox(), canvas);
         root.getChildren().addAll(toolBar, label, textField, DefinedVariables.getVBox(), canvas);
         textField.setOnAction(new TextInputEvent(textField));
 
