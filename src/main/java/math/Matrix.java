@@ -21,6 +21,15 @@ public class Matrix implements Renderable{
         matrix = new double[height][width];
     }
 
+    public Matrix(double a, double b, double c, double d){
+        this(2, 2);
+        double[][] dArr = {
+            {a, b},
+            {c, d}
+        };
+        matrix = dArr;
+    }
+
     public Vector transformVector(Vector vector) throws IllegalNumberOfDimensionsException {
         if(vector.getDimensions() != width)
             throw new IllegalNumberOfDimensionsException("The vectors number of dimensions doesnt match the matrix width");
