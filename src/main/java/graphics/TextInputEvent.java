@@ -20,6 +20,10 @@ import java.util.stream.DoubleStream;
 public class TextInputEvent implements EventHandler<ActionEvent> {
     private TextField inputField;
     private Matcher m;
+
+    private final String varDec = "(\\w[0-9a-zA-z])*\\s*=\\s*";
+    private final String vecCon =  "\\[\\s*([0-9]+(\\.?[0-9+]+)?)(\\s*,\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*])";
+
     private final Pattern vector = Pattern.compile("(\\w[0-9a-zA-Z_]*)(\\s*=\\s*\\[\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*,\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*])");
     private final Pattern point = Pattern.compile("(\\w[0-9a-zA-Z_]*)(\\s*=\\s*\\(\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*,\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*\\))");
 
@@ -40,9 +44,9 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         String inp = inputField.getText().replace(" ", "");
-        if(Pattern.matches("\\w[a-zA-Z_]*\\s*=.*", inp))
-        if(Pattern.matches(vector.toString(), inp)){
-            m = vector.matcher(inp);
+        //if(Pattern.matches("\\w[a-zA-Z_]*\\s*=.*", inp))
+        if(Pattern.matches(varDec+vecCon, inp)){
+            m = Pattern.compile(varDec+vecCon).matcher(inp);
             if(m.find()){
                 System.out.println("found vector");
                 DefinedVariables.add(new Vector(Double.parseDouble(m.group(3)), Double.parseDouble(m.group(6))), m.group(1));
