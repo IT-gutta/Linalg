@@ -10,7 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.List;
 
 /**
  * JavaFX App
@@ -25,6 +26,7 @@ public class App extends Application {
         CanvasRenderer.setCanvas(canvas);
         CanvasRenderer.setGraphicsContext(gc);
         CanvasRenderer.start();
+
 
         VBox root = new VBox();
         Label label = new Label("Input");
@@ -57,5 +59,27 @@ public class App extends Application {
     }
     public static double getHeight(){
         return scene.getHeight();
+    }
+
+
+    public static void saveToFile(){
+        try {
+            FileOutputStream fos = new FileOutputStream("/list.out");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(CanvasRenderer.getList());
+            oos.flush();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadFromFile(){
+        try {
+            FileInputStream fos = new FileInputStream("/list.out");
+            ObjectInputStream oos = new ObjectInputStream(fos);
+            CanvasRenderer.setList((List<Renderable>) oos.readObject());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
