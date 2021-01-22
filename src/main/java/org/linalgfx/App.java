@@ -33,7 +33,6 @@ public class App extends Application {
 
         TextInputEvent.fillOpMaps();
 
-        root.getChildren().addAll(label, textField, DefinedVariables.getVBox(), canvas);
         root.getChildren().addAll(toolBar, label, textField, DefinedVariables.getVBox(), canvas);
         textField.setOnAction(new TextInputEvent(textField));
 
