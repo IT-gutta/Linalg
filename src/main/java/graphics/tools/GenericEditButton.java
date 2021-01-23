@@ -72,7 +72,6 @@ public class GenericEditButton extends MenuButton {
             catch (IllegalArgumentException e){
                 handleChangeName(true);
             }
-
         });
     }
 
