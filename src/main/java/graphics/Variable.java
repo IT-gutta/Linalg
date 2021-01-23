@@ -21,7 +21,7 @@ public class Variable<T> extends HBox {
         getChildren().add(text);
 
         if(editButton != null)
-            getChildren().add(text);
+            getChildren().add(editButton);
     }
 
 
