@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import math.Matrix;
 import math.Vector;
+import regex.RegexUtils;
 
 import java.util.regex.Pattern;
 
@@ -42,16 +43,17 @@ public class EditVectorButton extends GenericEditButton {
 
 
                 String name = dialog.getEditor().getText();
-                if(!name.equals(getOwner().getName())){
-                    try{
-                        if(!Pattern.matches("\\w[a-zA-Z0-9_]*", name))
-                            throw new IllegalArgumentException("Illegal name");
+                if(name.equals(getOwner().getName()))
+                    return;
 
-                        getOwner().setName(name);
-                    }
-                    catch (IllegalArgumentException e){
-                        handleChangeName(true);
-                    }
+                try{
+                    if(!RegexUtils.isValidName(name))
+                        throw new IllegalArgumentException("Illegal name.");
+
+                    getOwner().setName(name);
+                }
+                catch (IllegalArgumentException e){
+                    handleChangeName(true);
                 }
             });
         });

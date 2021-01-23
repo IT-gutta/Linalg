@@ -7,6 +7,7 @@ import javafx.scene.control.TextInputDialog;
 import javafx.stage.Modality;
 import math.Matrix;
 import math.Vector;
+import regex.RegexUtils;
 
 import java.util.regex.Pattern;
 
@@ -49,7 +50,6 @@ public class GenericEditButton extends MenuButton {
     protected void handleChangeName(boolean isRetry){
         clearDialog();
 
-        String name = dialog.getEditor().getText();
 
         if(isRetry)
             dialog.setHeaderText("Illegal name. Try again.");
@@ -60,8 +60,9 @@ public class GenericEditButton extends MenuButton {
 
         dialog.showAndWait().ifPresent(response ->{
             try{
-                System.out.println(name);
-                if(!Pattern.matches("\\w[a-zA-Z0-9_]*", name))
+                String name = dialog.getEditor().getText();
+
+                if(!RegexUtils.isValidName(name))
                     throw new IllegalArgumentException("Illegal name.");
 
                 if(getOwner().getName().equals(name))

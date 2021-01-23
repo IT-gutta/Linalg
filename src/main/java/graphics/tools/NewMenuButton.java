@@ -12,11 +12,11 @@ import math.*;
 import java.util.regex.Pattern;
 
 public class NewMenuButton extends MenuButton {
-    private TextInputDialog dialog = new TextInputDialog("");
+    private TextInputDialog dialog;
 
     public NewMenuButton() {
         super("Add New");
-        dialog.initModality(Modality.APPLICATION_MODAL);
+        clearDialog();
 
         MenuItem vector = new MenuItem("2DVector");
         vector.setOnAction(actionEvent -> {
@@ -160,6 +160,7 @@ public class NewMenuButton extends MenuButton {
 
     private void clearDialog(){
         dialog = new TextInputDialog("");
+        dialog.initModality(Modality.APPLICATION_MODAL);
     }
 
     private boolean validName(String name){

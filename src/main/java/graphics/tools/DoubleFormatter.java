@@ -28,6 +28,7 @@ public class DoubleFormatter{
                 if (s.isEmpty() || "-".equals(s) || ".".equals(s) || "-.".equals(s)) {
                     return 0.0 ;
                 } else {
+
                     return Double.valueOf(s);
                 }
             }
@@ -49,8 +50,10 @@ public class DoubleFormatter{
     }
 
     public static TextField getTextField(double current){
-        var textField = new TextField(Double.toString(current));
+        var textField = new TextField();
         textField.setTextFormatter(getFormatter());
+
+        textField.setText(Double.toString(current));
         return textField;
     }
 }
