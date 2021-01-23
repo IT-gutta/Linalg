@@ -1,7 +1,5 @@
-package graphics.toolbar;
+package graphics.tools;
 
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.layout.HBox;
 
 

@@ -1,6 +1,5 @@
-package graphics.toolbar;
+package graphics.tools;
 
-import graphics.DefinedVariables;
 import graphics.Variable;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -11,15 +10,13 @@ import math.Vector;
 
 public class GenericEditButton<T> extends MenuButton {
     private Variable<T> variable;
-    private TextInputDialog dialog = new TextInputDialog("");
+    protected TextInputDialog dialog;
 
     private MenuItem deleteButton = new MenuItem("Delete");
     private MenuItem changeNameButton = new MenuItem("Edit Name");
 
     public GenericEditButton(Variable<T> variable){
         super("Edit");
-        dialog.initModality(Modality.APPLICATION_MODAL);
-
         this.variable = variable;
 
         deleteButton.setOnAction(ev ->{
@@ -27,12 +24,7 @@ public class GenericEditButton<T> extends MenuButton {
         });
 
         changeNameButton.setOnAction(ev ->{
-            dialog.setHeaderText("Change Name");
-            dialog.setContentText("Name: ");
-
-            dialog.showAndWait().ifPresent(response ->{
-                variable.update(dialog.getEditor().getText());
-            });
+            handleChangeName(false);
         });
 
 
@@ -47,6 +39,43 @@ public class GenericEditButton<T> extends MenuButton {
 
     public void delete(){
         variable.delete();
+    }
+
+    protected void clearDialog(){
+        dialog = new TextInputDialog("");
+        dialog.initModality(Modality.APPLICATION_MODAL);
+    }
+
+    protected void handleChangeName(boolean isRetry){
+        clearDialog();
+
+        if(isRetry)
+            dialog.setHeaderText("Illegal name. Try again.");
+        else
+            dialog.setHeaderText("Change Name");
+
+        dialog.setContentText("Name: ");
+
+        dialog.showAndWait().ifPresent(response ->{
+            try{
+                if(dialog.getEditor().getText().equals(""))
+                    throw new IllegalArgumentException("Name cant be empty");
+
+                if(getOwner().getName().equals(dialog.getEditor().getText()))
+                    return;
+
+                variable.setName(dialog.getEditor().getText());
+            }
+            catch (IllegalArgumentException e){
+                handleChangeName(true);
+            }
+
+        });
+    }
+
+
+    public Variable<T> getOwner(){
+        return variable;
     }
 
 

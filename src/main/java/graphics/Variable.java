@@ -1,7 +1,7 @@
 package graphics;
 
 
-import graphics.toolbar.GenericEditButton;
+import graphics.tools.GenericEditButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
@@ -21,25 +21,8 @@ public class Variable<T> extends HBox {
         getChildren().addAll(text, editButton);
     }
 
-    public void update(String name){
-        DefinedVariables.remove(this);
-        this.name = name;
-        text.setText(toString());
 
-        DefinedVariables.add(this);
-    }
 
-    public void update(T variable){
-        DefinedVariables.remove(this);
-        this.variable = variable;
-        text.setText(toString());
-
-        DefinedVariables.add(this);
-    }
-    public void update(T variable, String name){
-        update(variable);
-        update(name);
-    }
 
     public void delete(){
         DefinedVariables.remove(getName());
@@ -52,7 +35,7 @@ public class Variable<T> extends HBox {
     }
 
     public boolean equals(Variable other){
-        return other.getName().equals(name);
+        return other.variable.equals(getVariable());
     }
 
     public String getName(){
@@ -61,5 +44,26 @@ public class Variable<T> extends HBox {
 
     public T getVariable(){
         return variable;
+    }
+
+    public void setName(String name) throws IllegalArgumentException{
+        if(DefinedVariables.contains(name))
+            throw new IllegalArgumentException("Name already exist!");
+
+        DefinedVariables.remove(this);
+
+        this.name = name;
+        text.setText(toString());
+
+        DefinedVariables.add(this);
+    }
+
+    public void updateText(){
+        text.setText(toString());
+    }
+
+    public void setVariable(T variable){
+        this.variable = variable;
+        text.setText(toString());
     }
 }

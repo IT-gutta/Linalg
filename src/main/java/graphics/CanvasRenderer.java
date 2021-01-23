@@ -12,7 +12,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-
 public abstract class CanvasRenderer implements Serializable {
     private static List<Renderable> list = new ArrayList<>();
     private static Canvas canvas;
@@ -27,20 +26,10 @@ public abstract class CanvasRenderer implements Serializable {
         CoordinateSystem cs = new CoordinateSystem(canvas.getWidth(), canvas.getHeight());
         add(cs);
 
-        Vector vector = new Vector(2, 3);
-        double[][] dArr = {
-                {1, -1},
-                {1, 0}
-        };
-        Matrix matrix = new Matrix(dArr);
-        Mapping m = new Mapping(Math::cos, "cos(x)");
-        m.transform(matrix);
-        Vector v = new Vector(1,2);
 
-//        DefinedVariables.add(matrix, "RM");
-//        DefinedVariables.add(m, "a");
-//        DefinedVariables.add(v, "v");
-//      DefinedVariables.add(new Variable(vector, "roterendeVektor"));
+
+        Mapping m = new Mapping(Math::cos, "cos(x)");
+
 
         new Timer().scheduleAtFixedRate(
                 new TimerTask() {

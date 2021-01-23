@@ -1,27 +1,13 @@
-package graphics.toolbar;
+package graphics.tools;
 
-import graphics.CanvasRenderer;
 import graphics.DefinedVariables;
 import graphics.Variable;
-import javafx.event.ActionEvent;
-import javafx.event.EventDispatchChain;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
-import javafx.stage.PopupWindow;
-import javafx.stage.Window;
 import math.*;
-import org.linalgfx.App;
-
-import java.util.List;
 
 public class NewMenuButton extends MenuButton {
     private TextInputDialog dialog = new TextInputDialog("");
