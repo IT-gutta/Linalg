@@ -28,9 +28,6 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
     private final String matCon = "\\["+flNum+","+flNum+";"+flNum+","+flNum+"\\]";
     private final String linCon = "line\\("+varName+","+varName+"\\)";
 
-//    private final Pattern vector = Pattern.compile("(\\w[0-9a-zA-Z_]*)(\\s*=\\s*\\[\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*,\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*])");
-//    private final Pattern point = Pattern.compile("(\\w[0-9a-zA-Z_]*)(\\s*=\\s*\\(\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*,\\s*)([0-9]+(\\.?[0-9+]+)?)(\\s*\\))");
-
     private static HashMap<String, BiFunction<Vector, Vector, Vector>> vvvOps = new HashMap<>();
     private static HashMap<String, BiFunction<Vector, Vector, Double>> vvdOps = new HashMap<>();
     private static HashMap<String, BiFunction<Vector, Double, Vector>> vdvOps = new HashMap<>();
