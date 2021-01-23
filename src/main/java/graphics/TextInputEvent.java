@@ -20,13 +20,15 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
     private TextField inputField;
     private Matcher m;
 
-    private final String flNum = "([0-9]+(\\.?[0-9+]+)?)";
+    private final String flNum = "(-?[0-9]+(\\.?[0-9+]+)?)";
+    private final String posFlNum = "([0-9]+(\\.?[0-9+]+)?)";
     private final String varName = "(\\w[0-9a-zA-Z_]*)";
     private final String varDec = "(\\w[0-9a-zA-Z_]*)=";
-    private final String vecCon = "\\[([0-9]+(\\.?[0-9+]+)?),([0-9]+(\\.?[0-9+]+)?)]";
-    private final String poiCon = "\\(([0-9]+(\\.?[0-9+]+)?),([0-9]+(\\.?[0-9+]+)?)\\)";
+    private final String vecCon = "\\["+flNum+","+flNum+"]";
+    private final String poiCon = "\\("+flNum+","+flNum+"\\)";
     private final String matCon = "\\["+flNum+","+flNum+";"+flNum+","+flNum+"\\]";
     private final String linCon = "line\\("+varName+","+varName+"\\)";
+    private final String comCon = flNum+"\\[\\+-]"+posFlNum+"i";
 
     private static HashMap<String, BiFunction<Vector, Vector, Vector>> vvvOps = new HashMap<>();
     private static HashMap<String, BiFunction<Vector, Vector, Double>> vvdOps = new HashMap<>();
