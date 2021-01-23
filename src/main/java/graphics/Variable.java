@@ -22,6 +22,9 @@ public class Variable<T> extends HBox {
 
         if(editButton != null)
             getChildren().add(editButton);
+
+
+        getStyleClass().add("variable");
     }
 
 

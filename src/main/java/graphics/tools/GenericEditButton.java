@@ -8,6 +8,8 @@ import javafx.stage.Modality;
 import math.Matrix;
 import math.Vector;
 
+import java.util.regex.Pattern;
+
 public class GenericEditButton extends MenuButton {
     private Variable variable;
     protected TextInputDialog dialog;
@@ -26,8 +28,6 @@ public class GenericEditButton extends MenuButton {
         changeNameButton.setOnAction(ev ->{
             handleChangeName(false);
         });
-
-
 
         getItems().addAll(deleteButton, changeNameButton);
     }
@@ -49,6 +49,8 @@ public class GenericEditButton extends MenuButton {
     protected void handleChangeName(boolean isRetry){
         clearDialog();
 
+        String name = dialog.getEditor().getText();
+
         if(isRetry)
             dialog.setHeaderText("Illegal name. Try again.");
         else
@@ -58,13 +60,14 @@ public class GenericEditButton extends MenuButton {
 
         dialog.showAndWait().ifPresent(response ->{
             try{
-                if(dialog.getEditor().getText().equals(""))
-                    throw new IllegalArgumentException("Name cant be empty");
+                System.out.println(name);
+                if(!Pattern.matches("\\w[a-zA-Z0-9_]*", name))
+                    throw new IllegalArgumentException("Illegal name.");
 
-                if(getOwner().getName().equals(dialog.getEditor().getText()))
+                if(getOwner().getName().equals(name))
                     return;
 
-                variable.setName(dialog.getEditor().getText());
+                variable.setName(name);
             }
             catch (IllegalArgumentException e){
                 handleChangeName(true);

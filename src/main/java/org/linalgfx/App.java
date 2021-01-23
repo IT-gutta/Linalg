@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -22,20 +23,28 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Canvas canvas = new Canvas(1000,500);
+
+
         GraphicsContext gc = canvas.getGraphicsContext2D();
         CanvasRenderer.setCanvas(canvas);
         CanvasRenderer.setGraphicsContext(gc);
         CanvasRenderer.start();
 
+        DefinedVariables.getScrollPane().getStyleClass().add("variables");
 
         VBox root = new VBox();
+        HBox varsAndCanvas = new HBox();
+        varsAndCanvas.getChildren().addAll(DefinedVariables.getScrollPane(), canvas);
+
         Label label = new Label("Input");
         TextField textField = new TextField();
         ToolBar toolBar = new ToolBar();
 
         TextInputEvent.fillOpMaps();
+        //DefinedVariables.getVBox().setPrefWidth(250);
+        DefinedVariables.getScrollPane().setPrefWidth(250);
 
-        root.getChildren().addAll(toolBar, label, textField, DefinedVariables.getVBox(), canvas);
+        root.getChildren().addAll(toolBar, label, textField, varsAndCanvas);
         textField.setOnAction(new TextInputEvent(textField));
 
         scene = new Scene(root);
