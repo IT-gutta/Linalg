@@ -8,14 +8,14 @@ import javafx.stage.Modality;
 import math.Matrix;
 import math.Vector;
 
-public class GenericEditButton<T> extends MenuButton {
-    private Variable<T> variable;
+public class GenericEditButton extends MenuButton {
+    private Variable variable;
     protected TextInputDialog dialog;
 
     private MenuItem deleteButton = new MenuItem("Delete");
     private MenuItem changeNameButton = new MenuItem("Edit Name");
 
-    public GenericEditButton(Variable<T> variable){
+    public GenericEditButton(Variable variable){
         super("Edit");
         this.variable = variable;
 
@@ -74,7 +74,7 @@ public class GenericEditButton<T> extends MenuButton {
     }
 
 
-    public Variable<T> getOwner(){
+    public Variable getOwner(){
         return variable;
     }
 
@@ -86,6 +86,6 @@ public class GenericEditButton<T> extends MenuButton {
         if(variable.getVariable() instanceof Matrix)
             return new EditMatrixButton((Variable<Matrix>) variable);
 
-        return null;
+        return new GenericEditButton(variable);
     }
 }

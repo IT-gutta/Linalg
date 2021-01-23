@@ -9,20 +9,21 @@ public class Variable<T> extends HBox {
     private T variable;
     private String name;
     private Text text;
-    private GenericEditButton<T> editButton;
+    private GenericEditButton editButton;
 
 
     public Variable(T variable, String name){
         this.variable = variable;
         this.name = name;
         text = new Text(toString());
-        editButton = (GenericEditButton<T>) GenericEditButton.getEditButton(this);
+        editButton = GenericEditButton.getEditButton(this);
 
         getChildren().add(text);
 
         if(editButton != null)
             getChildren().add(editButton);
     }
+
 
 
 
