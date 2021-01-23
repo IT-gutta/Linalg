@@ -29,7 +29,6 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
     private final String matCon = "\\["+flNum+","+flNum+";"+flNum+","+flNum+"\\]";
     private final String linCon = "line\\("+varName+","+varName+"\\)";
     private final String comCon = flNum+"\\[\\+-]"+posFlNum+"i";
-    int a = 2;
 
     private static HashMap<String, BiFunction<Vector, Vector, Vector>> vvvOps = new HashMap<>();
     private static HashMap<String, BiFunction<Vector, Vector, Double>> vvdOps = new HashMap<>();
