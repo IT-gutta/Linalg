@@ -1,4 +1,4 @@
-package graphics.toolbar;
+package graphics.tools;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -44,6 +44,12 @@ public class DoubleFormatter{
 
     public static TextField getTextField(){
         var textField = new TextField();
+        textField.setTextFormatter(getFormatter());
+        return textField;
+    }
+
+    public static TextField getTextField(double current){
+        var textField = new TextField(Double.toString(current));
         textField.setTextFormatter(getFormatter());
         return textField;
     }

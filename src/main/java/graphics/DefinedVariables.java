@@ -28,63 +28,26 @@ public abstract class DefinedVariables {
 
 
     public static boolean remove(String name){
-        boolean didRemove = vbox.getChildren().stream()
-                .filter(n -> {
-                    if(((Variable) n).getName().equals(name)){
-                        vbox.getChildren().remove(n);
-                        return true;
-                    }
-                    return false;
-                })
-                .count() > 0;
+        if(map.containsKey(name)){
+            Variable variable = map.remove(name);
+            vbox.getChildren().remove(variable);
 
-        if(didRemove){
-            map.remove(name);
+            if(variable.getVariable() instanceof Renderable)
+                CanvasRenderer.remove((Renderable) variable.getVariable());
             return true;
         }
         return false;
     }
 
-
-    public static boolean removeAnonymous(Renderable renderable){
-        List<Variable> removedVariables = new ArrayList<>();
-        vbox.getChildren().stream()
-                .forEach(n -> {
-                    if(((Variable) n).getVariable().equals(renderable)){
-                        vbox.getChildren().remove(n);
-                        removedVariables.add((Variable) n);
-                    }
-                });
-
-        for(Variable v : removedVariables){
-            map.remove(v.getName());
-        }
-
-        if(removedVariables.stream()
-                .filter(v -> v instanceof Renderable)
-                .anyMatch(v -> CanvasRenderer.remove((Renderable) v.getVariable())))
-            {return true;}
-
-
-        removedVariables.stream()
-                .filter(v -> v instanceof Renderable)
-                .forEach(v ->{
-                    CanvasRenderer.remove((Renderable) v.getVariable());
-        });
-
-
-        return removedVariables.size() > 0;
+    public static boolean remove(Variable variable){
+        return remove(variable.getName());
     }
 
 
-    public static boolean remove(Variable variable){
-        return remove(variable.getName());
-//        boolean didRemove = vbox.getChildren().remove(variable);
-//        if(didRemove){
-//            map.remove(variable.getName());
-//            return true;
-//        }
-//        return false;
+
+
+    public static boolean removeAnonymous(Renderable renderable){
+        return CanvasRenderer.remove(renderable);
     }
 
     public static void addAnonymous(Renderable renderable){
@@ -93,7 +56,7 @@ public abstract class DefinedVariables {
 
 
     public static void removeAllAnonymousVariables(){
-        CanvasRenderer.getList().clear();
+        CanvasRenderer.getList().stream().filter(renderable -> !(renderable instanceof CoordinateSystem));
     }
 
     public static void addAll(Variable... variables){

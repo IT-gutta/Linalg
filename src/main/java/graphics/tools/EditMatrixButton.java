@@ -1,4 +1,4 @@
-package graphics.toolbar;
+package graphics.tools;
 
 import graphics.Variable;
 import math.Matrix;
