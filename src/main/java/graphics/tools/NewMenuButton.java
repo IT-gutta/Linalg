@@ -27,6 +27,9 @@ public class NewMenuButton extends MenuButton {
             dialog.setHeaderText("2DVector");
             dialog.setContentText("Enter name:");
             dialog.showAndWait().ifPresent(response ->{
+                if(dialog.getEditor().getText().equals(""))
+                    return;
+
                 DefinedVariables.add(new Vector((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
             });
         });
@@ -50,6 +53,9 @@ public class NewMenuButton extends MenuButton {
             dialog.setHeaderText("2x2Matrix");
             dialog.setContentText("Enter name:");
             dialog.showAndWait().ifPresent(response ->{
+                if(dialog.getEditor().getText().equals(""))
+                    return;
+
                 DefinedVariables.add(new Matrix((double) aInput.getTextFormatter().getValue(), (double) bInput.getTextFormatter().getValue(), (double) cInput.getTextFormatter().getValue(), (double) dInput.getTextFormatter().getValue()), dialog.getEditor().getText());
             });
         });
@@ -74,6 +80,9 @@ public class NewMenuButton extends MenuButton {
             dialog.setHeaderText("Line");
             dialog.setContentText("Enter name:");
             dialog.showAndWait().ifPresent(response ->{
+                if(dialog.getEditor().getText().equals(""))
+                    return;
+
                 DefinedVariables.add(new Line(new Point((double) aInput.getTextFormatter().getValue(), (double) bInput.getTextFormatter().getValue()), new Vector((double) cInput.getTextFormatter().getValue(), (double) dInput.getTextFormatter().getValue())), dialog.getEditor().getText());
             });
         });
@@ -91,6 +100,9 @@ public class NewMenuButton extends MenuButton {
             dialog.setHeaderText("Complex");
             dialog.setContentText("Enter name:");
             dialog.showAndWait().ifPresent(response ->{
+                if(dialog.getEditor().getText().equals(""))
+                    return;
+
                 DefinedVariables.add(new Complex((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
             });
         });
@@ -107,6 +119,9 @@ public class NewMenuButton extends MenuButton {
             dialog.setHeaderText("Point");
             dialog.setContentText("Enter name:");
             dialog.showAndWait().ifPresent(response ->{
+                if(dialog.getEditor().getText().equals(""))
+                    return;
+
                 DefinedVariables.add(new Point((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
             });
         });
