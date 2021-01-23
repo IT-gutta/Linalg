@@ -42,8 +42,21 @@ public class Vectors {
         return new Vector(d);
     }
 
+    public static Vector transform(Vector v, Matrix matrix){
+        return matrix.transformVector(v);
+    }
+
     public static Vector fromPoint(Point p){
         return new Vector(p.getPoint());
+    }
+
+    public static Vector fromPoints(Point p, Point q) throws IllegalNumberOfDimensionsException{
+        if(p.getDimensions()!=q.getDimensions()) throw new IllegalNumberOfDimensionsException("Illegal number of dimensions");
+        double[] d = new double[p.getDimensions()];
+        for(int i = 0; i<p.getDimensions(); i++){
+            d[i] = p.getElement(i)-q.getElement(i);
+        }
+        return new Vector(d);
     }
 
     public static Point toPoint(Vector v){

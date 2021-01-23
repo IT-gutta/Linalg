@@ -13,6 +13,10 @@ public class Points {
         return add(p1, scale(p2, -1));
     }
 
+    public static Point transform(Point p, Matrix matrix){
+        return matrix.transformVector(p.toVector()).toPoint();
+    }
+
     public static Point add(Point p1, Point p2){
         return fromVector(Vectors.add(toVector(p1), toVector(p2)));
     }

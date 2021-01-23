@@ -26,6 +26,10 @@ public class Point implements Renderable {
         return matrix.transformVector(toVector()).toPoint();
     }
 
+    public int getDimensions(){
+        return point.length;
+    }
+
     @Override
     public String toString(){
         String s = "";

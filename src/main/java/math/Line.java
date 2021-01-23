@@ -21,7 +21,7 @@ public class Line implements Renderable {
 
         this.start = start;
         this.end = end;
-//        direction = Points.toVector(Points.subtract(end, start));
+        direction = Vectors.fromPoints(start,end);
     }
 
     private boolean isParallel(Line l){

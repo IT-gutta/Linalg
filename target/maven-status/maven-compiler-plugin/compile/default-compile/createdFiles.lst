@@ -1,4 +1,9 @@
 math\Complex.class
+graphics\toolbar\EditMatrixButton.class
 math\Matrix.class
+graphics\toolbar\EditVectorButton.class
+graphics\toolbar\GenericEditButton.class
 exceptions\RenderException.class
 math\ComplexNumbers.class
+math\Vectors.class
+graphics\DefinedVariables.class
