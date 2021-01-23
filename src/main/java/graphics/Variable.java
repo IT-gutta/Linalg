@@ -15,23 +15,34 @@ public class Variable<T> extends HBox {
     public Variable(T variable, String name){
         this.variable = variable;
         this.name = name;
-        this.text = new Text(toString());
-        editButton = GenericEditButton.getEditButton(this);
+        text = new Text(toString());
+        editButton = (GenericEditButton<T>) GenericEditButton.getEditButton(this);
 
-        getChildren().addAll();
+        getChildren().addAll(text, editButton);
     }
 
     public void update(String name){
+        DefinedVariables.remove(this);
         this.name = name;
         text.setText(toString());
+
+        DefinedVariables.add(this);
     }
+
     public void update(T variable){
+        DefinedVariables.remove(this);
         this.variable = variable;
         text.setText(toString());
+
+        DefinedVariables.add(this);
     }
     public void update(T variable, String name){
         update(variable);
         update(name);
+    }
+
+    public void delete(){
+        DefinedVariables.remove(getName());
     }
 
 
