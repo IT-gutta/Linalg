@@ -8,3 +8,28 @@
     -fx-border-color: black;
     -fx-border-width: 3px;
 }
+
+.variables{
+    -fx-border-radius: 2px;
+    -fx-border-color: grey;
+    -fx-border-width: 2px;
+    -fx-background-color: beige;
+}
+
+.variable{
+    -fx-font-family: Arial;
+    -fx-spacing: 10px;
+    -fx-padding: 5px;
+}
+
+.menu-button{
+    -fx-max-height: 20px;
+}
+
+.split-pane-divider{
+    -fx-background-color: grey;
+}
+
+.split-pane-divider:hover{
+    -fx-background-color: black;
+}

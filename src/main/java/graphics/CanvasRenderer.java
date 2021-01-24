@@ -12,19 +12,19 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public abstract class CanvasRenderer implements Serializable {
+public abstract class CanvasRenderer{
     private static List<Renderable> list = new ArrayList<>();
     private static Canvas canvas;
     private static GraphicsContext graphicsContext;
+    private static CoordinateSystem cs;
     static int unitSize;
-    static double canvasWidth;
-    static double canvasHeight;
+
 
 
     public static void start(){
         //viktig å kjøre først
-        CoordinateSystem cs = new CoordinateSystem(canvas.getWidth(), canvas.getHeight());
-        add(cs);
+        cs = new CoordinateSystem();
+        DefinedVariables.add(cs, "Coordinate System");
 
 
 
@@ -40,7 +40,7 @@ public abstract class CanvasRenderer implements Serializable {
                     }
                 },
                 100,
-                1000
+                100
         );
     }
 
@@ -91,22 +91,30 @@ public abstract class CanvasRenderer implements Serializable {
     }
 
     public static double getCanvasWidth() {
-        return canvasWidth;
+        return canvas.getWidth();
     }
 
     public static double getCanvasHeight() {
-        return canvasHeight;
+        return canvas.getHeight();
     }
 
     public static Point toCanvasPoint(Point point) throws IllegalNumberOfDimensionsException {
         if(point.getPoint().length != 2)
             throw new IllegalNumberOfDimensionsException("Point has to be 2D");
-        return new Point(point.getElement(0)*getUnitSize() + canvasWidth / 2, -point.getElement(1)*getUnitSize() + canvasHeight / 2);
+        return new Point(point.getElement(0)*getUnitSize() + getCanvasWidth() / 2, -point.getElement(1)*getUnitSize() + getCanvasHeight() / 2);
     }
 
     public static Point fromCanvasPoint(Point point) throws IllegalNumberOfDimensionsException{
         if(point.getPoint().length != 2)
             throw new IllegalNumberOfDimensionsException("Point has to be 2D");
-        return new Point((point.getElement(0) - canvasWidth / 2) / getUnitSize(), (point.getElement(0) - canvasWidth / 2) / -getUnitSize());
+        return new Point((point.getElement(0) - getCanvasWidth() / 2) / getUnitSize(), (point.getElement(0) - getCanvasWidth() / 2) / -getUnitSize());
     }
+
+
+    public static void updateCoordinateSystem(){
+        if(cs == null)
+            return;
+        cs.updateLines();
+    }
+
 }

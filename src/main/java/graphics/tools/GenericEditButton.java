@@ -1,5 +1,6 @@
 package graphics.tools;
 
+import graphics.CoordinateSystem;
 import graphics.Variable;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -7,15 +8,18 @@ import javafx.scene.control.TextInputDialog;
 import javafx.stage.Modality;
 import math.Matrix;
 import math.Vector;
+import regex.RegexUtils;
 
-public class GenericEditButton<T> extends MenuButton {
-    private Variable<T> variable;
+import java.util.regex.Pattern;
+
+public class GenericEditButton extends MenuButton {
+    private Variable variable;
     protected TextInputDialog dialog;
 
     private MenuItem deleteButton = new MenuItem("Delete");
     private MenuItem changeNameButton = new MenuItem("Edit Name");
 
-    public GenericEditButton(Variable<T> variable){
+    public GenericEditButton(Variable variable){
         super("Edit");
         this.variable = variable;
 
@@ -26,8 +30,6 @@ public class GenericEditButton<T> extends MenuButton {
         changeNameButton.setOnAction(ev ->{
             handleChangeName(false);
         });
-
-
 
         getItems().addAll(deleteButton, changeNameButton);
     }
@@ -49,6 +51,7 @@ public class GenericEditButton<T> extends MenuButton {
     protected void handleChangeName(boolean isRetry){
         clearDialog();
 
+
         if(isRetry)
             dialog.setHeaderText("Illegal name. Try again.");
         else
@@ -58,23 +61,24 @@ public class GenericEditButton<T> extends MenuButton {
 
         dialog.showAndWait().ifPresent(response ->{
             try{
-                if(dialog.getEditor().getText().equals(""))
-                    throw new IllegalArgumentException("Name cant be empty");
+                String name = dialog.getEditor().getText();
 
-                if(getOwner().getName().equals(dialog.getEditor().getText()))
+                if(!RegexUtils.isValidName(name))
+                    throw new IllegalArgumentException("Illegal name.");
+
+                if(getOwner().getName().equals(name))
                     return;
 
-                variable.setName(dialog.getEditor().getText());
+                variable.setName(name);
             }
             catch (IllegalArgumentException e){
                 handleChangeName(true);
             }
-
         });
     }
 
 
-    public Variable<T> getOwner(){
+    public Variable getOwner(){
         return variable;
     }
 
@@ -86,6 +90,8 @@ public class GenericEditButton<T> extends MenuButton {
         if(variable.getVariable() instanceof Matrix)
             return new EditMatrixButton((Variable<Matrix>) variable);
 
-        return null;
+        if(variable.getVariable() instanceof CoordinateSystem)
+            return new EditCoordinateSystem((Variable<CoordinateSystem>) variable);
+        return new GenericEditButton(variable);
     }
 }

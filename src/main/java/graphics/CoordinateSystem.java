@@ -1,13 +1,14 @@
 package graphics;
 
 import exceptions.IllegalNumberOfDimensionsException;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import math.Matrix;
-import math.Line;
-import math.Point;
-import math.Vector;
+import math.*;
 
-public class CoordinateSystem implements Renderable {
+import java.util.ArrayList;
+import java.util.List;
+
+public class CoordinateSystem implements Renderable, Transformable {
     private Vector iHat;
     private Vector jHat;
     private Line[] lines;
@@ -15,45 +16,69 @@ public class CoordinateSystem implements Renderable {
     private int horizontalLines;
 
 
-    public CoordinateSystem(double width, double height, Vector iHat, Vector jHat, int verticalLines, int horizontalLines, int unitSize){
-        this.iHat = iHat;
-        this.jHat = jHat;
-        this.verticalLines = verticalLines;
-        this.horizontalLines = horizontalLines;
-        CanvasRenderer.unitSize = unitSize;
-        CanvasRenderer.canvasWidth = width;
-        CanvasRenderer.canvasHeight = height;
-        updateLines();
-    }
 
-    public CoordinateSystem(double width, double height){
+    public CoordinateSystem(){
         iHat = new Vector(1,0);
         jHat = new Vector(0,1);
-        verticalLines = 20;
-        horizontalLines = 15;
         CanvasRenderer.unitSize = 40;
-        CanvasRenderer.canvasWidth = width;
-        CanvasRenderer.canvasHeight = height;
         updateLines();
     }
 
     public void updateLines(){
-        int j = 0;
-        lines = new Line[verticalLines*2+horizontalLines*2-2];
-        for(int i = -verticalLines+1; i<verticalLines; i++){
-            lines[j] = new Line(new Point(iHat.getElement(0)*i,iHat.getElement(1)*i),jHat);
-            j++;
+//        verticalLines = (int) CanvasRenderer.getCanvasWidth() / CanvasRenderer.getUnitSize() / 2 + 1;
+//        horizontalLines = (int) CanvasRenderer.getCanvasHeight() / CanvasRenderer.getUnitSize() / 2 + 1;
+
+        int halfDiagonal = (int) Math.sqrt(Math.pow(CanvasRenderer.getCanvasWidth() / CanvasRenderer.getUnitSize() / 2, 2) + Math.pow(CanvasRenderer.getCanvasHeight() / CanvasRenderer.getUnitSize() / 2, 2)) + 1;
+
+        lines = new Line[4*halfDiagonal];
+        int i = 0;
+        int x = 0;
+        while(x > -halfDiagonal){
+            lines[i] = new Line(new Point(x, 0), jHat);
+            x--;
+            i++;
         }
-        for(int i = -horizontalLines+1; i<horizontalLines; i++){
-            lines[j] = new Line(new Point(jHat.getElement(0)*i,jHat.getElement(1)*i),iHat);
-            j++;
+        x = 0;
+        while(x < halfDiagonal){
+            lines[i] = new Line(new Point(x, 0), jHat);
+            x++;
+            i++;
         }
+
+        int y = 0;
+        while(y > -halfDiagonal){
+            lines[i] = new Line(new Point(0, y), iHat);
+            y--;
+            i++;
+        }
+        y = 0;
+        while(y < halfDiagonal){
+            lines[i] = new Line(new Point(0, y), iHat);
+            y++;
+            i++;
+        }
+
+
+
+
+        verticalLines = 25;
+        horizontalLines = 15;
+//        int j = 0;
+//        lines = new Line[verticalLines*2+horizontalLines*2-2];
+//        for(int i = -verticalLines+1; i<verticalLines; i++){
+//            lines[j] = new Line(new Point(iHat.getElement(0)*i,iHat.getElement(1)*i),jHat);
+//            j++;
+//        }
+//
+//        for(int i = -horizontalLines+1; i<horizontalLines; i++){
+//            lines[j] = new Line(new Point(jHat.getElement(0)*i,jHat.getElement(1)*i),iHat);
+//            j++;
+//        }
     }
 
-    public void transform(Matrix matrix) throws IllegalNumberOfDimensionsException{
-        iHat.applyTransformation(matrix);
-        jHat.applyTransformation(matrix);
-        updateLines();
+    public void transform(Matrix matrix){
+        iHat.transform(matrix);
+        jHat.transform(matrix);
     }
 
 
@@ -84,12 +109,18 @@ public class CoordinateSystem implements Renderable {
         return true;
     }
 
+    @Override
+    public String toString(){
+        return "iHat: " + iHat + ", jHat: " + jHat;
+    }
+
 
     @Override
     public void render(GraphicsContext gc) {
         gc.setLineWidth(0.5);
         for(Line line : lines){
-            line.render(gc);
+            if(line != null)
+                line.render(gc);
         }
     }
 }

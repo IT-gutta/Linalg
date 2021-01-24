@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -21,26 +23,41 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Canvas canvas = new Canvas(1000,500);
+        CanvasPane canvasPane = new CanvasPane(1000, 500);
+        Canvas canvas = canvasPane.getCanvas();
+
+
         GraphicsContext gc = canvas.getGraphicsContext2D();
         CanvasRenderer.setCanvas(canvas);
         CanvasRenderer.setGraphicsContext(gc);
         CanvasRenderer.start();
 
+        DefinedVariables.getScrollPane().getStyleClass().add("variables");
 
         VBox root = new VBox();
+
+
         Label label = new Label("Input");
         TextField textField = new TextField();
         ToolBar toolBar = new ToolBar();
 
+        SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane);
+        splitPane.prefHeightProperty().bind(root.heightProperty());
+
         TextInputEvent.fillOpMaps();
 
-        root.getChildren().addAll(toolBar, label, textField, DefinedVariables.getVBox(), canvas);
+        DefinedVariables.getScrollPane().setMinWidth(150);
+
+
+        root.getChildren().addAll(toolBar, label, textField, splitPane);
         textField.setOnAction(new TextInputEvent(textField));
 
         scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("stylesheets/style.css").toExternalForm());
         stage.setScene(scene);
+
+        stage.setMinHeight(500);
+        stage.setMinWidth(500);
 
         stage.show();
     }

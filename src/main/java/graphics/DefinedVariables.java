@@ -1,5 +1,7 @@
 package graphics;
 
+import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.stream.Collectors;
 
 public abstract class DefinedVariables {
     private static VBox vbox = new VBox();
+    private static ScrollPane scrollPane = new ScrollPane(vbox);
     private static Map<String, Variable> map = new HashMap<>();
 
 
@@ -95,5 +98,9 @@ public abstract class DefinedVariables {
 
     public static VBox getVBox(){
         return vbox;
+    }
+
+    public static ScrollPane getScrollPane() {
+        return scrollPane;
     }
 }
