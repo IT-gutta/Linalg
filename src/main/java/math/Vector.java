@@ -165,25 +165,14 @@ public class Vector implements Renderable, Transformable {
         return Points.fromVector(this);
     }
 
-    public double getCanvasX(){
-       return getCanvasPoint().getElement(0);
-    }
-
-    public double getCanvasY(){
-        return getCanvasPoint().getElement(1);
-    }
-
-    public Point getCanvasPoint(){
-        return CanvasRenderer.toCanvasPoint(Points.fromVector(this));
-    }
     @Override
     public void render(GraphicsContext gc) throws RenderException {
         if(isHidden())
             return;
         if(getDimensions() != 2)
             throw new RenderException("Has to be a 2-dimensional vector to render");
-        gc.strokeLine(CanvasRenderer.getCanvasWidth() / 2, CanvasRenderer.getCanvasHeight() / 2, getCanvasX(), getCanvasY());
-        gc.fillOval(getCanvasX() - 5, getCanvasY() - 5, 10, 10);
+        gc.strokeLine(CanvasRenderer.toCanvasX(0), CanvasRenderer.toCanvasY(0), CanvasRenderer.toCanvasX(getElement(0)), CanvasRenderer.toCanvasY(getElement(1)));
+        gc.fillOval(CanvasRenderer.toCanvasX(getElement(0)) - 5, CanvasRenderer.toCanvasY(getElement(1)) - 5, 10, 10);
     }
 
 

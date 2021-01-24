@@ -27,6 +27,7 @@ public class App extends Application {
         Canvas canvas = canvasPane.getCanvas();
 
 
+
         GraphicsContext gc = canvas.getGraphicsContext2D();
         CanvasRenderer.setCanvas(canvas);
         CanvasRenderer.setGraphicsContext(gc);

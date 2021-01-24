@@ -17,7 +17,12 @@ public abstract class CanvasRenderer{
     private static Canvas canvas;
     private static GraphicsContext graphicsContext;
     private static CoordinateSystem cs;
-    static int unitSize;
+    private static double offsetX;
+    private static double offsetY;
+
+    public static int unitSize;
+
+
 
 
 
@@ -25,6 +30,7 @@ public abstract class CanvasRenderer{
         //viktig å kjøre først
         cs = new CoordinateSystem();
         DefinedVariables.add(cs, "Coordinate System");
+
 
 
 
@@ -99,22 +105,51 @@ public abstract class CanvasRenderer{
     }
 
     public static Point toCanvasPoint(Point point) throws IllegalNumberOfDimensionsException {
-        if(point.getPoint().length != 2)
-            throw new IllegalNumberOfDimensionsException("Point has to be 2D");
-        return new Point(point.getElement(0)*getUnitSize() + getCanvasWidth() / 2, -point.getElement(1)*getUnitSize() + getCanvasHeight() / 2);
+        return new Point(toCanvasX(point.getElement(0)), toCanvasY(point.getElement(1)));
     }
 
-    public static Point fromCanvasPoint(Point point) throws IllegalNumberOfDimensionsException{
-        if(point.getPoint().length != 2)
-            throw new IllegalNumberOfDimensionsException("Point has to be 2D");
-        return new Point((point.getElement(0) - getCanvasWidth() / 2) / getUnitSize(), (point.getElement(0) - getCanvasWidth() / 2) / -getUnitSize());
+    //public static Point fromCanvasPoint(Point point) throws IllegalNumberOfDimensionsException{ }
+
+    public static double toCanvasX(double x){
+        return x * unitSize + getCanvasWidth()/2 + offsetX;
     }
+
+    public static double toCanvasY(double y){
+        return getCanvasHeight() / 2 + offsetY - y * unitSize;
+    }
+
+    public static double fromScreenToCanvasX(double x){
+        return x - offsetX;
+    }
+
+    public static double fromScreenToCanvasY(double y){
+        return y - offsetY;
+    }
+
 
 
     public static void updateCoordinateSystem(){
+        //testPoint.setElement(0, CanvasRenderer.fromCanvasPoint(new Point(-getCanvasWidth()/2 + offsetX, -getCanvasHeight()/2 + offsetY)).getElement(0));
+        //testPoint.setElement(1, CanvasRenderer.fromCanvasPoint(new Point(-getCanvasWidth()/2 + offsetX, -getCanvasHeight()/2 + offsetY)).getElement(1));
+
         if(cs == null)
             return;
         cs.updateLines();
     }
 
+
+    public static void changeOffsetX(double x){
+        offsetX += x;
+    }
+    public static void changeOffsetY(double y){
+        offsetY += y;
+    }
+
+    public static double getOffsetX(){
+        return offsetX;
+    }
+
+    public static double getOffsetY(){
+        return offsetY;
+    }
 }

@@ -7,6 +7,7 @@ import math.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.spi.CalendarNameProvider;
 
 public class CoordinateSystem implements Renderable, Transformable {
     private Vector iHat;
@@ -26,55 +27,67 @@ public class CoordinateSystem implements Renderable, Transformable {
     }
 
     public void updateLines(){
+
+
+
+
 //        verticalLines = (int) CanvasRenderer.getCanvasWidth() / CanvasRenderer.getUnitSize() / 2 + 1;
 //        horizontalLines = (int) CanvasRenderer.getCanvasHeight() / CanvasRenderer.getUnitSize() / 2 + 1;
+        double width = CanvasRenderer.getCanvasWidth();
+        double height = CanvasRenderer.getCanvasHeight();
+        int unitSize = CanvasRenderer.getUnitSize();
 
-        int halfDiagonal = (int) Math.sqrt(Math.pow(CanvasRenderer.getCanvasWidth() / CanvasRenderer.getUnitSize() / 2, 2) + Math.pow(CanvasRenderer.getCanvasHeight() / CanvasRenderer.getUnitSize() / 2, 2)) + 1;
+        double offsetX = (CanvasRenderer.getOffsetX() % unitSize) / unitSize;
+        double offsetY = (CanvasRenderer.getOffsetY() % unitSize) / unitSize;
+
+        double midScreenX = CanvasRenderer.fromScreenToCanvasX(width/2) / unitSize;
+        double midScreenY = CanvasRenderer.fromScreenToCanvasY(height/2) / unitSize;
+
+        int halfDiagonal = (int) Math.sqrt(Math.pow(width / unitSize / 2, 2) + Math.pow(height / unitSize / 2, 2)) + 1;
+
+        int flipX = 1;
+        int flipY = 1;
+
+        if(offsetX > 0)
+            flipX = -1;
+
+        if(offsetY > 0)
+            flipY = -1;
+
+
+
 
         lines = new Line[4*halfDiagonal];
         int i = 0;
-        int x = 0;
-        while(x > -halfDiagonal){
-            lines[i] = new Line(new Point(x, 0), jHat);
+        double x = midScreenX;
+        while(x > -halfDiagonal + midScreenX){
+            lines[i] = new Line(new Point(x + flipX * offsetX, midScreenY), jHat);
             x--;
             i++;
         }
-        x = 0;
-        while(x < halfDiagonal){
-            lines[i] = new Line(new Point(x, 0), jHat);
+
+
+        x = midScreenX;
+        while(x < halfDiagonal + midScreenX){
+            lines[i] = new Line(new Point(x + flipX * offsetX + 1, midScreenY), jHat);
             x++;
             i++;
         }
 
-        int y = 0;
-        while(y > -halfDiagonal){
-            lines[i] = new Line(new Point(0, y), iHat);
+        double y = midScreenY;
+        while(y > -halfDiagonal + midScreenY){
+            lines[i] = new Line(new Point(midScreenX, y + flipY * offsetY), iHat);
             y--;
             i++;
         }
-        y = 0;
-        while(y < halfDiagonal){
-            lines[i] = new Line(new Point(0, y), iHat);
+
+
+        y = midScreenY;
+        while(y < halfDiagonal + midScreenY){
+            lines[i] = new Line(new Point(midScreenX, y + flipY * offsetY + 1), iHat);
             y++;
             i++;
         }
-
-
-
-
-        verticalLines = 25;
-        horizontalLines = 15;
-//        int j = 0;
-//        lines = new Line[verticalLines*2+horizontalLines*2-2];
-//        for(int i = -verticalLines+1; i<verticalLines; i++){
-//            lines[j] = new Line(new Point(iHat.getElement(0)*i,iHat.getElement(1)*i),jHat);
-//            j++;
-//        }
-//
-//        for(int i = -horizontalLines+1; i<horizontalLines; i++){
-//            lines[j] = new Line(new Point(jHat.getElement(0)*i,jHat.getElement(1)*i),iHat);
-//            j++;
-//        }
     }
 
     public void transform(Matrix matrix){
@@ -120,6 +133,7 @@ public class CoordinateSystem implements Renderable, Transformable {
     public void render(GraphicsContext gc) {
         if(isHidden())
             return;
+
         gc.setLineWidth(0.5);
         for(Line line : lines){
             if(line != null)
