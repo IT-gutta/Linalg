@@ -1,6 +1,6 @@
 package graphics.tools;
 
-import graphics.CoordinateSystem;
+import graphics.Renderable;
 import graphics.Variable;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -18,6 +18,7 @@ public class GenericEditButton extends MenuButton {
 
     private MenuItem deleteButton = new MenuItem("Delete");
     private MenuItem changeNameButton = new MenuItem("Edit Name");
+    private MenuItem showHideButton = new MenuItem("Show/Hide");
 
     public GenericEditButton(Variable variable){
         super("Edit");
@@ -31,7 +32,13 @@ public class GenericEditButton extends MenuButton {
             handleChangeName(false);
         });
 
-        getItems().addAll(deleteButton, changeNameButton);
+        showHideButton.setOnAction(ev->{
+            handleShowHide();
+        });
+
+
+
+        getItems().addAll(deleteButton, changeNameButton, showHideButton);
     }
 
 
@@ -78,6 +85,21 @@ public class GenericEditButton extends MenuButton {
     }
 
 
+    protected void handleShowHide(){
+
+        /// fixxxx
+        if(!(variable instanceof Renderable))
+            return;
+
+        Renderable renderable = (Renderable) variable;
+
+        if(renderable.isHidden())
+            renderable.show();
+        else
+            renderable.hide();
+    }
+
+
     public Variable getOwner(){
         return variable;
     }
@@ -90,8 +112,6 @@ public class GenericEditButton extends MenuButton {
         if(variable.getVariable() instanceof Matrix)
             return new EditMatrixButton((Variable<Matrix>) variable);
 
-        if(variable.getVariable() instanceof CoordinateSystem)
-            return new EditCoordinateSystem((Variable<CoordinateSystem>) variable);
         return new GenericEditButton(variable);
     }
 }

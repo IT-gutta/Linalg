@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 public class Point implements Renderable {
     private double[] point;
+    private boolean isHidden = false;
     public Point(double... args){
         point = args;
     }
@@ -45,9 +46,24 @@ public class Point implements Renderable {
 
     @Override
     public void render(GraphicsContext gc){
+        if(isHidden())
+            return;
         Point p = CanvasRenderer.toCanvasPoint(new Point(point));
         gc.fillOval(p.getElement(0) - 5, p.getElement(1)- 5, 10,10);
     }
 
+    @Override
+    public boolean isHidden() {
+        return isHidden;
+    }
 
+    @Override
+    public void show() {
+        isHidden = false;
+    }
+
+    @Override
+    public void hide() {
+        isHidden = true;
+    }
 }

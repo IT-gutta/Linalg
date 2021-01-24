@@ -14,6 +14,7 @@ public class CoordinateSystem implements Renderable, Transformable {
     private Line[] lines;
     private int verticalLines;
     private int horizontalLines;
+    private boolean isHidden = false;
 
 
 
@@ -117,10 +118,27 @@ public class CoordinateSystem implements Renderable, Transformable {
 
     @Override
     public void render(GraphicsContext gc) {
+        if(isHidden())
+            return;
         gc.setLineWidth(0.5);
         for(Line line : lines){
             if(line != null)
                 line.render(gc);
         }
+    }
+
+    @Override
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    @Override
+    public void show() {
+        isHidden = false;
+    }
+
+    @Override
+    public void hide() {
+        isHidden = true;
     }
 }

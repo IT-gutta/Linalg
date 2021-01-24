@@ -15,6 +15,7 @@ public class Complex implements Renderable {
     private double im;
     private double length;
     private double angle;
+    private boolean isHidden = false;
 
     public Complex(double re, double im){
         this.re = re;
@@ -104,8 +105,25 @@ public class Complex implements Renderable {
 
     @Override
     public void render(GraphicsContext gc){
+        if(isHidden())
+            return;
         Point p = getCanvasPoint();
         gc.fillRect(p.getElement(0) - 5, p.getElement(1)- 5, 10,10);
+    }
+
+    @Override
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    @Override
+    public void show() {
+        isHidden = false;
+    }
+
+    @Override
+    public void hide() {
+        isHidden = true;
     }
 }
 

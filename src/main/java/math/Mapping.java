@@ -16,6 +16,7 @@ public class Mapping implements Renderable {
     private ArrayList<Point> points = new ArrayList<>();
     private ArrayList<Point> canvasPoints;
     private String name;
+    private boolean isHidden = false;
     public Mapping(Function<Double, Double> fun, double start, double end, double step, String name){
         mapping = fun;
         this.start = start;
@@ -64,6 +65,8 @@ public class Mapping implements Renderable {
     }
 
     public void render(GraphicsContext gc){
+        if(isHidden())
+            return;
         for(Point p:canvasPoints){
             gc.fillOval(p.getElement(0),p.getElement(1),2,2);
         }
@@ -74,9 +77,24 @@ public class Mapping implements Renderable {
         System.out.println(m.evaluate(0));
     }
 
+    @Override
     public String toString(){
         return name;
     }
 
+    @Override
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    @Override
+    public void show() {
+        isHidden = false;
+    }
+
+    @Override
+    public void hide() {
+        isHidden = true;
+    }
 
 }

@@ -10,6 +10,7 @@ public class Line implements Renderable {
     private Point start;
     private Point end;
     private Vector direction;
+    private boolean isHidden = false;
 
     public Line(Point p, Vector v){
         start = p;
@@ -64,6 +65,23 @@ public class Line implements Renderable {
 
     @Override
     public void render(GraphicsContext gc){
+        if(isHidden)
+            return;
         gc.strokeLine(getAbsoluteStart().getElement(0), getAbsoluteStart().getElement(1), getAbsoluteEnd().getElement(0), getAbsoluteEnd().getElement(1));
+    }
+
+    @Override
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    @Override
+    public void show() {
+        isHidden = false;
+    }
+
+    @Override
+    public void hide() {
+        isHidden = true;
     }
 }

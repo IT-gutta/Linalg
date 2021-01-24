@@ -6,7 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
 
-public class Matrix implements Renderable{
+public class Matrix{
     private double[][] matrix;
     private int width;
     private int height;
@@ -106,10 +106,5 @@ public class Matrix implements Renderable{
 
         System.out.println(m.transformVector(new Vector(2, 4)));
         System.out.println(m);
-    }
-
-    @Override
-    public void render(GraphicsContext gc) {
-        
     }
 }

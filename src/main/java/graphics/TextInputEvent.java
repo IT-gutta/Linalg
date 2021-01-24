@@ -88,7 +88,7 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 System.out.println("found matrix");
                 m = Pattern.compile(varDec+matCon).matcher(inp);
                 if(m.find()){
-                    DefinedVariables.add(new Matrix(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4)),Double.parseDouble(m.group(6)),Double.parseDouble(m.group(8))), m.group(1));
+                    DefinedVariables.add(new Variable<>(new Matrix(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4)),Double.parseDouble(m.group(6)),Double.parseDouble(m.group(8))), m.group(1)));
                 }
             }
 

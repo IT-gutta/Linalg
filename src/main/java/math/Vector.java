@@ -10,6 +10,7 @@ import java.util.stream.DoubleStream;
 
 public class Vector implements Renderable, Transformable {
     private double[] vector;
+    private boolean isHidden = false;
     public static void main(String[] args) {
         Vector v1 = new Vector(1,2,3);
         Vector v2 = new Vector(5,-1,3);
@@ -177,6 +178,8 @@ public class Vector implements Renderable, Transformable {
     }
     @Override
     public void render(GraphicsContext gc) throws RenderException {
+        if(isHidden())
+            return;
         if(getDimensions() != 2)
             throw new RenderException("Has to be a 2-dimensional vector to render");
         gc.strokeLine(CanvasRenderer.getCanvasWidth() / 2, CanvasRenderer.getCanvasHeight() / 2, getCanvasX(), getCanvasY());
@@ -184,6 +187,19 @@ public class Vector implements Renderable, Transformable {
     }
 
 
+    @Override
+    public boolean isHidden() {
+        return isHidden;
+    }
 
+    @Override
+    public void show() {
+        isHidden = false;
+    }
+
+    @Override
+    public void hide() {
+        isHidden = true;
+    }
 
 }
