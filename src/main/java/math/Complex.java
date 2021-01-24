@@ -32,7 +32,7 @@ public class Complex implements Renderable {
         im = re*other.im + im*other.re;
     }
 
-    public void pow(int exponent){
+    public void pow(double exponent){
         length = Math.pow(length, exponent);
         angle = angle * exponent;
         setStandardFromPolar();
@@ -60,7 +60,9 @@ public class Complex implements Renderable {
 
     @Override
     public String toString(){
-        return re + " + " + im + "i";
+        if(im>0)
+            return re + " + " + im + "i";
+        return re + " - " + Double.toString(im).replace("-","")+"i";
     }
 
 

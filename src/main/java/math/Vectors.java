@@ -21,6 +21,19 @@ public class Vectors {
         return new Vector(u);
     }
 
+    public static Vector subtract(Vector... args) throws IllegalNumberOfDimensionsException{
+        int d = args[0].getDimensions();
+        double[] u = new double[d];
+        for(Vector v:args){
+            if(d!=v.getDimensions())
+                throw new IllegalNumberOfDimensionsException("Vectors must have same dimensions");
+            for(int i = 0; i<d; i++){
+                u[i]-=v.getElement(i);
+            }
+        }
+        return new Vector(u);
+    }
+
     public static double dot(Vector v, Vector u) throws IllegalNumberOfDimensionsException{
         if(u.getDimensions()!=v.getDimensions()) throw new IllegalNumberOfDimensionsException("Vectors must have the same dimensions");
         double dot = 0;
@@ -44,6 +57,14 @@ public class Vectors {
 
     public static Vector transform(Vector v, Matrix matrix){
         return matrix.transformVector(v);
+    }
+
+    public static double getMagnitude(Vector v){
+        double ans = 0;
+        for(double element:v.getVector()){
+            ans+=Math.pow(element,2);
+        }
+        return Math.sqrt(ans);
     }
 
     public static Vector fromPoint(Point p){

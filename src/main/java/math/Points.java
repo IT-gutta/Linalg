@@ -22,7 +22,7 @@ public class Points {
     }
 
 
-    public static Point scale(Point point, double s){
+    public static Point scale(Point point, double s) {
         Vector newVector = toVector(point);
         newVector.scale(s);
         return fromVector(newVector);
