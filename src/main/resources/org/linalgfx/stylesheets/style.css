@@ -25,3 +25,11 @@
 .menu-button{
     -fx-max-height: 20px;
 }
+
+.split-pane-divider{
+    -fx-background-color: grey;
+}
+
+.split-pane-divider:hover{
+    -fx-background-color: black;
+}

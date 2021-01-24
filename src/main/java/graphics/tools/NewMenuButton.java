@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import math.*;
+import regex.RegexUtils;
 
 import java.util.regex.Pattern;
 
@@ -30,7 +31,8 @@ public class NewMenuButton extends MenuButton {
             dialog.setHeaderText("2DVector");
             dialog.setContentText("Enter name:");
             dialog.showAndWait().ifPresent(response ->{
-                if(!validName(dialog.getEditor().getText()))
+
+                if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
                 DefinedVariables.add(new Vector((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
@@ -57,7 +59,7 @@ public class NewMenuButton extends MenuButton {
             dialog.setHeaderText("2x2Matrix");
             dialog.setContentText("Enter name:");
             dialog.showAndWait().ifPresent(response ->{
-                if(!validName(dialog.getEditor().getText()))
+                if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
                 DefinedVariables.add(new Matrix((double) aInput.getTextFormatter().getValue(), (double) bInput.getTextFormatter().getValue(), (double) cInput.getTextFormatter().getValue(), (double) dInput.getTextFormatter().getValue()), dialog.getEditor().getText());
@@ -84,7 +86,7 @@ public class NewMenuButton extends MenuButton {
             dialog.setHeaderText("Line");
             dialog.setContentText("Enter name:");
             dialog.showAndWait().ifPresent(response ->{
-                if(!validName(dialog.getEditor().getText()))
+                if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
                 DefinedVariables.add(new Line(new Point((double) aInput.getTextFormatter().getValue(), (double) bInput.getTextFormatter().getValue()), new Vector((double) cInput.getTextFormatter().getValue(), (double) dInput.getTextFormatter().getValue())), dialog.getEditor().getText());
@@ -105,7 +107,7 @@ public class NewMenuButton extends MenuButton {
             dialog.setHeaderText("Complex");
             dialog.setContentText("Enter name:");
             dialog.showAndWait().ifPresent(response ->{
-                if(!validName(dialog.getEditor().getText()))
+                if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
                 DefinedVariables.add(new Complex((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
@@ -125,7 +127,7 @@ public class NewMenuButton extends MenuButton {
             dialog.setHeaderText("Point");
             dialog.setContentText("Enter name:");
             dialog.showAndWait().ifPresent(response ->{
-                if(!validName(dialog.getEditor().getText()))
+                if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
                 DefinedVariables.add(new Point((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
@@ -145,7 +147,7 @@ public class NewMenuButton extends MenuButton {
             dialog.setHeaderText("Point");
             dialog.setContentText("Enter name:");
             dialog.showAndWait().ifPresent(response ->{
-                if(!validName(dialog.getEditor().getText()))
+                if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
                 DefinedVariables.add(new Variable<>((Double) input.getTextFormatter().getValue(), dialog.getEditor().getText()));
@@ -162,9 +164,4 @@ public class NewMenuButton extends MenuButton {
         dialog = new TextInputDialog("");
         dialog.initModality(Modality.APPLICATION_MODAL);
     }
-
-    private boolean validName(String name){
-        return Pattern.matches("\\w[a-zA-Z0-9_]*", name);
-    }
-
 }

@@ -1,5 +1,6 @@
 package graphics.tools;
 
+import graphics.CoordinateSystem;
 import graphics.Variable;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -89,6 +90,8 @@ public class GenericEditButton extends MenuButton {
         if(variable.getVariable() instanceof Matrix)
             return new EditMatrixButton((Variable<Matrix>) variable);
 
+        if(variable.getVariable() instanceof CoordinateSystem)
+            return new EditCoordinateSystem((Variable<CoordinateSystem>) variable);
         return new GenericEditButton(variable);
     }
 }

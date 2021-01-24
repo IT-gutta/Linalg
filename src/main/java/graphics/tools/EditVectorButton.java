@@ -1,17 +1,12 @@
 package graphics.tools;
 
-import graphics.DefinedVariables;
 import graphics.Variable;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.ImageInput;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import math.Matrix;
 import math.Vector;
 import regex.RegexUtils;
-
-import java.util.regex.Pattern;
 
 public class EditVectorButton extends GenericEditButton {
     private Variable<Vector> variable;
@@ -59,26 +54,10 @@ public class EditVectorButton extends GenericEditButton {
         });
 
 
-        MenuItem transform = new MenuItem("Transform");
-        transform.setOnAction(actionEvent ->{
-            clearDialog();
-
-            dialog.setHeaderText("Transform vector with a matrix");
-            dialog.setContentText("Enter name of matrix");
-
-            dialog.showAndWait().ifPresent(response ->{
-                String name = dialog.getEditor().getText();
-                if(DefinedVariables.contains(name)){
-                    Variable v = DefinedVariables.get(name);
-                    if(v.getVariable() instanceof Matrix)
-                        variable.getVariable().applyTransformation((Matrix) v.getVariable());
-                }
-            });
-        });
 
 
 
         addMenuItem(edit);
-        addMenuItem(transform);
+        addMenuItem(MenuItems.transformMenuButton(variable));
     }
 }

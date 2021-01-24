@@ -30,7 +30,7 @@ public class Line implements Renderable {
 
     public void transform(Matrix m){
         start = start.transform(m);
-        direction.applyTransformation(m);
+        direction.transform(m);
     }
 
     public Point getPoint(double parameter){

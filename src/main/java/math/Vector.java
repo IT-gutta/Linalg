@@ -8,7 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 import java.util.stream.DoubleStream;
 
-public class Vector implements Renderable {
+public class Vector implements Renderable, Transformable {
     private double[] vector;
     public static void main(String[] args) {
         Vector v1 = new Vector(1,2,3);
@@ -152,11 +152,11 @@ public class Vector implements Renderable {
         return true;
     }
 
-    public void applyTransformation(Matrix matrix){
+    public void transform(Matrix matrix){
         vector = matrix.transformVector(this).getVector();
     }
 
-    public Vector transform(Matrix matrix){
+    public Vector getTransformed(Matrix matrix){
         return matrix.transformVector(this);
     }
 
