@@ -26,6 +26,7 @@ public class CoordinateSystem implements Renderable, Transformable {
     }
 
     public void updateLines(){
+
         double midX = CanvasRenderer.fromCanvasX(CanvasRenderer.getCanvasWidth() / 2);
         double midY = CanvasRenderer.fromCanvasY(CanvasRenderer.getCanvasHeight() / 2);
 
