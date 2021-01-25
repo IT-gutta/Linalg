@@ -4,6 +4,8 @@ import graphics.CanvasRenderer;
 import graphics.Renderable;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 public class Line implements Renderable {
@@ -11,6 +13,11 @@ public class Line implements Renderable {
     private Point end;
     private Vector direction;
     private boolean isHidden = false;
+
+    private double canvasStartX = 0;
+    private double canvasStartY = 0;
+    private double canvasEndX = 0;
+    private double canvasEndY = 0;
 
     public Line(Point p, Vector v){
         start = p;
@@ -39,16 +46,6 @@ public class Line implements Renderable {
     }
 
 
-    private double getEdgeParameter(){
-        return Math.sqrt(Math.pow(CanvasRenderer.getCanvasWidth(), 2) + Math.pow(CanvasRenderer.getCanvasHeight(), 2)) / (2 * direction.getMagnitude());
-    }
-    public Point getAbsoluteStart(){
-        return CanvasRenderer.toCanvasPoint(getPoint(getEdgeParameter()));
-    }
-    public Point getAbsoluteEnd(){
-        return CanvasRenderer.toCanvasPoint(getPoint(- getEdgeParameter()));
-    }
-
 
     public Point getStart(){
         return start;
@@ -57,6 +54,75 @@ public class Line implements Renderable {
     public Point getEnd(){
             return end;
     }
+
+    private double getA(){
+        return direction.getElement(1) / direction.getElement(0);
+    }
+
+    private double getB(){
+        return start.getElement(1) - getA()*start.getElement(0);
+    }
+
+    private double getYFromX(double x){
+        return getA() * x + getB();
+    }
+
+    private double getXFromY(double y){
+        return (y - getB()) / getA();
+    }
+
+    public void updateCanvasPoints(){
+        //calculate intersection with canvas
+        List<Point> startEndPoints = new ArrayList<>();
+
+        double u = CanvasRenderer.getUnitSize();
+        double w = CanvasRenderer.getCanvasWidth();
+        double h = CanvasRenderer.getCanvasHeight();
+        //offset
+        double offX = CanvasRenderer.getOffsetX();
+        double offY = CanvasRenderer.getOffsetY();
+
+        //x for canvas vertical lines
+        double l1 = -w/(2*u) - offX/u;
+        double l3 = w/(2*u) - offX/u;
+
+        //y for canvas horizontal lines
+        double l2 = -h/(2*u) - offY/u;
+        double l4 = h/(2*u) - offY/u;
+
+        //intersect left vertical
+        double y1 = getYFromX(l1);
+
+        if(y1 <= l4 && y1 >= l2) //intersection!
+            startEndPoints.add(new Point(l1, y1));
+
+
+        //intersect right vertical
+        double y3 = getYFromX(l3);
+        if(y3 <= l4 && y3 >= l2) //intersection!
+            startEndPoints.add(new Point(l3, y3));
+
+        //intersect top horizontal
+        double x2 = getXFromY(l2);
+        if(x2 <= l3 && x2 >= l1) //intersection!
+            startEndPoints.add(new Point(x2, l2));
+
+        //intersect bottom horizontal
+        double x4 = getXFromY(l4);
+        if(x4 <= l3 && x4 >= l1) //intersection!
+            startEndPoints.add(new Point(x4, l4));
+
+        if(startEndPoints.size() != 2){
+            return;
+        }
+
+
+        canvasStartX = CanvasRenderer.toCanvasX(startEndPoints.get(0).getElement(0));
+        canvasStartY = CanvasRenderer.toCanvasY(startEndPoints.get(0).getElement(1));
+        canvasEndX = CanvasRenderer.toCanvasX(startEndPoints.get(1).getElement(0));
+        canvasEndY = CanvasRenderer.toCanvasY(startEndPoints.get(1).getElement(1));
+    }
+
 
     @Override
     public String toString(){
@@ -67,7 +133,8 @@ public class Line implements Renderable {
     public void render(GraphicsContext gc){
         if(isHidden)
             return;
-        gc.strokeLine(getAbsoluteStart().getElement(0), getAbsoluteStart().getElement(1), getAbsoluteEnd().getElement(0), getAbsoluteEnd().getElement(1));
+
+        gc.strokeLine(canvasStartX, canvasStartY, canvasEndX, canvasEndY);
     }
 
     @Override

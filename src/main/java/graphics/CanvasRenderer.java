@@ -111,28 +111,25 @@ public abstract class CanvasRenderer{
     //public static Point fromCanvasPoint(Point point) throws IllegalNumberOfDimensionsException{ }
 
     public static double toCanvasX(double x){
-        return x * unitSize + getCanvasWidth()/2 + offsetX;
+        return getCanvasWidth()/2 + offsetX + x * unitSize;
     }
 
     public static double toCanvasY(double y){
         return getCanvasHeight() / 2 + offsetY - y * unitSize;
     }
 
-    public static double fromScreenToCanvasX(double x){
-        return x - offsetX;
+    public static double fromCanvasX(double x){
+        return (x - offsetX - getCanvasWidth()/2) / unitSize;
     }
 
-    public static double fromScreenToCanvasY(double y){
-        return y - offsetY;
+    public static double fromCanvasY(double y){
+        return - (y - offsetY - getCanvasHeight()/2) / unitSize;
     }
 
 
 
     public static void updateCoordinateSystem(){
-        //testPoint.setElement(0, CanvasRenderer.fromCanvasPoint(new Point(-getCanvasWidth()/2 + offsetX, -getCanvasHeight()/2 + offsetY)).getElement(0));
-        //testPoint.setElement(1, CanvasRenderer.fromCanvasPoint(new Point(-getCanvasWidth()/2 + offsetX, -getCanvasHeight()/2 + offsetY)).getElement(1));
-
-        if(cs == null)
+        if(cs.isHidden())
             return;
         cs.updateLines();
     }
