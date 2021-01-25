@@ -2,6 +2,7 @@ package math;
 
 import graphics.CanvasRenderer;
 import graphics.Renderable;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class Line implements Renderable {
     private Point end;
     private Vector direction;
     private boolean isHidden = false;
+    private boolean isInsideCanvas;
 
     private double canvasStartX = 0;
     private double canvasStartY = 0;
@@ -22,6 +24,7 @@ public class Line implements Renderable {
     public Line(Point p, Vector v){
         start = p;
         direction = v;
+        updateCanvasPoints();
     }
 
 
@@ -30,11 +33,12 @@ public class Line implements Renderable {
         this.start = start;
         this.end = end;
         direction = Vectors.fromPoints(start,end);
+        updateCanvasPoints();
     }
 
-    private boolean isParallel(Line l){
-        return true;
-    }
+//    private boolean isParallel(Line l){
+//        return true;
+//    }
 
     public void transform(Matrix m){
         start = start.transform(m);
@@ -75,31 +79,24 @@ public class Line implements Renderable {
         //calculate intersection with canvas
         List<Point> startEndPoints = new ArrayList<>();
 
-        double u = CanvasRenderer.getUnitSize();
-        double w = CanvasRenderer.getCanvasWidth();
-        double h = CanvasRenderer.getCanvasHeight();
-        //offset
-        double offX = CanvasRenderer.getOffsetX();
-        double offY = CanvasRenderer.getOffsetY();
 
-        //x for canvas vertical lines
-        double l1 = -w/(2*u) - offX/u;
-        double l3 = w/(2*u) - offX/u;
+        //x coords from origin for the vertical canvas borders
+        double l1 = CanvasRenderer.fromCanvasX(0);
+        double l3 = CanvasRenderer.fromCanvasX(CanvasRenderer.getCanvasWidth());
 
-        //y for canvas horizontal lines
-        double l2 = -h/(2*u) - offY/u;
-        double l4 = h/(2*u) - offY/u;
+        //y coords from origin for the horizontal canvas borders
+        double l2 = CanvasRenderer.fromCanvasY(0);
+        double l4 = CanvasRenderer.fromCanvasY(CanvasRenderer.getCanvasHeight());
 
         //intersect left vertical
         double y1 = getYFromX(l1);
-
-        if(y1 <= l4 && y1 >= l2) //intersection!
+        if(y1 >= l4 && y1 <= l2) //intersection!
             startEndPoints.add(new Point(l1, y1));
 
 
         //intersect right vertical
         double y3 = getYFromX(l3);
-        if(y3 <= l4 && y3 >= l2) //intersection!
+        if(y3 >= l4 && y3 <= l2)//intersection!
             startEndPoints.add(new Point(l3, y3));
 
         //intersect top horizontal
@@ -113,14 +110,19 @@ public class Line implements Renderable {
             startEndPoints.add(new Point(x4, l4));
 
         if(startEndPoints.size() != 2){
+            isInsideCanvas = false;
             return;
         }
+        isInsideCanvas = true;
+
 
 
         canvasStartX = CanvasRenderer.toCanvasX(startEndPoints.get(0).getElement(0));
         canvasStartY = CanvasRenderer.toCanvasY(startEndPoints.get(0).getElement(1));
         canvasEndX = CanvasRenderer.toCanvasX(startEndPoints.get(1).getElement(0));
         canvasEndY = CanvasRenderer.toCanvasY(startEndPoints.get(1).getElement(1));
+
+        //System.out.println("x1: " + canvasStartX + ", y1: " + canvasStartY + ", x2: " + canvasEndX + ", y2: " + canvasEndY);
     }
 
 
@@ -131,7 +133,8 @@ public class Line implements Renderable {
 
     @Override
     public void render(GraphicsContext gc){
-        if(isHidden)
+        //System.out.println(isInsideCanvas);
+        if(isHidden || !isInsideCanvas)
             return;
 
         gc.strokeLine(canvasStartX, canvasStartY, canvasEndX, canvasEndY);
@@ -150,5 +153,11 @@ public class Line implements Renderable {
     @Override
     public void hide() {
         isHidden = true;
+    }
+
+
+    public static void main(String[] args) {
+        Line line = new Line(new Point(10, 2), new Vector(2, 2));
+        System.out.println(line.getYFromX(10));
     }
 }

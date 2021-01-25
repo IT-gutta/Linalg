@@ -30,7 +30,7 @@ public class CanvasPane extends Pane {
         super.layoutChildren();
         final double x = snappedLeftInset();
         final double y = snappedTopInset();
-        // Java 9 - snapSize is deprecated, use snapSizeX() and snapSizeY() accordingly
+
         final double w = snapSizeX(getWidth()) - x - snappedRightInset();
         final double h = snapSizeY(getHeight()) - y - snappedBottomInset();
         canvas.setLayoutX(x);
@@ -38,7 +38,9 @@ public class CanvasPane extends Pane {
         canvas.setWidth(w);
         canvas.setHeight(h);
 
+
         CanvasRenderer.updateCoordinateSystem();
+        CanvasRenderer.updateNonCSLines();
     }
 
     private EventHandler<MouseEvent> startDragEvent = mouse -> {
@@ -54,10 +56,9 @@ public class CanvasPane extends Pane {
         CanvasRenderer.changeOffsetY(endDragY - startDragY);
 
         CanvasRenderer.updateCoordinateSystem();
+        CanvasRenderer.updateNonCSLines();
 
         startDragX = mouse.getX();
         startDragY = mouse.getY();
-
-
     };
 }

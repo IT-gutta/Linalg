@@ -27,10 +27,10 @@ public class App extends Application {
         Canvas canvas = canvasPane.getCanvas();
 
 
-
         GraphicsContext gc = canvas.getGraphicsContext2D();
         CanvasRenderer.setCanvas(canvas);
         CanvasRenderer.setGraphicsContext(gc);
+        CanvasRenderer.setUnitSize(40);
         CanvasRenderer.start();
 
         DefinedVariables.getScrollPane().getStyleClass().add("variables");

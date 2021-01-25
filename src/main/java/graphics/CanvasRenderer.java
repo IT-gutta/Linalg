@@ -32,6 +32,14 @@ public abstract class CanvasRenderer{
         DefinedVariables.add(cs, "Coordinate System");
 
 
+        Line line = new Line(new Point(fromCanvasX(getCanvasWidth()/2) + 2, fromCanvasY(getCanvasHeight()/2)), new Vector(2, 2));
+        Vector vector = new Vector(2, 2);
+
+        DefinedVariables.add(vector, "vector");
+
+        DefinedVariables.add(line, "linje");
+
+        updateNonCSLines();
 
 
         Mapping m = new Mapping(Math::cos, "cos(x)");
@@ -41,6 +49,7 @@ public abstract class CanvasRenderer{
                 new TimerTask() {
                     @Override
                     public void run() {
+
                         graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                         list.forEach( r -> r.render(graphicsContext));
                     }
@@ -132,6 +141,14 @@ public abstract class CanvasRenderer{
         if(cs.isHidden())
             return;
         cs.updateLines();
+    }
+
+    public static void updateNonCSLines(){
+        //oppdaterer alle linjer som ikke er i coordinatsystemet
+        for(Renderable renderable : list){
+            if(renderable instanceof Line)
+                ((Line) renderable).updateCanvasPoints();
+        }
     }
 
 
