@@ -76,6 +76,16 @@ public class Line implements Renderable {
     }
 
     public void updateCanvasPoints(){
+        if(direction.getElement(0) <= 0.0001){
+            isInsideCanvas = true;
+            if(start.getElement(0) <= CanvasRenderer.fromCanvasX(CanvasRenderer.getCanvasWidth()) && start.getElement(0) >= CanvasRenderer.fromCanvasX(0))
+                isInsideCanvas = true;
+            canvasStartX = CanvasRenderer.toCanvasX(getStart().getElement(0));
+            canvasEndX = CanvasRenderer.toCanvasX(getStart().getElement(0));
+            canvasStartY = 0;
+            canvasEndY = CanvasRenderer.getCanvasHeight();
+            return;
+        }
         //calculate intersection with canvas
         List<Point> startEndPoints = new ArrayList<>();
 

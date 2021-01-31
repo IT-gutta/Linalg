@@ -3,6 +3,7 @@ package graphics;
 import exceptions.IllegalNumberOfDimensionsException;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Paint;
 import math.*;
 
 import java.io.Serializable;
@@ -20,18 +21,13 @@ public abstract class CanvasRenderer{
     private static double offsetX;
     private static double offsetY;
 
-    public static int unitSize;
+    public static double unitSize;
 
 
 
 
 
     public static void start(){
-        //viktig å kjøre først
-        cs = new CoordinateSystem();
-        DefinedVariables.add(cs, "Coordinate System");
-
-
         Line line = new Line(new Point(fromCanvasX(getCanvasWidth()/2) + 2, fromCanvasY(getCanvasHeight()/2)), new Vector(2, 2));
         Vector vector = new Vector(2, 2);
 
@@ -49,6 +45,7 @@ public abstract class CanvasRenderer{
                     public void run() {
 
                         graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                        drawLines();
                         list.forEach( r -> r.render(graphicsContext));
                     }
                 },
@@ -95,11 +92,11 @@ public abstract class CanvasRenderer{
         CanvasRenderer.list = list;
     }
 
-    public static int getUnitSize(){
+    public static double getUnitSize(){
         return unitSize;
     }
 
-    public static void setUnitSize(int i){
+    public static void setUnitSize(double i){
         unitSize = i;
     }
 
@@ -135,11 +132,7 @@ public abstract class CanvasRenderer{
 
 
 
-    public static void updateCoordinateSystem(){
-        if(cs.isHidden())
-            return;
-        cs.updateLines();
-    }
+
 
     public static void updateNonCSLines(){
         //oppdaterer alle linjer som ikke er i coordinatsystemet
@@ -156,6 +149,12 @@ public abstract class CanvasRenderer{
     public static void changeOffsetY(double y){
         offsetY += y;
     }
+    public static void scaleUnitSize(double s){
+        unitSize *= s;
+
+        if(unitSize == 0)
+            unitSize = Double.MIN_VALUE;
+    }
 
     public static double getOffsetX(){
         return offsetX;
@@ -163,5 +162,30 @@ public abstract class CanvasRenderer{
 
     public static double getOffsetY(){
         return offsetY;
+    }
+
+
+    public static void drawLines(){
+        graphicsContext.setLineWidth(0.5);
+        graphicsContext.setStroke(Paint.valueOf("grey"));
+        double spacing = unitSize;
+
+        double originX = toCanvasX(0);
+        double originY = toCanvasY(0);
+
+        double dX = originX % spacing;
+        double dY = originY % spacing;
+
+        double x = dX;
+        while(x <= getCanvasWidth()){
+            graphicsContext.strokeLine(x, 0, x, getCanvasHeight());
+            x+=spacing;
+        }
+
+        double y = dY;
+        while(y <= getCanvasHeight()){
+            graphicsContext.strokeLine(0, y, getCanvasWidth(), y);
+            y+=spacing;
+        }
     }
 }

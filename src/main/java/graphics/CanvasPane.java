@@ -3,6 +3,7 @@ package graphics;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 
 public class CanvasPane extends Pane {
@@ -26,6 +27,7 @@ public class CanvasPane extends Pane {
     protected void layoutChildren() {
         canvas.setOnMousePressed(startDragEvent);
         canvas.setOnMouseDragged(endDragEvent);
+        canvas.setOnScroll(scrollEvent);
 
         super.layoutChildren();
         final double x = snappedLeftInset();
@@ -39,7 +41,6 @@ public class CanvasPane extends Pane {
         canvas.setHeight(h);
 
 
-        CanvasRenderer.updateCoordinateSystem();
         CanvasRenderer.updateNonCSLines();
     }
 
@@ -55,10 +56,17 @@ public class CanvasPane extends Pane {
         CanvasRenderer.changeOffsetX(endDragX - startDragX);
         CanvasRenderer.changeOffsetY(endDragY - startDragY);
 
-        CanvasRenderer.updateCoordinateSystem();
         CanvasRenderer.updateNonCSLines();
 
         startDragX = mouse.getX();
         startDragY = mouse.getY();
     };
+
+    private EventHandler<ScrollEvent> scrollEvent = event ->{
+        if(event.getDeltaY() > 0)
+            CanvasRenderer.scaleUnitSize(1.2);
+        else
+            CanvasRenderer.scaleUnitSize(1/1.2);
+    };
+
 }
