@@ -4,6 +4,7 @@ package graphics;
 import graphics.tools.GenericEditButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import math.Mapping;
 
 public class Variable<T> extends HBox {
     private T variable;
@@ -38,6 +39,9 @@ public class Variable<T> extends HBox {
 
     @Override
     public String toString(){
+        if(variable instanceof Mapping)
+            return name + "(x) = " + variable.toString();
+
         return name + " = " + variable.toString();
     }
 

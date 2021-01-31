@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.function.Function;
 
 public class Mapping implements Renderable {
-    private final Function<Double,Double> mapping;
+    private final Expression mapping;
     private final double start;
     private final double end;
     private final double step;
@@ -17,21 +17,19 @@ public class Mapping implements Renderable {
     private ArrayList<Point> canvasPoints;
     private String name;
     private boolean isHidden = false;
-    public Mapping(Function<Double, Double> fun, double start, double end, double step, String name){
-        mapping = fun;
+    public Mapping(String expression, double start, double end, double step){
+        mapping = new Expression(expression);
         this.start = start;
         this.end = end;
         this.step = step;
-        this.name = name;
         initPoints();
     }
 
-    public Mapping(Function<Double, Double> fun, String name){
-        mapping = fun;
+    public Mapping(String expression){
+        mapping = new Expression(expression);
         start = -10;
         end = 10;
-        step = Math.pow(10, -3);
-        this.name = name;
+        step = Math.pow(10, -1);
         initPoints();
     }
 
@@ -61,7 +59,7 @@ public class Mapping implements Renderable {
     }
 
     public double evaluate(double x){
-        return mapping.apply(x);
+        return mapping.evaluate(x);
     }
 
     public void render(GraphicsContext gc){
@@ -73,13 +71,11 @@ public class Mapping implements Renderable {
     }
 
     public static void main(String[] args) {
-        Mapping m = new Mapping(Math::cos, "cos(x)");
-        System.out.println(m.evaluate(0));
     }
 
     @Override
     public String toString(){
-        return name;
+        return mapping.getExpression();
     }
 
     @Override

@@ -42,8 +42,6 @@ public abstract class CanvasRenderer{
         updateNonCSLines();
 
 
-        Mapping m = new Mapping(Math::cos, "cos(x)");
-
 
         new Timer().scheduleAtFixedRate(
                 new TimerTask() {

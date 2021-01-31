@@ -24,6 +24,7 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
     private final String posFlNum = "([0-9]+(\\.?[0-9+]+)?)";
     private final String varName = "(\\w[0-9a-zA-Z_]*)";
     private final String varDec = "(\\w[0-9a-zA-Z_]*)=";
+    private final String funDec = "(\\w[0-9a-zA-Z_]*)\\(x\\)=";
     private final String vecCon = "\\["+flNum+","+flNum+"]";
     private final String poiCon = "\\("+flNum+","+flNum+"\\)";
     private final String matCon = "\\["+flNum+","+flNum+";"+flNum+","+flNum+"\\]";
@@ -233,6 +234,16 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 }
             }
 
+        }
+        else if(Pattern.matches(funDec+".*", inp)){
+            try{
+                m = Pattern.compile(funDec+"(.*)").matcher(inp);
+                if(m.find())
+                    DefinedVariables.add(new Variable<Mapping>(new Mapping(m.group(2)), m.group(1)));
+            }
+            catch (Exception e){
+                System.out.println(e);
+            };
         }
         inputField.clear();
         System.out.println(DefinedVariables.getVBox().getChildren());
