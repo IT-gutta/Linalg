@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class Line implements Renderable {
+    //TODO fix toString
     private Point start;
     private Point end;
     private Vector direction;

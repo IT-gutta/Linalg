@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.ArrayList;
 
 public class Mapping implements Renderable {
+    //TODO fix problems related to rendering
     private final Expression mapping;
     private final double start;
     private final double end;

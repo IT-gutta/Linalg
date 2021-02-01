@@ -19,6 +19,8 @@ import java.util.List;
  * JavaFX App
  */
 public class App extends Application {
+    //TODO add 3d-graphics
+    //TODO add the ability to select objects in the graphics window
     private static Scene scene;
 
     @Override

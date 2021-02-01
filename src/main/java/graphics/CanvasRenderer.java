@@ -52,7 +52,7 @@ public abstract class CanvasRenderer{
                     }
                 },
                 100,
-                100
+                30
         );
     }
 

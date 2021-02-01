@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.ArrayList;
 
 public class Matrix{
+    //TODO fix toString
     private double[][] matrix;
     private int width;
     private int height;
