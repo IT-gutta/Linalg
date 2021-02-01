@@ -1,16 +1,11 @@
 package graphics.tools;
 
-import graphics.CoordinateSystem;
-import graphics.DefinedVariables;
+import graphics.Grid;
 import graphics.Variable;
-import javafx.scene.Node;
-import javafx.scene.control.MenuItem;
-import math.Matrix;
-import math.Vector;
 
 public class EditCoordinateSystem extends GenericEditButton{
-    private Variable<CoordinateSystem> variable;
-    public EditCoordinateSystem(Variable<CoordinateSystem> variable){
+    private Variable<Grid> variable;
+    public EditCoordinateSystem(Variable<Grid> variable){
         super(variable);
         this.variable = variable;
 

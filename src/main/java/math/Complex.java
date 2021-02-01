@@ -1,14 +1,8 @@
 package math;
 
 import graphics.CanvasRenderer;
-import graphics.CoordinateSystem;
 import graphics.Renderable;
 import javafx.scene.canvas.GraphicsContext;
-
-import java.util.function.Function;
-import java.util.function.IntToDoubleFunction;
-import java.util.function.IntUnaryOperator;
-import java.util.stream.IntStream;
 
 public class Complex implements Renderable {
     private double re;

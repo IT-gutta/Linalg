@@ -44,4 +44,8 @@ public class Utils {
     public int sum(int start, int end, IntUnaryOperator function){
         return IntStream.rangeClosed(start, end).map(i -> function.applyAsInt(i)).sum();
     }
+
+    public static double log2(double num){
+        return Math.log(num) / Math.log(2);
+    }
 }

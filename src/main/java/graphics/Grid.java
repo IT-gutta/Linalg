@@ -4,7 +4,7 @@ import exceptions.IllegalNumberOfDimensionsException;
 import javafx.scene.canvas.GraphicsContext;
 import math.*;
 
-public class CoordinateSystem implements Renderable, Transformable {
+public class Grid implements Renderable, Transformable {
     private Vector iHat;
     private Vector jHat;
     private Line[] lines;
@@ -16,7 +16,7 @@ public class CoordinateSystem implements Renderable, Transformable {
 
 
 
-    public CoordinateSystem(){
+    public Grid(){
         iHat = new Vector(1,0);
         jHat = new Vector(0,1);
         baseSpaceBetween = CanvasRenderer.getUnitSize();
@@ -24,69 +24,7 @@ public class CoordinateSystem implements Renderable, Transformable {
     }
 
     public void updateLines(){
-        //double u = CanvasRenderer.getUnitSize();
-        //spaceBetween = baseSpaceBetween + u - Math.floor(u) * baseSpaceBetween;
-
-
-
-        double midX = CanvasRenderer.fromCanvasX(CanvasRenderer.getCanvasWidth() / 2);
-        double midY = CanvasRenderer.fromCanvasY(CanvasRenderer.getCanvasHeight() / 2);
-
-        double dX = Math.abs(midX) - Math.floor(Math.abs(midX));
-        double dY = Math.abs(midY) - Math.floor(Math.abs(midY));
-
-        if(midX < 0)
-            dX*=-1;
-        if(midY < 0)
-            dY*=-1;
-
-        int halfDiagonalInUnits = (int) (Math.sqrt(Math.pow(CanvasRenderer.getCanvasWidth(), 2) + Math.pow(CanvasRenderer.getCanvasHeight(), 2)) / 2 / CanvasRenderer.getUnitSize()) + 1;
-
-        lines = new Line[halfDiagonalInUnits*4];
-
-        int i = 0;
-
-        int count = 0;
-
-        double x = midX - dX;
-        while(count < halfDiagonalInUnits){
-            lines[i] = new Line(new Point(x, midY), jHat);
-            x--;
-            count++;
-            i++;
-        }
-
-        count = 0;
-        x = midX - dX + 1;
-        while(count < halfDiagonalInUnits){
-            lines[i] = new Line(new Point(x, midY), jHat);
-            x++;
-            count++;
-            i++;
-        }
-
-        count = 0;
-        double y = midY - dY + 1;
-        while(count < halfDiagonalInUnits){
-            lines[i] = new Line(new Point(midX, y), iHat);
-            y++;
-            count++;
-            i++;
-        }
-
-        count = 0;
-        y = midY - dY;
-        while(count < halfDiagonalInUnits){
-            lines[i] = new Line(new Point(midX, y), iHat);
-            y--;
-            count++;
-            i++;
-        }
-
-        //fikse på alle linjer
-        for(Line line : lines){
-            line.updateCanvasPoints();
-        }
+        return;
     }
 
     public void transform(Matrix matrix){

@@ -41,7 +41,7 @@ public class CanvasPane extends Pane {
         canvas.setHeight(h);
 
 
-        CanvasRenderer.updateNonCSLines();
+        CanvasRenderer.accountForChanges();
     }
 
     private EventHandler<MouseEvent> startDragEvent = mouse -> {
@@ -56,7 +56,7 @@ public class CanvasPane extends Pane {
         CanvasRenderer.changeOffsetX(endDragX - startDragX);
         CanvasRenderer.changeOffsetY(endDragY - startDragY);
 
-        CanvasRenderer.updateNonCSLines();
+        CanvasRenderer.accountForChanges();
 
         startDragX = mouse.getX();
         startDragY = mouse.getY();
@@ -67,6 +67,7 @@ public class CanvasPane extends Pane {
             CanvasRenderer.scaleUnitSize(1.2);
         else
             CanvasRenderer.scaleUnitSize(1/1.2);
-    };
 
+        CanvasRenderer.accountForChanges();
+    };
 }

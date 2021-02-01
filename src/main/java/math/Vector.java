@@ -9,6 +9,8 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.stream.DoubleStream;
 
 public class Vector implements Renderable, Transformable {
+
+    //todo add Arrow to vector
     private double[] vector;
     private boolean isHidden = false;
     public static void main(String[] args) {

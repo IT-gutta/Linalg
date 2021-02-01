@@ -4,9 +4,12 @@ import exceptions.IllegalNumberOfDimensionsException;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
-import math.*;
+import math.Line;
+import math.Point;
+import math.Utils;
+import math.Vector;
 
-import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -17,11 +20,10 @@ public abstract class CanvasRenderer{
     private static List<Renderable> list = new ArrayList<>();
     private static Canvas canvas;
     private static GraphicsContext graphicsContext;
-    private static CoordinateSystem cs;
     private static double offsetX;
     private static double offsetY;
-
     public static double unitSize;
+    private static double baseSpacing;
 
 
 
@@ -35,7 +37,7 @@ public abstract class CanvasRenderer{
 
         DefinedVariables.add(line, "linje");
 
-        updateNonCSLines();
+        accountForChanges();
 
 
 
@@ -134,7 +136,7 @@ public abstract class CanvasRenderer{
 
 
 
-    public static void updateNonCSLines(){
+    public static void accountForChanges(){
         //oppdaterer alle linjer som ikke er i coordinatsystemet
         for(Renderable renderable : list){
             if(renderable instanceof Line)
@@ -143,16 +145,18 @@ public abstract class CanvasRenderer{
     }
 
 
+
+
     public static void changeOffsetX(double x){
         offsetX += x;
     }
     public static void changeOffsetY(double y){
         offsetY += y;
     }
-    public static void scaleUnitSize(double s){
+    public static void scaleUnitSize(double s) {
         unitSize *= s;
 
-        if(unitSize == 0)
+        if (unitSize == 0)
             unitSize = Double.MIN_VALUE;
     }
 
@@ -166,9 +170,11 @@ public abstract class CanvasRenderer{
 
 
     public static void drawLines(){
-        graphicsContext.setLineWidth(0.5);
-        graphicsContext.setStroke(Paint.valueOf("grey"));
-        double spacing = unitSize;
+        baseSpacing = 40;
+
+        double spacing =  baseSpacing * Math.pow(2, Utils.log2(unitSize/baseSpacing) - Math.floor(Utils.log2(unitSize/baseSpacing)));
+
+        long n = -Math.round(Math.floor(Utils.log2(unitSize/baseSpacing)));
 
         double originX = toCanvasX(0);
         double originY = toCanvasY(0);
@@ -176,16 +182,49 @@ public abstract class CanvasRenderer{
         double dX = originX % spacing;
         double dY = originY % spacing;
 
+        graphicsContext.setStroke(Paint.valueOf("black"));
+        graphicsContext.setLineWidth(1);
+
+        graphicsContext.strokeLine(originX, 0, originX, getCanvasHeight());
+        graphicsContext.strokeLine(0, originY, getCanvasWidth(), originY);
+
         double x = dX;
+        double y = dY;
+
+        graphicsContext.setStroke(Paint.valueOf("grey"));
+        graphicsContext.setLineWidth(0.5);
         while(x <= getCanvasWidth()){
+            graphicsContext.fillText(stringifyPowerOf2(fromCanvasX(x), n), x, originY-4);
             graphicsContext.strokeLine(x, 0, x, getCanvasHeight());
             x+=spacing;
         }
 
-        double y = dY;
+
         while(y <= getCanvasHeight()){
+            graphicsContext.fillText(stringifyPowerOf2(fromCanvasY(y), n), originX+6, y);
             graphicsContext.strokeLine(0, y, getCanvasWidth(), y);
             y+=spacing;
         }
+    }
+
+    private static DecimalFormat df = new DecimalFormat("0.00");
+
+    private static String stringifyPowerOf2(double d, long n){
+        int k = (int) Math.round(d / Math.pow(2, n));
+
+        if(k == 0)
+            return "";
+        //return k + ", "+n + ", d:" + df.format(d);
+
+        if(n >= 0)
+            return "" + (int) (k*Math.pow(2, n));
+
+        int denominator = (int) Math.pow(2, -n);
+        int gcd = Utils.gcd(k, denominator);
+        denominator = denominator/gcd;
+        if(denominator == 1)
+            return ""+k/gcd;
+
+        return "" + k/gcd + "/" + (int) Math.pow(2, -n) / gcd;
     }
 }

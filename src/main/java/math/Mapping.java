@@ -1,12 +1,10 @@
 package math;
 
 import graphics.CanvasRenderer;
-import graphics.CoordinateSystem;
 import graphics.Renderable;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
-import java.util.function.Function;
 
 public class Mapping implements Renderable {
     private final Expression mapping;

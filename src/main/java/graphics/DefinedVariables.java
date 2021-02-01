@@ -1,14 +1,10 @@
 package graphics;
 
-import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 public abstract class DefinedVariables {
@@ -59,7 +55,7 @@ public abstract class DefinedVariables {
 
 
     public static void removeAllAnonymousVariables(){
-        CanvasRenderer.getList().stream().filter(renderable -> !(renderable instanceof CoordinateSystem));
+        CanvasRenderer.getList().stream().filter(renderable -> !(renderable instanceof Grid));
     }
 
     public static void addAll(Variable... variables){
