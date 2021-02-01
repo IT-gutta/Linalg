@@ -45,11 +45,20 @@ public class Line implements Renderable {
         direction.transform(m);
     }
 
+    public Point intersection(Line l){
+        double a = start.getElement(0);double c = start.getElement(1);double e = l.getStart().getElement(0);double g = l.getStart().getElement(1);
+        double b = direction.getElement(0);double d = direction.getElement(1); double f = l.getDirection().getElement(0); double h = l.getDirection().getElement(1);
+        double t = (-a*h+c*f+e*h-f*g)/(b*h-d*f);
+        return getPoint(t);
+    }
+
     public Point getPoint(double parameter){
         return new Point(start.getElement(0) + parameter * direction.getElement(0), start.getElement(1) + parameter * direction.getElement(1));
     }
 
-
+    public Vector getDirection(){
+        return direction;
+    }
 
     public Point getStart(){
         return start;
@@ -157,7 +166,8 @@ public class Line implements Renderable {
 
 
     public static void main(String[] args) {
-        Line line = new Line(new Point(10, 2), new Vector(2, 2));
-        System.out.println(line.getYFromX(10));
+        Line line1 = new Line(new Point(10, 2), new Vector(1, 0));
+        Line line2 = new Line(new Point(-7,3), new Vector(0,1));
+        System.out.println(line1.intersection(line2));
     }
 }

@@ -32,12 +32,12 @@ public abstract class CanvasRenderer{
         DefinedVariables.add(cs, "Coordinate System");
 
 
-        Line line = new Line(new Point(fromCanvasX(getCanvasWidth()/2) + 2, fromCanvasY(getCanvasHeight()/2)), new Vector(2, 2));
-        Vector vector = new Vector(2, 2);
+//        Line line = new Line(new Point(fromCanvasX(getCanvasWidth()/2) + 2, fromCanvasY(getCanvasHeight()/2)), new Vector(2, 2));
+//        Vector vector = new Vector(2, 2);
 
-        DefinedVariables.add(vector, "vector");
-
-        DefinedVariables.add(line, "linje");
+//        DefinedVariables.add(vector, "vector");
+//
+//        DefinedVariables.add(line, "linje");
 
         updateNonCSLines();
 

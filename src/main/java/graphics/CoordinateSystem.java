@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import math.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.spi.CalendarNameProvider;
 
@@ -80,6 +81,7 @@ public class CoordinateSystem implements Renderable, Transformable {
         for(Line line : lines){
             line.updateCanvasPoints();
         }
+        System.out.println(Arrays.toString(lines));
     }
 
     public void transform(Matrix matrix){

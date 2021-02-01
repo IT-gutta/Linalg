@@ -94,6 +94,15 @@ public class Matrix{
 
         s += "]";
         return s;
+//        String s = "";
+//        int[] lengths = new int[width];
+//        Vector[] cols = getAllColumns();
+//        for(int i = 0; i<width; i++){
+//            int maxLength = 0;
+//            for(int j = 0; j<height; j++){
+//
+//            }
+//        }
     }
 
     public static void main(String[] args) {
