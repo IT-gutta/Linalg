@@ -1,14 +1,8 @@
 package graphics;
 
 import exceptions.IllegalNumberOfDimensionsException;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import math.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.spi.CalendarNameProvider;
 
 public class CoordinateSystem implements Renderable, Transformable {
     private Vector iHat;
@@ -17,22 +11,34 @@ public class CoordinateSystem implements Renderable, Transformable {
     private int verticalLines;
     private int horizontalLines;
     private boolean isHidden = false;
+    private double spaceBetween;
+    private double baseSpaceBetween;
 
 
 
     public CoordinateSystem(){
         iHat = new Vector(1,0);
         jHat = new Vector(0,1);
+        baseSpaceBetween = CanvasRenderer.getUnitSize();
         updateLines();
     }
 
     public void updateLines(){
+        //double u = CanvasRenderer.getUnitSize();
+        //spaceBetween = baseSpaceBetween + u - Math.floor(u) * baseSpaceBetween;
+
+
 
         double midX = CanvasRenderer.fromCanvasX(CanvasRenderer.getCanvasWidth() / 2);
         double midY = CanvasRenderer.fromCanvasY(CanvasRenderer.getCanvasHeight() / 2);
 
         double dX = Math.abs(midX) - Math.floor(Math.abs(midX));
         double dY = Math.abs(midY) - Math.floor(Math.abs(midY));
+
+        if(midX < 0)
+            dX*=-1;
+        if(midY < 0)
+            dY*=-1;
 
         int halfDiagonalInUnits = (int) (Math.sqrt(Math.pow(CanvasRenderer.getCanvasWidth(), 2) + Math.pow(CanvasRenderer.getCanvasHeight(), 2)) / 2 / CanvasRenderer.getUnitSize()) + 1;
 
@@ -81,7 +87,6 @@ public class CoordinateSystem implements Renderable, Transformable {
         for(Line line : lines){
             line.updateCanvasPoints();
         }
-        System.out.println(Arrays.toString(lines));
     }
 
     public void transform(Matrix matrix){
