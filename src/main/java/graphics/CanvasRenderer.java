@@ -192,6 +192,7 @@ public abstract class CanvasRenderer{
         double y = dY;
 
         graphicsContext.setStroke(Paint.valueOf("grey"));
+        graphicsContext.setFill(Paint.valueOf("black"));
         graphicsContext.setLineWidth(0.5);
         while(x <= getCanvasWidth()){
             graphicsContext.fillText(stringifyPowerOf2(fromCanvasX(x), n), x, originY-4);
@@ -220,7 +221,7 @@ public abstract class CanvasRenderer{
             return "" + (int) (k*Math.pow(2, n));
 
         int denominator = (int) Math.pow(2, -n);
-        int gcd = Utils.gcd(k, denominator);
+        int gcd = Math.abs(Utils.gcd(k, denominator));
         denominator = denominator/gcd;
         if(denominator == 1)
             return ""+k/gcd;

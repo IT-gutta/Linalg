@@ -5,6 +5,7 @@ import exceptions.RenderException;
 import graphics.CanvasRenderer;
 import graphics.Renderable;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Paint;
 
 import java.util.stream.DoubleStream;
 
@@ -13,6 +14,8 @@ public class Vector implements Renderable, Transformable {
     //todo add Arrow to vector
     private double[] vector;
     private boolean isHidden = false;
+    private final double arrowTipLength = 12;
+    private final double arrowSideLength = 7;
     public static void main(String[] args) {
         Vector v1 = new Vector(1,2,3);
         Vector v2 = new Vector(5,-1,3);
@@ -174,7 +177,27 @@ public class Vector implements Renderable, Transformable {
         if(getDimensions() != 2)
             throw new RenderException("Has to be a 2-dimensional vector to render");
         gc.strokeLine(CanvasRenderer.toCanvasX(0), CanvasRenderer.toCanvasY(0), CanvasRenderer.toCanvasX(getElement(0)), CanvasRenderer.toCanvasY(getElement(1)));
-        gc.fillOval(CanvasRenderer.toCanvasX(getElement(0)) - 5, CanvasRenderer.toCanvasY(getElement(1)) - 5, 10, 10);
+
+        //fill arrow
+        double angle = Math.atan2(getElement(1), getElement(0));
+
+        double startX = CanvasRenderer.toCanvasX(getElement(0)) - arrowTipLength * Math.cos(angle); //move back so tip can be at exact location
+        double startY = CanvasRenderer.toCanvasY(getElement(1)) + arrowTipLength * Math.sin(angle); //move back so tip can be at exact location
+
+        double[] xCoords = {
+                CanvasRenderer.toCanvasX(getElement(0)), //tipX
+                startX + arrowSideLength * Math.sin(angle), //rightX
+                startX - arrowSideLength * Math.sin(angle) //leftX
+        };
+
+        double[] yCoords = {
+                CanvasRenderer.toCanvasY(getElement(1)), //tipY
+                startY + arrowSideLength * Math.cos(angle), //rightY
+                startY - arrowSideLength * Math.cos(angle), //leftY
+        };
+
+        gc.setFill(Paint.valueOf("red"));
+        gc.fillPolygon(xCoords, yCoords, 3);
     }
 
 
