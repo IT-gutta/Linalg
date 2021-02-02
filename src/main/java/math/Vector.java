@@ -169,7 +169,7 @@ public class Vector implements Renderable, Transformable {
         lerpStartPos = Arrays.copyOf(vector, vector.length);
         lerpEndPos = matrix.transformVector(this).getVector();
         lerpProgress = 0f;
-        lerpSpeed = 0.01f;
+        lerpSpeed = 0.02f;
     }
 
 
@@ -183,16 +183,27 @@ public class Vector implements Renderable, Transformable {
 
     @Override
     public void render(GraphicsContext gc) throws RenderException {
+        if(getDimensions() != 2)
+            throw new RenderException("Has to be a 2-dimensional vector to render");
+
+        //linear interpolation
         if(lerpProgress < 1){
             lerpProgress += lerpSpeed;
             setElement(0, lerpStartPos[0] + lerpProgress * (lerpEndPos[0] - lerpStartPos[0]));
             setElement(1, lerpStartPos[1] + lerpProgress * (lerpEndPos[1] - lerpStartPos[1]));
         }
+        else if(lerpProgress > 1){
+            setElement(0, lerpEndPos[0]);
+            setElement(1, lerpEndPos[1]);
+            lerpProgress = 1;
+        }
+
 
         if(isHidden())
             return;
-        if(getDimensions() != 2)
-            throw new RenderException("Has to be a 2-dimensional vector to render");
+
+        gc.setStroke(Paint.valueOf("black"));
+        gc.setLineWidth(1.5);
         gc.strokeLine(CanvasRenderer.toCanvasX(0), CanvasRenderer.toCanvasY(0), CanvasRenderer.toCanvasX(getElement(0)), CanvasRenderer.toCanvasY(getElement(1)));
 
         //fill arrow

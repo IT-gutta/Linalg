@@ -4,10 +4,7 @@ import exceptions.IllegalNumberOfDimensionsException;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
-import math.Line;
-import math.Point;
-import math.Utils;
-import math.Vector;
+import math.*;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -30,12 +27,12 @@ public abstract class CanvasRenderer{
 
 
     public static void start(){
-        Line line = new Line(new Point(fromCanvasX(getCanvasWidth()/2) + 2, fromCanvasY(getCanvasHeight()/2)), new Vector(2, 2));
+        Matrix matrix = new Matrix(0, 1, -1, 0);
         Vector vector = new Vector(2, 2);
 
         DefinedVariables.add(vector, "vector");
+        DefinedVariables.add(new Variable<Matrix>(matrix, "m"));
 
-        DefinedVariables.add(line, "linje");
 
         accountForChanges();
 
