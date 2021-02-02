@@ -17,7 +17,7 @@ public class Vector implements Renderable, Transformable {
     private boolean isHidden = false;
     private double[] lerpStartPos;
     private double[] lerpEndPos;
-    private float lerpProgress;
+    private float lerpProgress = 1;
     private float lerpSpeed;
     private final double arrowTipLength = 12;
     private final double arrowSideLength = 7;
