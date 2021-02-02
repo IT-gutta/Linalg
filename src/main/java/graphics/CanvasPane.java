@@ -13,6 +13,7 @@ public class CanvasPane extends Pane {
     private double startDragY;
     private double endDragX;
     private double endDragY;
+    private double scrollScale = Math.pow(2,(double)1/5);
 
     public CanvasPane(double width, double height) {
         canvas = new Canvas(width, height);
@@ -64,9 +65,9 @@ public class CanvasPane extends Pane {
 
     private EventHandler<ScrollEvent> scrollEvent = event ->{
         if(event.getDeltaY() > 0)
-            CanvasRenderer.scaleUnitSize(1.2);
+            CanvasRenderer.scaleUnitSize(scrollScale);
         else
-            CanvasRenderer.scaleUnitSize(1/1.2);
+            CanvasRenderer.scaleUnitSize(1/scrollScale);
 
         CanvasRenderer.accountForChanges();
     };

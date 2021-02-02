@@ -17,6 +17,8 @@ import java.util.regex.Pattern;
 import java.util.stream.DoubleStream;
 
 public class TextInputEvent implements EventHandler<ActionEvent> {
+    //TODO Add more functions
+    //TODO Add derivatives
     private TextField inputField;
     private Matcher m;
 
