@@ -6,6 +6,7 @@ import graphics.CanvasRenderer;
 import graphics.Renderable;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.Arrays;
 import java.util.stream.DoubleStream;
 
 public class Vector implements Renderable, Transformable {
@@ -13,6 +14,11 @@ public class Vector implements Renderable, Transformable {
     //todo add Arrow to vector
     private double[] vector;
     private boolean isHidden = false;
+    private double[] lerpStartPos;
+    private double[] lerpEndPos;
+    private float lerpProgress;
+    private float lerpSpeed;
+
     public static void main(String[] args) {
         Vector v1 = new Vector(1,2,3);
         Vector v2 = new Vector(5,-1,3);
@@ -155,9 +161,14 @@ public class Vector implements Renderable, Transformable {
         return true;
     }
 
+    @Override
     public void transform(Matrix matrix){
-        vector = matrix.transformVector(this).getVector();
+        lerpStartPos = Arrays.copyOf(vector, vector.length);
+        lerpEndPos = matrix.transformVector(this).getVector();
+        lerpProgress = 0f;
+        lerpSpeed = 0.01f;
     }
+
 
     public Vector getTransformed(Matrix matrix){
         return matrix.transformVector(this);
@@ -169,6 +180,12 @@ public class Vector implements Renderable, Transformable {
 
     @Override
     public void render(GraphicsContext gc) throws RenderException {
+        if(lerpProgress < 1){
+            lerpProgress += lerpSpeed;
+            setElement(0, lerpStartPos[0] + lerpProgress * (lerpEndPos[0] - lerpStartPos[0]));
+            setElement(1, lerpStartPos[1] + lerpProgress * (lerpEndPos[1] - lerpStartPos[1]));
+        }
+
         if(isHidden())
             return;
         if(getDimensions() != 2)
