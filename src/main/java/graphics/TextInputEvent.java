@@ -100,8 +100,8 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
             if(m.find()){
                 Variable a = DefinedVariables.get(m.group(2));
                 Variable b = DefinedVariables.get(m.group(3));
-                if(a.getVariable() instanceof Point && b.getVariable() instanceof Point)
-                    DefinedVariables.add(new Variable<Line>(new Line((Point)a.getVariable(),(Point)b.getVariable()), m.group(1)));
+                /*if(a.getVariable() instanceof Point && b.getVariable() instanceof Point)
+                    DefinedVariables.add(new Variable<Line>(new Line((Point)a.getVariable(),(Point)b.getVariable()), m.group(1)));*/
                 if(a.getVariable() instanceof Point && b.getVariable() instanceof Vector)
                     DefinedVariables.add(new Variable<Line>(new Line((Point)a.getVariable(),(Vector)b.getVariable()),m.group(1)));
                 if(a.getVariable() instanceof Vector && b.getVariable() instanceof Point)

@@ -3,8 +3,6 @@ package math;
 import exceptions.IllegalNumberOfDimensionsException;
 import graphics.Variable;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Vectors {
@@ -56,7 +54,7 @@ public class Vectors {
     }
 
     public static Vector transform(Vector v, Matrix matrix){
-        return matrix.transformVector(v);
+        return matrix.transform(v);
     }
 
     public static double getMagnitude(Vector v){

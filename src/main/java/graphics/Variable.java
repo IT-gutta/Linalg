@@ -1,7 +1,7 @@
 package graphics;
 
 
-import graphics.tools.GenericEditButton;
+import graphics.tools.editbuttons.GenericEditButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import math.Mapping;

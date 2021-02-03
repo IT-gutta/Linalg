@@ -17,25 +17,22 @@ public class Complex implements Renderable {
         setPolarFromStandard();
     }
 
-    public void add(Complex other){
-        re += other.re;
-        im += other.im;
+    public Complex add(Complex other){
+        return ComplexNumbers.add(this, other);
     }
 
-    public void multiply(Complex other){
-        re = re*other.re - im*other.im;
-        im = re*other.im + im*other.re;
+    public Complex multiply(Complex other){
+        return ComplexNumbers.multiply(this, other);
     }
 
-    public void pow(double exponent){
-        length = Math.pow(length, exponent);
-        angle = angle * exponent;
-        setStandardFromPolar();
+    public Complex pow(double exponent){
+        double l = Math.pow(this.length, exponent);
+        double a = this.angle * exponent;
+        return ComplexNumbers.fromPolar(l, a);
     }
 
 
     public String asPolar(){
-
         return length + "e^i*" + angle;
     }
 
@@ -99,8 +96,6 @@ public class Complex implements Renderable {
 
     @Override
     public void render(GraphicsContext gc){
-        if(isHidden())
-            return;
         Point p = getCanvasPoint();
         gc.fillRect(p.getElement(0) - 5, p.getElement(1)- 5, 10,10);
     }

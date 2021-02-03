@@ -2,6 +2,7 @@ package graphics;
 
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import math.Grid;
 
 import java.util.HashMap;
 import java.util.Map;

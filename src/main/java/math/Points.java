@@ -14,7 +14,7 @@ public class Points {
     }
 
     public static Point transform(Point p, Matrix matrix){
-        return matrix.transformVector(p.toVector()).toPoint();
+        return matrix.transform(p.toVector()).toPoint();
     }
 
     public static Point add(Point p1, Point p2){

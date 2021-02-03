@@ -21,6 +21,7 @@ public abstract class CanvasRenderer{
     private static double offsetY;
     public static double unitSize;
     private static double baseSpacing;
+    public final static int deltaTime = 30;
 
 
 
@@ -29,8 +30,15 @@ public abstract class CanvasRenderer{
     public static void start(){
         Matrix matrix = new Matrix(0, 1, -1, 0);
         Vector vector = new Vector(2, 2);
+        Line line = new Line(-2, 0, 2, 2);
+
+        Grid grid = new Grid(0, 0, 5, 5, 1, 1);
+        LineSegment lineSegment = new LineSegment(-2, 0, -5, -5);
 
         DefinedVariables.add(vector, "vector");
+        DefinedVariables.add(line, "line");
+        DefinedVariables.add(grid, "grid");
+        DefinedVariables.add(lineSegment, "linesegment");
         DefinedVariables.add(new Variable<Matrix>(matrix, "m"));
 
 
@@ -45,11 +53,14 @@ public abstract class CanvasRenderer{
 
                         graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                         drawLines();
-                        list.forEach( r -> r.render(graphicsContext));
+                        list.forEach( r -> {
+                            if(!r.isHidden())
+                                r.render(graphicsContext);
+                        });
                     }
                 },
-                100,
-                30
+                0,
+                deltaTime
         );
     }
 
@@ -224,5 +235,13 @@ public abstract class CanvasRenderer{
             return ""+k/gcd;
 
         return "" + k/gcd + "/" + (int) Math.pow(2, -n) / gcd;
+    }
+
+
+    public static boolean insideCanvas(Point point){
+        Point actual = CanvasRenderer.toCanvasPoint(point);
+        if(actual.getElement(0) < 0 || actual.getElement(0) > CanvasRenderer.getCanvasWidth() || actual.getElement(1) < 0 || actual.getElement(1) > CanvasRenderer.getCanvasHeight())
+            return false;
+        return true;
     }
 }

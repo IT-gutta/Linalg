@@ -18,7 +18,8 @@ public class Vector implements Renderable, Transformable {
     private double[] lerpStartPos;
     private double[] lerpEndPos;
     private float lerpProgress = 1;
-    private float lerpSpeed;
+    private float lerpAngle;
+    private int lerpMillis;
     private final double arrowTipLength = 12;
     private final double arrowSideLength = 7;
 
@@ -166,15 +167,16 @@ public class Vector implements Renderable, Transformable {
 
     @Override
     public void transform(Matrix matrix){
-        lerpStartPos = Arrays.copyOf(vector, vector.length);
-        lerpEndPos = matrix.transformVector(this).getVector();
+        lerpStartPos = vector;
+        lerpEndPos = matrix.transform(getVector());
         lerpProgress = 0f;
-        lerpSpeed = 0.02f;
+        lerpAngle = 0f;
+        lerpMillis = 1000;
     }
 
 
     public Vector getTransformed(Matrix matrix){
-        return matrix.transformVector(this);
+        return matrix.transform(this);
     }
 
     public Point toPoint(){
@@ -187,16 +189,8 @@ public class Vector implements Renderable, Transformable {
             throw new RenderException("Has to be a 2-dimensional vector to render");
 
         //linear interpolation
-        if(lerpProgress < 1){
-            lerpProgress += lerpSpeed;
-            setElement(0, lerpStartPos[0] + lerpProgress * (lerpEndPos[0] - lerpStartPos[0]));
-            setElement(1, lerpStartPos[1] + lerpProgress * (lerpEndPos[1] - lerpStartPos[1]));
-        }
-        else if(lerpProgress > 1){
-            setElement(0, lerpEndPos[0]);
-            setElement(1, lerpEndPos[1]);
-            lerpProgress = 1;
-        }
+        if(lerpProgress < 1)
+            updateTransformProgress();
 
 
         if(isHidden())
@@ -226,6 +220,21 @@ public class Vector implements Renderable, Transformable {
 
         gc.setFill(Paint.valueOf("red"));
         gc.fillPolygon(xCoords, yCoords, 3);
+    }
+
+    private void updateTransformProgress() {
+        //lerping
+        lerpAngle += Math.PI/2 / lerpMillis * CanvasRenderer.deltaTime;
+        lerpProgress = (float) Math.sin(lerpAngle);
+
+        if(lerpAngle >= Math.PI/2) {
+            //fix vectors endpos
+            lerpProgress = 1f;
+            setElement(0, lerpEndPos[0]);
+            setElement(1, lerpEndPos[1]);
+        }
+        setElement(0, lerpStartPos[0] + lerpProgress * (lerpEndPos[0] - lerpStartPos[0]));
+        setElement(1, lerpStartPos[1] + lerpProgress * (lerpEndPos[1] - lerpStartPos[1]));
     }
 
 
