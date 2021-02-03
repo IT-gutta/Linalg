@@ -12,7 +12,7 @@ import java.util.stream.DoubleStream;
 
 public class Vector implements Renderable, Transformable {
 
-    //todo add Arrow to vector
+
     private double[] vector;
     private boolean isHidden = false;
     private double[] lerpStartPos;

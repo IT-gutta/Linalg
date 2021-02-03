@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 public class Matrix{
     //TODO fix toString
+    //TODO Add inverse
     private double[][] matrix;
     private int width;
     private int height;

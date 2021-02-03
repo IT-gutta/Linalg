@@ -4,4 +4,4 @@ public interface Transformable {
     void transform(Matrix matrix);
 }
 
-//todo linea interpolation
+//todo linear interpolation transformation
