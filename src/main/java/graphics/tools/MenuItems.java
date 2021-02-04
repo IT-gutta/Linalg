@@ -11,7 +11,7 @@ import math.Transformable;
 
 public abstract class MenuItems {
 
-    public static MenuItem transformMenuButton(Variable<? extends Transformable> variable){
+    public static MenuItem transformMenuItem(Variable<? extends Transformable> variable){
         MenuItem transform = new MenuItem("Transform");
         transform.setOnAction(actionEvent ->{
             TextInputDialog dialog = new TextInputDialog();

@@ -13,6 +13,7 @@ import regex.RegexUtils;
 import java.util.regex.Pattern;
 
 public class NewMenuButton extends MenuButton {
+    //TODO Add support for more variables (grid, linesegment and more) in the new menu window
     private TextInputDialog dialog;
 
     public NewMenuButton() {

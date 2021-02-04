@@ -4,10 +4,7 @@ import exceptions.IllegalNumberOfDimensionsException;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
-import math.Line;
-import math.Point;
-import math.Utils;
-import math.Vector;
+import math.*;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -24,18 +21,26 @@ public abstract class CanvasRenderer{
     private static double offsetY;
     public static double unitSize;
     private static double baseSpacing;
+    public final static int deltaTime = 30;
 
 
 
 
 
     public static void start(){
-        Line line = new Line(new Point(fromCanvasX(getCanvasWidth()/2) + 2, fromCanvasY(getCanvasHeight()/2)), new Vector(2, 2));
+        Matrix matrix = new Matrix(0, 1, -1, 0);
         Vector vector = new Vector(2, 2);
+        Line line = new Line(-2, 0, 2, 2);
+
+        Grid grid = new Grid(0, 0, 5, 5, 1, 1);
+        LineSegment lineSegment = new LineSegment(-2, 0, -5, -5);
 
         DefinedVariables.add(vector, "vector");
+        DefinedVariables.add(line, "line");
+        DefinedVariables.add(grid, "grid");
+        DefinedVariables.add(lineSegment, "linesegment");
+        DefinedVariables.add(new Variable<Matrix>(matrix, "m"));
 
-        DefinedVariables.add(line, "linje");
 
         accountForChanges();
 
@@ -48,11 +53,14 @@ public abstract class CanvasRenderer{
 
                         graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                         drawLines();
-                        list.forEach( r -> r.render(graphicsContext));
+                        list.forEach( r -> {
+                            if(!r.isHidden())
+                                r.render(graphicsContext);
+                        });
                     }
                 },
-                100,
-                30
+                0,
+                deltaTime
         );
     }
 
@@ -192,6 +200,7 @@ public abstract class CanvasRenderer{
         double y = dY;
 
         graphicsContext.setStroke(Paint.valueOf("grey"));
+        graphicsContext.setFill(Paint.valueOf("black"));
         graphicsContext.setLineWidth(0.5);
         while(x <= getCanvasWidth()){
             graphicsContext.fillText(stringifyPowerOf2(fromCanvasX(x), n), x, originY-4);
@@ -220,11 +229,19 @@ public abstract class CanvasRenderer{
             return "" + (int) (k*Math.pow(2, n));
 
         int denominator = (int) Math.pow(2, -n);
-        int gcd = Utils.gcd(k, denominator);
+        int gcd = Math.abs(Utils.gcd(k, denominator));
         denominator = denominator/gcd;
         if(denominator == 1)
             return ""+k/gcd;
 
         return "" + k/gcd + "/" + (int) Math.pow(2, -n) / gcd;
+    }
+
+
+    public static boolean insideCanvas(Point point){
+        Point actual = CanvasRenderer.toCanvasPoint(point);
+        if(actual.getElement(0) < 0 || actual.getElement(0) > CanvasRenderer.getCanvasWidth() || actual.getElement(1) < 0 || actual.getElement(1) > CanvasRenderer.getCanvasHeight())
+            return false;
+        return true;
     }
 }

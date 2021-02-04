@@ -11,10 +11,8 @@ public class CanvasPane extends Pane {
     private final Canvas canvas;
     private double startDragX;
     private double startDragY;
-    private double endDragX;
-    private double endDragY;
-    private double scrollScale = Math.pow(2,(double)1/5);
-
+    //private double scrollScale = Math.pow(2,(double)1/5);
+    private final double scrollScale = 0.1;
     public CanvasPane(double width, double height) {
         canvas = new Canvas(width, height);
         getChildren().add(canvas);
@@ -51,8 +49,8 @@ public class CanvasPane extends Pane {
     };
 
     private EventHandler<MouseEvent> endDragEvent = mouse -> {
-        endDragX = mouse.getX();
-        endDragY = mouse.getY();
+        double endDragX = mouse.getX();
+        double endDragY = mouse.getY();
 
         CanvasRenderer.changeOffsetX(endDragX - startDragX);
         CanvasRenderer.changeOffsetY(endDragY - startDragY);
@@ -63,11 +61,19 @@ public class CanvasPane extends Pane {
         startDragY = mouse.getY();
     };
 
+    private double clampScroll(double val){
+        if(Math.abs(val) < 1.05)
+            return 1.05;
+        if(Math.abs(val) > 1.2)
+            return 1.2;
+        return Math.abs(val);
+    }
+
     private EventHandler<ScrollEvent> scrollEvent = event ->{
         if(event.getDeltaY() > 0)
-            CanvasRenderer.scaleUnitSize(scrollScale);
+            CanvasRenderer.scaleUnitSize(clampScroll(event.getDeltaY()));
         else
-            CanvasRenderer.scaleUnitSize(1/scrollScale);
+            CanvasRenderer.scaleUnitSize(1/clampScroll(event.getDeltaY()));
 
         CanvasRenderer.accountForChanges();
     };

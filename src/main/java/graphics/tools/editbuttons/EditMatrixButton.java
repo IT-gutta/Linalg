@@ -1,4 +1,4 @@
-package graphics.tools;
+package graphics.tools.editbuttons;
 
 import graphics.Variable;
 import math.Matrix;

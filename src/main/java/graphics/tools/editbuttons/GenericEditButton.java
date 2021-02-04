@@ -1,4 +1,4 @@
-package graphics.tools;
+package graphics.tools.editbuttons;
 
 import graphics.Renderable;
 import graphics.Variable;
@@ -6,11 +6,8 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Modality;
-import math.Matrix;
-import math.Vector;
+import math.*;
 import regex.RegexUtils;
-
-import java.util.regex.Pattern;
 
 public class GenericEditButton extends MenuButton {
     private Variable variable;
@@ -36,9 +33,10 @@ public class GenericEditButton extends MenuButton {
             handleShowHide();
         });
 
+        getItems().addAll(deleteButton, changeNameButton);
 
-
-        getItems().addAll(deleteButton, changeNameButton, showHideButton);
+        if(variable.getVariable() instanceof Renderable)
+            getItems().add(showHideButton);
     }
 
 
@@ -87,11 +85,7 @@ public class GenericEditButton extends MenuButton {
 
     protected void handleShowHide(){
 
-        /// fixxxx
-        if(!(variable instanceof Renderable))
-            return;
-
-        Renderable renderable = (Renderable) variable;
+        Renderable renderable = (Renderable) variable.getVariable();
 
         if(renderable.isHidden())
             renderable.show();
@@ -111,6 +105,15 @@ public class GenericEditButton extends MenuButton {
 
         if(variable.getVariable() instanceof Matrix)
             return new EditMatrixButton((Variable<Matrix>) variable);
+
+        if(variable.getVariable() instanceof Line)
+            return new EditLineButton((Variable<Line>) variable);
+
+        if(variable.getVariable() instanceof Grid)
+            return new EditGridButton((Variable<Grid>) variable);
+
+        if(variable.getVariable() instanceof LineSegment)
+            return new EditLineSegmentButton((Variable<LineSegment>) variable);
 
         return new GenericEditButton(variable);
     }

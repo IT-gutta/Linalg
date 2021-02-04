@@ -1,13 +1,13 @@
 package math;
 
 import exceptions.IllegalNumberOfDimensionsException;
-import graphics.Renderable;
-import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Matrix{
     //TODO fix toString
+    //TODO Add inverse
     private double[][] matrix;
     private int width;
     private int height;
@@ -31,26 +31,40 @@ public class Matrix{
         matrix = dArr;
     }
 
-    public Vector transformVector(Vector vector) throws IllegalNumberOfDimensionsException {
+    public Vector transform(Vector vector) throws IllegalNumberOfDimensionsException {
         if(vector.getDimensions() != width)
             throw new IllegalNumberOfDimensionsException("The vectors number of dimensions doesnt match the matrix width");
-        Vector[] allColumns = getAllColumns();
-        for(int i = 0; i < width; i++){
-            allColumns[i].scale(vector.getElement(i));
-        }
-        return Vectors.add(allColumns);
+
+        return new Vector(transform(vector.getVector()));
     }
 
-    private Vector getColumn(int columnNumber){
+    public double[] transform(double[] coords){
+        double[][] allColumns = getAllColumns();
+
+        for(int i = 0; i < width; i++)
+            for(int j = 0; j < height; j++)
+                allColumns[i][j] *= coords[i];
+
+        double[] sum = new double[height];
+
+        for(int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                sum[j] += allColumns[i][j];
+            }
+        }
+        return sum;
+    }
+
+    private double[] getColumn(int columnNumber){
         double[] col = new double[height];
         for(int i = 0; i < height; i++){
             col[i] = get(i, columnNumber);
         }
-        return new Vector(col);
+        return col;
     }
 
-    public Vector[] getAllColumns(){
-        var vecs = new Vector[width];
+    public double[][] getAllColumns(){
+        var vecs = new double[width][height];
         for(int column = 0; column < width; column++){
             vecs[column] = getColumn(column);
         }
@@ -82,7 +96,7 @@ public class Matrix{
 
     @Override
     public String toString(){
-        String s = "[\n";
+        /*String s = "[\n";
         for(int y = 0; y < height; y++){
             s += "[";
             for(int x = 0; x < width; x++){
@@ -94,16 +108,28 @@ public class Matrix{
         }
 
         s += "]";
-        return s;
-//        String s = "";
-//        int[] lengths = new int[width];
-//        Vector[] cols = getAllColumns();
-//        for(int i = 0; i<width; i++){
-//            int maxLength = 0;
-//            for(int j = 0; j<height; j++){
-//
-//            }
-//        }
+        return s;*/
+        int[] paddings = new int[width];
+        for(int i = 0; i < height; i++){
+            for(int j = 0; j < width; j++){
+                if(Double.toString(matrix[i][j]).length() > paddings[j])
+                    paddings[j] = Double.toString(matrix[i][j]).length();
+            }
+        }
+        String str = "\n";
+        for(int i = 0; i < height; i++){
+            for(int j = 0; j < width; j++){
+                String inner = Double.toString(matrix[i][j]);
+                while(inner.length() < paddings[j])
+                    inner += " ";
+
+                str += inner;
+                if(j < width - 1)
+                    str += "\t";
+            }
+            str += "\n";
+        }
+        return str;
     }
 
     public static void main(String[] args) {
@@ -114,7 +140,7 @@ public class Matrix{
 
         Matrix m = new Matrix(arr);
 
-        System.out.println(m.transformVector(new Vector(2, 4)));
+        System.out.println(m.transform(new Vector(2, 4)));
         System.out.println(m);
     }
 }

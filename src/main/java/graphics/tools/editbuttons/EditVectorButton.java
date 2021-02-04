@@ -1,6 +1,8 @@
-package graphics.tools;
+package graphics.tools.editbuttons;
 
 import graphics.Variable;
+import graphics.tools.DoubleFormatter;
+import graphics.tools.MenuItems;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -58,6 +60,6 @@ public class EditVectorButton extends GenericEditButton {
 
 
         addMenuItem(edit);
-        addMenuItem(MenuItems.transformMenuButton(variable));
+        addMenuItem(MenuItems.transformMenuItem(variable));
     }
 }

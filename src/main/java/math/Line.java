@@ -2,17 +2,14 @@ package math;
 
 import graphics.CanvasRenderer;
 import graphics.Renderable;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
-public class Line implements Renderable {
+public class Line implements Renderable, Transformable {
     //TODO fix toString
     private Point start;
-    private Point end;
     private Vector direction;
     private boolean isHidden = false;
     private boolean isInsideCanvas;
@@ -22,29 +19,32 @@ public class Line implements Renderable {
     private double canvasEndX = 0;
     private double canvasEndY = 0;
 
+
+    //lerping
+    private double[] lerpStartPoint;
+    private double[] lerpEndPoint;
+    private double[] lerpStartDirection;
+    private double[] lerpEndDirection;
+    private float lerpProgress = 1;
+    private float lerpAngle;
+    private int lerpMillis;
+
     public Line(Point p, Vector v){
         start = p;
         direction = v;
         updateCanvasPoints();
     }
-
-
-    public Line(Point start, Point end){
-
-        this.start = start;
-        this.end = end;
-        direction = Vectors.fromPoints(start,end);
+    public Line(double pointX, double pointY, double directionX, double directionY){
+        start = new Point(pointX, pointY);
+        direction = new Vector(directionX, directionY);
         updateCanvasPoints();
     }
+
 
 //    private boolean isParallel(Line l){
 //        return true;
 //    }
 
-    public void transform(Matrix m){
-        start = start.transform(m);
-        direction.transform(m);
-    }
 
     public Point intersection(Line l){
         double a = start.getElement(0);double c = start.getElement(1);double e = l.getStart().getElement(0);double g = l.getStart().getElement(1);
@@ -65,10 +65,6 @@ public class Line implements Renderable {
         return start;
     }
 
-    public Point getEnd(){
-            return end;
-    }
-
     private double getA(){
         return direction.getElement(1) / direction.getElement(0);
     }
@@ -86,7 +82,8 @@ public class Line implements Renderable {
     }
 
     public void updateCanvasPoints(){
-        if(direction.getElement(0) <= 0.0001){
+        if(Math.abs(direction.getElement(0)) <= 0.001 / CanvasRenderer.unitSize){
+            //vertical linje
             isInsideCanvas = true;
             if(start.getElement(0) <= CanvasRenderer.fromCanvasX(CanvasRenderer.getCanvasWidth()) && start.getElement(0) >= CanvasRenderer.fromCanvasX(0))
                 isInsideCanvas = true;
@@ -148,16 +145,57 @@ public class Line implements Renderable {
 
     @Override
     public String toString(){
-        return "Start: " + start + ", End: " + end + ", Direction: " + direction;
+        return "Start: " + start + ", Direction: " + direction;
     }
 
     @Override
     public void render(GraphicsContext gc){
         //System.out.println(isInsideCanvas);
-        if(isHidden || !isInsideCanvas)
+        if(!isInsideCanvas)
             return;
 
+        //linear interpolation of transformation
+        if(lerpProgress < 1)
+            handleLerp();
+
         gc.strokeLine(canvasStartX, canvasStartY, canvasEndX, canvasEndY);
+    }
+
+    @Override
+    public void transform(Matrix m){
+        lerpStartPoint = start.getPoint();
+        lerpEndPoint = m.transform(start.getPoint());
+        lerpStartDirection = direction.getVector();
+        lerpEndDirection = m.transform(direction.getVector());
+        lerpProgress = 0f;
+        lerpAngle = 0f;
+        lerpMillis = 1000;
+    }
+
+
+    private void handleLerp() {
+        //lerping
+        lerpAngle += Math.PI/2 / lerpMillis * CanvasRenderer.deltaTime;
+        lerpProgress = (float) Math.sin(lerpAngle);
+
+        if(lerpAngle >= Math.PI/2) {
+            //fix the line in the endpos
+            lerpProgress = 1f;
+            start.setElement(0, lerpEndPoint[0]);
+            start.setElement(1, lerpEndPoint[1]);
+            direction.setElement(0, lerpEndDirection[0]);
+            direction.setElement(1, lerpEndDirection[1]);
+        }
+        //set startpoint
+        start.setElement(0, lerpStartPoint[0] + lerpProgress * (lerpEndPoint[0] - lerpStartPoint[0]));
+        start.setElement(1, lerpStartPoint[1] + lerpProgress * (lerpEndPoint[1] - lerpStartPoint[1]));
+
+        //set direction
+        direction.setElement(0, lerpStartDirection[0] + lerpProgress * (lerpEndDirection[0] - lerpStartDirection[0]));
+        direction.setElement(1, lerpStartDirection[1] + lerpProgress * (lerpEndDirection[1] - lerpStartDirection[1]));
+
+        //update canvas rendering of line
+        updateCanvasPoints();
     }
 
     @Override

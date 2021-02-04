@@ -21,7 +21,7 @@ public class Point implements Renderable {
     }
 
     public Point transform(Matrix matrix){
-        return matrix.transformVector(toVector()).toPoint();
+        return matrix.transform(toVector()).toPoint();
     }
 
     public int getDimensions(){
