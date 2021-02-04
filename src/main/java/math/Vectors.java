@@ -44,6 +44,9 @@ public class Vectors {
     public static double angle(Vector v, Vector u){
         return Math.acos(u.dot(v)/(u.getMagnitude()*v.getMagnitude()));
     }
+    public static double angle2(double[] v1, double[] v2){
+        return Math.atan2(v1[0]*v2[1]-v1[1]*v2[0],v1[0]*v2[0]+v1[1]*v2[1]);
+    }
 
     public static Vector scale(Vector v, double s){
         double[] d = new double[v.getDimensions()];
