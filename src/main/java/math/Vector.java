@@ -2,17 +2,17 @@ package math;
 
 import exceptions.IllegalNumberOfDimensionsException;
 import exceptions.RenderException;
-import graphics.CanvasRenderer;
 import graphics.Renderable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
+import graphics.CanvasRenderer;
 
 import java.util.Arrays;
 import java.util.stream.DoubleStream;
 
 public class Vector implements Renderable, Transformable {
 
-
+    private String name;
     private double[] vector;
     private boolean isHidden = false;
     private double[] lerpStartPos;
@@ -24,12 +24,16 @@ public class Vector implements Renderable, Transformable {
     private final double arrowSideLength = 7;
 
     public static void main(String[] args) {
-        Vector v1 = new Vector(1,2,3);
-        Vector v2 = new Vector(5,-1,3);
-        Vector v3 = new Vector(-5,6,1);
+        Vector v1 = new Vector("a",1,2,3);
+        Vector v2 = new Vector("b",5,-1,3);
+        Vector v3 = new Vector("c",-5,6,1);
         System.out.println(Vectors.add(v1,v2,v3).toString());
     }
 
+    public Vector(String name, double... args){
+        vector = args;
+        this.name = name;
+    }
     public Vector(double... args){
         vector = args;
     }
@@ -185,6 +189,7 @@ public class Vector implements Renderable, Transformable {
 
     @Override
     public void render(GraphicsContext gc) throws RenderException {
+
         if(getDimensions() != 2)
             throw new RenderException("Has to be a 2-dimensional vector to render");
 
@@ -195,6 +200,12 @@ public class Vector implements Renderable, Transformable {
 
         if(isHidden())
             return;
+
+        gc.setFill(Paint.valueOf("purple"));
+        if(name!=null){
+            Vector distance = Vectors.scale(this, 1/getMagnitude()/3);
+            gc.fillText(name, CanvasRenderer.toCanvasX(getElement(0)+distance.getElement(0)), CanvasRenderer.toCanvasY(getElement(1)+distance.getElement(1)));
+        }
 
         gc.setStroke(Paint.valueOf("black"));
         gc.setLineWidth(1.5);
