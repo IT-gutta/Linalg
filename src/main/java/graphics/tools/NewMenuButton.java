@@ -23,6 +23,7 @@ public class NewMenuButton extends MenuButton {
     public NewMenuButton() {
         super("New");
         setGraphic(Icons.of("addnew.png", 30));
+        getStyleClass().add("transparent-button");
         getStyleClass().add("new-menu-button");
         clearDialog();
 

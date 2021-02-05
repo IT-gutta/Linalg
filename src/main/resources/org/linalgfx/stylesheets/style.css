@@ -29,18 +29,16 @@
     -fx-cursor: hand;
 }
 
-.new-menu-button{
+.transparent-button{
     -fx-border-color: transparent;
     -fx-border-width: 1 1;
     -fx-background-radius: 0;
     -fx-background-color: transparent;
-    -fx-font-family:"Segoe UI", Helvetica, Arial, sans-serif;
-    -fx-font-size: 1.5em; /* 12 */
     -fx-text-fill: #828282;
     -fx-border-insets: 1 1 1 1, 0;
 }
 
-.new-menu-button:focused {
+.transparent-button:focused {
     -fx-border-color: transparent, black;
     -fx-border-width: 1 1;
     -fx-border-style: solid, segments(1, 2);
@@ -49,9 +47,15 @@
     -fx-text-fill: white;
 }
 
-.new-menu-button:hover {
+.transparent-button:hover {
     -fx-cursor: hand;
 }
+
+.new-menu-button{
+    /*-fx-font-family:"Segoe UI", Helvetica, Arial, sans-serif;*/
+    -fx-font-size: 1.5em; /* 12 */
+}
+
 
 .new-menu-item{
     -fx-font-size: 1.1em;

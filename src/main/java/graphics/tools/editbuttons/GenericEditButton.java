@@ -21,6 +21,7 @@ public class GenericEditButton extends MenuButton {
     public GenericEditButton(Variable variable){
         super("");
         setGraphic(Icons.of("settings.png", 20));
+        getStyleClass().add("transparent-button");
 
         this.variable = variable;
 

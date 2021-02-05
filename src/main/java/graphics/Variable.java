@@ -31,6 +31,8 @@ public class Variable<T> extends HBox {
         ShowHideButton showHideButton = new ShowHideButton(variable);
 
         colorPicker = new ColorPicker(Color.BLACK);
+        colorPicker.getStyleClass().add("transparent-button");
+        colorPicker.setPrefWidth(32.5);
 
         getChildren().addAll(showHideButton, colorPicker, editButton, text);
 
