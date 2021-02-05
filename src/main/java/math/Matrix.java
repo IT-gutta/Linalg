@@ -3,7 +3,6 @@ package math;
 import exceptions.IllegalNumberOfDimensionsException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Matrix{
     //TODO fix toString
@@ -16,6 +15,7 @@ public class Matrix{
         width = matrix[0].length;
         height = matrix.length;
     }
+
     public Matrix(int height, int width){
         this.height = height;
         this.width = width;
@@ -31,6 +31,18 @@ public class Matrix{
         matrix = dArr;
     }
 
+    public void invert2x2(){
+        double determinant = matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0];
+        if(determinant <= 0.0000001)
+            throw new RuntimeException("Matrix is invertible");
+        double s = 1d / determinant;
+
+        matrix = new double[][]{
+                {s*matrix[1][1], -s*matrix[0][1]},
+                {-s*matrix[1][0], s*matrix[0][0]}
+        };
+    }
+
     public Vector transform(Vector vector) throws IllegalNumberOfDimensionsException {
         if(vector.getDimensions() != width)
             throw new IllegalNumberOfDimensionsException("The vectors number of dimensions doesnt match the matrix width");
@@ -39,6 +51,7 @@ public class Matrix{
     }
 
     public double[] transform(double[] coords){
+
         double[][] allColumns = getAllColumns();
 
         for(int i = 0; i < width; i++)
