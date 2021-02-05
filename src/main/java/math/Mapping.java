@@ -54,7 +54,7 @@ public class Mapping implements Renderable{
 
     @Override
     public void render(GraphicsContext gc, String name, Paint paint) {
-        gc.setLineWidth(1);
+        gc.setLineWidth(1.5);
         gc.setStroke(paint);
         //non-transformable
         double prev = start;

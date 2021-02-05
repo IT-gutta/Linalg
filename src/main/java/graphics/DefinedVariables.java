@@ -2,7 +2,6 @@ package graphics;
 
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-import math.Grid;
 
 import java.util.HashMap;
 import java.util.List;
@@ -78,6 +77,6 @@ public abstract class DefinedVariables {
     }
 
     public static void updateText(){
-       vbox.getChildren().forEach(n -> ((Variable) n).updateText());
+       vbox.getChildren().forEach(n -> ((Variable) n).updateContentText());
     }
 }

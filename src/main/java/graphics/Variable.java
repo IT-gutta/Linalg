@@ -23,8 +23,10 @@ public class Variable<T> extends HBox {
     public Variable(T variable, String name){
         this.variable = variable;
         this.name = name;
-        contentField = new Text(variable.toString());
-        nameField = new Text(name + " =");
+        contentField = new Text();
+        nameField = new Text();
+        updateContentText();
+        updateNameText();
         nameField.getStyleClass().add("variable-name");
         contentField.getStyleClass().add("variable-content");
         HBox nameWrapper = new HBox(nameField, contentField);
@@ -86,14 +88,19 @@ public class Variable<T> extends HBox {
         DefinedVariables.remove(this);
 
         this.name = name;
-        nameField.setText(name + " =");
-        contentField.setText(variable.toString());
+        updateNameText();
+        updateContentText();
 
         DefinedVariables.add(this);
     }
 
-    public void updateText(){
+    public void updateContentText(){
         contentField.setText(variable.toString());
+    }
+
+    private void updateNameText(){
+        String[] classPath = variable.getClass().getName().split("\\.");
+        nameField.setText("(" + classPath[classPath.length-1] + ")\t" + name);
     }
 
     public void setVariable(T variable){

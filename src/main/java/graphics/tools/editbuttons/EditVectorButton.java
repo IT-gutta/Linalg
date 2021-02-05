@@ -38,7 +38,7 @@ public class EditVectorButton extends GenericEditButton {
             dialog.showAndWait().ifPresent(response ->{
                 variable.getVariable().setElement(0, (double) xInput.getTextFormatter().getValue());
                 variable.getVariable().setElement(1, (double) yInput.getTextFormatter().getValue());
-                getOwner().updateText();
+                getOwner().updateContentText();
 
 
 
