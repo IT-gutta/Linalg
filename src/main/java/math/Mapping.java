@@ -2,16 +2,13 @@ package math;
 
 import graphics.CanvasRenderer;
 import graphics.Renderable;
+import graphics.Variable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class Mapping implements Renderable{
     //TODO fix problems related to rendering
+    private Variable<Mapping> wrapper;
     private final Expression mapping;
     private final double start;
     private final double end;
@@ -46,12 +43,19 @@ public class Mapping implements Renderable{
         return mapping.evaluate(x);
     }
 
-    public void render(GraphicsContext gc){
-        if(isHidden())
-            return;
 
+    public static void main(String[] args) {
+    }
+
+    @Override
+    public String toString(){
+        return mapping.getExpression();
+    }
+
+    @Override
+    public void render(GraphicsContext gc, String name, Paint paint) {
         gc.setLineWidth(1);
-        gc.setStroke(Paint.valueOf("red"));
+        gc.setStroke(paint);
         //non-transformable
         double prev = start;
         for(int x = 0; x < CanvasRenderer.getCanvasWidth(); x+= step){
@@ -60,18 +64,6 @@ public class Mapping implements Renderable{
 
             prev = x;
         }
-
-        /*for(Point p:canvasPoints){
-            gc.fillOval(p.getElement(0),p.getElement(1),2,2);
-        }*/
-    }
-
-    public static void main(String[] args) {
-    }
-
-    @Override
-    public String toString(){
-        return mapping.getExpression();
     }
 
     @Override

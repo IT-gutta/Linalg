@@ -88,24 +88,24 @@ public class App extends Application {
     }
 
 
-    public static void saveToFile(){
-        try {
-            FileOutputStream fos = new FileOutputStream("/list.out");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(CanvasRenderer.getList());
-            oos.flush();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public static void loadFromFile(){
-        try {
-            FileInputStream fos = new FileInputStream("/list.out");
-            ObjectInputStream oos = new ObjectInputStream(fos);
-            CanvasRenderer.setList((List<Renderable>) oos.readObject());
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
+//    public static void saveToFile(){
+//        try {
+//            FileOutputStream fos = new FileOutputStream("/list.out");
+//            ObjectOutputStream oos = new ObjectOutputStream(fos);
+//            //oos.writeObject(DefinedVariables.getVBox().getChildren());
+//            oos.flush();
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public static void loadFromFile(){
+//        try {
+//            FileInputStream fos = new FileInputStream("/list.out");
+//            ObjectInputStream oos = new ObjectInputStream(fos);
+//            //Def.setList((List<Renderable>) oos.readObject());
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 }

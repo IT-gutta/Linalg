@@ -2,6 +2,7 @@ package math;
 
 import graphics.CanvasRenderer;
 import graphics.Renderable;
+import graphics.Variable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class Line implements Renderable, Transformable {
     //TODO fix toString
+    private Variable<Line> wrapper;
     private Point start;
     private Vector direction;
     private boolean isHidden = false;
@@ -150,7 +152,7 @@ public class Line implements Renderable, Transformable {
     }
 
     @Override
-    public void render(GraphicsContext gc){
+    public void render(GraphicsContext gc, String name, Paint paint){
         //linear interpolation of transformation
         handleLerp();
 
@@ -159,10 +161,11 @@ public class Line implements Renderable, Transformable {
         if(!isInsideCanvas)
             return;
 
-        gc.setStroke(Paint.valueOf("black"));
+        gc.setStroke(paint);
         gc.setLineWidth(1);
         gc.strokeLine(canvasStartX, canvasStartY, canvasEndX, canvasEndY);
     }
+
 
     @Override
     public void transform(Matrix m){

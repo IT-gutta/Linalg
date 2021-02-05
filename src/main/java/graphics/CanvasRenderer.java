@@ -8,14 +8,9 @@ import javafx.scene.paint.Paint;
 import math.*;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public abstract class CanvasRenderer{
-    private static List<Renderable> list = new ArrayList<>();
     private static Canvas canvas;
     private static GraphicsContext graphicsContext;
     private static double offsetX;
@@ -53,37 +48,16 @@ public abstract class CanvasRenderer{
                 deltaTime = (now - lastFrameTime) / 1000000;
                 graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 CanvasRenderer.drawLines();
-                list.forEach( r -> {
-                    if(!r.isHidden())
-                        r.render(graphicsContext);
+                DefinedVariables.getRenderableVariables().forEach(r -> {
+                    r.getRenderable().render(graphicsContext, r.getName(), r.getPaint());
                 });
 
                 lastFrameTime = now;
 
-                DefinedVariables.getVBox().getChildren().forEach(n -> ((Variable) n).updateText());
+                DefinedVariables.updateText();
             }
         };
         animationTimer.start();
-    }
-
-    public static void add(Renderable r){
-        list.add(r);
-    }
-
-    public static void addAll(Renderable... rs){
-        list.addAll(List.of(rs));
-    }
-
-    public static boolean contains(Renderable r){
-        return list.contains(r);
-    }
-
-    public static void removeAll(List<Renderable> renderables){
-        list.removeAll(renderables);
-    }
-
-    public static boolean remove(Renderable renderable){
-        return list.remove(renderable);
     }
 
 
@@ -93,15 +67,6 @@ public abstract class CanvasRenderer{
 
     public static void setCanvas(Canvas canvas) {
         CanvasRenderer.canvas = canvas;
-    }
-
-
-    public static List<Renderable> getList(){
-        return list;
-    }
-
-    public static void setList(List<Renderable> list){
-        CanvasRenderer.list = list;
     }
 
     public static double getUnitSize(){
@@ -148,10 +113,9 @@ public abstract class CanvasRenderer{
 
     public static void accountForChanges(){
         //oppdaterer alle linjer
-        for(Renderable renderable : list){
-            if(renderable instanceof Line && !renderable.isHidden())
-                ((Line) renderable).updateCanvasPoints();
-        }
+        for(Variable<Renderable> variable : DefinedVariables.getRenderableVariables())
+            if(variable.getVariable() instanceof Line)
+                ((Line) variable.getVariable()).updateCanvasPoints();
     }
 
 
@@ -246,4 +210,6 @@ public abstract class CanvasRenderer{
             return false;
         return true;
     }
+
+
 }

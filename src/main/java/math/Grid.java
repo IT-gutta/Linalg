@@ -1,11 +1,12 @@
 package math;
 
-import exceptions.IllegalNumberOfDimensionsException;
 import graphics.Renderable;
+import graphics.Variable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 
 public class Grid implements Renderable, Transformable {
+    private Variable<Grid> wrapper;
     private Vector iHat;
     private Vector jHat;
     private LineSegment[] lineSegments;
@@ -49,14 +50,15 @@ public class Grid implements Renderable, Transformable {
 
 
     @Override
-    public void render(GraphicsContext gc) {
-        gc.setStroke(Paint.valueOf("blue"));
+    public void render(GraphicsContext gc, String name, Paint paint) {
+        gc.setStroke(paint);
         //gc.setLineWidth(1);
         for(LineSegment line : lineSegments) {
             line.handleLerp();
-            line.render(gc);
+            line.render(gc, name, paint);
         }
     }
+
 
     @Override
     public void transform(Matrix matrix){

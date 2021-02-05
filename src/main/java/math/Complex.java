@@ -2,6 +2,7 @@ package math;
 
 import graphics.CanvasRenderer;
 import graphics.Renderable;
+import graphics.Variable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 
@@ -11,17 +12,10 @@ public class Complex implements Renderable {
     private double length;
     private double angle;
     private boolean isHidden = false;
-    private String name;
 
     public Complex(double re, double im){
         this.re = re;
         this.im = im;
-        setPolarFromStandard();
-    }
-    public Complex(String name, double re, double im){
-        this.re = re;
-        this.im = im;
-        this.name = name;
         setPolarFromStandard();
     }
 
@@ -103,15 +97,16 @@ public class Complex implements Renderable {
     }
 
     @Override
-    public void render(GraphicsContext gc){
+    public void render(GraphicsContext gc, String name, Paint paint){
         Point p = getCanvasPoint();
         gc.fillRect(p.getElement(0) - 5, p.getElement(1)- 5, 10,10);
         if(name!=null){
             Vector d = Vectors.scale(Vectors.fromComplex(this), 1/length/3);
-            gc.setFill(Paint.valueOf("purple"));
+            gc.setFill(paint);
             gc.fillText(name, CanvasRenderer.toCanvasX(re+d.getElement(0)), CanvasRenderer.toCanvasY(im+d.getElement(1)));
         }
     }
+
 
     @Override
     public boolean isHidden() {
