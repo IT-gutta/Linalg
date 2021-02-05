@@ -5,9 +5,12 @@ import graphics.tools.DoubleFormatter;
 import graphics.tools.MenuItems;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import math.Vector;
+import org.linalgfx.App;
 import regex.RegexUtils;
 
 public class EditVectorButton extends GenericEditButton {
@@ -16,7 +19,7 @@ public class EditVectorButton extends GenericEditButton {
         super(variable);
         this.variable = variable;
 
-        MenuItem edit = new MenuItem("Edit");
+        MenuItem edit = new MenuItem("Edit", new ImageView(new Image(App.resourceURL("images/hammer.png"))));
         edit.setOnAction(actionEvent -> {
             clearDialog();
 

@@ -5,28 +5,31 @@ import graphics.tools.editbuttons.GenericEditButton;
 import graphics.tools.editbuttons.ShowHideButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 import math.Mapping;
 
 public class Variable<T> extends HBox {
     private T variable;
     private String name;
-    private Text text;
+    private final Text text;
     private ShowHideButton showHideButton;
     private final GenericEditButton editButton;
+    //private final Pane spacer = new Pane();
 
 
     public Variable(T variable, String name){
         this.variable = variable;
         this.name = name;
         text = new Text(toString());
+        text.getStyleClass().add("variable-text");
         editButton = GenericEditButton.getEditButton(this);
+        showHideButton = new ShowHideButton(variable);
 
-        if(variable instanceof Renderable){
-            showHideButton = new ShowHideButton((Renderable) variable);
-            getChildren().add(showHideButton);
-        }
-        getChildren().addAll(text, editButton);
+
+
+        getChildren().addAll(showHideButton, editButton, text);
 
         getStyleClass().add("variable");
     }

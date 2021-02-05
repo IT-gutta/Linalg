@@ -1,29 +1,35 @@
 package graphics.tools.editbuttons;
 
+import graphics.Icons;
 import graphics.Renderable;
 import graphics.Variable;
+import javafx.scene.ImageCursor;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import math.*;
+import org.linalgfx.App;
 import regex.RegexUtils;
 
 public class GenericEditButton extends MenuButton {
-    private Variable variable;
+    private final Variable variable;
     protected TextInputDialog dialog;
 
-    private MenuItem deleteButton = new MenuItem("Delete");
-    private MenuItem changeNameButton = new MenuItem("Edit Name");
-
     public GenericEditButton(Variable variable){
-        super("Edit");
+        super("");
+        setGraphic(Icons.of("settings.png", 20));
+
         this.variable = variable;
 
+        MenuItem deleteButton = new MenuItem("Delete", Icons.of("delete.png", 20));
         deleteButton.setOnAction(ev ->{
             delete();
         });
 
+        MenuItem changeNameButton = new MenuItem("Edit Name", Icons.of("changename.png", 20));
         changeNameButton.setOnAction(ev ->{
             handleChangeName(false);
         });
