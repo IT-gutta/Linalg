@@ -20,9 +20,22 @@
     -fx-font-family: Arial;
     -fx-spacing: 10px;
     -fx-padding: 5px;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: black;
 }
-.variable-text{
+.variable-name {
+    -fx-font-size: 1.2em;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+}
 
+.variable-content{
+    -fx-font-size: 1.1em;
+}
+
+.variable-text{
+    -fx-spacing: 20px;
+    -fx-padding: 10px;
 }
 
 .showhide:hover {

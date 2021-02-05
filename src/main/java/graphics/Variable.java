@@ -4,10 +4,7 @@ package graphics;
 import graphics.tools.editbuttons.GenericEditButton;
 import graphics.tools.editbuttons.ShowHideButton;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
@@ -16,7 +13,8 @@ import math.Mapping;
 public class Variable<T> extends HBox {
     private T variable;
     private String name;
-    private final Text text;
+    private final Text contentField;
+    private final Text nameField;
     private final ColorPicker colorPicker;
     private final boolean isRenderable;
     //private final Pane spacer = new Pane();
@@ -25,8 +23,13 @@ public class Variable<T> extends HBox {
     public Variable(T variable, String name){
         this.variable = variable;
         this.name = name;
-        text = new Text(toString());
-        text.getStyleClass().add("variable-text");
+        contentField = new Text(variable.toString());
+        nameField = new Text(name + " =");
+        nameField.getStyleClass().add("variable-name");
+        contentField.getStyleClass().add("variable-content");
+        HBox nameWrapper = new HBox(nameField, contentField);
+        nameWrapper.getStyleClass().add("variable-text");
+
         GenericEditButton editButton = GenericEditButton.getEditButton(this);
         ShowHideButton showHideButton = new ShowHideButton(variable);
 
@@ -34,7 +37,10 @@ public class Variable<T> extends HBox {
         colorPicker.getStyleClass().add("transparent-button");
         colorPicker.setPrefWidth(32.5);
 
-        getChildren().addAll(showHideButton, colorPicker, editButton, text);
+        //DefinedVariables.getVBox().getChildren().add(nameWrapper);
+
+
+        getChildren().addAll(showHideButton, colorPicker, editButton, nameWrapper);
 
         getStyleClass().add("variable");
 
@@ -62,7 +68,7 @@ public class Variable<T> extends HBox {
     }
 
     public boolean equals(Variable other){
-        return other.variable.equals(getVariable());
+        return other.variable.equals(variable);
     }
 
     public String getName(){
@@ -80,17 +86,18 @@ public class Variable<T> extends HBox {
         DefinedVariables.remove(this);
 
         this.name = name;
-        text.setText(toString());
+        nameField.setText(name + " =");
+        contentField.setText(variable.toString());
 
         DefinedVariables.add(this);
     }
 
     public void updateText(){
-        text.setText(toString());
+        contentField.setText(variable.toString());
     }
 
     public void setVariable(T variable){
         this.variable = variable;
-        text.setText(toString());
+        contentField.setText(variable.toString());
     }
 }
