@@ -2,6 +2,8 @@ package graphics;
 
 
 import graphics.tools.editbuttons.GenericEditButton;
+import graphics.tools.editbuttons.ShowHideButton;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import math.Mapping;
@@ -10,7 +12,8 @@ public class Variable<T> extends HBox {
     private T variable;
     private String name;
     private Text text;
-    private GenericEditButton editButton;
+    private ShowHideButton showHideButton;
+    private final GenericEditButton editButton;
 
 
     public Variable(T variable, String name){
@@ -19,17 +22,14 @@ public class Variable<T> extends HBox {
         text = new Text(toString());
         editButton = GenericEditButton.getEditButton(this);
 
-        getChildren().add(text);
-
-        if(editButton != null)
-            getChildren().add(editButton);
-
+        if(variable instanceof Renderable){
+            showHideButton = new ShowHideButton((Renderable) variable);
+            getChildren().add(showHideButton);
+        }
+        getChildren().addAll(text, editButton);
 
         getStyleClass().add("variable");
     }
-
-
-
 
 
     public void delete(){

@@ -1,6 +1,7 @@
 package graphics;
 
 import exceptions.IllegalNumberOfDimensionsException;
+import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
@@ -21,7 +22,7 @@ public abstract class CanvasRenderer{
     private static double offsetY;
     public static double unitSize;
     private static double baseSpacing;
-    public final static int deltaTime = 30;
+    public static long deltaTime;
 
 
 
@@ -45,23 +46,24 @@ public abstract class CanvasRenderer{
         accountForChanges();
 
 
+        AnimationTimer animationTimer = new AnimationTimer() {
+            long lastFrameTime;
+            @Override
+            public void handle(long now) {
+                deltaTime = (now - lastFrameTime) / 1000000;
+                graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                CanvasRenderer.drawLines();
+                list.forEach( r -> {
+                    if(!r.isHidden())
+                        r.render(graphicsContext);
+                });
 
-        new Timer().scheduleAtFixedRate(
-                new TimerTask() {
-                    @Override
-                    public void run() {
+                lastFrameTime = now;
 
-                        graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                        drawLines();
-                        list.forEach( r -> {
-                            if(!r.isHidden())
-                                r.render(graphicsContext);
-                        });
-                    }
-                },
-                0,
-                deltaTime
-        );
+                DefinedVariables.getVBox().getChildren().forEach(n -> ((Variable) n).updateText());
+            }
+        };
+        animationTimer.start();
     }
 
     public static void add(Renderable r){
@@ -145,9 +147,9 @@ public abstract class CanvasRenderer{
 
 
     public static void accountForChanges(){
-        //oppdaterer alle linjer som ikke er i coordinatsystemet
+        //oppdaterer alle linjer
         for(Renderable renderable : list){
-            if(renderable instanceof Line)
+            if(renderable instanceof Line && !renderable.isHidden())
                 ((Line) renderable).updateCanvasPoints();
         }
     }

@@ -57,7 +57,7 @@ public class App extends Application {
         textField.setOnAction(new TextInputEvent(textField));
 
         scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("stylesheets/style.css").toExternalForm());
+        scene.getStylesheets().add(resourceURL("stylesheets/style.css"));
         stage.setScene(scene);
 
         stage.setMinHeight(500);
@@ -69,6 +69,10 @@ public class App extends Application {
     @Override
     public void stop(){
         System.exit(0);
+    }
+
+    public static String resourceURL(String path){
+        return App.class.getResource(path).toExternalForm();
     }
 
 

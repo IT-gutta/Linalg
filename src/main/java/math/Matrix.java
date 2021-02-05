@@ -55,6 +55,21 @@ public class Matrix{
         return sum;
     }
 
+    public Matrix multiply(Matrix other){
+        if(width != other.height)
+            throw new IllegalArgumentException("Illegal size of matrices");
+        double[][] m = new double[height][other.width];
+
+        for(int i = 0; i < height; i++){
+            for(int j = 0; j < other.width; j++){
+                for(int k = 0; k < width; k++){
+                    m[i][j] += matrix[i][k] * other.matrix[k][j];
+                }
+            }
+        }
+        return new Matrix(m);
+    }
+
     private double[] getColumn(int columnNumber){
         double[] col = new double[height];
         for(int i = 0; i < height; i++){

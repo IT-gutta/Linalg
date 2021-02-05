@@ -17,15 +17,7 @@ public class Vector implements Renderable, Transformable {
     private double[] vector;
     private boolean isHidden = false;
     private Lerper lerper;
-    /*private double[] lerpStartPos;
-    private double[] lerpEndPos;
-    private double lerpProgress = 1;
-    private double lerpSineProgress;
-    private double lerpStartAngle;
-    private double lerpEndAngle;
-    private double lerpStartLength;
-    private double lerpEndLength;
-    private int lerpMillis;*/
+
     private final double arrowTipLength = 12;
     private final double arrowSideLength = 7;
 
@@ -175,15 +167,6 @@ public class Vector implements Renderable, Transformable {
         return true;
     }
 
-    @Override
-    public void transform(Matrix matrix){
-        lerpStartPos = vector;
-        lerpEndPos = matrix.transform(getVector());
-        lerpProgress = 0f;
-        lerpAngle = 0f;
-        lerpMillis = 1000;
-    }
-
 
     public Vector getTransformed(Matrix matrix){
         return matrix.transform(this);
@@ -199,14 +182,7 @@ public class Vector implements Renderable, Transformable {
             throw new RenderException("Has to be a 2-dimensional vector to render");
 
         //linear interpolation
-        if(lerper != null){
-            lerper.handle();
-            //0 is the length, and 1 is the angle
-            setElement(0, lerper.get(0) * Math.cos(lerper.get(1)));
-            setElement(1, lerper.get(0) * Math.sin(lerper.get(1)));
-            if(lerper.isFinished())
-                lerper = null;
-        }
+        handleLerp();
 
 
         if(isHidden())
@@ -246,13 +222,28 @@ public class Vector implements Renderable, Transformable {
     }
 
     @Override
-    public void transform(Matrix matrix){
-        double[] endPos = matrix.transform(getVector());
+    public void transform(Matrix m){
+        transform(m, 1000);
+    }
+
+    public void transform(Matrix m, int millis){
+        double[] endPos = m.transform(getVector());
         double startAngle = Math.atan2(vector[1], vector[0]);
         double endAngle = startAngle + Vectors.angle2(vector, endPos);
         double startLength = Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2));
         double endLength = Math.sqrt(Math.pow(endPos[0], 2) + Math.pow(endPos[1], 2));
-        lerper = new Lerper(1000, new double[]{startLength, startAngle}, new double[]{endLength, endAngle});
+        lerper = new Lerper(millis, new double[]{startLength, startAngle}, new double[]{endLength, endAngle});
+    }
+
+    public void handleLerp(){
+        if(lerper != null){
+            lerper.handle();
+            //0 is the length, and 1 is the angle
+            setElement(0, lerper.get(0) * Math.cos(lerper.get(1)));
+            setElement(1, lerper.get(0) * Math.sin(lerper.get(1)));
+            if(lerper.isFinished())
+                lerper = null;
+        }
     }
 
 

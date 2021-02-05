@@ -15,7 +15,6 @@ public class GenericEditButton extends MenuButton {
 
     private MenuItem deleteButton = new MenuItem("Delete");
     private MenuItem changeNameButton = new MenuItem("Edit Name");
-    private MenuItem showHideButton = new MenuItem("Show/Hide");
 
     public GenericEditButton(Variable variable){
         super("Edit");
@@ -29,14 +28,7 @@ public class GenericEditButton extends MenuButton {
             handleChangeName(false);
         });
 
-        showHideButton.setOnAction(ev->{
-            handleShowHide();
-        });
-
         getItems().addAll(deleteButton, changeNameButton);
-
-        if(variable.getVariable() instanceof Renderable)
-            getItems().add(showHideButton);
     }
 
 
@@ -83,17 +75,6 @@ public class GenericEditButton extends MenuButton {
     }
 
 
-    protected void handleShowHide(){
-
-        Renderable renderable = (Renderable) variable.getVariable();
-
-        if(renderable.isHidden())
-            renderable.show();
-        else
-            renderable.hide();
-    }
-
-
     public Variable getOwner(){
         return variable;
     }
@@ -114,6 +95,9 @@ public class GenericEditButton extends MenuButton {
 
         if(variable.getVariable() instanceof LineSegment)
             return new EditLineSegmentButton((Variable<LineSegment>) variable);
+
+        if(variable.getVariable() instanceof Point)
+            return new EditPointButton((Variable<Point>) variable);
 
         return new GenericEditButton(variable);
     }

@@ -3,6 +3,7 @@ package math;
 import graphics.CanvasRenderer;
 import graphics.Renderable;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,51 +151,34 @@ public class Line implements Renderable, Transformable {
 
     @Override
     public void render(GraphicsContext gc){
+        //linear interpolation of transformation
+        handleLerp();
+
+
         //System.out.println(isInsideCanvas);
         if(!isInsideCanvas)
             return;
 
-        //linear interpolation of transformation
-        if(lerpProgress < 1)
-            handleLerp();
-
+        gc.setStroke(Paint.valueOf("black"));
+        gc.setLineWidth(1);
         gc.strokeLine(canvasStartX, canvasStartY, canvasEndX, canvasEndY);
     }
 
     @Override
     public void transform(Matrix m){
-        lerpStartPoint = start.getPoint();
-        lerpEndPoint = m.transform(start.getPoint());
-        lerpStartDirection = direction.getVector();
-        lerpEndDirection = m.transform(direction.getVector());
-        lerpProgress = 0f;
-        lerpAngle = 0f;
-        lerpMillis = 1000;
+        transform(m, 1000);
+    }
+
+    public void transform(Matrix m, int millis){
+        start.transform(m, millis);
+        direction.transform(m, millis);
     }
 
 
     private void handleLerp() {
         //lerping
-        lerpAngle += Math.PI/2 / lerpMillis * CanvasRenderer.deltaTime;
-        lerpProgress = (float) Math.sin(lerpAngle);
-
-        if(lerpAngle >= Math.PI/2) {
-            //fix the line in the endpos
-            lerpProgress = 1f;
-            start.setElement(0, lerpEndPoint[0]);
-            start.setElement(1, lerpEndPoint[1]);
-            direction.setElement(0, lerpEndDirection[0]);
-            direction.setElement(1, lerpEndDirection[1]);
-        }
-        //set startpoint
-        start.setElement(0, lerpStartPoint[0] + lerpProgress * (lerpEndPoint[0] - lerpStartPoint[0]));
-        start.setElement(1, lerpStartPoint[1] + lerpProgress * (lerpEndPoint[1] - lerpStartPoint[1]));
-
-        //set direction
-        direction.setElement(0, lerpStartDirection[0] + lerpProgress * (lerpEndDirection[0] - lerpStartDirection[0]));
-        direction.setElement(1, lerpStartDirection[1] + lerpProgress * (lerpEndDirection[1] - lerpStartDirection[1]));
-
-        //update canvas rendering of line
+        direction.handleLerp();
+        start.handleLerp();
         updateCanvasPoints();
     }
 
