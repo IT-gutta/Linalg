@@ -98,11 +98,11 @@ public class Complex implements Renderable {
 
     @Override
     public void render(GraphicsContext gc, String name, Paint paint){
+        gc.setFill(paint);
         Point p = getCanvasPoint();
         gc.fillRect(p.getElement(0) - 5, p.getElement(1)- 5, 10,10);
         if(name!=null){
             Vector d = Vectors.scale(Vectors.fromComplex(this), 1/length/3);
-            gc.setFill(paint);
             gc.fillText(name, CanvasRenderer.toCanvasX(re+d.getElement(0)), CanvasRenderer.toCanvasY(im+d.getElement(1)));
         }
     }
