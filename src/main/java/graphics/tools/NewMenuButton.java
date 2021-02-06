@@ -1,13 +1,17 @@
 package graphics.tools;
 
 import graphics.DefinedVariables;
+import graphics.Icons;
 import graphics.Variable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import math.*;
+import org.linalgfx.App;
 import regex.RegexUtils;
 
 import java.util.regex.Pattern;
@@ -17,10 +21,15 @@ public class NewMenuButton extends MenuButton {
     private TextInputDialog dialog;
 
     public NewMenuButton() {
-        super("Add New");
+        super("New");
+        setGraphic(Icons.of("addnew.png", 30));
+        getStyleClass().add("transparent-button");
+        getStyleClass().add("new-menu-button");
         clearDialog();
 
-        MenuItem vector = new MenuItem("2DVector");
+
+        MenuItem vector = new MenuItem("2DVector", Icons.of("vector.png", 20));
+        vector.getStyleClass().add("new-menu-item");
         vector.setOnAction(actionEvent -> {
             clearDialog();
             var vectorInput = new HBox();
@@ -36,11 +45,12 @@ public class NewMenuButton extends MenuButton {
                 if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
-                DefinedVariables.add(new Vector(dialog.getEditor().getText(), (double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
+                DefinedVariables.add(new Vector((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
             });
         });
 
-        MenuItem matrix = new MenuItem("Matrix");
+        MenuItem matrix = new MenuItem("Matrix", Icons.of("matrix2d.png", 20));
+        matrix.getStyleClass().add("new-menu-item");
         matrix.setOnAction(actionEvent -> {
             clearDialog();
             var matrixInputRows = new VBox();
@@ -67,7 +77,8 @@ public class NewMenuButton extends MenuButton {
             });
         });
 
-        MenuItem line = new MenuItem("Line");
+        MenuItem line = new MenuItem("Line", Icons.of("line.png", 20));
+        line.getStyleClass().add("new-menu-item");
         line.setOnAction(actionEvent -> {
             clearDialog();
             var lineInputRows = new VBox();
@@ -96,7 +107,8 @@ public class NewMenuButton extends MenuButton {
 
 
 
-        MenuItem complex = new MenuItem("Complex");
+        MenuItem complex = new MenuItem("Complex", Icons.of("i.png", 20));
+        complex.getStyleClass().add("new-menu-item");
         complex.setOnAction(actionEvent -> {
             clearDialog();
             var complexInputBox = new HBox();
@@ -116,7 +128,8 @@ public class NewMenuButton extends MenuButton {
         });
 
 
-        MenuItem point = new MenuItem("Point");
+        MenuItem point = new MenuItem("Point", Icons.of("point.png", 20));
+        point.getStyleClass().add("new-menu-item");
         point.setOnAction(actionEvent -> {
             clearDialog();
             var pointInputBox = new HBox();
@@ -137,13 +150,14 @@ public class NewMenuButton extends MenuButton {
 
 
 
-        MenuItem number = new MenuItem("Number");
-        number.setOnAction(actionEvent -> {
+        MenuItem scalar = new MenuItem("Scalar", Icons.of("number.png", 20));
+        scalar.getStyleClass().add("new-menu-item");
+        scalar.setOnAction(actionEvent -> {
             clearDialog();
             var numberInputBox = new HBox();
             TextField input = DoubleFormatter.getTextField();
 
-            numberInputBox.getChildren().addAll(new Text("Enter the number:   "), input);
+            numberInputBox.getChildren().addAll(new Text("Enter the scalar:   "), input);
             dialog.setGraphic(numberInputBox);
             dialog.setHeaderText("Point");
             dialog.setContentText("Enter name:");
@@ -157,7 +171,8 @@ public class NewMenuButton extends MenuButton {
 
 
 
-        getItems().addAll(vector, complex, matrix, line, point);
+
+        getItems().addAll(vector, complex, matrix, line, point, scalar);
     }
 
 

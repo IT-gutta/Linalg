@@ -1,42 +1,41 @@
 package graphics.tools.editbuttons;
 
+import graphics.Icons;
 import graphics.Renderable;
 import graphics.Variable;
+import javafx.scene.ImageCursor;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import math.*;
+import org.linalgfx.App;
 import regex.RegexUtils;
 
 public class GenericEditButton extends MenuButton {
-    private Variable variable;
+    private final Variable variable;
     protected TextInputDialog dialog;
 
-    private MenuItem deleteButton = new MenuItem("Delete");
-    private MenuItem changeNameButton = new MenuItem("Edit Name");
-    private MenuItem showHideButton = new MenuItem("Show/Hide");
-
     public GenericEditButton(Variable variable){
-        super("Edit");
+        super("");
+        setGraphic(Icons.of("settings.png", 20));
+        getStyleClass().add("transparent-button");
+
         this.variable = variable;
 
+        MenuItem deleteButton = new MenuItem("Delete", Icons.of("delete.png", 20));
         deleteButton.setOnAction(ev ->{
             delete();
         });
 
+        MenuItem changeNameButton = new MenuItem("Edit Name", Icons.of("changename.png", 20));
         changeNameButton.setOnAction(ev ->{
             handleChangeName(false);
         });
 
-        showHideButton.setOnAction(ev->{
-            handleShowHide();
-        });
-
         getItems().addAll(deleteButton, changeNameButton);
-
-        if(variable.getVariable() instanceof Renderable)
-            getItems().add(showHideButton);
     }
 
 
@@ -83,17 +82,6 @@ public class GenericEditButton extends MenuButton {
     }
 
 
-    protected void handleShowHide(){
-
-        Renderable renderable = (Renderable) variable.getVariable();
-
-        if(renderable.isHidden())
-            renderable.show();
-        else
-            renderable.hide();
-    }
-
-
     public Variable getOwner(){
         return variable;
     }
@@ -114,6 +102,9 @@ public class GenericEditButton extends MenuButton {
 
         if(variable.getVariable() instanceof LineSegment)
             return new EditLineSegmentButton((Variable<LineSegment>) variable);
+
+        if(variable.getVariable() instanceof Point)
+            return new EditPointButton((Variable<Point>) variable);
 
         return new GenericEditButton(variable);
     }

@@ -2,9 +2,7 @@ package math;
 
 import exceptions.IllegalNumberOfDimensionsException;
 import exceptions.RenderException;
-import graphics.CanvasRenderer;
-import graphics.Lerper;
-import graphics.Renderable;
+import graphics.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import graphics.CanvasRenderer;
@@ -13,33 +11,20 @@ import java.util.stream.DoubleStream;
 
 public class Vector implements Renderable, Transformable {
 
-    private String name;
     private double[] vector;
     private boolean isHidden = false;
-    private Lerper lerper;
-    /*private double[] lerpStartPos;
-    private double[] lerpEndPos;
-    private double lerpProgress = 1;
-    private double lerpSineProgress;
-    private double lerpStartAngle;
-    private double lerpEndAngle;
-    private double lerpStartLength;
-    private double lerpEndLength;
-    private int lerpMillis;*/
+    private Interpolator interpolator;
+
     private final double arrowTipLength = 12;
     private final double arrowSideLength = 7;
 
-    public static void main(String[] args) {
-        Vector v1 = new Vector("a",1,2,3);
-        Vector v2 = new Vector("b",5,-1,3);
-        Vector v3 = new Vector("c",-5,6,1);
-        System.out.println(Vectors.add(v1,v2,v3).toString());
-    }
+//    public static void main(String[] args) {
+//        Vector v1 = new Vector("a",1,2,3);
+//        Vector v2 = new Vector("b",5,-1,3);
+//        Vector v3 = new Vector("c",-5,6,1);
+//        System.out.println(Vectors.add(v1,v2,v3).toString());
+//    }
 
-    public Vector(String name, double... args){
-        vector = args;
-        this.name = name;
-    }
     public Vector(double... args){
         vector = args;
     }
@@ -176,7 +161,6 @@ public class Vector implements Renderable, Transformable {
     }
 
 
-
     public Vector getTransformed(Matrix matrix){
         return matrix.transform(this);
     }
@@ -186,31 +170,21 @@ public class Vector implements Renderable, Transformable {
     }
 
     @Override
-    public void render(GraphicsContext gc) throws RenderException {
-        if(getDimensions() != 2)
-            throw new RenderException("Has to be a 2-dimensional vector to render");
-
+    public void render(GraphicsContext gc, String name, Paint paint){
         //linear interpolation
-        if(lerper != null){
-            lerper.handle();
-            //0 is the length, and 1 is the angle
-            setElement(0, lerper.get(0) * Math.cos(lerper.get(1)));
-            setElement(1, lerper.get(0) * Math.sin(lerper.get(1)));
-            if(lerper.isFinished())
-                lerper = null;
-        }
+        handleLerp();
 
 
         if(isHidden())
             return;
 
-        gc.setFill(Paint.valueOf("purple"));
-        if(name!=null){
-            Vector distance = Vectors.scale(this, 1/getMagnitude()/3);
-            gc.fillText(name, CanvasRenderer.toCanvasX(getElement(0)+distance.getElement(0)), CanvasRenderer.toCanvasY(getElement(1)+distance.getElement(1)));
-        }
+        gc.setFill(paint);
+        gc.setStroke(paint);
 
-        gc.setStroke(Paint.valueOf("black"));
+        Vector distance = Vectors.scale(this, 1/getMagnitude()/3);
+        gc.fillText(name, CanvasRenderer.toCanvasX(getElement(0)+distance.getElement(0)), CanvasRenderer.toCanvasY(getElement(1)+distance.getElement(1)));
+
+
         gc.setLineWidth(1.5);
         gc.strokeLine(CanvasRenderer.toCanvasX(0), CanvasRenderer.toCanvasY(0), CanvasRenderer.toCanvasX(getElement(0)), CanvasRenderer.toCanvasY(getElement(1)));
 
@@ -233,18 +207,32 @@ public class Vector implements Renderable, Transformable {
                 startY - arrowSideLength * Math.cos(angle), //leftY
         };
 
-        gc.setFill(Paint.valueOf("red"));
         gc.fillPolygon(xCoords, yCoords, 3);
     }
 
     @Override
-    public void transform(Matrix matrix){
-        double[] endPos = matrix.transform(getVector());
+    public void transform(Matrix m){
+        transform(m, 1000);
+    }
+
+    public void transform(Matrix m, int millis){
+        double[] endPos = m.transform(getVector());
         double startAngle = Math.atan2(vector[1], vector[0]);
         double endAngle = startAngle + Vectors.angle2(vector, endPos);
         double startLength = Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2));
         double endLength = Math.sqrt(Math.pow(endPos[0], 2) + Math.pow(endPos[1], 2));
-        lerper = new Lerper(1000, new double[]{startLength, startAngle}, new double[]{endLength, endAngle});
+        interpolator = new Interpolator(millis, new double[]{startLength, startAngle}, new double[]{endLength, endAngle});
+    }
+
+    public void handleLerp(){
+        if(interpolator != null){
+            interpolator.handle();
+            //0 is the length, and 1 is the angle
+            setElement(0, interpolator.get(0) * Math.cos(interpolator.get(1)));
+            setElement(1, interpolator.get(0) * Math.sin(interpolator.get(1)));
+            if(interpolator.isFinished())
+                interpolator = null;
+        }
     }
 
 

@@ -14,10 +14,20 @@ public class Expression {
     private Expression rightChild;
     private String operator;
 
+    private HashMap<String, BiFunction<Double, Double, Double>> dddOps = new HashMap<>();
+    private HashMap<String, Function<Double, Double>> ddOps = new HashMap<>();
+    private HashMap<String, Double> constants = new HashMap<>();
+
+
     public Expression(String input) throws IllegalArgumentException{
         if(!checkInput(input))
             throw new IllegalArgumentException();
         this.expression = input;
+
+        dddOps.put("+", Expressions::sum);dddOps.put("-", Expressions::difference); dddOps.put("*", Expressions::product); dddOps.put("/", Expressions::division); dddOps.put("^", Math::pow);
+        ddOps.put("cos", Math::cos); ddOps.put("sin", Math::sin); ddOps.put("tan", Math::tan); ddOps.put("abs", Math::abs); ddOps.put("log",Math::log);
+        constants.put("pi", Math.PI); constants.put("e", Math.E);
+
         findChildren();
     }
 
@@ -75,7 +85,6 @@ public class Expression {
         else if(expression.contains("(")){
             leftChild = new Expression(parseComposition());;
         }
-
     }
 
     private void removeBrackets(){
@@ -183,7 +192,7 @@ public class Expression {
         Matcher m = Pattern.compile(f+"\\((.+)\\)").matcher(expression);
         if(m.find()){
             operator = m.group(1);
-            return  m.group(2);
+            return m.group(2);
         }
         throw new IllegalArgumentException();
     }
@@ -193,12 +202,6 @@ public class Expression {
     }
 
     public double evaluate(double x){
-        HashMap<String, BiFunction<Double, Double, Double>> dddOps = new HashMap<>();
-        HashMap<String, Function<Double, Double>> ddOps = new HashMap<>();
-        HashMap<String, Double> constants = new HashMap<>();
-        dddOps.put("+", Expressions::sum);dddOps.put("-", Expressions::difference); dddOps.put("*", Expressions::product); dddOps.put("/", Expressions::division); dddOps.put("^", Math::pow);
-        ddOps.put("cos", Math::cos); ddOps.put("sin", Math::sin); ddOps.put("tan", Math::tan); ddOps.put("abs", Math::abs); ddOps.put("log",Math::log);
-        constants.put("pi", Math.PI); constants.put("e", Math.E);
 
         if(leftChild!=null && rightChild!=null){
             return dddOps.get(operator).apply(leftChild.evaluate(x), rightChild.evaluate(x));

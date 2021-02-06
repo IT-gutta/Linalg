@@ -1,27 +1,23 @@
 package graphics;
 
 import exceptions.IllegalNumberOfDimensionsException;
+import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.*;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public abstract class CanvasRenderer{
-    private static List<Renderable> list = new ArrayList<>();
     private static Canvas canvas;
     private static GraphicsContext graphicsContext;
     private static double offsetX;
     private static double offsetY;
     public static double unitSize;
     private static double baseSpacing;
-    public final static int deltaTime = 30;
+    public static long deltaTime;
 
 
 
@@ -45,43 +41,23 @@ public abstract class CanvasRenderer{
         accountForChanges();
 
 
+        AnimationTimer animationTimer = new AnimationTimer() {
+            long lastFrameTime;
+            @Override
+            public void handle(long now) {
+                deltaTime = (now - lastFrameTime) / 1000000;
+                graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                CanvasRenderer.drawLines();
+                DefinedVariables.getRenderableVariables().forEach(r -> {
+                    r.getRenderable().render(graphicsContext, r.getName(), r.getPaint());
+                });
 
-        new Timer().scheduleAtFixedRate(
-                new TimerTask() {
-                    @Override
-                    public void run() {
+                lastFrameTime = now;
 
-                        graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                        drawLines();
-                        list.forEach( r -> {
-                            if(!r.isHidden())
-                                r.render(graphicsContext);
-                        });
-                    }
-                },
-                0,
-                deltaTime
-        );
-    }
-
-    public static void add(Renderable r){
-        list.add(r);
-    }
-
-    public static void addAll(Renderable... rs){
-        list.addAll(List.of(rs));
-    }
-
-    public static boolean contains(Renderable r){
-        return list.contains(r);
-    }
-
-    public static void removeAll(List<Renderable> renderables){
-        list.removeAll(renderables);
-    }
-
-    public static boolean remove(Renderable renderable){
-        return list.remove(renderable);
+                DefinedVariables.updateText();
+            }
+        };
+        animationTimer.start();
     }
 
 
@@ -91,15 +67,6 @@ public abstract class CanvasRenderer{
 
     public static void setCanvas(Canvas canvas) {
         CanvasRenderer.canvas = canvas;
-    }
-
-
-    public static List<Renderable> getList(){
-        return list;
-    }
-
-    public static void setList(List<Renderable> list){
-        CanvasRenderer.list = list;
     }
 
     public static double getUnitSize(){
@@ -145,11 +112,10 @@ public abstract class CanvasRenderer{
 
 
     public static void accountForChanges(){
-        //oppdaterer alle linjer som ikke er i coordinatsystemet
-        for(Renderable renderable : list){
-            if(renderable instanceof Line)
-                ((Line) renderable).updateCanvasPoints();
-        }
+        //oppdaterer alle linjer
+        for(Variable<Renderable> variable : DefinedVariables.getRenderableVariables())
+            if(variable.getVariable() instanceof Line)
+                ((Line) variable.getVariable()).updateCanvasPoints();
     }
 
 
@@ -244,4 +210,6 @@ public abstract class CanvasRenderer{
             return false;
         return true;
     }
+
+
 }

@@ -39,6 +39,18 @@ public class Matrix{
         return height;
     }
 
+    public void invert2x2(){
+        double determinant = matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0];
+        if(determinant <= 0.0000001)
+            throw new RuntimeException("Matrix is invertible");
+        double s = 1d / determinant;
+
+        matrix = new double[][]{
+                {s*matrix[1][1], -s*matrix[0][1]},
+                {-s*matrix[1][0], s*matrix[0][0]}
+        };
+    }
+
     public Vector transform(Vector vector) throws IllegalNumberOfDimensionsException {
         if(vector.getDimensions() != width)
             throw new IllegalNumberOfDimensionsException("The vectors number of dimensions doesnt match the matrix width");
@@ -61,6 +73,21 @@ public class Matrix{
             }
         }
         return sum;
+    }
+
+    public Matrix multiply(Matrix other){
+        if(width != other.height)
+            throw new IllegalArgumentException("Illegal size of matrices");
+        double[][] m = new double[height][other.width];
+
+        for(int i = 0; i < height; i++){
+            for(int j = 0; j < other.width; j++){
+                for(int k = 0; k < width; k++){
+                    m[i][j] += matrix[i][k] * other.matrix[k][j];
+                }
+            }
+        }
+        return new Matrix(m);
     }
 
     private double[] getColumn(int columnNumber){

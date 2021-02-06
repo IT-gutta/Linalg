@@ -1,6 +1,6 @@
 package graphics;
 
-public class Lerper {
+public class Interpolator {
     private double[] starts;
     private double[] ends;
     private double[] actuals;
@@ -8,7 +8,7 @@ public class Lerper {
     private double progressAngle;
     private double millis;
 
-    public Lerper(double millis, double[] starts, double[] ends){
+    public Interpolator(double millis, double[] starts, double[] ends){
         if(ends.length != starts.length)
             throw new IllegalArgumentException("Invalid length");
         this.millis = millis;

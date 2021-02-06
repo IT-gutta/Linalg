@@ -1,23 +1,19 @@
 package math;
 
 import graphics.CanvasRenderer;
+import graphics.Interpolator;
 import graphics.Renderable;
+import graphics.Variable;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Paint;
 
 public class LineSegment implements Renderable, Transformable {
     private Point start;
     private Point end;
+    private Variable<LineSegment> wrapper;
 
     private boolean isHidden = false;
-
-    //lerping
-    private double[] firstStart;
-    private double[] firstEnd;
-    private double[] otherStart;
-    private double[] otherEnd;
-    private float lerpProgress = 1;
-    private float lerpAngle;
-    private int lerpMillis = 2500;
+    private Interpolator interpolator;
 
     public LineSegment(Point start, Point end){
         this.start = start;
@@ -46,10 +42,12 @@ public class LineSegment implements Renderable, Transformable {
     }
 
     @Override
-    public void render(GraphicsContext gc) {
+    public void render(GraphicsContext gc, String name, Paint paint){
         gc.setLineWidth(1);
-        if(lerpProgress < 1)
-            handleLerp();
+        //linear interpolation for the points
+        handleLerp();
+
+        gc.setStroke(paint);
 
         gc.strokeLine(CanvasRenderer.toCanvasX(start.getElement(0)), CanvasRenderer.toCanvasY(start.getElement(1)), CanvasRenderer.toCanvasX(end.getElement(0)), CanvasRenderer.toCanvasY(end.getElement(1)));
     }
@@ -71,36 +69,21 @@ public class LineSegment implements Renderable, Transformable {
 
     @Override
     public void transform(Matrix m){
-        firstStart = start.getPoint();
-        firstEnd = m.transform(start.getPoint());
-        otherStart = end.getPoint();
-        otherEnd = m.transform(end.getPoint());
-        lerpProgress = 0f;
-        lerpAngle = 0f;
+        transform(m, 1000);
     }
 
     public void transform(Matrix m, int millis){
-        lerpMillis = millis;
-        transform(m);
+        start.transform(m, millis);
+        end.transform(m, millis);
     }
 
-    private void handleLerp(){
-        lerpAngle += Math.PI/2 / lerpMillis * CanvasRenderer.deltaTime;
-        lerpProgress = (float) Math.sin(lerpAngle);
+    public void handleLerp(){
+        start.handleLerp();
+        end.handleLerp();
+    }
 
-        if(lerpAngle >= Math.PI/2) {
-            //fix the line in the ending state
-            lerpProgress = 1f;
-            start.setElement(0, firstEnd[0]);
-            start.setElement(1, firstEnd[1]);
-            end.setElement(0, otherEnd[0]);
-            end.setElement(1, otherEnd[1]);
-        }
-
-        start.setElement(0, firstStart[0] + lerpProgress * (firstEnd[0] - firstStart[0]));
-        start.setElement(1, firstStart[1] + lerpProgress * (firstEnd[1] - firstStart[1]));
-
-        end.setElement(0, otherStart[0] + lerpProgress * (otherEnd[0] - otherStart[0]));
-        end.setElement(1, otherStart[1] + lerpProgress * (otherEnd[1] - otherStart[1]));
+    @Override
+    public String toString(){
+        return "Start: " + start.toString() + "\tEnd: " + end.toString();
     }
 }

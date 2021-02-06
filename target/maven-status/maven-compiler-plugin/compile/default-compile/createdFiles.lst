@@ -1,8 +1,0 @@
-math\Complex.class
-math\Matrix.class
-math\Expression.class
-math\Expressions.class
-exceptions\RenderException.class
-math\ComplexNumbers.class
-math\Vectors.class
-graphics\DefinedVariables.class

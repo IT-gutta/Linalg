@@ -1,18 +1,22 @@
 package graphics.tools;
 
 import graphics.DefinedVariables;
+import graphics.Icons;
 import graphics.Renderable;
 import graphics.Variable;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import math.Matrix;
 import math.Transformable;
+import org.linalgfx.App;
 
 public abstract class MenuItems {
 
     public static MenuItem transformMenuItem(Variable<? extends Transformable> variable){
-        MenuItem transform = new MenuItem("Transform");
+        MenuItem transform = new MenuItem("Transform", Icons.of("transform.png", 20));
         transform.setOnAction(actionEvent ->{
             TextInputDialog dialog = new TextInputDialog();
 

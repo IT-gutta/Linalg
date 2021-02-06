@@ -1,33 +1,21 @@
 package math;
 
-import exceptions.IllegalNumberOfDimensionsException;
 import graphics.Renderable;
+import graphics.Variable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 
 public class Grid implements Renderable, Transformable {
+    private Variable<Grid> wrapper;
     private Vector iHat;
     private Vector jHat;
     private LineSegment[] lineSegments;
     private boolean isHidden = false;
-    private double startX;
-    private double startY;
-    private int h;
-    private int w;
-    private double sizeX;
-    private double sizeY;
-
 
 
     public Grid(double startX, double startY, int h, int w, double sizeX, double sizeY){
         iHat = new Vector(1,0);
         jHat = new Vector(0,1);
-        this.startX = startX;
-        this.startY = startY;
-        this.h = h;
-        this.w = w;
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
 
         //add all the lines
         lineSegments = new LineSegment[h + w + 2];
@@ -49,19 +37,10 @@ public class Grid implements Renderable, Transformable {
         return iHat;
     }
 
-    public void setI(Vector v) throws IllegalNumberOfDimensionsException{
-        if(v.getDimensions()!=2)
-            throw new IllegalNumberOfDimensionsException("Basis vector must be two dimensional");
-        iHat = v;
-    }
-
     public Vector getJ(){
         return jHat;
     }
 
-    public void setJ(Vector v){
-        jHat = v;
-    }
 
 
     @Override
@@ -71,20 +50,24 @@ public class Grid implements Renderable, Transformable {
 
 
     @Override
-    public void render(GraphicsContext gc) {
-        gc.setStroke(Paint.valueOf("blue"));
-        gc.setLineWidth(0.8);
-        for(LineSegment line : lineSegments)
-            line.render(gc);
+    public void render(GraphicsContext gc, String name, Paint paint) {
+        gc.setStroke(paint);
+        //gc.setLineWidth(1);
+        for(LineSegment line : lineSegments) {
+            line.handleLerp();
+            line.render(gc, name, paint);
+        }
     }
+
 
     @Override
     public void transform(Matrix matrix){
         iHat.transform(matrix);
         jHat.transform(matrix);
         for(LineSegment line : lineSegments)
-            line.transform(matrix);
+            line.transform(matrix, 2000);
     }
+
 
     @Override
     public boolean isHidden() {

@@ -2,10 +2,11 @@ package graphics;
 
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-import math.Grid;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 public abstract class DefinedVariables {
@@ -18,9 +19,6 @@ public abstract class DefinedVariables {
         return vbox.getChildren().stream().anyMatch(other -> variable.equals(other));
     }
 
-    public static boolean contains(Renderable renderable){
-        return CanvasRenderer.contains(renderable);
-    }
 
     public static boolean contains(String name){
         return map.containsKey(name);
@@ -31,9 +29,6 @@ public abstract class DefinedVariables {
         if(map.containsKey(name)){
             Variable variable = map.remove(name);
             vbox.getChildren().remove(variable);
-
-            if(variable.getVariable() instanceof Renderable)
-                CanvasRenderer.remove((Renderable) variable.getVariable());
             return true;
         }
         return false;
@@ -44,30 +39,9 @@ public abstract class DefinedVariables {
     }
 
 
-
-
-    public static boolean removeAnonymous(Renderable renderable){
-        return CanvasRenderer.remove(renderable);
-    }
-
-    public static void addAnonymous(Renderable renderable){
-        CanvasRenderer.add(renderable);
-    }
-
-
-    public static void removeAllAnonymousVariables(){
-        CanvasRenderer.getList().stream().filter(renderable -> !(renderable instanceof Grid));
-    }
-
     public static void addAll(Variable... variables){
         for(Variable v : variables){
             add(v);
-        }
-    }
-
-    public static void addAll(Renderable... renderables){
-        for(Renderable r : renderables){
-            addAnonymous(r);
         }
     }
 
@@ -76,9 +50,6 @@ public abstract class DefinedVariables {
             return;
         vbox.getChildren().add(variable);
         map.put(variable.getName(), variable);
-
-        if(variable.getVariable() instanceof Renderable)
-            CanvasRenderer.add((Renderable) variable.getVariable());
     }
 
     public static void add(Renderable r, String name){
@@ -99,5 +70,13 @@ public abstract class DefinedVariables {
 
     public static ScrollPane getScrollPane() {
         return scrollPane;
+    }
+
+    public static List<Variable<Renderable>> getRenderableVariables(){
+        return vbox.getChildren().stream().map(node -> (Variable) node).filter(v -> v.getRenderable()!=null && !v.getRenderable().isHidden()).map(v -> (Variable<Renderable>) v).collect(Collectors.toList());
+    }
+
+    public static void updateText(){
+       vbox.getChildren().forEach(n -> ((Variable) n).updateContentText());
     }
 }

@@ -75,7 +75,7 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
             if(Pattern.matches(varDec+vecCon, inp)){
                 m = Pattern.compile(varDec+vecCon).matcher(inp);
                 if(m.find()){
-                    DefinedVariables.add(new Vector(m.group(1), Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4))), m.group(1));
+                    DefinedVariables.add(new Vector(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4))), m.group(1));
                 }
             }
 
@@ -116,9 +116,9 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 for(int i = 0; i<m.groupCount()+1; i++)
                     System.out.println(m.group(i));
                 if(m.group(2)!=null)
-                    DefinedVariables.add(new Variable(new Complex(m.group(1),Double.parseDouble(m.group(3)),Double.parseDouble(m.group(5)+m.group(6))), m.group(1)));
+                    DefinedVariables.add(new Variable(new Complex(Double.parseDouble(m.group(3)),Double.parseDouble(m.group(5)+m.group(6))), m.group(1)));
                 else
-                    DefinedVariables.add(new Variable(new Complex(m.group(1),Double.parseDouble(m.group(11)+m.group(12)),Double.parseDouble(m.group(9))), m.group(1)));
+                    DefinedVariables.add(new Variable(new Complex(Double.parseDouble(m.group(11)+m.group(12)),Double.parseDouble(m.group(9))), m.group(1)));
 
             }
 
