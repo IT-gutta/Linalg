@@ -83,7 +83,7 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
             if(Pattern.matches(varDec+poiCon, inp)){
                 m = Pattern.compile(varDec+poiCon).matcher(inp);
                 if(m.find()){
-                    DefinedVariables.add(new Point(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4))), m.group(1));
+                    DefinedVariables.add(new Point(m.group(1),Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4))), m.group(1));
                 }
             }
 

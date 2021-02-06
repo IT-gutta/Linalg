@@ -111,7 +111,7 @@ public class NewMenuButton extends MenuButton {
                 if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
-                DefinedVariables.add(new Complex((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
+                DefinedVariables.add(new Complex(dialog.getEditor().getText(), (double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
             });
         });
 
@@ -131,7 +131,7 @@ public class NewMenuButton extends MenuButton {
                 if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
-                DefinedVariables.add(new Point((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
+                DefinedVariables.add(new Point(dialog.getEditor().getText(), (double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
             });
         });
 

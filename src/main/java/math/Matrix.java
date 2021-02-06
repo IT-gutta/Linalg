@@ -31,6 +31,14 @@ public class Matrix{
         matrix = dArr;
     }
 
+    public int getWidth(){
+        return width;
+    }
+
+    public int getHeight(){
+        return height;
+    }
+
     public Vector transform(Vector vector) throws IllegalNumberOfDimensionsException {
         if(vector.getDimensions() != width)
             throw new IllegalNumberOfDimensionsException("The vectors number of dimensions doesnt match the matrix width");

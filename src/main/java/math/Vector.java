@@ -175,14 +175,6 @@ public class Vector implements Renderable, Transformable {
         return true;
     }
 
-    @Override
-    public void transform(Matrix matrix){
-        lerpStartPos = vector;
-        lerpEndPos = matrix.transform(getVector());
-        lerpProgress = 0f;
-        lerpAngle = 0f;
-        lerpMillis = 1000;
-    }
 
 
     public Vector getTransformed(Matrix matrix){
