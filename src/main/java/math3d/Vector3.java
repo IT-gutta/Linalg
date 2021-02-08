@@ -1,11 +1,10 @@
-package graphics.math3d;
+package math3d;
 
 import graphics.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.Matrix;
 import math.Vector;
-import math.Vectors;
 
 public class Vector3 extends Renderer3D implements Interpolatable {
     private Vector vector;

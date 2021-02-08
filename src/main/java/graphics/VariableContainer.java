@@ -1,14 +1,14 @@
 package graphics;
 
 
-import graphics.tools.editbuttons.GenericEditButton;
-import graphics.tools.editbuttons.ShowHideButton;
+import graphics.editbuttons.GenericEditButton;
+import graphics.editbuttons.ShowHideButton;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import graphics.math2d.Mapping;
+import math2d.Mapping;
 
 public class VariableContainer<T> extends HBox {
     private T variable;

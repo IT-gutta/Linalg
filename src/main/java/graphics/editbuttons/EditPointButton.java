@@ -1,12 +1,10 @@
-package graphics.tools.editbuttons;
+package graphics.editbuttons;
 
 import graphics.VariableContainer;
-import graphics.math2d.Point2;
-import graphics.tools.MenuItems;
-import math.Point;
+import math2d.Point2;
 
 public class EditPointButton extends GenericEditButton{
-    private VariableContainer<Point2> variableContainer;
+    private final VariableContainer<Point2> variableContainer;
     public EditPointButton(VariableContainer<Point2> variableContainer){
         super(variableContainer);
         this.variableContainer = variableContainer;

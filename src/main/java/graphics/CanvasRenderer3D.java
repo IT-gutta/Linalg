@@ -1,6 +1,6 @@
 package graphics;
 
-import graphics.math3d.Vector3;
+import math3d.Vector3;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

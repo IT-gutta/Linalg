@@ -1,4 +1,4 @@
-package graphics.tools;
+package graphics;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;

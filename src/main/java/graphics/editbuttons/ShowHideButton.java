@@ -1,4 +1,4 @@
-package graphics.tools.editbuttons;
+package graphics.editbuttons;
 
 
 import graphics.Renderer2D;

@@ -1,12 +1,10 @@
-package graphics.tools.editbuttons;
+package graphics.editbuttons;
 
 import graphics.VariableContainer;
-import graphics.math2d.Line2;
-import graphics.tools.MenuItems;
-import math.Line;
+import math2d.Line2;
 
 public class EditLineButton extends GenericEditButton {
-    private VariableContainer<Line2> variableContainer;
+    private final VariableContainer<Line2> variableContainer;
     public EditLineButton(VariableContainer<Line2> variableContainer) {
         super(variableContainer);
         this.variableContainer = variableContainer;

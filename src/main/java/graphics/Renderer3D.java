@@ -6,8 +6,7 @@ import javafx.scene.paint.Paint;
 
 public abstract class Renderer3D {
     private boolean isHidden = false;
-    //TODO Add the ability for scalars to be rendered along the real axis
-    //TODO Add the name of an object to the object in the graphics window
+    //TODO Add the name of an object to the object in the graphics window (as 3D text?)
     public abstract void render(GraphicsContext gc, String name, Paint paint);
     public boolean isHidden(){
         return isHidden;

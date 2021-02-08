@@ -1,7 +1,5 @@
-package graphics.math2d;
+package math2d;
 
-import graphics.Renderer2D;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 public class Vector2Test {

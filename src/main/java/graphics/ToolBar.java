@@ -1,5 +1,6 @@
-package graphics.tools;
+package graphics;
 
+import graphics.editbuttons.NewMenuButton;
 import javafx.scene.layout.HBox;
 
 

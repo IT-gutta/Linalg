@@ -1,4 +1,4 @@
-package graphics.tools.editbuttons;
+package graphics.editbuttons;
 
 import graphics.Icons;
 import graphics.VariableContainer;
@@ -6,7 +6,7 @@ import javafx.scene.control.MenuItem;
 import math.Matrix;
 
 public class EditMatrixButton extends GenericEditButton {
-    private VariableContainer<Matrix> variableContainer;
+    private final VariableContainer<Matrix> variableContainer;
     public EditMatrixButton(VariableContainer<Matrix> variableContainer){
         super(variableContainer);
         this.variableContainer = variableContainer;

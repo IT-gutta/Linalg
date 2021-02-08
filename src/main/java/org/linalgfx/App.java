@@ -1,7 +1,7 @@
 package org.linalgfx;
 
 import graphics.*;
-import graphics.tools.ToolBar;
+import graphics.ToolBar;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;

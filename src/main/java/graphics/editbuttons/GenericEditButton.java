@@ -1,8 +1,8 @@
-package graphics.tools.editbuttons;
+package graphics.editbuttons;
 
 import graphics.Icons;
 import graphics.VariableContainer;
-import graphics.math2d.*;
+import math2d.*;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
@@ -66,7 +66,7 @@ public class GenericEditButton extends MenuButton {
                 if(!RegexUtils.isValidName(name))
                     throw new IllegalArgumentException("Illegal name.");
 
-                if(getOwner().getName().equals(name))
+                if(getContainer().getName().equals(name))
                     return;
 
                 variableContainer.setName(name);
@@ -78,7 +78,7 @@ public class GenericEditButton extends MenuButton {
     }
 
 
-    public VariableContainer getOwner(){
+    public VariableContainer getContainer(){
         return variableContainer;
     }
 

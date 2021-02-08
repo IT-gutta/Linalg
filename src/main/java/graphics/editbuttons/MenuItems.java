@@ -1,4 +1,4 @@
-package graphics.tools;
+package graphics.editbuttons;
 
 import graphics.DefinedVariables;
 import graphics.Icons;
@@ -7,7 +7,6 @@ import graphics.VariableContainer;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
 import math.Matrix;
-import math.Transformable;
 
 public abstract class MenuItems {
 

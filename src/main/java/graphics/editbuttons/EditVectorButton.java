@@ -1,21 +1,19 @@
-package graphics.tools.editbuttons;
+package graphics.editbuttons;
 
 import graphics.VariableContainer;
-import graphics.math2d.Vector2;
-import graphics.tools.DoubleFormatter;
-import graphics.tools.MenuItems;
+import math2d.Vector2;
+import graphics.DoubleFormatter;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import math.Vector;
 import org.linalgfx.App;
 import regex.RegexUtils;
 
 public class EditVectorButton extends GenericEditButton {
-    private VariableContainer<Vector2> variableContainer;
+    private final VariableContainer<Vector2> variableContainer;
     public EditVectorButton(VariableContainer<Vector2> variableContainer){
         super(variableContainer);
         this.variableContainer = variableContainer;
@@ -28,7 +26,7 @@ public class EditVectorButton extends GenericEditButton {
             TextField xInput = DoubleFormatter.getTextField(variableContainer.getVariable().getX());
             TextField yInput = DoubleFormatter.getTextField(variableContainer.getVariable().getY());
 
-            dialog.getEditor().setText(getOwner().getName());
+            dialog.getEditor().setText(getContainer().getName());
 
             vectorInput.getChildren().addAll(new Text("Enter x, y :   "), xInput, yInput);
             dialog.setGraphic(vectorInput);
@@ -39,19 +37,19 @@ public class EditVectorButton extends GenericEditButton {
             dialog.showAndWait().ifPresent(response ->{
                 variableContainer.getVariable().setX((double) xInput.getTextFormatter().getValue());
                 variableContainer.getVariable().setY((double) yInput.getTextFormatter().getValue());
-                getOwner().updateContentText();
+                getContainer().updateContentText();
 
 
 
                 String name = dialog.getEditor().getText();
-                if(name.equals(getOwner().getName()))
+                if(name.equals(getContainer().getName()))
                     return;
 
                 try{
                     if(!RegexUtils.isValidName(name))
                         throw new IllegalArgumentException("Illegal name.");
 
-                    getOwner().setName(name);
+                    getContainer().setName(name);
                 }
                 catch (IllegalArgumentException e){
                     handleChangeName(true);

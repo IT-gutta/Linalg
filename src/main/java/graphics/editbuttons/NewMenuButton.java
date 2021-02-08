@@ -1,11 +1,12 @@
-package graphics.tools;
+package graphics.editbuttons;
 
 import graphics.DefinedVariables;
+import graphics.DoubleFormatter;
 import graphics.Icons;
 import graphics.VariableContainer;
-import graphics.math2d.Line2;
-import graphics.math2d.Point2;
-import graphics.math2d.Vector2;
+import math2d.Line2;
+import math2d.Point2;
+import math2d.Vector2;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;

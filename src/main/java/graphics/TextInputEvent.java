@@ -1,8 +1,8 @@
 package graphics;
 
-import graphics.math2d.Mapping;
-import graphics.math2d.Point2;
-import graphics.math2d.Vector2;
+import math2d.Mapping;
+import math2d.Point2;
+import math2d.Vector2;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;

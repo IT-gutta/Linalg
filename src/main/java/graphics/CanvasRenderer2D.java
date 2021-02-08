@@ -1,10 +1,10 @@
 package graphics;
 
 import exceptions.IllegalNumberOfDimensionsException;
-import graphics.math2d.Grid2;
-import graphics.math2d.Line2;
-import graphics.math2d.LineSegment2;
-import graphics.math2d.Vector2;
+import math2d.Grid2;
+import math2d.Line2;
+import math2d.LineSegment2;
+import math2d.Vector2;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

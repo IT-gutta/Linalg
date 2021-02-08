@@ -1,4 +1,4 @@
-package graphics.math2d;
+package math2d;
 
 import graphics.Interpolatable;
 import graphics.Renderer2D;

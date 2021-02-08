@@ -1,4 +1,4 @@
-package graphics.math2d;
+package math2d;
 
 import graphics.CanvasRenderer2D;
 import graphics.Renderer2D;
