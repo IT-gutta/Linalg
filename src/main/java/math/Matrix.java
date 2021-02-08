@@ -4,6 +4,7 @@ import exceptions.IllegalNumberOfDimensionsException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class Matrix{
     //TODO fix toString
@@ -90,7 +91,11 @@ public class Matrix{
         return new Matrix(m);
     }
 
-    private double[] getColumn(int columnNumber){
+    public double[][] getMatrix(){
+        return matrix;
+    }
+
+    public double[] getColumn(int columnNumber){
         double[] col = new double[height];
         for(int i = 0; i < height; i++){
             col[i] = get(i, columnNumber);
@@ -104,6 +109,114 @@ public class Matrix{
             vecs[column] = getColumn(column);
         }
         return vecs;
+    }
+
+    public double det(){
+        if(width==1){
+            return matrix[0][0];
+        }
+        double sum = 0;
+        int j = 0;
+        for(int i = 0; i<getWidth(); i++){
+            sum+=matrix[0][i]*getDetMatrix(i,j).det()*Math.pow(-1, i);
+        }
+        return sum;
+    }
+
+    private Matrix getDetMatrix(int x, int y){
+        double[][] newMatrix = new double[height-1][width-1];
+        int counter = 0;
+        for(int i = 0; i<height; i++){
+            for(int j = 0; j<width; j++){
+                if(i!=y && j!=x){
+                    newMatrix[counter/(width-1)][counter%(width-1)] = matrix[i][j];
+                    counter++;
+                }
+            }
+        }
+        return new Matrix(newMatrix);
+    }
+
+    public void scaleRow(int row, double scale) throws IllegalArgumentException{
+        if(row>=height)
+            throw new IllegalArgumentException();
+        for(int i = 0; i<width; i++){
+            matrix[row][i]*=scale;
+        }
+    }
+
+    public double[] getRow(int row)throws IllegalArgumentException{
+        if(row>=height)
+            throw new IllegalArgumentException();
+        return matrix[row];
+    }
+
+    public double[] getScaledRow(int row, double scale) throws IllegalArgumentException{
+        double[] scaledRow = new double[getWidth()];
+        for(int i = 0; i<width; i++){
+            scaledRow[i] = Math.round(Math.pow(10,10)*matrix[row][i]*scale)/Math.pow(10,10);
+        }
+        return scaledRow;
+    }
+    public void addRowToRow(int row1, double[] row2) throws IllegalArgumentException{
+        if(row1>=height || width!=row2.length)
+            throw new IllegalArgumentException();
+        for(int i = 0; i<width; i++){
+            matrix[row1][i]+=row2[i];
+        }
+    }
+    public void swapRows(int row1, int row2) throws IllegalArgumentException{
+        if(row1>=width || row2>=width)
+            throw new IllegalArgumentException();
+        double[] r1 = matrix[row1]; double[] r2 = matrix[row2];
+        matrix[row1] = r2; matrix[row2] = r1;
+    }
+    public void append(Vector v){
+        for(int i = 0; i<height; i++){
+            double[] d = new double[width+1];
+            for(int j = 0; j<width; j++)
+                d[j] = matrix[i][j];
+            d[width] = v.getElement(i);
+            matrix[i] = d;
+        }
+        width+=1;
+    }
+    public void append(Matrix m){
+        double[][] newM = new double[height][2*height];
+        for(int i = 0; i<height; i++){
+            System.arraycopy(this.getRow(i),0,newM[i], 0, height);
+            System.arraycopy(m.getRow(i),0,newM[i], height, height);
+        }
+        width+=m.getWidth();
+        matrix = newM;
+    }
+    public boolean isIdentityMatrix(){
+        for(int i = 0; i<height; i++){
+            for(int j = 0; j<height; j++){
+                if(i==j){
+                    if(matrix[i][j]!=1)
+                        return false;
+                }
+                else
+                    if(matrix[i][j]!=0)
+                        return false;
+            }
+        }
+        return true;
+    }
+    public Matrix getInverted(){
+        return Solver.invertedMatrix(this);
+    }
+    public boolean isRowEchelon(){
+        for(int i = 0; i<height; i++){
+            for(int j = 0; j<i; j++){
+                if(matrix[i][j]!=0)
+                    return false;
+            }
+            if(matrix[i][i]!=1)
+                return false;
+        }
+        return true;
     }
 
     public ArrayList<Vector> getBasisVectors(){
@@ -169,13 +282,15 @@ public class Matrix{
 
     public static void main(String[] args) {
         double[][] arr = {
-                {1, 2},
-                {2, 1}
+                {1, 2, 4, 7},
+                {2, 1, -3, 5},
+                {8, 1, -6, 8},
+                {2, -1, 3, -5}
         };
 
         Matrix m = new Matrix(arr);
 
-        System.out.println(m.transform(new Vector(2, 4)));
+        System.out.println(m.det());
         System.out.println(m);
     }
 }

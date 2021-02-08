@@ -19,6 +19,8 @@ import java.util.stream.DoubleStream;
 public class TextInputEvent implements EventHandler<ActionEvent> {
     //TODO Add more functions
     //TODO Add derivatives
+    //TODO Fix complex constructor
+    //TODO Make it so that constructors take in arbitrarily many arguments
 
     private TextField inputField;
     private Matcher m;
@@ -42,6 +44,7 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
     private static HashMap<String, BiFunction<Point, Point, Point>> pppOps = new HashMap<>();
     private static HashMap<String, BiFunction<Complex, Complex, Complex>> cccOps = new HashMap<>();
     private static HashMap<String, BiFunction<Complex, Double, Complex>> cdcOps = new HashMap<>();
+    private static HashMap<String, BiFunction<Matrix, Vector, Vector>> mvvOps = new HashMap<>();
 
     private static HashMap<String, Function<Vector, Double>> vdOps = new HashMap<>();
 
@@ -54,6 +57,8 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
         vvdOps.put("dot", Vectors::dot); vvdOps.put("angle", Vectors::angle);
         vdvOps.put("scale", Vectors::scale);
         vmvOps.put("transform", Vectors::transform);
+
+        mvvOps.put("solve", Solver::solveLinSys);
 
         pmpOps.put("transform", Points::transform);
         pppOps.put("add", Points::add);pppOps.put("subtract", Points::subtract);
@@ -234,6 +239,19 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                     Variable a = DefinedVariables.get(m.group(2));
                     if(a.getVariable() instanceof Vector){
                         DefinedVariables.add(new Variable<Double>(vdOps.get(f).apply((Vector)a.getVariable()),m.group(1)));
+                    }
+                }
+            }
+
+            for (String f : mvvOps.keySet()) {
+                String func = varDec+f+"\\("+varName+","+varName+"\\)";
+                m = Pattern.compile(func).matcher(inp);
+                if(m.find()){
+                    System.out.println(f);
+                    Variable a = DefinedVariables.get(m.group(2));
+                    Variable b = DefinedVariables.get(m.group(3));
+                    if(a.getVariable() instanceof Matrix && b.getVariable() instanceof Vector){
+                        DefinedVariables.add(new Variable<Vector>(mvvOps.get(f).apply((Matrix) a.getVariable(), (Vector) b.getVariable()),m.group(1)));
                     }
                 }
             }

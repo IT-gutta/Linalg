@@ -30,9 +30,9 @@ public class Point implements Renderable, Transformable {
     }
     public String name;
 
-    public Point transform(Matrix matrix){
-        return matrix.transform(toVector()).toPoint();
-    }
+//    public Point transform(Matrix matrix){
+//        return matrix.transform(toVector()).toPoint();
+//    }
 
     public int getDimensions(){
         return point.length;
