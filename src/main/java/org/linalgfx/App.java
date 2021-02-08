@@ -7,13 +7,10 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.List;
 
 /**
  * JavaFX App
@@ -26,15 +23,15 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        CanvasPane canvasPane = new CanvasPane(1000, 500);
-        Canvas canvas = canvasPane.getCanvas();
+        CanvasPane2D canvasPane2D = new CanvasPane2D(1000, 500);
+        Canvas canvas = canvasPane2D.getCanvas();
 
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        CanvasRenderer.setCanvas(canvas);
-        CanvasRenderer.setGraphicsContext(gc);
-        CanvasRenderer.setUnitSize(40);
-        CanvasRenderer.start();
+        CanvasRenderer2D.setCanvas(canvas);
+        CanvasRenderer2D.setGraphicsContext(gc);
+        CanvasRenderer2D.setUnitSize(40);
+        CanvasRenderer2D.start();
 
         DefinedVariables.getScrollPane().getStyleClass().add("variables");
 
@@ -45,7 +42,7 @@ public class App extends Application {
         TextField textField = new TextField();
         ToolBar toolBar = new ToolBar();
 
-        SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane);
+        SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane2D);
         splitPane.prefHeightProperty().bind(root.heightProperty());
 
         TextInputEvent.fillOpMaps();

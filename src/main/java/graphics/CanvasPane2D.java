@@ -6,14 +6,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 
-public class CanvasPane extends Pane {
+public class CanvasPane2D extends Pane {
 
     private final Canvas canvas;
     private double startDragX;
     private double startDragY;
     //private double scrollScale = Math.pow(2,(double)1/5);
     private final double scrollScale = 0.1;
-    public CanvasPane(double width, double height) {
+    public CanvasPane2D(double width, double height) {
         canvas = new Canvas(width, height);
         getChildren().add(canvas);
     }
@@ -40,7 +40,7 @@ public class CanvasPane extends Pane {
         canvas.setHeight(h);
 
 
-        CanvasRenderer.accountForChanges();
+        CanvasRenderer2D.accountForChanges();
     }
 
     private EventHandler<MouseEvent> startDragEvent = mouse -> {
@@ -52,10 +52,10 @@ public class CanvasPane extends Pane {
         double endDragX = mouse.getX();
         double endDragY = mouse.getY();
 
-        CanvasRenderer.changeOffsetX(endDragX - startDragX);
-        CanvasRenderer.changeOffsetY(endDragY - startDragY);
+        CanvasRenderer2D.changeOffsetX(endDragX - startDragX);
+        CanvasRenderer2D.changeOffsetY(endDragY - startDragY);
 
-        CanvasRenderer.accountForChanges();
+        CanvasRenderer2D.accountForChanges();
 
         startDragX = mouse.getX();
         startDragY = mouse.getY();
@@ -71,10 +71,10 @@ public class CanvasPane extends Pane {
 
     private EventHandler<ScrollEvent> scrollEvent = event ->{
         if(event.getDeltaY() > 0)
-            CanvasRenderer.scaleUnitSize(clampScroll(event.getDeltaY()));
+            CanvasRenderer2D.scaleUnitSize(clampScroll(event.getDeltaY()));
         else
-            CanvasRenderer.scaleUnitSize(1/clampScroll(event.getDeltaY()));
+            CanvasRenderer2D.scaleUnitSize(1/clampScroll(event.getDeltaY()));
 
-        CanvasRenderer.accountForChanges();
+        CanvasRenderer2D.accountForChanges();
     };
 }

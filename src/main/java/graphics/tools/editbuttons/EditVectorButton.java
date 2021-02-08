@@ -1,6 +1,7 @@
 package graphics.tools.editbuttons;
 
 import graphics.VariableContainer;
+import graphics.math2d.Vector2;
 import graphics.tools.DoubleFormatter;
 import graphics.tools.MenuItems;
 import javafx.scene.control.MenuItem;
@@ -14,8 +15,8 @@ import org.linalgfx.App;
 import regex.RegexUtils;
 
 public class EditVectorButton extends GenericEditButton {
-    private VariableContainer<Vector> variableContainer;
-    public EditVectorButton(VariableContainer<Vector> variableContainer){
+    private VariableContainer<Vector2> variableContainer;
+    public EditVectorButton(VariableContainer<Vector2> variableContainer){
         super(variableContainer);
         this.variableContainer = variableContainer;
 
@@ -24,8 +25,8 @@ public class EditVectorButton extends GenericEditButton {
             clearDialog();
 
             var vectorInput = new HBox();
-            TextField xInput = DoubleFormatter.getTextField(variableContainer.getVariable().getElement(0));
-            TextField yInput = DoubleFormatter.getTextField(variableContainer.getVariable().getElement(1));
+            TextField xInput = DoubleFormatter.getTextField(variableContainer.getVariable().getX());
+            TextField yInput = DoubleFormatter.getTextField(variableContainer.getVariable().getY());
 
             dialog.getEditor().setText(getOwner().getName());
 
@@ -36,8 +37,8 @@ public class EditVectorButton extends GenericEditButton {
 
 
             dialog.showAndWait().ifPresent(response ->{
-                variableContainer.getVariable().setElement(0, (double) xInput.getTextFormatter().getValue());
-                variableContainer.getVariable().setElement(1, (double) yInput.getTextFormatter().getValue());
+                variableContainer.getVariable().setX((double) xInput.getTextFormatter().getValue());
+                variableContainer.getVariable().setY((double) yInput.getTextFormatter().getValue());
                 getOwner().updateContentText();
 
 
@@ -57,9 +58,6 @@ public class EditVectorButton extends GenericEditButton {
                 }
             });
         });
-
-
-
 
 
         addMenuItem(edit);

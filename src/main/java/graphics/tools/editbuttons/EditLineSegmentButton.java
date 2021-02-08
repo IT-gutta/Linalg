@@ -1,12 +1,12 @@
 package graphics.tools.editbuttons;
 
 import graphics.VariableContainer;
+import graphics.math2d.LineSegment2;
 import graphics.tools.MenuItems;
-import math.LineSegment;
 
 public class EditLineSegmentButton extends GenericEditButton{
-    private VariableContainer<LineSegment> variableContainer;
-    public EditLineSegmentButton(VariableContainer<LineSegment> variableContainer){
+    private VariableContainer<LineSegment2> variableContainer;
+    public EditLineSegmentButton(VariableContainer<LineSegment2> variableContainer){
         super(variableContainer);
         this.variableContainer = variableContainer;
 

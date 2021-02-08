@@ -1,6 +1,10 @@
 package graphics;
 
 import exceptions.IllegalNumberOfDimensionsException;
+import graphics.math2d.Grid2;
+import graphics.math2d.Line2;
+import graphics.math2d.LineSegment2;
+import graphics.math2d.Vector2;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -10,7 +14,7 @@ import math.*;
 import java.text.DecimalFormat;
 
 
-public abstract class CanvasRenderer{
+public abstract class CanvasRenderer2D {
     private static Canvas canvas;
     private static GraphicsContext graphicsContext;
     private static double offsetX;
@@ -25,17 +29,17 @@ public abstract class CanvasRenderer{
 
     public static void start(){
         Matrix matrix = new Matrix(0, 1, -1, 0);
-        Vector vector = new Vector(2, 2);
-        Line line = new Line(-2, 0, 2, 2);
+        Vector2 vector = new Vector2(2, 2);
+        Line2 line = new Line2(-2, 0, 2, 2);
 
-        Grid grid = new Grid(0, 0, 5, 5, 1, 1);
-        LineSegment lineSegment = new LineSegment(-2, 0, -5, -5);
+        Grid2 grid2 = new Grid2(0, 0, 5, 5, 1, 1);
+        LineSegment2 lineSegment2 = new LineSegment2(-2, 0, -5, -5);
 
         DefinedVariables.add(vector, "vector");
         DefinedVariables.add(line, "line");
-        DefinedVariables.add(grid, "grid");
-        DefinedVariables.add(lineSegment, "linesegment");
-        DefinedVariables.add(new VariableContainer<Matrix>(matrix, "m"));
+        DefinedVariables.add(grid2, "grid");
+        DefinedVariables.add(lineSegment2, "linesegment");
+        DefinedVariables.add(new VariableContainer<>(matrix, "m"));
 
 
         accountForChanges();
@@ -47,9 +51,9 @@ public abstract class CanvasRenderer{
             public void handle(long now) {
                 deltaTime = (now - lastFrameTime) / 1000000;
                 graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                CanvasRenderer.drawLines();
-                DefinedVariables.getRenderableVariables().forEach(r -> {
-                    r.getRenderable().render(graphicsContext, r.getName(), r.getPaint());
+                CanvasRenderer2D.drawLines();
+                DefinedVariables.get2DRenderables().forEach(r -> {
+                    r.getVariable().render(graphicsContext, r.getName(), r.getPaint());
                 });
 
                 lastFrameTime = now;
@@ -62,11 +66,11 @@ public abstract class CanvasRenderer{
 
 
     public static void setGraphicsContext(GraphicsContext graphicsContext) {
-        CanvasRenderer.graphicsContext = graphicsContext;
+        CanvasRenderer2D.graphicsContext = graphicsContext;
     }
 
     public static void setCanvas(Canvas canvas) {
-        CanvasRenderer.canvas = canvas;
+        CanvasRenderer2D.canvas = canvas;
     }
 
     public static double getUnitSize(){
@@ -113,9 +117,9 @@ public abstract class CanvasRenderer{
 
     public static void accountForChanges(){
         //oppdaterer alle linjer
-        for(VariableContainer<Renderable> variableContainer : DefinedVariables.getRenderableVariables())
-            if(variableContainer.getVariable() instanceof Line)
-                ((Line) variableContainer.getVariable()).updateCanvasPoints();
+        for(VariableContainer<Renderer2D> variableContainer : DefinedVariables.get2DRenderables())
+            if(variableContainer.getVariable() instanceof Line2)
+                ((Line2) variableContainer.getVariable()).updateCanvasPoints();
     }
 
 
@@ -205,11 +209,9 @@ public abstract class CanvasRenderer{
 
 
     public static boolean insideCanvas(Point point){
-        Point actual = CanvasRenderer.toCanvasPoint(point);
-        if(actual.getElement(0) < 0 || actual.getElement(0) > CanvasRenderer.getCanvasWidth() || actual.getElement(1) < 0 || actual.getElement(1) > CanvasRenderer.getCanvasHeight())
+        Point actual = CanvasRenderer2D.toCanvasPoint(point);
+        if(actual.getElement(0) < 0 || actual.getElement(0) > CanvasRenderer2D.getCanvasWidth() || actual.getElement(1) < 0 || actual.getElement(1) > CanvasRenderer2D.getCanvasHeight())
             return false;
         return true;
     }
-
-
 }

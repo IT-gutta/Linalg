@@ -2,6 +2,7 @@ package graphics.tools.editbuttons;
 
 import graphics.Icons;
 import graphics.VariableContainer;
+import graphics.math2d.*;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
@@ -83,23 +84,23 @@ public class GenericEditButton extends MenuButton {
 
 
     public static <T> GenericEditButton getEditButton(VariableContainer<T> variableContainer){
-        if(variableContainer.getVariable() instanceof Vector)
-            return new EditVectorButton((VariableContainer<Vector>) variableContainer);
+        if(variableContainer.getVariable() instanceof Vector2)
+            return new EditVectorButton((VariableContainer<Vector2>) variableContainer);
 
         if(variableContainer.getVariable() instanceof Matrix)
             return new EditMatrixButton((VariableContainer<Matrix>) variableContainer);
 
-        if(variableContainer.getVariable() instanceof Line)
-            return new EditLineButton((VariableContainer<Line>) variableContainer);
+        if(variableContainer.getVariable() instanceof Line2)
+            return new EditLineButton((VariableContainer<Line2>) variableContainer);
 
-        if(variableContainer.getVariable() instanceof Grid)
-            return new EditGridButton((VariableContainer<Grid>) variableContainer);
+        if(variableContainer.getVariable() instanceof Grid2)
+            return new EditGridButton((VariableContainer<Grid2>) variableContainer);
 
-        if(variableContainer.getVariable() instanceof LineSegment)
-            return new EditLineSegmentButton((VariableContainer<LineSegment>) variableContainer);
+        if(variableContainer.getVariable() instanceof LineSegment2)
+            return new EditLineSegmentButton((VariableContainer<LineSegment2>) variableContainer);
 
-        if(variableContainer.getVariable() instanceof Point)
-            return new EditPointButton((VariableContainer<Point>) variableContainer);
+        if(variableContainer.getVariable() instanceof Point2)
+            return new EditPointButton((VariableContainer<Point2>) variableContainer);
 
         return new GenericEditButton(variableContainer);
     }

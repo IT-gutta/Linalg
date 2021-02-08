@@ -1,6 +1,6 @@
 package math;
 
-public class Points {
+public abstract class Points {
     //vær forsiktig her med entanglement!!
     public static Vector toVector(Point p){
         return new Vector(p.getPoint());

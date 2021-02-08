@@ -1,21 +1,21 @@
 package graphics.tools.editbuttons;
 
 
-import graphics.Renderable;
+import graphics.Renderer2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import org.linalgfx.App;
 
 public class ShowHideButton extends Region {
-    private final Renderable renderable;
+    private final Renderer2D renderer2D;
     private final Image visible = new Image(App.resourceURL("images/visible.png"));
     private final Image hidden = new Image(App.resourceURL("images/hidden.png"));
     private final ImageView imageView = new ImageView();
     public <T> ShowHideButton(T variable){
         super();
-        if(variable instanceof Renderable) {
-            this.renderable = (Renderable) variable;
+        if(variable instanceof Renderer2D) {
+            this.renderer2D = (Renderer2D) variable;
 
 
             imageView.setImage(visible);
@@ -26,14 +26,14 @@ public class ShowHideButton extends Region {
 
 
             setOnMouseClicked(ev -> {
-                if (renderable.isHidden())
+                if (renderer2D.isHidden())
                     show();
                 else
                     hide();
             });
         }
         else {
-            renderable = null;
+            renderer2D = null;
             imageView.setImage(hidden);
             System.out.println("hei");
         }
@@ -41,11 +41,11 @@ public class ShowHideButton extends Region {
         getChildren().add(imageView);
     }
     public void show(){
-        renderable.show();
+        renderer2D.show();
         imageView.setImage(visible);
     }
     public void hide(){
-        renderable.hide();
+        renderer2D.hide();
         imageView.setImage(hidden);
     }
 }

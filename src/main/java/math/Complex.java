@@ -1,11 +1,6 @@
 package math;
 
-import graphics.CanvasRenderer;
-import graphics.Renderable;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Paint;
-
-public class Complex implements Renderable {
+public class Complex{
     private double re;
     private double im;
     private double length;
@@ -89,37 +84,6 @@ public class Complex implements Renderable {
 
     public void setAngle(double angle) {
         this.angle = angle;
-    }
-
-    public Point getCanvasPoint(){
-        return CanvasRenderer.toCanvasPoint(new Point(re, im));
-    }
-
-    @Override
-    public void render(GraphicsContext gc, String name, Paint paint){
-        gc.setFill(paint);
-        Point p = getCanvasPoint();
-        gc.fillRect(p.getElement(0) - 5, p.getElement(1)- 5, 10,10);
-        if(name!=null){
-            Vector d = Vectors.scale(Vectors.fromComplex(this), 1/length/3);
-            gc.fillText(name, CanvasRenderer.toCanvasX(re+d.getElement(0)), CanvasRenderer.toCanvasY(im+d.getElement(1)));
-        }
-    }
-
-
-    @Override
-    public boolean isHidden() {
-        return isHidden;
-    }
-
-    @Override
-    public void show() {
-        isHidden = false;
-    }
-
-    @Override
-    public void hide() {
-        isHidden = true;
     }
 }
 

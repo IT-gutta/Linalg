@@ -18,7 +18,7 @@ public class Interpolator {
     }
 
     public void handle(){
-        progressAngle += Math.PI/2 / millis * CanvasRenderer.deltaTime;
+        progressAngle += Math.PI/2 / millis * CanvasRenderer2D.deltaTime;
         progress = Math.sin(progressAngle);
 
         //lerping finished
@@ -29,7 +29,6 @@ public class Interpolator {
             actuals[i] = starts[i] + progress * (ends[i] - starts[i]);
         }
     }
-
     public boolean isFinished(){
         return progress == 1;
     }

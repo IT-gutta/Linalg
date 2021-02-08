@@ -1,18 +1,13 @@
 package math;
 
 import exceptions.IllegalNumberOfDimensionsException;
-import exceptions.RenderException;
 import graphics.*;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Paint;
-import graphics.CanvasRenderer;
 
 import java.util.stream.DoubleStream;
 
-public class Vector implements Renderable, Transformable {
+public class Vector implements Transformable {
 
     private double[] vector;
-    private boolean isHidden = false;
     private Interpolator interpolator;
 
     private final double arrowTipLength = 12;
@@ -87,7 +82,6 @@ public class Vector implements Renderable, Transformable {
                 vector[i]+=v.getElement(i);
             }
         }
-
         return this;
     }
 
@@ -169,86 +163,10 @@ public class Vector implements Renderable, Transformable {
         return Points.fromVector(this);
     }
 
-    @Override
-    public void render(GraphicsContext gc, String name, Paint paint){
-        //linear interpolation
-        handleLerp();
-
-
-        if(isHidden())
-            return;
-
-        gc.setFill(paint);
-        gc.setStroke(paint);
-
-        Vector distance = Vectors.scale(this, 1/getMagnitude()/3);
-        gc.fillText(name, CanvasRenderer.toCanvasX(getElement(0)+distance.getElement(0)), CanvasRenderer.toCanvasY(getElement(1)+distance.getElement(1)));
-
-
-        gc.setLineWidth(1.5);
-        gc.strokeLine(CanvasRenderer.toCanvasX(0), CanvasRenderer.toCanvasY(0), CanvasRenderer.toCanvasX(getElement(0)), CanvasRenderer.toCanvasY(getElement(1)));
-
-
-        //fill arrow
-        double angle = Math.atan2(getElement(1), getElement(0));
-
-        double startX = CanvasRenderer.toCanvasX(getElement(0)) - arrowTipLength * Math.cos(angle); //move back so tip can be at exact location
-        double startY = CanvasRenderer.toCanvasY(getElement(1)) + arrowTipLength * Math.sin(angle); //move back so tip can be at exact location
-
-        double[] xCoords = {
-                CanvasRenderer.toCanvasX(getElement(0)), //tipX
-                startX + arrowSideLength * Math.sin(angle), //rightX
-                startX - arrowSideLength * Math.sin(angle) //leftX
-        };
-
-        double[] yCoords = {
-                CanvasRenderer.toCanvasY(getElement(1)), //tipY
-                startY + arrowSideLength * Math.cos(angle), //rightY
-                startY - arrowSideLength * Math.cos(angle), //leftY
-        };
-
-        gc.fillPolygon(xCoords, yCoords, 3);
-    }
 
     @Override
     public void transform(Matrix m){
-        transform(m, 1000);
-    }
-
-    public void transform(Matrix m, int millis){
-        double[] endPos = m.transform(getVector());
-        double startAngle = Math.atan2(vector[1], vector[0]);
-        double endAngle = startAngle + Vectors.angle2(vector, endPos);
-        double startLength = Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2));
-        double endLength = Math.sqrt(Math.pow(endPos[0], 2) + Math.pow(endPos[1], 2));
-        interpolator = new Interpolator(millis, new double[]{startLength, startAngle}, new double[]{endLength, endAngle});
-    }
-
-    public void handleLerp(){
-        if(interpolator != null){
-            interpolator.handle();
-            //0 is the length, and 1 is the angle
-            setElement(0, interpolator.get(0) * Math.cos(interpolator.get(1)));
-            setElement(1, interpolator.get(0) * Math.sin(interpolator.get(1)));
-            if(interpolator.isFinished())
-                interpolator = null;
-        }
-    }
-
-
-    @Override
-    public boolean isHidden() {
-        return isHidden;
-    }
-
-    @Override
-    public void show() {
-        isHidden = false;
-    }
-
-    @Override
-    public void hide() {
-        isHidden = true;
+        //skriv kode her
     }
 
 }

@@ -2,6 +2,7 @@ package graphics.tools;
 
 import graphics.DefinedVariables;
 import graphics.Icons;
+import graphics.Interpolatable;
 import graphics.VariableContainer;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
@@ -10,7 +11,7 @@ import math.Transformable;
 
 public abstract class MenuItems {
 
-    public static MenuItem transformMenuItem(VariableContainer<? extends Transformable> variableContainer){
+    public static MenuItem transformMenuItem(VariableContainer<? extends Interpolatable> variableContainer){
         MenuItem transform = new MenuItem("Transform", Icons.of("transform.png", 20));
         transform.setOnAction(actionEvent ->{
             TextInputDialog dialog = new TextInputDialog();
@@ -23,7 +24,7 @@ public abstract class MenuItems {
                 if(DefinedVariables.contains(name)){
                     VariableContainer v = DefinedVariables.get(name);
                     if(v.getVariable() instanceof Matrix)
-                        variableContainer.getVariable().transform((Matrix) v.getVariable());
+                        variableContainer.getVariable().startInterpolation((Matrix) v.getVariable(), 1000);
                 }
             });
         });

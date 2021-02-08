@@ -3,6 +3,9 @@ package graphics.tools;
 import graphics.DefinedVariables;
 import graphics.Icons;
 import graphics.VariableContainer;
+import graphics.math2d.Line2;
+import graphics.math2d.Point2;
+import graphics.math2d.Vector2;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -40,7 +43,7 @@ public class NewMenuButton extends MenuButton {
                 if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
-                DefinedVariables.add(new Vector((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
+                DefinedVariables.add(new Vector2((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
             });
         });
 
@@ -96,7 +99,7 @@ public class NewMenuButton extends MenuButton {
                 if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
-                DefinedVariables.add(new Line(new Point((double) aInput.getTextFormatter().getValue(), (double) bInput.getTextFormatter().getValue()), new Vector((double) cInput.getTextFormatter().getValue(), (double) dInput.getTextFormatter().getValue())), dialog.getEditor().getText());
+                DefinedVariables.add(new Line2(new Point2((double) aInput.getTextFormatter().getValue(), (double) bInput.getTextFormatter().getValue()), new Vector2((double) cInput.getTextFormatter().getValue(), (double) dInput.getTextFormatter().getValue())), dialog.getEditor().getText());
             });
         });
 
@@ -118,7 +121,7 @@ public class NewMenuButton extends MenuButton {
                 if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
-                DefinedVariables.add(new Complex((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
+                DefinedVariables.add(new VariableContainer<Complex>(new Complex((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText()));
             });
         });
 
@@ -139,7 +142,7 @@ public class NewMenuButton extends MenuButton {
                 if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
-                DefinedVariables.add(new Point(dialog.getEditor().getText(), (double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
+                DefinedVariables.add(new Point2((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
             });
         });
 
