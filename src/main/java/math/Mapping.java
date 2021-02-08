@@ -2,13 +2,13 @@ package math;
 
 import graphics.CanvasRenderer;
 import graphics.Renderable;
-import graphics.Variable;
+import graphics.VariableContainer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 
 public class Mapping implements Renderable{
     //TODO fix problems related to rendering
-    private Variable<Mapping> wrapper;
+    private VariableContainer<Mapping> wrapper;
     private final Expression mapping;
     private final double start;
     private final double end;

@@ -2,7 +2,6 @@ package math;
 
 import graphics.CanvasRenderer;
 import graphics.Renderable;
-import graphics.Variable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 

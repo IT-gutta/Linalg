@@ -1,12 +1,12 @@
 package graphics;
 
 public class Interpolator {
-    private double[] starts;
-    private double[] ends;
+    private final double[] starts;
+    private final double[] ends;
     private double[] actuals;
     private double progress;
     private double progressAngle;
-    private double millis;
+    private final double millis;
 
     public Interpolator(double millis, double[] starts, double[] ends){
         if(ends.length != starts.length)

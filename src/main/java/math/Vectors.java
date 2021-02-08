@@ -1,7 +1,7 @@
 package math;
 
 import exceptions.IllegalNumberOfDimensionsException;
-import graphics.Variable;
+import graphics.VariableContainer;
 
 import java.util.stream.Stream;
 
@@ -99,7 +99,7 @@ public class Vectors {
         return new Vector(Stream.of(args).mapToDouble(Double::parseDouble).toArray());
     }
 
-    public static Variable<Vector> of(String name, double... args){
-        return new Variable<Vector>(new Vector(args), name);
+    public static VariableContainer<Vector> of(String name, double... args){
+        return new VariableContainer<Vector>(new Vector(args), name);
     }
 }

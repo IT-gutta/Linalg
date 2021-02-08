@@ -35,7 +35,7 @@ public abstract class CanvasRenderer{
         DefinedVariables.add(line, "line");
         DefinedVariables.add(grid, "grid");
         DefinedVariables.add(lineSegment, "linesegment");
-        DefinedVariables.add(new Variable<Matrix>(matrix, "m"));
+        DefinedVariables.add(new VariableContainer<Matrix>(matrix, "m"));
 
 
         accountForChanges();
@@ -113,9 +113,9 @@ public abstract class CanvasRenderer{
 
     public static void accountForChanges(){
         //oppdaterer alle linjer
-        for(Variable<Renderable> variable : DefinedVariables.getRenderableVariables())
-            if(variable.getVariable() instanceof Line)
-                ((Line) variable.getVariable()).updateCanvasPoints();
+        for(VariableContainer<Renderable> variableContainer : DefinedVariables.getRenderableVariables())
+            if(variableContainer.getVariable() instanceof Line)
+                ((Line) variableContainer.getVariable()).updateCanvasPoints();
     }
 
 

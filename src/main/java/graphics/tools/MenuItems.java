@@ -2,20 +2,15 @@ package graphics.tools;
 
 import graphics.DefinedVariables;
 import graphics.Icons;
-import graphics.Renderable;
-import graphics.Variable;
-import javafx.scene.control.MenuButton;
+import graphics.VariableContainer;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import math.Matrix;
 import math.Transformable;
-import org.linalgfx.App;
 
 public abstract class MenuItems {
 
-    public static MenuItem transformMenuItem(Variable<? extends Transformable> variable){
+    public static MenuItem transformMenuItem(VariableContainer<? extends Transformable> variableContainer){
         MenuItem transform = new MenuItem("Transform", Icons.of("transform.png", 20));
         transform.setOnAction(actionEvent ->{
             TextInputDialog dialog = new TextInputDialog();
@@ -26,9 +21,9 @@ public abstract class MenuItems {
             dialog.showAndWait().ifPresent(response ->{
                 String name = dialog.getEditor().getText();
                 if(DefinedVariables.contains(name)){
-                    Variable v = DefinedVariables.get(name);
+                    VariableContainer v = DefinedVariables.get(name);
                     if(v.getVariable() instanceof Matrix)
-                        variable.getVariable().transform((Matrix) v.getVariable());
+                        variableContainer.getVariable().transform((Matrix) v.getVariable());
                 }
             });
         });

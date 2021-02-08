@@ -2,19 +2,14 @@ package graphics.tools;
 
 import graphics.DefinedVariables;
 import graphics.Icons;
-import graphics.Variable;
+import graphics.VariableContainer;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import math.*;
-import org.linalgfx.App;
 import regex.RegexUtils;
-
-import java.util.regex.Pattern;
 
 public class NewMenuButton extends MenuButton {
     //TODO Add support for more variables (grid, linesegment and more) in the new menu window
@@ -73,7 +68,7 @@ public class NewMenuButton extends MenuButton {
                 if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
-                DefinedVariables.add(new Variable<Matrix>(new Matrix((double) aInput.getTextFormatter().getValue(), (double) bInput.getTextFormatter().getValue(), (double) cInput.getTextFormatter().getValue(), (double) dInput.getTextFormatter().getValue()), dialog.getEditor().getText()));
+                DefinedVariables.add(new VariableContainer<Matrix>(new Matrix((double) aInput.getTextFormatter().getValue(), (double) bInput.getTextFormatter().getValue(), (double) cInput.getTextFormatter().getValue(), (double) dInput.getTextFormatter().getValue()), dialog.getEditor().getText()));
             });
         });
 
@@ -165,7 +160,7 @@ public class NewMenuButton extends MenuButton {
                 if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
-                DefinedVariables.add(new Variable<>((Double) input.getTextFormatter().getValue(), dialog.getEditor().getText()));
+                DefinedVariables.add(new VariableContainer<>((Double) input.getTextFormatter().getValue(), dialog.getEditor().getText()));
             });
         });
 

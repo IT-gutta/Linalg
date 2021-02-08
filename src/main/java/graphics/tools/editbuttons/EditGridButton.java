@@ -1,15 +1,15 @@
 package graphics.tools.editbuttons;
 
 import math.Grid;
-import graphics.Variable;
+import graphics.VariableContainer;
 import graphics.tools.MenuItems;
 
 public class EditGridButton extends GenericEditButton {
-    private Variable<Grid> variable;
-    public EditGridButton(Variable<Grid> variable){
-        super(variable);
-        this.variable = variable;
+    private VariableContainer<Grid> variableContainer;
+    public EditGridButton(VariableContainer<Grid> variableContainer){
+        super(variableContainer);
+        this.variableContainer = variableContainer;
 
-        addMenuItem(MenuItems.transformMenuItem(variable));
+        addMenuItem(MenuItems.transformMenuItem(variableContainer));
     }
 }

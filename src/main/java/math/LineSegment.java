@@ -3,14 +3,14 @@ package math;
 import graphics.CanvasRenderer;
 import graphics.Interpolator;
 import graphics.Renderable;
-import graphics.Variable;
+import graphics.VariableContainer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 
 public class LineSegment implements Renderable, Transformable {
     private Point start;
     private Point end;
-    private Variable<LineSegment> wrapper;
+    private VariableContainer<LineSegment> wrapper;
 
     private boolean isHidden = false;
     private Interpolator interpolator;

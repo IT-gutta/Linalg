@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
 public abstract class DefinedVariables {
     private static VBox vbox = new VBox();
     private static ScrollPane scrollPane = new ScrollPane(vbox);
-    private static Map<String, Variable> map = new HashMap<>();
+    private static Map<String, VariableContainer> map = new HashMap<>();
 
 
-    public static boolean contains(Variable variable){
-        return vbox.getChildren().stream().anyMatch(other -> variable.equals(other));
+    public static boolean contains(VariableContainer variableContainer){
+        return vbox.getChildren().stream().anyMatch(other -> variableContainer.equals(other));
     }
 
 
@@ -27,40 +27,40 @@ public abstract class DefinedVariables {
 
     public static boolean remove(String name){
         if(map.containsKey(name)){
-            Variable variable = map.remove(name);
-            vbox.getChildren().remove(variable);
+            VariableContainer variableContainer = map.remove(name);
+            vbox.getChildren().remove(variableContainer);
             return true;
         }
         return false;
     }
 
-    public static boolean remove(Variable variable){
-        return remove(variable.getName());
+    public static boolean remove(VariableContainer variableContainer){
+        return remove(variableContainer.getName());
     }
 
 
-    public static void addAll(Variable... variables){
-        for(Variable v : variables){
+    public static void addAll(VariableContainer... variableContainers){
+        for(VariableContainer v : variableContainers){
             add(v);
         }
     }
 
-    public static void add(Variable variable){
-        if(contains(variable) || map.containsKey(variable.getName()))
+    public static void add(VariableContainer variableContainer){
+        if(contains(variableContainer) || map.containsKey(variableContainer.getName()))
             return;
-        vbox.getChildren().add(variable);
-        map.put(variable.getName(), variable);
+        vbox.getChildren().add(variableContainer);
+        map.put(variableContainer.getName(), variableContainer);
     }
 
     public static void add(Renderable r, String name){
-        add(new Variable<>(r, name));
+        add(new VariableContainer<>(r, name));
     }
 
-    public static Variable get(String name){
+    public static VariableContainer get(String name){
         return map.get(name);
     }
 
-    public static void set(String name, Variable v){
+    public static void set(String name, VariableContainer v){
         map.put(name, v);
     }
 
@@ -72,11 +72,11 @@ public abstract class DefinedVariables {
         return scrollPane;
     }
 
-    public static List<Variable<Renderable>> getRenderableVariables(){
-        return vbox.getChildren().stream().map(node -> (Variable) node).filter(v -> v.getRenderable()!=null && !v.getRenderable().isHidden()).map(v -> (Variable<Renderable>) v).collect(Collectors.toList());
+    public static List<VariableContainer<Renderable>> getRenderableVariables(){
+        return vbox.getChildren().stream().map(node -> (VariableContainer) node).filter(v -> v.getRenderable()!=null && !v.getRenderable().isHidden()).map(v -> (VariableContainer<Renderable>) v).collect(Collectors.toList());
     }
 
     public static void updateText(){
-       vbox.getChildren().forEach(n -> ((Variable) n).updateContentText());
+       vbox.getChildren().forEach(n -> ((VariableContainer) n).updateContentText());
     }
 }

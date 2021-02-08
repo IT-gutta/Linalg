@@ -1,6 +1,6 @@
 package graphics.tools.editbuttons;
 
-import graphics.Variable;
+import graphics.VariableContainer;
 import graphics.tools.DoubleFormatter;
 import graphics.tools.MenuItems;
 import javafx.scene.control.MenuItem;
@@ -14,18 +14,18 @@ import org.linalgfx.App;
 import regex.RegexUtils;
 
 public class EditVectorButton extends GenericEditButton {
-    private Variable<Vector> variable;
-    public EditVectorButton(Variable<Vector> variable){
-        super(variable);
-        this.variable = variable;
+    private VariableContainer<Vector> variableContainer;
+    public EditVectorButton(VariableContainer<Vector> variableContainer){
+        super(variableContainer);
+        this.variableContainer = variableContainer;
 
         MenuItem edit = new MenuItem("Edit", new ImageView(new Image(App.resourceURL("images/hammer.png"))));
         edit.setOnAction(actionEvent -> {
             clearDialog();
 
             var vectorInput = new HBox();
-            TextField xInput = DoubleFormatter.getTextField(variable.getVariable().getElement(0));
-            TextField yInput = DoubleFormatter.getTextField(variable.getVariable().getElement(1));
+            TextField xInput = DoubleFormatter.getTextField(variableContainer.getVariable().getElement(0));
+            TextField yInput = DoubleFormatter.getTextField(variableContainer.getVariable().getElement(1));
 
             dialog.getEditor().setText(getOwner().getName());
 
@@ -36,8 +36,8 @@ public class EditVectorButton extends GenericEditButton {
 
 
             dialog.showAndWait().ifPresent(response ->{
-                variable.getVariable().setElement(0, (double) xInput.getTextFormatter().getValue());
-                variable.getVariable().setElement(1, (double) yInput.getTextFormatter().getValue());
+                variableContainer.getVariable().setElement(0, (double) xInput.getTextFormatter().getValue());
+                variableContainer.getVariable().setElement(1, (double) yInput.getTextFormatter().getValue());
                 getOwner().updateContentText();
 
 
@@ -63,6 +63,6 @@ public class EditVectorButton extends GenericEditButton {
 
 
         addMenuItem(edit);
-        addMenuItem(MenuItems.transformMenuItem(variable));
+        addMenuItem(MenuItems.transformMenuItem(variableContainer));
     }
 }

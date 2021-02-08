@@ -10,7 +10,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import math.Mapping;
 
-public class Variable<T> extends HBox {
+public class VariableContainer<T> extends HBox {
     private T variable;
     private String name;
     private final Text contentField;
@@ -20,7 +20,7 @@ public class Variable<T> extends HBox {
     //private final Pane spacer = new Pane();
 
 
-    public Variable(T variable, String name){
+    public VariableContainer(T variable, String name){
         this.variable = variable;
         this.name = name;
         contentField = new Text();
@@ -69,7 +69,7 @@ public class Variable<T> extends HBox {
         return name + " = " + variable.toString();
     }
 
-    public boolean equals(Variable other){
+    public boolean equals(VariableContainer other){
         return other.variable.equals(variable);
     }
 

@@ -1,29 +1,24 @@
 package graphics.tools.editbuttons;
 
 import graphics.Icons;
-import graphics.Renderable;
-import graphics.Variable;
-import javafx.scene.ImageCursor;
+import graphics.VariableContainer;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import math.*;
-import org.linalgfx.App;
 import regex.RegexUtils;
 
 public class GenericEditButton extends MenuButton {
-    private final Variable variable;
+    private final VariableContainer variableContainer;
     protected TextInputDialog dialog;
 
-    public GenericEditButton(Variable variable){
+    public GenericEditButton(VariableContainer variableContainer){
         super("");
         setGraphic(Icons.of("settings.png", 20));
         getStyleClass().add("transparent-button");
 
-        this.variable = variable;
+        this.variableContainer = variableContainer;
 
         MenuItem deleteButton = new MenuItem("Delete", Icons.of("delete.png", 20));
         deleteButton.setOnAction(ev ->{
@@ -44,7 +39,7 @@ public class GenericEditButton extends MenuButton {
     }
 
     public void delete(){
-        variable.delete();
+        variableContainer.delete();
     }
 
     protected void clearDialog(){
@@ -73,7 +68,7 @@ public class GenericEditButton extends MenuButton {
                 if(getOwner().getName().equals(name))
                     return;
 
-                variable.setName(name);
+                variableContainer.setName(name);
             }
             catch (IllegalArgumentException e){
                 handleChangeName(true);
@@ -82,30 +77,30 @@ public class GenericEditButton extends MenuButton {
     }
 
 
-    public Variable getOwner(){
-        return variable;
+    public VariableContainer getOwner(){
+        return variableContainer;
     }
 
 
-    public static <T> GenericEditButton getEditButton(Variable<T> variable){
-        if(variable.getVariable() instanceof Vector)
-            return new EditVectorButton((Variable<Vector>) variable);
+    public static <T> GenericEditButton getEditButton(VariableContainer<T> variableContainer){
+        if(variableContainer.getVariable() instanceof Vector)
+            return new EditVectorButton((VariableContainer<Vector>) variableContainer);
 
-        if(variable.getVariable() instanceof Matrix)
-            return new EditMatrixButton((Variable<Matrix>) variable);
+        if(variableContainer.getVariable() instanceof Matrix)
+            return new EditMatrixButton((VariableContainer<Matrix>) variableContainer);
 
-        if(variable.getVariable() instanceof Line)
-            return new EditLineButton((Variable<Line>) variable);
+        if(variableContainer.getVariable() instanceof Line)
+            return new EditLineButton((VariableContainer<Line>) variableContainer);
 
-        if(variable.getVariable() instanceof Grid)
-            return new EditGridButton((Variable<Grid>) variable);
+        if(variableContainer.getVariable() instanceof Grid)
+            return new EditGridButton((VariableContainer<Grid>) variableContainer);
 
-        if(variable.getVariable() instanceof LineSegment)
-            return new EditLineSegmentButton((Variable<LineSegment>) variable);
+        if(variableContainer.getVariable() instanceof LineSegment)
+            return new EditLineSegmentButton((VariableContainer<LineSegment>) variableContainer);
 
-        if(variable.getVariable() instanceof Point)
-            return new EditPointButton((Variable<Point>) variable);
+        if(variableContainer.getVariable() instanceof Point)
+            return new EditPointButton((VariableContainer<Point>) variableContainer);
 
-        return new GenericEditButton(variable);
+        return new GenericEditButton(variableContainer);
     }
 }

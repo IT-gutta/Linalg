@@ -2,7 +2,6 @@ package graphics.tools.editbuttons;
 
 
 import graphics.Renderable;
-import graphics.Variable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;

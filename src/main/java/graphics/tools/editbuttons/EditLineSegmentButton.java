@@ -1,16 +1,15 @@
 package graphics.tools.editbuttons;
 
-import graphics.Variable;
+import graphics.VariableContainer;
 import graphics.tools.MenuItems;
-import math.Grid;
 import math.LineSegment;
 
 public class EditLineSegmentButton extends GenericEditButton{
-    private Variable<LineSegment> variable;
-    public EditLineSegmentButton(Variable<LineSegment> variable){
-        super(variable);
-        this.variable = variable;
+    private VariableContainer<LineSegment> variableContainer;
+    public EditLineSegmentButton(VariableContainer<LineSegment> variableContainer){
+        super(variableContainer);
+        this.variableContainer = variableContainer;
 
-        addMenuItem(MenuItems.transformMenuItem(variable));
+        addMenuItem(MenuItems.transformMenuItem(variableContainer));
     }
 }

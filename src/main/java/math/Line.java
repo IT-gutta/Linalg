@@ -2,7 +2,7 @@ package math;
 
 import graphics.CanvasRenderer;
 import graphics.Renderable;
-import graphics.Variable;
+import graphics.VariableContainer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Line implements Renderable, Transformable {
     //TODO fix toString
-    private Variable<Line> wrapper;
+    private VariableContainer<Line> wrapper;
     private Point start;
     private Vector direction;
     private boolean isHidden = false;

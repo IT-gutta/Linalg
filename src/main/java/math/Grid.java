@@ -1,12 +1,12 @@
 package math;
 
 import graphics.Renderable;
-import graphics.Variable;
+import graphics.VariableContainer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 
 public class Grid implements Renderable, Transformable {
-    private Variable<Grid> wrapper;
+    private VariableContainer<Grid> wrapper;
     private Vector iHat;
     private Vector jHat;
     private LineSegment[] lineSegments;

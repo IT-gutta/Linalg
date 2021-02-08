@@ -3,14 +3,14 @@ package math;
 import graphics.CanvasRenderer;
 import graphics.Interpolator;
 import graphics.Renderable;
-import graphics.Variable;
+import graphics.VariableContainer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 
 public class Point implements Renderable, Transformable {
     private double[] point;
     private boolean isHidden = false;
-    private Variable<Point> wrapper;
+    private VariableContainer<Point> wrapper;
     private Interpolator interpolator;
     public Point(double... args){
         point = args;

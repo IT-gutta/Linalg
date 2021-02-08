@@ -5,16 +5,11 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import math.*;
 
-import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.DoubleStream;
 
 public class TextInputEvent implements EventHandler<ActionEvent> {
     //TODO Ultimately find a better system instead of repeating code
@@ -102,21 +97,21 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 System.out.println("found matrix");
                 m = Pattern.compile(varDec+matCon).matcher(inp);
                 if(m.find()){
-                    DefinedVariables.add(new Variable<>(new Matrix(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4)),Double.parseDouble(m.group(6)),Double.parseDouble(m.group(8))), m.group(1)));
+                    DefinedVariables.add(new VariableContainer<>(new Matrix(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4)),Double.parseDouble(m.group(6)),Double.parseDouble(m.group(8))), m.group(1)));
                 }
             }
 
             //LineConstructor
             m = Pattern.compile(varDec+linCon).matcher(inp);
             if(m.find()){
-                Variable a = DefinedVariables.get(m.group(2));
-                Variable b = DefinedVariables.get(m.group(3));
+                VariableContainer a = DefinedVariables.get(m.group(2));
+                VariableContainer b = DefinedVariables.get(m.group(3));
                 /*if(a.getVariable() instanceof Point && b.getVariable() instanceof Point)
                     DefinedVariables.add(new Variable<Line>(new Line((Point)a.getVariable(),(Point)b.getVariable()), m.group(1)));*/
                 if(a.getVariable() instanceof Point && b.getVariable() instanceof Vector)
-                    DefinedVariables.add(new Variable<Line>(new Line((Point)a.getVariable(),(Vector)b.getVariable()),m.group(1)));
+                    DefinedVariables.add(new VariableContainer<Line>(new Line((Point)a.getVariable(),(Vector)b.getVariable()),m.group(1)));
                 if(a.getVariable() instanceof Vector && b.getVariable() instanceof Point)
-                    DefinedVariables.add(new Variable<Line>(new Line((Point)b.getVariable(),(Vector)a.getVariable()),m.group(1)));
+                    DefinedVariables.add(new VariableContainer<Line>(new Line((Point)b.getVariable(),(Vector)a.getVariable()),m.group(1)));
             }
 
             //ComplexConstructor
@@ -126,9 +121,9 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 for(int i = 0; i<m.groupCount()+1; i++)
                     System.out.println(m.group(i));
                 if(m.group(2)!=null)
-                    DefinedVariables.add(new Variable(new Complex(Double.parseDouble(m.group(3)),Double.parseDouble(m.group(5)+m.group(6))), m.group(1)));
+                    DefinedVariables.add(new VariableContainer(new Complex(Double.parseDouble(m.group(3)),Double.parseDouble(m.group(5)+m.group(6))), m.group(1)));
                 else
-                    DefinedVariables.add(new Variable(new Complex(Double.parseDouble(m.group(11)+m.group(12)),Double.parseDouble(m.group(9))), m.group(1)));
+                    DefinedVariables.add(new VariableContainer(new Complex(Double.parseDouble(m.group(11)+m.group(12)),Double.parseDouble(m.group(9))), m.group(1)));
 
             }
 
@@ -137,10 +132,10 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 String func = varDec+f+"\\("+varName+","+varName+"\\)";
                 m = Pattern.compile(func).matcher(inp);
                 if(m.find()){
-                    Variable a = DefinedVariables.get(m.group(2));
-                    Variable b = DefinedVariables.get(m.group(3));
+                    VariableContainer a = DefinedVariables.get(m.group(2));
+                    VariableContainer b = DefinedVariables.get(m.group(3));
                     if(a.getVariable() instanceof Vector && b.getVariable() instanceof Vector){
-                        DefinedVariables.add(new Variable<Vector>(vvvOps.get(f).apply((Vector)a.getVariable(), (Vector)b.getVariable()),m.group(1)));
+                        DefinedVariables.add(new VariableContainer<Vector>(vvvOps.get(f).apply((Vector)a.getVariable(), (Vector)b.getVariable()),m.group(1)));
                     }
                 }
             }
@@ -150,10 +145,10 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 String func = varDec+f+"\\("+varName+","+varName+"\\)";
                 m = Pattern.compile(func).matcher(inp);
                 if(m.find()){
-                    Variable a = DefinedVariables.get(m.group(2));
-                    Variable b = DefinedVariables.get(m.group(3));
+                    VariableContainer a = DefinedVariables.get(m.group(2));
+                    VariableContainer b = DefinedVariables.get(m.group(3));
                     if(a.getVariable() instanceof Vector && b.getVariable() instanceof Vector){
-                        DefinedVariables.add(new Variable<Double>(vvdOps.get(f).apply((Vector)a.getVariable(), (Vector)b.getVariable()),m.group(1)));
+                        DefinedVariables.add(new VariableContainer<Double>(vvdOps.get(f).apply((Vector)a.getVariable(), (Vector)b.getVariable()),m.group(1)));
                     }
                 }
             }
@@ -163,10 +158,10 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 String func = varDec+f+"\\("+varName+","+varName+"\\)";
                 m = Pattern.compile(func).matcher(inp);
                 if(m.find()){
-                    Variable a = DefinedVariables.get(m.group(2));
-                    Variable b = DefinedVariables.get(m.group(3));
+                    VariableContainer a = DefinedVariables.get(m.group(2));
+                    VariableContainer b = DefinedVariables.get(m.group(3));
                     if(a.getVariable() instanceof Vector && b.getVariable() instanceof Double){
-                        DefinedVariables.add(new Variable<Vector>(vdvOps.get(f).apply((Vector)a.getVariable(), (Double) b.getVariable()),m.group(1)));
+                        DefinedVariables.add(new VariableContainer<Vector>(vdvOps.get(f).apply((Vector)a.getVariable(), (Double) b.getVariable()),m.group(1)));
                     }
                 }
             }
@@ -176,10 +171,10 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 String func = varDec+f+"\\("+varName+","+varName+"\\)";
                 m = Pattern.compile(func).matcher(inp);
                 if(m.find()){
-                    Variable a = DefinedVariables.get(m.group(2));
-                    Variable b = DefinedVariables.get(m.group(3));
+                    VariableContainer a = DefinedVariables.get(m.group(2));
+                    VariableContainer b = DefinedVariables.get(m.group(3));
                     if(a.getVariable() instanceof Vector && b.getVariable() instanceof Matrix){
-                        DefinedVariables.add(new Variable<Vector>(vmvOps.get(f).apply((Vector)a.getVariable(), (Matrix) b.getVariable()),m.group(1)));
+                        DefinedVariables.add(new VariableContainer<Vector>(vmvOps.get(f).apply((Vector)a.getVariable(), (Matrix) b.getVariable()),m.group(1)));
                     }
                 }
             }
@@ -189,10 +184,10 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 String func = varDec+f+"\\("+varName+","+varName+"\\)";
                 m = Pattern.compile(func).matcher(inp);
                 if(m.find()){
-                    Variable a = DefinedVariables.get(m.group(2));
-                    Variable b = DefinedVariables.get(m.group(3));
+                    VariableContainer a = DefinedVariables.get(m.group(2));
+                    VariableContainer b = DefinedVariables.get(m.group(3));
                     if(a.getVariable() instanceof Point && b.getVariable() instanceof Matrix){
-                        DefinedVariables.add(new Variable<Point>(pmpOps.get(f).apply((Point)a.getVariable(), (Matrix) b.getVariable()),m.group(1)));
+                        DefinedVariables.add(new VariableContainer<Point>(pmpOps.get(f).apply((Point)a.getVariable(), (Matrix) b.getVariable()),m.group(1)));
                     }
                 }
             }
@@ -202,10 +197,10 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 String func = varDec+f+"\\("+varName+","+varName+"\\)";
                 m = Pattern.compile(func).matcher(inp);
                 if(m.find()){
-                    Variable a = DefinedVariables.get(m.group(2));
-                    Variable b = DefinedVariables.get(m.group(3));
+                    VariableContainer a = DefinedVariables.get(m.group(2));
+                    VariableContainer b = DefinedVariables.get(m.group(3));
                     if(a.getVariable() instanceof Point && b.getVariable() instanceof Point){
-                        DefinedVariables.add(new Variable<Point>(pppOps.get(f).apply((Point)a.getVariable(), (Point) b.getVariable()),m.group(1)));
+                        DefinedVariables.add(new VariableContainer<Point>(pppOps.get(f).apply((Point)a.getVariable(), (Point) b.getVariable()),m.group(1)));
                     }
                 }
             }
@@ -215,10 +210,10 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 String func = varDec+f+"\\("+varName+","+varName+"\\)";
                 m = Pattern.compile(func).matcher(inp);
                 if(m.find()){
-                    Variable a = DefinedVariables.get(m.group(2));
-                    Variable b = DefinedVariables.get(m.group(3));
+                    VariableContainer a = DefinedVariables.get(m.group(2));
+                    VariableContainer b = DefinedVariables.get(m.group(3));
                     if(a.getVariable() instanceof Complex && b.getVariable() instanceof Complex){
-                        DefinedVariables.add(new Variable<Complex>(cccOps.get(f).apply((Complex) a.getVariable(), (Complex) b.getVariable()),m.group(1)));
+                        DefinedVariables.add(new VariableContainer<Complex>(cccOps.get(f).apply((Complex) a.getVariable(), (Complex) b.getVariable()),m.group(1)));
                     }
                 }
             }
@@ -228,10 +223,10 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 String func = varDec+f+"\\("+varName+","+varName+"\\)";
                 m = Pattern.compile(func).matcher(inp);
                 if(m.find()){
-                    Variable a = DefinedVariables.get(m.group(2));
-                    Variable b = DefinedVariables.get(m.group(3));
+                    VariableContainer a = DefinedVariables.get(m.group(2));
+                    VariableContainer b = DefinedVariables.get(m.group(3));
                     if(a.getVariable() instanceof Complex && b.getVariable() instanceof Double){
-                        DefinedVariables.add(new Variable<Complex>(cdcOps.get(f).apply((Complex) a.getVariable(), (Double) b.getVariable()),m.group(1)));
+                        DefinedVariables.add(new VariableContainer<Complex>(cdcOps.get(f).apply((Complex) a.getVariable(), (Double) b.getVariable()),m.group(1)));
                     }
                 }
             }
@@ -241,9 +236,9 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 String func = varDec+f+"\\("+varName+"\\)";
                 m = Pattern.compile(func).matcher(inp);
                 if(m.find()){
-                    Variable a = DefinedVariables.get(m.group(2));
+                    VariableContainer a = DefinedVariables.get(m.group(2));
                     if(a.getVariable() instanceof Vector){
-                        DefinedVariables.add(new Variable<Double>(vdOps.get(f).apply((Vector)a.getVariable()),m.group(1)));
+                        DefinedVariables.add(new VariableContainer<Double>(vdOps.get(f).apply((Vector)a.getVariable()),m.group(1)));
                     }
                 }
             }
@@ -252,9 +247,9 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 String func = varDec+f+"\\("+varName+"\\)";
                 m = Pattern.compile(func).matcher(inp);
                 if(m.find()){
-                    Variable a = DefinedVariables.get(m.group(2));
+                    VariableContainer a = DefinedVariables.get(m.group(2));
                     if(a.getVariable() instanceof Matrix){
-                        DefinedVariables.add(new Variable<Matrix>(mmOps.get(f).apply((Matrix) a.getVariable()),m.group(1)));
+                        DefinedVariables.add(new VariableContainer(mmOps.get(f).apply((Matrix) a.getVariable()),m.group(1)));
                     }
                 }
             }
@@ -264,12 +259,12 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 m = Pattern.compile(func).matcher(inp);
                 if(m.find()){
                     System.out.println(f);
-                    Variable a = DefinedVariables.get(m.group(2));
-                    Variable b = DefinedVariables.get(m.group(3));
+                    VariableContainer a = DefinedVariables.get(m.group(2));
+                    VariableContainer b = DefinedVariables.get(m.group(3));
                     if(a.getVariable() instanceof Matrix && b.getVariable() instanceof Vector){
                         System.out.println((Matrix)a.getVariable());
                         System.out.println((Vector)b.getVariable());
-                        DefinedVariables.add(new Variable<Vector>(mvvOps.get(f).apply((Matrix) a.getVariable(), (Vector) b.getVariable()),m.group(1)));
+                        DefinedVariables.add(new VariableContainer<Vector>(mvvOps.get(f).apply((Matrix) a.getVariable(), (Vector) b.getVariable()),m.group(1)));
                     }
                 }
             }
@@ -277,10 +272,10 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 String func = varDec+f+"\\("+varName+","+varName+"\\)";
                 m = Pattern.compile(func).matcher(inp);
                 if(m.find()){
-                    Variable a = DefinedVariables.get(m.group(2));
-                    Variable b = DefinedVariables.get(m.group(3));
+                    VariableContainer a = DefinedVariables.get(m.group(2));
+                    VariableContainer b = DefinedVariables.get(m.group(3));
                     if(a.getVariable() instanceof Matrix && b.getVariable() instanceof Matrix){
-                        DefinedVariables.add(new Variable<Matrix>(mmmOps.get(f).apply((Matrix) a.getVariable(), (Matrix) b.getVariable()),m.group(1)));
+                        DefinedVariables.add(new VariableContainer(mmmOps.get(f).apply((Matrix) a.getVariable(), (Matrix) b.getVariable()),m.group(1)));
                     }
                 }
             }
@@ -290,7 +285,7 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
             try{
                 m = Pattern.compile(funDec+"(.*)").matcher(inp);
                 if(m.find())
-                    DefinedVariables.add(new Variable<Mapping>(new Mapping(m.group(2)), m.group(1)));
+                    DefinedVariables.add(new VariableContainer<Mapping>(new Mapping(m.group(2)), m.group(1)));
             }
             catch (Exception e){
                 System.out.println(e);
