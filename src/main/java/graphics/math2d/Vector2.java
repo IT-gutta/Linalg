@@ -79,8 +79,8 @@ public class Vector2 extends Renderer2D implements Interpolatable {
         if(interpolator != null){
             interpolator.handle();
             //0 is the length, and 1 is the angle
-            vector.setElement(0, interpolator.get(0) * Math.cos(interpolator.get(1)));
-            vector.setElement(1, interpolator.get(0) * Math.sin(interpolator.get(1)));
+            setX(interpolator.get(0) * Math.cos(interpolator.get(1)));
+            setY(interpolator.get(0) * Math.sin(interpolator.get(1)));
             if(interpolator.isFinished())
                 interpolator = null;
         }

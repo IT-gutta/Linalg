@@ -51,7 +51,7 @@ public abstract class CanvasRenderer2D {
             public void handle(long now) {
                 deltaTime = (now - lastFrameTime) / 1000000;
                 graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                CanvasRenderer2D.drawLines();
+                drawLines();
                 DefinedVariables.get2DRenderables().forEach(r -> {
                     r.getVariable().render(graphicsContext, r.getName(), r.getPaint());
                 });
