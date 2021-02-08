@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class Solver {
-    public static Matrix toReducedRowEchelon(Matrix m) throws IllegalArgumentException{
+    public static Matrix toReducedRowEchelon(Matrix m){
         HashMap<Integer, ArrayList<Integer>> pivotIndexes = new HashMap<>();
         while(!m.isRowEchelon()){
             //find pivot indexes
@@ -64,7 +64,10 @@ public class Solver {
         return pivotIndexes;
     }
 
-    public static Matrix invertedMatrix(Matrix m){
+    public static Matrix invertedMatrix(Matrix matrix) throws IllegalArgumentException{
+        if(matrix.getWidth()!=matrix.getHeight() || matrix.det()==0)
+            throw new IllegalArgumentException();
+        Matrix m = new Matrix(matrix.getMatrix());
         m.append(Matrices.getIdentityMatrix(m.getHeight()));
         int a = 0;
         m = toReducedRowEchelon(m);
@@ -74,7 +77,9 @@ public class Solver {
         return new Matrix(ansM);
     }
 
-    public static Vector solveLinSys(Matrix matrix, Vector v){
+    public static Vector solveLinSys(Matrix matrix, Vector v) throws IllegalArgumentException{
+        if(matrix.getHeight()!=matrix.getWidth() || matrix.getWidth()!=v.getDimensions() || matrix.det()==0)
+            throw new IllegalArgumentException();
         Matrix m = new Matrix(matrix.getMatrix());
         m.append(v);
         m = toReducedRowEchelon(m);
@@ -83,12 +88,11 @@ public class Solver {
 
     public static void main(String[] args) {
         double[][] arr = {
-                {1, 2, 4},
-                {2, 1, -3},
-                {8, 1, -6},
+                {0, 1},
+                {1, 0}
         };
         Matrix m = new Matrix(arr);
-        Vector v = new Vector(1,2,3);
-        System.out.println(invertedMatrix(m));
+        Vector v = new Vector(1,2);
+        System.out.println(solveLinSys(m,v));
     }
 }

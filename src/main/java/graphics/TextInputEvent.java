@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 import java.util.stream.DoubleStream;
 
 public class TextInputEvent implements EventHandler<ActionEvent> {
+    //TODO Ultimately find a better system instead of repeating code
     //TODO Add more functions
     //TODO Add derivatives
     //TODO Fix complex constructor
@@ -40,6 +41,7 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
     private static HashMap<String, BiFunction<Vector, Vector, Double>> vvdOps = new HashMap<>();
     private static HashMap<String, BiFunction<Vector, Double, Vector>> vdvOps = new HashMap<>();
     private static HashMap<String, BiFunction<Vector, Matrix, Vector>> vmvOps = new HashMap<>();
+    private static HashMap<String, BiFunction<Matrix, Matrix, Matrix>> mmmOps = new HashMap<>();
     private static HashMap<String, BiFunction<Point, Matrix, Point>> pmpOps = new HashMap<>();
     private static HashMap<String, BiFunction<Point, Point, Point>> pppOps = new HashMap<>();
     private static HashMap<String, BiFunction<Complex, Complex, Complex>> cccOps = new HashMap<>();
@@ -47,6 +49,7 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
     private static HashMap<String, BiFunction<Matrix, Vector, Vector>> mvvOps = new HashMap<>();
 
     private static HashMap<String, Function<Vector, Double>> vdOps = new HashMap<>();
+    private static HashMap<String, Function<Matrix, Matrix>> mmOps = new HashMap<>();
 
     public TextInputEvent(TextField inputField) {
         this.inputField = inputField;
@@ -57,6 +60,7 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
         vvdOps.put("dot", Vectors::dot); vvdOps.put("angle", Vectors::angle);
         vdvOps.put("scale", Vectors::scale);
         vmvOps.put("transform", Vectors::transform);
+        mmmOps.put("product", Matrices::product);
 
         mvvOps.put("solve", Solver::solveLinSys);
 
@@ -67,6 +71,7 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
         cdcOps.put("pow", ComplexNumbers::pow);
 
         vdOps.put("abs", Vectors::getMagnitude);
+        mmOps.put("inverse", Solver::invertedMatrix);
     }
 
     @Override
@@ -243,6 +248,17 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                 }
             }
 
+            for (String f : mmOps.keySet()) {
+                String func = varDec+f+"\\("+varName+"\\)";
+                m = Pattern.compile(func).matcher(inp);
+                if(m.find()){
+                    Variable a = DefinedVariables.get(m.group(2));
+                    if(a.getVariable() instanceof Matrix){
+                        DefinedVariables.add(new Variable<Matrix>(mmOps.get(f).apply((Matrix) a.getVariable()),m.group(1)));
+                    }
+                }
+            }
+
             for (String f : mvvOps.keySet()) {
                 String func = varDec+f+"\\("+varName+","+varName+"\\)";
                 m = Pattern.compile(func).matcher(inp);
@@ -251,7 +267,20 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                     Variable a = DefinedVariables.get(m.group(2));
                     Variable b = DefinedVariables.get(m.group(3));
                     if(a.getVariable() instanceof Matrix && b.getVariable() instanceof Vector){
+                        System.out.println((Matrix)a.getVariable());
+                        System.out.println((Vector)b.getVariable());
                         DefinedVariables.add(new Variable<Vector>(mvvOps.get(f).apply((Matrix) a.getVariable(), (Vector) b.getVariable()),m.group(1)));
+                    }
+                }
+            }
+            for (String f : mmmOps.keySet()) {
+                String func = varDec+f+"\\("+varName+","+varName+"\\)";
+                m = Pattern.compile(func).matcher(inp);
+                if(m.find()){
+                    Variable a = DefinedVariables.get(m.group(2));
+                    Variable b = DefinedVariables.get(m.group(3));
+                    if(a.getVariable() instanceof Matrix && b.getVariable() instanceof Matrix){
+                        DefinedVariables.add(new Variable<Matrix>(mmmOps.get(f).apply((Matrix) a.getVariable(), (Matrix) b.getVariable()),m.group(1)));
                     }
                 }
             }

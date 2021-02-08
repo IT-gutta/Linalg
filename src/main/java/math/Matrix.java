@@ -241,7 +241,7 @@ public class Matrix{
         matrix[y][x] = value;
     }
 
-
+    //TODO ToString doesnt display negative values
     @Override
     public String toString(){
         /*String s = "[\n";
