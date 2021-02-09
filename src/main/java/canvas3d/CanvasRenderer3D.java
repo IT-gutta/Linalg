@@ -1,5 +1,7 @@
-package graphics;
+package canvas3d;
 
+import graphics.DefinedVariables;
+import graphics.VariableContainer;
 import math3d.Vector3;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;

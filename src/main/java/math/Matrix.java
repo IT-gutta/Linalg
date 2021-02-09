@@ -82,7 +82,7 @@ public class Matrix{
         return sum;
     }
 
-    public Matrix multiply(Matrix other){
+    /*public Matrix multiply(Matrix other){
         if(width != other.height)
             throw new IllegalArgumentException("Illegal size of matrices");
         double[][] m = new double[height][other.width];
@@ -92,6 +92,19 @@ public class Matrix{
                 for(int k = 0; k < width; k++){
                     m[i][j] += matrix[i][k] * other.matrix[k][j];
                 }
+            }
+        }
+        return new Matrix(m);
+    }*/
+
+    public Matrix multiply(Matrix other){
+        if(width != other.height)
+            throw new IllegalArgumentException("Illegal size of matrices");
+        double[][] m = new double[height][other.width];
+
+        for(int y = 0; y < m.length; y++){
+            for(int x = 0; x < m[y].length; x++){
+                m[y][x] = new Vector(getRow(y)).dot(new Vector(other.getColumn(x)));
             }
         }
         return new Matrix(m);

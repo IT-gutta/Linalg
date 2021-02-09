@@ -1,5 +1,7 @@
 package graphics;
 
+import canvas2d.CanvasRenderer2D;
+
 public class Interpolator {
     private final double[] starts;
     private final double[] ends;

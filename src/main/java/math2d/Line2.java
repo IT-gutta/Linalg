@@ -1,17 +1,18 @@
 package math2d;
 
-import graphics.CanvasRenderer2D;
+import canvas2d.CanvasRenderer2D;
 import graphics.Interpolatable;
-import graphics.Renderer2D;
+import canvas2d.Renderer2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
+import math.Line;
 import math.Matrix;
 import math.Point;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Line2 extends Renderer2D implements Interpolatable {
+public class Line2 extends Renderer2D<Line> implements Interpolatable {
     private Vector2 direction;
     private Point2 start;
     private boolean isInsideCanvas;
@@ -22,10 +23,12 @@ public class Line2 extends Renderer2D implements Interpolatable {
     private double canvasEndY = 0;
 
     public Line2(Point2 start, Vector2 direction){
+        this(start.getX(), start.getY(), direction.getX(), direction.getY());
         this.start = start;
         this.direction = direction;
     }
     public Line2(double sx, double sy,double dx,double dy){
+        super(new Line(sx, sy, dx, dy));
         this.start = new Point2(sx, sy);
         this.direction = new Vector2(dx, dy);
     }

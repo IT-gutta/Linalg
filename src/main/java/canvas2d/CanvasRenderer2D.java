@@ -1,6 +1,8 @@
-package graphics;
+package canvas2d;
 
 import exceptions.IllegalNumberOfDimensionsException;
+import graphics.DefinedVariables;
+import graphics.VariableContainer;
 import math2d.Grid2;
 import math2d.Line2;
 import math2d.LineSegment2;

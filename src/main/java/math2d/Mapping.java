@@ -1,14 +1,13 @@
 package math2d;
 
-import graphics.CanvasRenderer2D;
-import graphics.Renderer2D;
+import canvas2d.CanvasRenderer2D;
+import canvas2d.Renderer2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.Expression;
 
-public class Mapping extends Renderer2D {
+public class Mapping extends Renderer2D<Expression> {
     //TODO fix problems related to rendering
-    private final Expression mapping;
     private final double start;
     private final double end;
     private final double step;
@@ -16,13 +15,8 @@ public class Mapping extends Renderer2D {
 
 
     public Mapping(String expression){
-        try{
-            mapping = new Expression(expression);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            throw new IllegalArgumentException();
-        }
+        super(new Expression(expression));
+
         start = -10;
         end = 10;
         step = 1;
@@ -30,13 +24,13 @@ public class Mapping extends Renderer2D {
 
 
     public double evaluate(double x){
-        return mapping.evaluate(x);
+        return math.evaluate(x);
     }
 
 
     @Override
     public String toString(){
-        return mapping.getExpression();
+        return math.getExpression();
     }
 
     @Override

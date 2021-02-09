@@ -1,5 +1,6 @@
-package graphics;
+package canvas3d;
 
+import canvas2d.CanvasRenderer2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 

@@ -1,5 +1,7 @@
 package graphics;
 
+import canvas2d.Renderer2D;
+import canvas3d.Renderer3D;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 

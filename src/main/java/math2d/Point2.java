@@ -1,41 +1,40 @@
 package math2d;
 
-import graphics.CanvasRenderer2D;
+import canvas2d.CanvasRenderer2D;
 import graphics.Interpolatable;
 import graphics.Interpolator;
-import graphics.Renderer2D;
+import canvas2d.Renderer2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.*;
 
-public class Point2 extends Renderer2D implements Interpolatable {
-    private Point point;
+public class Point2 extends Renderer2D<Point> implements Interpolatable {
     private Interpolator interpolator;
 
     public Point2(Point point){
-        this.point = point;
+        super(point);
     }
 
     public Point2(double x, double y){
-        this.point = new Point(x, y);
+        super(new Point(x, y));
     }
 
     public double getX(){
-        return point.getElement(0);
+        return math.getElement(0);
     }
     public double getY(){
-        return point.getElement(1);
+        return math.getElement(1);
     }
     public void setX(double x){
-        point.setElement(0, x);
+        math.setElement(0, x);
     }
     public void setY(double y){
-        point.setElement(1, y);
+        math.setElement(1, y);
     }
 
     @Override
     public void startInterpolation(Matrix m, int millis) {
-        double[] p = point.getPoint();
+        double[] p = math.getPoint();
         double[] endPos = m.transform(p);
         double startAngle = Math.atan2(p[1], p[0]);
         double endAngle = startAngle + Vectors.angle2(p, endPos);
@@ -49,8 +48,8 @@ public class Point2 extends Renderer2D implements Interpolatable {
         if(interpolator != null){
             interpolator.handle();
             //0 is the length, and 1 is the angle
-            point.setElement(0, interpolator.get(0) * Math.cos(interpolator.get(1)));
-            point.setElement(1, interpolator.get(0) * Math.sin(interpolator.get(1)));
+            math.setElement(0, interpolator.get(0) * Math.cos(interpolator.get(1)));
+            math.setElement(1, interpolator.get(0) * Math.sin(interpolator.get(1)));
             if(interpolator.isFinished())
                 interpolator = null;
         }
@@ -60,7 +59,7 @@ public class Point2 extends Renderer2D implements Interpolatable {
 
     @Override
     public void render(GraphicsContext gc, String name, Paint paint){
-        double[] p = point.getPoint();
+        double[] p = math.getPoint();
         //linear interpolation
         handleInterpolation();
 
@@ -70,7 +69,7 @@ public class Point2 extends Renderer2D implements Interpolatable {
         gc.fillOval(CanvasRenderer2D.toCanvasX(p[0]) - 5, CanvasRenderer2D.toCanvasY(p[1])- 5, 10,10);
         if(name!=null){
             gc.setFill(Paint.valueOf("purple"));
-            Vector d = Vectors.scale(Vectors.fromPoint(point), 1/point.toVector().getMagnitude()/3);
+            Vector d = Vectors.scale(Vectors.fromPoint(math), 1/ math.toVector().getMagnitude()/3);
             gc.fillText(name, CanvasRenderer2D.toCanvasX(p[0]+d.getElement(0)), CanvasRenderer2D.toCanvasY(p[1]+d.getElement(1)));
         }
     }

@@ -1,38 +1,37 @@
 package math2d;
 
-import graphics.CanvasRenderer2D;
+import canvas2d.CanvasRenderer2D;
 import graphics.Interpolatable;
 import graphics.Interpolator;
-import graphics.Renderer2D;
+import canvas2d.Renderer2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.Matrix;
 import math.Vector;
 import math.Vectors;
 
-public class Vector2 extends Renderer2D implements Interpolatable {
-    private Vector vector;
+public class Vector2 extends Renderer2D<Vector> implements Interpolatable {
     private Interpolator interpolator;
 
     public Vector2(Vector vector){
-        this.vector = vector;
+        super(vector);
     }
 
     public Vector2(double x, double y){
-        this.vector = new Vector(x, y);
+        super(new Vector(x, y));
     }
 
     public double getX(){
-        return vector.getElement(0);
+        return math.getElement(0);
     }
     public double getY(){
-        return vector.getElement(1);
+        return math.getElement(1);
     }
     public void setX(double x){
-        vector.setElement(0, x);
+        math.setElement(0, x);
     }
     public void setY(double y){
-        vector.setElement(1, y);
+        math.setElement(1, y);
     }
 
     @Override
@@ -43,30 +42,30 @@ public class Vector2 extends Renderer2D implements Interpolatable {
         gc.setFill(paint);
         gc.setStroke(paint);
 
-        Vector distance = Vectors.scale(vector, 1/vector.getMagnitude()/3);
-        gc.fillText(name, CanvasRenderer2D.toCanvasX(vector.getElement(0)+distance.getElement(0)), CanvasRenderer2D.toCanvasY(vector.getElement(1)+distance.getElement(1)));
+        Vector distance = Vectors.scale(math, 1/ math.getMagnitude()/3);
+        gc.fillText(name, CanvasRenderer2D.toCanvasX(math.getElement(0)+distance.getElement(0)), CanvasRenderer2D.toCanvasY(math.getElement(1)+distance.getElement(1)));
 
 
         gc.setLineWidth(1.5);
-        gc.strokeLine(CanvasRenderer2D.toCanvasX(0), CanvasRenderer2D.toCanvasY(0), CanvasRenderer2D.toCanvasX(vector.getElement(0)), CanvasRenderer2D.toCanvasY(vector.getElement(1)));
+        gc.strokeLine(CanvasRenderer2D.toCanvasX(0), CanvasRenderer2D.toCanvasY(0), CanvasRenderer2D.toCanvasX(math.getElement(0)), CanvasRenderer2D.toCanvasY(math.getElement(1)));
 
 
         //fill arrow
-        double angle = Math.atan2(vector.getElement(1), vector.getElement(0));
+        double angle = Math.atan2(math.getElement(1), math.getElement(0));
 
         double arrowTipLength = 12;
-        double startX = CanvasRenderer2D.toCanvasX(vector.getElement(0)) - arrowTipLength * Math.cos(angle); //move back so tip can be at exact location
-        double startY = CanvasRenderer2D.toCanvasY(vector.getElement(1)) + arrowTipLength * Math.sin(angle); //move back so tip can be at exact location
+        double startX = CanvasRenderer2D.toCanvasX(math.getElement(0)) - arrowTipLength * Math.cos(angle); //move back so tip can be at exact location
+        double startY = CanvasRenderer2D.toCanvasY(math.getElement(1)) + arrowTipLength * Math.sin(angle); //move back so tip can be at exact location
 
         double arrowSideLength = 7;
         double[] xCoords = {
-                CanvasRenderer2D.toCanvasX(vector.getElement(0)), //tipX
+                CanvasRenderer2D.toCanvasX(math.getElement(0)), //tipX
                 startX + arrowSideLength * Math.sin(angle), //rightX
                 startX - arrowSideLength * Math.sin(angle) //leftX
         };
 
         double[] yCoords = {
-                CanvasRenderer2D.toCanvasY(vector.getElement(1)), //tipY
+                CanvasRenderer2D.toCanvasY(math.getElement(1)), //tipY
                 startY + arrowSideLength * Math.cos(angle), //rightY
                 startY - arrowSideLength * Math.cos(angle), //leftY
         };
@@ -88,12 +87,12 @@ public class Vector2 extends Renderer2D implements Interpolatable {
 
     @Override
     public String toString(){
-        return vector.toString();
+        return math.toString();
     }
 
     @Override
     public void startInterpolation(Matrix m, int millis){
-        double[] vec = vector.getVector();
+        double[] vec = math.getVector();
         double[] endPos = m.transform(vec);
         double startAngle = Math.atan2(vec[1], vec[0]);
         double endAngle = startAngle + Vectors.angle2(vec, endPos);

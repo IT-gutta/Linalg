@@ -1,4 +1,4 @@
-package graphics;
+package canvas2d;
 
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
