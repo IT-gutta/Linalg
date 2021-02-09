@@ -32,6 +32,12 @@ public class Matrix{
         matrix = dArr;
     }
 
+    public Matrix(){
+        this(1,1);
+        double[][] dArr = {{0}};
+        matrix = dArr;
+    }
+
     public int getWidth(){
         return width;
     }

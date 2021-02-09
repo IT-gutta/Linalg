@@ -1,1 +1,9 @@
+graphics\tools\editbuttons\EditLineButton.class
+graphics\tools\editbuttons\EditPointButton.class
 math\Solver.class
+graphics\tools\editbuttons\EditGridButton.class
+math\Matrices.class
+graphics\tools\editbuttons\EditLineSegmentButton.class
+graphics\tools\editbuttons\EditVectorButton.class
+graphics\tools\MenuItems.class
+graphics\DefinedVariables.class

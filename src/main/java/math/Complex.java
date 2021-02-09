@@ -18,6 +18,12 @@ public class Complex implements Renderable {
         setPolarFromStandard();
     }
 
+    public Complex(){
+        this.re = 0;
+        this.im = 0;
+        setPolarFromStandard();
+    }
+
     public Complex add(Complex other){
         return ComplexNumbers.add(this, other);
     }
