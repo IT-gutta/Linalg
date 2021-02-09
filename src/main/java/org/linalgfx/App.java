@@ -8,10 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.util.List;
 
 /**
  * JavaFX App
@@ -24,15 +27,22 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        CanvasPane canvasPane = new CanvasPane(1000, 500);
-        Canvas canvas = canvasPane.getCanvas();
+        CanvasPane2D canvasPane2D = new CanvasPane2D(16*30, 9*30);
+        CanvasPane3D canvasPane3D = new CanvasPane3D(16*30, 9*30);
+        Canvas canvas2D = canvasPane2D.getCanvas();
+        Canvas canvas3D = canvasPane3D.getCanvas();
 
+        GraphicsContext graphicsContext2D = canvas2D.getGraphicsContext2D();
+        GraphicsContext graphicsContext3D = canvas3D.getGraphicsContext2D();
 
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        CanvasRenderer.setCanvas(canvas);
-        CanvasRenderer.setGraphicsContext(gc);
-        CanvasRenderer.setUnitSize(40);
-        CanvasRenderer.start();
+        CanvasRenderer2D.setCanvas(canvas2D);
+        CanvasRenderer2D.setGraphicsContext(graphicsContext2D);
+        CanvasRenderer2D.setUnitSize(40);
+        CanvasRenderer2D.start();
+
+        CanvasRenderer3D.setCanvas(canvas3D);
+        CanvasRenderer3D.setGraphicsContext(graphicsContext3D);
+        CanvasRenderer3D.start();
 
         DefinedVariables.getScrollPane().getStyleClass().add("variables");
 
@@ -43,10 +53,11 @@ public class App extends Application {
         TextField textField = new TextField();
         ToolBar toolBar = new ToolBar();
 
-        SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane);
+        SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane2D, canvasPane3D);
         splitPane.prefHeightProperty().bind(root.heightProperty());
-        System.out.println(1);
+
         TextInputEvent.fillOpMaps();
+
         DefinedVariables.getScrollPane().setMinWidth(150);
 
 

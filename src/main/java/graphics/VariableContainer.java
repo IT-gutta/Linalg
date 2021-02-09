@@ -1,14 +1,14 @@
 package graphics;
 
 
-import graphics.tools.editbuttons.GenericEditButton;
-import graphics.tools.editbuttons.ShowHideButton;
+import graphics.editbuttons.GenericEditButton;
+import graphics.editbuttons.ShowHideButton;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import math.Mapping;
+import math2d.Mapping;
 
 public class VariableContainer<T> extends HBox {
     private T variable;
@@ -16,7 +16,6 @@ public class VariableContainer<T> extends HBox {
     private final Text contentField;
     private final Text nameField;
     private final ColorPicker colorPicker;
-    private final boolean isRenderable;
     //private final Pane spacer = new Pane();
 
 
@@ -45,12 +44,6 @@ public class VariableContainer<T> extends HBox {
         getChildren().addAll(showHideButton, colorPicker, editButton, nameWrapper);
 
         getStyleClass().add("variable");
-
-        isRenderable = variable instanceof Renderable;
-    }
-
-    public Renderable getRenderable(){
-        return isRenderable ? (Renderable) variable : null;
     }
 
 

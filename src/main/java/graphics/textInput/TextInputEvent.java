@@ -107,6 +107,9 @@
 //    }
 //}
 
+import math2d.Mapping;
+import math2d.Point2;
+import math2d.Vector2;
 package graphics.textInput;
 
 import graphics.DefinedVariables;
@@ -195,7 +198,7 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
             if(Pattern.matches(varDec+vecCon, inp)){
                 m = Pattern.compile(varDec+vecCon).matcher(inp);
                 if(m.find()){
-                    DefinedVariables.add(new Vector(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4))), m.group(1));
+                    DefinedVariables.add(new Vector2(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4))), m.group(1));
                 }
             }
 
@@ -203,7 +206,7 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
             if(Pattern.matches(varDec+poiCon, inp)){
                 m = Pattern.compile(varDec+poiCon).matcher(inp);
                 if(m.find()){
-                    DefinedVariables.add(new Point(m.group(1),Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4))), m.group(1));
+                    DefinedVariables.add(new Point2(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4))), m.group(1));
                 }
             }
 
@@ -394,7 +397,6 @@ public class TextInputEvent implements EventHandler<ActionEvent> {
                     }
                 }
             }
-
         }
         else if(Pattern.matches(funDec+".*", inp)){
             try{

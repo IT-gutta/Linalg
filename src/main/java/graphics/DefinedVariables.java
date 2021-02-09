@@ -10,13 +10,13 @@ import java.util.stream.Collectors;
 
 
 public abstract class DefinedVariables {
-    private static VBox vbox = new VBox();
-    private static ScrollPane scrollPane = new ScrollPane(vbox);
+    private static final VBox vbox = new VBox();
+    private static final ScrollPane scrollPane = new ScrollPane(vbox);
     private static Map<String, VariableContainer> map = new HashMap<>();
 
 
     public static boolean contains(VariableContainer variableContainer){
-        return vbox.getChildren().stream().anyMatch(other -> variableContainer.equals(other));
+        return vbox.getChildren().stream().anyMatch(variableContainer::equals);
     }
 
 
@@ -52,7 +52,7 @@ public abstract class DefinedVariables {
         map.put(variableContainer.getName(), variableContainer);
     }
 
-    public static void add(Renderable r, String name){
+    public static void add(Renderer2D r, String name){
         add(new VariableContainer<>(r, name));
     }
 
@@ -72,8 +72,11 @@ public abstract class DefinedVariables {
         return scrollPane;
     }
 
-    public static List<VariableContainer<Renderable>> getRenderableVariables(){
-        return vbox.getChildren().stream().map(node -> (VariableContainer) node).filter(v -> v.getRenderable()!=null && !v.getRenderable().isHidden()).map(v -> (VariableContainer<Renderable>) v).collect(Collectors.toList());
+    public static List<VariableContainer<Renderer2D>> get2DRenderables(){
+        return vbox.getChildren().stream().map(node -> (VariableContainer) node).filter(v -> v.getVariable() instanceof Renderer2D && !((Renderer2D) v.getVariable()).isHidden()).map(v -> (VariableContainer<Renderer2D>) v).collect(Collectors.toList());
+    }
+    public static List<VariableContainer<Renderer3D>> get3DRenderables(){
+        return vbox.getChildren().stream().map(node -> (VariableContainer) node).filter(v -> v.getVariable() instanceof Renderer3D && !((Renderer3D) v.getVariable()).isHidden()).map(v -> (VariableContainer<Renderer3D>) v).collect(Collectors.toList());
     }
 
     public static void updateText(){
