@@ -1,16 +1,19 @@
 package math2d;
 
+import canvas2d.CanvasRenderer2D;
+import canvas2d.Renderer2D;
 import graphics.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.*;
 
-public class LineSegment2 extends Renderer2D implements Interpolatable {
+public class LineSegment2 extends Renderer2D<Line> implements Interpolatable {
     private final Point2 start;
     private final Point2 end;
     private Interpolator interpolator;
 
     public LineSegment2(double x1, double y1, double x2, double y2){
+        super(new Line(x1, y1, x2-x1, y2-y1));
         start = new Point2(x1, y1);
         end = new Point2(x2, y2);
     }

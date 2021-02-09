@@ -1,7 +1,7 @@
 package graphics.editbuttons;
 
 
-import graphics.Renderer2D;
+import canvas2d.Renderer2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;

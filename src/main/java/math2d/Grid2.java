@@ -1,9 +1,10 @@
 package math2d;
 
 import graphics.Interpolatable;
-import graphics.Renderer2D;
+import canvas2d.Renderer2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
+import math.Line;
 import math.Matrix;
 import math.Vector;
 
@@ -14,6 +15,7 @@ public class Grid2 extends Renderer2D implements Interpolatable {
 
 
     public Grid2(double startX, double startY, int h, int w, double sizeX, double sizeY){
+        super(new Object());
         iHat = new Vector(1,0);
         jHat = new Vector(0,1);
 

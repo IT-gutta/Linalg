@@ -1,17 +1,18 @@
 package math3d;
 
+import canvas3d.CanvasRenderer3D;
+import canvas3d.Renderer3D;
 import graphics.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.Matrix;
 import math.Vector;
 
-public class Vector3 extends Renderer3D implements Interpolatable {
-    private Vector vector;
+public class Vector3 extends Renderer3D<Vector> implements Interpolatable {
     private Interpolator interpolator;
 
     public Vector3(double x, double y, double z){
-        this.vector = new Vector(x, y, z);
+        super(new Vector(x, y, z));
     }
 
     @Override
@@ -48,25 +49,25 @@ public class Vector3 extends Renderer3D implements Interpolatable {
 
     @Override
     public String toString(){
-        return vector.toString();
+        return math.toString();
     }
 
     public double getX(){
-        return vector.getElement(0);
+        return math.getElement(0);
     }
     public double getY(){
-        return vector.getElement(1);
+        return math.getElement(1);
     }
     public double getZ(){
-        return vector.getElement(2);
+        return math.getElement(2);
     }
     public void setX(double x){
-        vector.setElement(0, x);
+        math.setElement(0, x);
     }
     public void setY(double y){
-        vector.setElement(1, y);
+        math.setElement(1, y);
     }
     public void setZ(double z){
-        vector.setElement(2, z);
+        math.setElement(2, z);
     }
 }

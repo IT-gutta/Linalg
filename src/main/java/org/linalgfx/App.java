@@ -1,5 +1,9 @@
 package org.linalgfx;
 
+import canvas2d.CanvasPane2D;
+import canvas2d.CanvasRenderer2D;
+import canvas3d.CanvasPane3D;
+import canvas3d.CanvasRenderer3D;
 import graphics.*;
 import graphics.ToolBar;
 import javafx.application.Application;
