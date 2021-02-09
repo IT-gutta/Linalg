@@ -1,8 +1,8 @@
 package org.linalgfx;
 
 import graphics.*;
+import graphics.ToolBar;
 import graphics.textInput.TextInputEvent;
-import graphics.tools.ToolBar;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;

@@ -106,11 +106,11 @@
 //
 //    }
 //}
+package graphics.textInput;
 
 import math2d.Mapping;
 import math2d.Point2;
 import math2d.Vector2;
-package graphics.textInput;
 
 import graphics.DefinedVariables;
 import graphics.VariableContainer;
