@@ -25,6 +25,9 @@ public abstract class CanvasRenderer3D {
         DefinedVariables.add(new VariableContainer<Vector3Renderer>(jHat, "jHat"));
         DefinedVariables.add(new VariableContainer<Vector3Renderer>(kHat, "kHat"));
 
+        Cube cube = new Cube();
+        DefinedVariables.add(new VariableContainer<Cube>(cube, "cube"));
+
         AnimationTimer animationTimer = new AnimationTimer() {
             long lastFrameTime;
             @Override

@@ -1,13 +1,10 @@
 package canvas3d;
 
-import canvas2d.CanvasRenderer2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.Vector;
 import math3d.Vector3;
 import math3d.Vector4;
-
-import java.util.Arrays;
 
 public class GraphicsContext3D {
     private GraphicsContext graphicsContext2D;
@@ -27,6 +24,13 @@ public class GraphicsContext3D {
 
         System.out.println("startX: " + start.getX() + ", startY: " +start.getY());
         System.out.println("endX: " + end.getX() + ", endY: " +end.getY());*/
+
+        graphicsContext2D.strokeLine(start.getX(), start.getY(), end.getX(), end.getY());
+    }
+
+    public void strokeLine(Vector3 start, Vector3 end){
+        Vector4 start4 = camera.project(start);
+        Vector4 end4 = camera.project(end);
 
         graphicsContext2D.strokeLine(start.getX(), start.getY(), end.getX(), end.getY());
     }
