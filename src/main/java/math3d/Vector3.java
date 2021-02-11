@@ -1,6 +1,7 @@
 package math3d;
 
 import canvas3d.CanvasRenderer3D;
+import canvas3d.GraphicsContext3D;
 import canvas3d.Renderer3D;
 import graphics.*;
 import javafx.scene.canvas.GraphicsContext;
@@ -41,9 +42,9 @@ public class Vector3 extends Renderer3D<Vector> implements Interpolatable {
     }
 
     @Override
-    public void render(GraphicsContext gc, String name, Paint paint){
+    public void render(GraphicsContext3D gc, String name, Paint paint){
         gc.setFill(paint);
-        gc.fillOval(CanvasRenderer3D.getCanvasWidth() / 2, CanvasRenderer3D.getCanvasHeight() / 2, 100, 100);
+        gc.strokeLine(0, 0, 0, 1, 1, 1);
     }
 
 

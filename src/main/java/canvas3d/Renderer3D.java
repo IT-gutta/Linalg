@@ -15,7 +15,7 @@ public abstract class Renderer3D<T> {
     public T getMath(){
         return math;
     }
-    public abstract void render(GraphicsContext gc, String name, Paint paint);
+    public abstract void render(GraphicsContext3D gc, String name, Paint paint);
     public boolean isHidden(){
         return isHidden;
     };

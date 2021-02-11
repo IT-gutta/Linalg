@@ -1,18 +1,17 @@
 package canvas3d;
 
-import math.Matrices;
 import math.Matrix;
 import math.Vector;
 import math.Vectors;
 
 public class Camera3D{
     private double[] position;
-    private double[] orientation;
+    private double[] direction;
     private double[] displayPosition;
     private Matrix dMatrix;
     public Camera3D(){
         this.position = new double[]{10, 10, 10};
-        this.orientation = new double[]{-1, -1, -1};
+        this.direction = new double[]{-1, -1, -1};
         this.displayPosition = new double[]{0, 0, 5};
     }
 
@@ -31,20 +30,29 @@ public class Camera3D{
                 displayPosition[2] * d[1] / d[2] + displayPosition[1]};
     }
 
+    public void setDirection(Vector direction){
+        this.direction = direction.getVector();
+    }
+
     public void updateMatrix(){
+        double[] angles = {
+                Math.atan2(direction[0], -direction[1]),
+                Math.atan2(Math.sqrt(Math.pow(direction[0], 2) + Math.pow(direction[1], 2)), direction[2]),
+                0
+        };
         double[][] m1 = {
                 {1, 0, 0},
-                {0, cos(orientation[0]), sin(orientation[0])},
-                {0, -sin(orientation[0]), cos(orientation[0])}
+                {0, cos(angles[0]), sin(angles[0])},
+                {0, -sin(angles[0]), cos(angles[0])}
         };
         double[][] m2 = {
-                {cos(orientation[1]), 0, -sin(orientation[1])},
+                {cos(angles[1]), 0, -sin(angles[1])},
                 {0, 1, 0},
-                {sin(orientation[1]), 0, cos(orientation[1])}
+                {sin(angles[1]), 0, cos(angles[1])}
         };
         double[][] m3 = {
-                {cos(orientation[2]), sin(orientation[2]), 0},
-                {-sin(orientation[2]), cos(orientation[2]), 0},
+                {cos(angles[2]), sin(angles[2]), 0},
+                {-sin(angles[2]), cos(angles[2]), 0},
                 {0, 0, 1}
         };
         dMatrix = new Matrix(m1).multiply(new Matrix(m2).multiply(new Matrix(m3)));
