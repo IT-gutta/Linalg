@@ -1,7 +1,6 @@
 package canvas3d;
 
 import graphics.DefinedVariables;
-import graphics.VariableContainer;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -26,7 +25,7 @@ public abstract class CanvasRenderer3D {
         DefinedVariables.add(new VariableContainer<Vector3Renderer>(kHat, "kHat"));*/
 
         Cube cube = new Cube();
-        DefinedVariables.add(new VariableContainer<Cube>(cube, "cube"));
+        //DefinedVariables.add(new VariableContainer<Cube>(cube, "cube"));
 
         AnimationTimer animationTimer = new AnimationTimer() {
             long lastFrameTime;

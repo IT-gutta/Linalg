@@ -17,6 +17,6 @@ public class RegexesTest {
     @Test
     public void complexReIm() {
         String complex = "2i+3";
-        Assertions.assertEquals(Regexes.complexReIm().matches(complex), true);
+        Assertions.assertEquals(Regexes.complex().matches(complex), true);
     }
 }
