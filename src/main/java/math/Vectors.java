@@ -19,15 +19,14 @@ public class Vectors {
         return new Vector(u);
     }
 
-    public static Vector subtract(Vector... args) throws IllegalNumberOfDimensionsException{
-        int d = args[0].getDimensions();
-        double[] u = new double[d];
-        for(Vector v:args){
-            if(d!=v.getDimensions())
-                throw new IllegalNumberOfDimensionsException("Vectors must have same dimensions");
-            for(int i = 0; i<d; i++){
-                u[i]-=v.getElement(i);
-            }
+    public static Vector subtract(Vector v1, Vector v2) throws IllegalNumberOfDimensionsException{
+        if(v1.getDimensions() != v2.getDimensions())
+            throw new IllegalNumberOfDimensionsException("Vectors must have same dimensions");
+
+        double[] u = new double[v1.getDimensions()];
+
+        for(int i = 0; i<u.length; i++){
+            u[i] = v1.getElement(i) - v2.getElement(i);
         }
         return new Vector(u);
     }

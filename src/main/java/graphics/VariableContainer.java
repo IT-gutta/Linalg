@@ -1,6 +1,8 @@
 package graphics;
 
 
+import canvas2d.Renderer2D;
+import canvas3d.Renderer3D;
 import graphics.editbuttons.GenericEditButton;
 import graphics.editbuttons.ShowHideButton;
 import javafx.scene.control.ColorPicker;
@@ -72,6 +74,15 @@ public class VariableContainer<T> extends HBox {
 
     public T getVariable(){
         return variable;
+    }
+
+    public Object getMath(){
+        if(variable instanceof Renderer3D)
+            return ((Renderer3D<?>) variable).getMath();
+        else if(variable instanceof Renderer2D)
+            return ((Renderer2D<?>) variable).getMath();
+        else
+            return getVariable();
     }
 
     public void setName(String name) throws IllegalArgumentException{
