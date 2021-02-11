@@ -3,6 +3,7 @@ package math3d;
 import exceptions.IllegalNumberOfDimensionsException;
 import math.Matrix;
 import math.Vector;
+import math.Vectors;
 
 public class Vector3 extends Vector{
     public Vector3(double... args){
@@ -19,6 +20,22 @@ public class Vector3 extends Vector{
     }
     public double getZ(){
         return getElement(2);
+    }
+
+
+    public Vector3 normalized(){
+        Vector vec = Vectors.scale(this, 1d/getMagnitude());
+        return new Vector3(vec.getVector());
+    }
+
+
+
+    //STATISKE UTILITY FUNCTIONS
+    public static Vector3 scale(Vector3 vec, double s){
+        for(int i = 0; i < 3; i++){
+
+        }
+        return new Vector3();
     }
 
     public static Vector3 rotateZ(Vector3 vec, double angle){
@@ -56,13 +73,14 @@ public class Vector3 extends Vector{
         if(v1.getDimensions() != v2.getDimensions())
             throw new IllegalNumberOfDimensionsException("Vectors must have same dimensions");
 
-        double[] u = new double[v1.getDimensions()];
+        double[] u = new double[3];
 
-        for(int i = 0; i<u.length; i++){
+        for(int i = 0; i<3; i++){
             u[i] = v1.getElement(i) - v2.getElement(i);
         }
+        if(Double.isNaN(u[0]))
+            System.out.println(v1);
+
         return new Vector3(u);
     }
-
-
 }

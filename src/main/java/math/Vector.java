@@ -107,11 +107,17 @@ public class Vector implements Transformable {
     }
 
     public double dot(Vector v) throws IllegalNumberOfDimensionsException{
-        if(this.getDimensions()!=v.getDimensions()) throw new IllegalNumberOfDimensionsException("Vectors must have the same dimensions");
+        if(this.getDimensions()!=v.getDimensions())
+            throw new IllegalNumberOfDimensionsException("Vectors must have the same dimensions");
+
         double dot = 0;
-        for(int i = 0; i< vector.length; i++){
-            dot+=(vector[i]*v.getElement(i));
+        for(int i = 0; i< getDimensions(); i++){
+            dot += getElement(i)*v.getElement(i);
         }
+//        if(Double.isNaN(dot)){
+//            System.out.println("1: " + this);
+//            System.out.println("2: " + v);
+//        }
         return dot;
     }
 
@@ -157,7 +163,18 @@ public class Vector implements Transformable {
     public boolean isParallel(Vector v) throws IllegalNumberOfDimensionsException{
         if(!this.hasSameDimensions(v))
             throw new IllegalNumberOfDimensionsException("Vectors must have same dimensions");
-        double scale = vector[0]/v.getElement(0);
+
+        double x = v.getElement(0);
+        int j = 0;
+        while(x == 0d){
+            j++;
+            if(j >= v.getDimensions())
+                return true;
+
+            x = v.getElement(j);
+        }
+        double scale = vector[j]/x;
+
         for(int i = 1; i<this.getDimensions(); i++){
             if(scale*v.getElement(i)==vector[i]) return false;
         }

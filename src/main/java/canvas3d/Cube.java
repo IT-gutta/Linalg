@@ -42,9 +42,9 @@ public class Cube extends Renderer3D<Vector>{
 
     @Override
     public void render(GraphicsContext3D gc, String name, Paint paint) {
-        double dThetaX = 0.005;
-        double dThetaZ = 0.01;
-        double dThetaY = 0.007;
+        double dThetaX = 0.0005 * CanvasRenderer3D.deltaTime;
+        double dThetaZ = 0.0001 * CanvasRenderer3D.deltaTime;
+        double dThetaY = 0.0007 * CanvasRenderer3D.deltaTime;
 
         for(int i = 0; i < corners.length; i++){
             corners[i] = Vector3.rotateX(corners[i], dThetaX);

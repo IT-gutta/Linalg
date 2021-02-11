@@ -1,6 +1,10 @@
 package canvas3d;
 
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import math.Line;
+import math.Point;
+import math3d.Line3;
 import math3d.Vector3;
 
 public class Triangle {
@@ -23,11 +27,15 @@ public class Triangle {
     public void render(GraphicsContext3D gc){
         if(!facingCamera())
             return;
+        Vector3 middle = getCentroid();
+        double brightness = CanvasRenderer3D.getCamera().getLightSource().getBrightness(vertices[0], getNormal());
 
-        gc.setFill(paint);
+
+        gc.setFill(Color.grayRgb((int) (Math.sqrt(brightness) * 255)));
+        //gc.setFill(paint);
         gc.fillPolygon(vertices);
 
-        gc.setStroke("black");
+        //gc.setStroke("black");
         gc.strokeLine(vertices[0], vertices[1]);
         gc.strokeLine(vertices[1], vertices[2]);
         gc.strokeLine(vertices[2], vertices[0]);
@@ -39,5 +47,26 @@ public class Triangle {
 
     public Vector3 getNormal(){
         return Vector3.cross(Vector3.subtract(vertices[1], vertices[0]), Vector3.subtract(vertices[2], vertices[0]));
+    }
+
+    public Vector3 getCentroid(){
+        Vector3 normal = getNormal();
+        Vector3 r1 = new Vector3(vertices[0].getX()-vertices[1].getX(), vertices[0].getY()-vertices[1].getY(), vertices[0].getZ()-vertices[1].getZ());
+        Vector3 r2 = new Vector3(vertices[0].getX()-vertices[2].getX(), vertices[0].getY()-vertices[2].getY(), vertices[0].getZ()-vertices[2].getZ());
+        Vector3 v1 = Vector3.cross(normal, r1);
+        Vector3 v2 = Vector3.cross(normal, r2);
+
+        Line3 line1 = new Line3(new Vector3((vertices[0].getX() + vertices[1].getX())/2, (vertices[0].getY() + vertices[1].getY())/2, (vertices[0].getZ() + vertices[1].getZ())/2), v1);
+        Line3 line2 = new Line3(new Vector3((vertices[0].getX() + vertices[2].getX())/2, (vertices[0].getY() + vertices[2].getY())/2, (vertices[0].getZ() + vertices[2].getZ())/2), v2);
+
+        Vector3 intersection = line1.intersection(line2);
+        if(intersection == null)
+            throw new Error("FEIL I getCentroid()-funksjonen");
+
+        return intersection;
+    }
+
+    public Vector3[] getVertices(){
+        return vertices;
     }
 }

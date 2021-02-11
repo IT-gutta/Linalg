@@ -1,6 +1,7 @@
 package canvas3d;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import math.Vector;
 import math3d.Vector3;
@@ -56,6 +57,13 @@ public class GraphicsContext3D {
 
     }
 
+    public void setAlpha(double alpha){
+        graphicsContext2D.setGlobalAlpha(alpha);
+    }
+    public void restoreAlpha(){
+        graphicsContext2D.setGlobalAlpha(1);
+    }
+
 
 
     public void setFill(Paint paint){
@@ -64,12 +72,19 @@ public class GraphicsContext3D {
     public void setFill(String color){
         graphicsContext2D.setFill(Paint.valueOf(color));
     }
+    public void setFill(Color color){
+        graphicsContext2D.setFill(Paint.valueOf(color.toString()));
+    }
     public void setStroke(Paint paint){
         graphicsContext2D.setStroke(paint);
     }
     public void setStroke(String color){
         graphicsContext2D.setStroke(Paint.valueOf(color));
     }
+    public void setColor(Color color){
+        graphicsContext2D.setStroke(Paint.valueOf(color.toString()));
+    }
+
 
     public void clearRect(double x, double y, double w, double h){
         graphicsContext2D.clearRect(x, y, w, h);
