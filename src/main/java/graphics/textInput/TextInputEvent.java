@@ -1,12 +1,18 @@
 package graphics.textInput;
 
+import canvas2d.Renderer2D;
+import canvas3d.Renderer3D;
 import graphics.DefinedVariables;
 import graphics.VariableContainer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import math.*;
+import math2d.Mapping;
+import math2d.Point2;
 import math2d.Vector2;
+import math3d.Point3;
+import math3d.Vector3;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,16 +27,16 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
     private TextField inputField;
     private Matcher m;
 
-    private final String flNum = "(-?[0-9]+(\\.?[0-9+]+)?)";
-    private final String posFlNum = "([0-9]+(\\.?[0-9+]+)?)";
-    private final String varName = "(\\w[0-9a-zA-Z_]*)";
-    private final String varDec = "(\\w[0-9a-zA-Z_]*)=";
-    private final String funDec = "(\\w[0-9a-zA-Z_]*)\\(x\\)=";
-    private final String vecCon = "\\["+flNum+","+flNum+"]";
-    private final String poiCon = "\\("+flNum+","+flNum+"\\)";
-    private final String matCon = "\\["+flNum+","+flNum+";"+flNum+","+flNum+"\\]";
-    private final String linCon = "line\\("+varName+","+varName+"\\)";
-    private final String comCon = "("+flNum+"([\\+-])"+posFlNum+"i"+")|("+flNum+"i([\\+-])"+posFlNum+")";
+//    private final String flNum = "(-?[0-9]+(\\.?[0-9+]+)?)";
+//    private final String posFlNum = "([0-9]+(\\.?[0-9+]+)?)";
+//    private final String varName = "(\\w[0-9a-zA-Z_]*)";
+//    private final String varDec = "(\\w[0-9a-zA-Z_]*)=";
+//    private final String funDec = "(\\w[0-9a-zA-Z_]*)\\(x\\)=";
+//    private final String vecCon = "\\["+flNum+","+flNum+"]";
+//    private final String poiCon = "\\("+flNum+","+flNum+"\\)";
+//    private final String matCon = "\\["+flNum+","+flNum+";"+flNum+","+flNum+"\\]";
+//    private final String linCon = "line\\("+varName+","+varName+"\\)";
+//    private final String comCon = "("+flNum+"([\\+-])"+posFlNum+"i"+")|("+flNum+"i([\\+-])"+posFlNum+")";
 
     private static final InputMapBiFunc<Vector, Vector, Vector> vvvOps = new InputMapBiFunc<>(new Vector(),new Vector(),new Vector());
     private static final InputMapBiFunc<Vector, Vector, Double> vvdOps = new InputMapBiFunc<>(new Vector(),new Vector(),0d);
@@ -77,41 +83,65 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
     @Override
     public void handle(ActionEvent actionEvent) {
         String inp = inputField.getText().replace(" ", "");
-        //Check for declaration statement
-        if(Pattern.matches(varDec+".*", inp)){
+        //Check for var declaration statement
+        if(Pattern.matches(Regexes.varDec+".*", inp)){
 
             //Vector 2D
-            if(Pattern.matches(varDec+vecCon, inp)){
-                m = Pattern.compile(varDec+vecCon).matcher(inp);
+            if(Pattern.matches(Regexes.varDec+Regexes.vector(2), inp)){
+                m = Pattern.compile(Regexes.varDec+Regexes.vector(2)).matcher(inp);
                 if(m.find()){
-                    DefinedVariables.add(new Vector2(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4))), m.group(1));
+                    DefinedVariables.add(new VariableContainer(new Vector2(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4))), m.group(1)));
                 }
             }
             //Vector 3d
-            if(Pattern.matches(varDec , inp)){
-                m = Pattern.compile(varDec+vecCon).matcher(inp);
+            if(Pattern.matches(Regexes.varDec+Regexes.vector(3), inp)){
+                m = Pattern.compile(Regexes.varDec+Regexes.vector(3)).matcher(inp);
                 if(m.find()){
-                    DefinedVariables.add(new Vector2(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4))), m.group(1));
+                    DefinedVariables.add(new VariableContainer(new Vector3(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4)), Double.parseDouble(m.group(6))), m.group(1)));
+                }
+            }
+            //Point 2d
+            if(Pattern.matches(Regexes.varDec+Regexes.point(2), inp)){
+                m = Pattern.compile(Regexes.varDec+Regexes.point(2)).matcher(inp);
+                if(m.find()){
+                    DefinedVariables.add(new VariableContainer(new Point2(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4))), m.group(1)));
+                }
+            }
+            //Point 3d
+            if(Pattern.matches(Regexes.varDec+Regexes.point(3), inp)){
+                m = Pattern.compile(Regexes.varDec+Regexes.point(3)).matcher(inp);
+                if(m.find()){
+                    DefinedVariables.add(new VariableContainer(new Point3(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4)), Double.parseDouble(m.group(6))), m.group(1)));
                 }
             }
             //check for function input
             for(InputMapBiFunc map:biFuncMaps){
                 for(Object o:map.getMap().keySet()){
                     String f = (String)o;
-                    String func = varDec+f+"\\("+varName+","+varName+"\\)";
+                    String func = Regexes.varDec+f+"\\("+Regexes.varName+","+Regexes.varName+"\\)";
                     m = Pattern.compile(func).matcher(inp);
                     if(m.find()){
                         VariableContainer a = DefinedVariables.get(m.group(2));
                         VariableContainer b = DefinedVariables.get(m.group(3));
-                        if(a.getVariable().getClass().equals(map.getInput1().getClass()) && b.getVariable().getClass().equals(map.getInput2().getClass())){
-                            DefinedVariables.add(new VariableContainer(map.apply(f, a.getVariable(), b.getVariable()), m.group(1)));
+                        if(a.getMath().getClass().equals(map.getInput1().getClass()) && b.getMath().getClass().equals(map.getInput2().getClass())){
+                            DefinedVariables.add(new VariableContainer(map.apply(f, map.getInput1().getClass().cast(a.getMath()), map.getInput2().getClass().cast(b.getMath())), m.group(1)));
                         }
                     }
                 }
             }
         }
+        //function declaration
+        else if(Pattern.matches(Regexes.funDec+".*", inp)){
+            try{
+                m = Pattern.compile(Regexes.funDec+"(.*)").matcher(inp);
+                if(m.find())
+                    DefinedVariables.add(new VariableContainer<Mapping>(new Mapping(m.group(2)), m.group(1)));
+            }
+            catch (Exception e){
+                System.out.println("Illegal function");
+            }
+        }
     }
-
     public static void main(String[] args) {
 
     }

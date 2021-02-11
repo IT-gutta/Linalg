@@ -26,8 +26,8 @@ public class GraphicsContext3D {
         end[0] = CanvasRenderer2D.toCanvasX(end[0]);
         end[1] = CanvasRenderer2D.toCanvasY(end[1]);
 
-        System.out.println("start" + Arrays.toString(start));
-        System.out.println("end" + Arrays.toString(end));
+//        System.out.println("start" + Arrays.toString(start));
+//        System.out.println("end" + Arrays.toString(end));
 
         graphicsContext2D.strokeLine(start[0], start[1], end[0], end[1]);
     }
