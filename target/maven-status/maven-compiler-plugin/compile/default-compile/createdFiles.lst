@@ -14,7 +14,6 @@ graphics\editbuttons\MenuItems.class
 graphics\editbuttons\EditVectorButton.class
 graphics\ToolBar.class
 math2d\Vector2.class
-graphics\Camera3D.class
 graphics\VariableContainer.class
 graphics\editbuttons\EditPointButton.class
 math\Matrices.class

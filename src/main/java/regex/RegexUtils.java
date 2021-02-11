@@ -7,4 +7,5 @@ public abstract class RegexUtils {
     public static boolean isValidName(String name){
         return namePattern.matcher(name).matches();
     }
+
 }
