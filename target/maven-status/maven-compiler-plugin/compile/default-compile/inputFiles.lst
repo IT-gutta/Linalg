@@ -1,4 +1,5 @@
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\math\Expression.java
+C:\Users\halvo\IdeaProjects\Linalg\src\main\java\canvas3d\Cube.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\graphics\editbuttons\GenericEditButton.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\org\linalgfx\App.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\canvas2d\CanvasPane2D.java
@@ -9,10 +10,12 @@ C:\Users\halvo\IdeaProjects\Linalg\src\main\java\canvas3d\CanvasRenderer3D.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\math2d\Grid2.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\canvas3d\Renderer3D.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\math\Vectors.java
+C:\Users\halvo\IdeaProjects\Linalg\src\main\java\math3d\Vector4.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\graphics\DoubleFormatter.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\math\Point.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\graphics\DefinedVariables.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\graphics\editbuttons\NewMenuButton.java
+C:\Users\halvo\IdeaProjects\Linalg\src\main\java\math3d\Vector3Renderer.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\graphics\Icons.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\graphics\textInput\Regexes.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\graphics\editbuttons\ShowHideButton.java
@@ -49,6 +52,7 @@ C:\Users\halvo\IdeaProjects\Linalg\src\main\java\graphics\ToolBar.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\exceptions\RenderException.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\graphics\editbuttons\EditVectorButton.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\graphics\editbuttons\MenuItems.java
+C:\Users\halvo\IdeaProjects\Linalg\src\main\java\canvas3d\Triangle.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\graphics\Interpolator.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\math\Complex.java
 C:\Users\halvo\IdeaProjects\Linalg\src\main\java\canvas2d\Renderer2D.java
