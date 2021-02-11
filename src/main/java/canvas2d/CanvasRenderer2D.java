@@ -62,6 +62,7 @@ public abstract class CanvasRenderer2D {
 
                 DefinedVariables.updateText();
 
+                graphicsContext.setFill(Paint.valueOf("black"));
                 if(deltaTime > 0)
                     graphicsContext.fillText("FPS: " + 1000/deltaTime, 10, 10);
             }

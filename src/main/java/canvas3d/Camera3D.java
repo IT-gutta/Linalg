@@ -1,8 +1,6 @@
 package canvas3d;
 
 import math.Matrix;
-import math.Vector;
-import math.Vectors;
 import math3d.Vector3;
 import math3d.Vector4;
 
@@ -15,8 +13,8 @@ public class Camera3D{
 
     private Matrix projectionMatrix;
     public Camera3D(){
-        this.position = new Vector3(10, 10, 10);
-        this.direction = new Vector3(-1, -1, -1);
+        this.position = new Vector3(0, 0, -3);
+        this.direction = new Vector3(0, 0, 1);
     }
 
     public Vector4 project(Vector3 vector3){
@@ -45,6 +43,13 @@ public class Camera3D{
                 {0, 0, 1, 0}
         };
         projectionMatrix = new Matrix(matrix);
+    }
+
+    public Vector3 getDirection(){
+        return direction;
+    }
+    public Vector3 getPosition(){
+        return position;
     }
 
     private double cos(double angle){

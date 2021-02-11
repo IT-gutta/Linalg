@@ -45,10 +45,10 @@ public class Vector3Renderer extends Renderer3D<Vector3> implements Interpolatab
     public void render(GraphicsContext3D gc, String name, Paint paint){
         theta1 += 0.005;
         theta2 += 0.01;
-        Vector3 vec = Vector3.rotateZ(math, theta1);
-        vec = Vector3.rotateX(vec, theta2);
+        /*Vector3 vec = Vector3.rotateZ(math, theta1);
+        vec = Vector3.rotateX(vec, theta2);*/
         gc.setFill(paint);
-        gc.strokeLine(0, 0, 0, vec.getX(), vec.getY(), vec.getZ());
+        gc.strokeLine(0, 0, 0, math.getX(), math.getY(), math.getZ());
     }
 
 

@@ -85,6 +85,16 @@ public class Vector implements Transformable {
         return this;
     }
 
+    public Vector sub(Vector v) throws IllegalNumberOfDimensionsException {
+        if(v.getDimensions()!=this.getDimensions())
+            throw new IllegalNumberOfDimensionsException("The number of dimensions must be equal");
+
+        for(int i = 0; i<vector.length; i++){
+            vector[i]-=v.getElement(i);
+        }
+        return this;
+    }
+
     public int factorize() throws IllegalNumberOfDimensionsException{
         for(double element:vector){
             if(!Utils.isWhole(element)) throw new IllegalNumberOfDimensionsException("Vector must contain integers");
@@ -105,7 +115,7 @@ public class Vector implements Transformable {
         return dot;
     }
 
-    public Vector cross(Vector v)throws IllegalNumberOfDimensionsException{
+    public Vector cross(Vector v) throws IllegalNumberOfDimensionsException{
         if(!(v.getDimensions()==3 && this.getDimensions()==3)){
             throw new IllegalNumberOfDimensionsException("Both vectors must be of dimension 3");
         }

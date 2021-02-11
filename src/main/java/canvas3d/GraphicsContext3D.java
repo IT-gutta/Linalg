@@ -32,7 +32,24 @@ public class GraphicsContext3D {
         Vector4 start4 = camera.project(start);
         Vector4 end4 = camera.project(end);
 
-        graphicsContext2D.strokeLine(start.getX(), start.getY(), end.getX(), end.getY());
+        graphicsContext2D.strokeLine(start4.getX(), start4.getY(), end4.getX(), end4.getY());
+    }
+
+    public void fillPolygon(Vector3... points){
+        int l = points.length;
+        Vector4[] projectedPoints = new Vector4[l];
+        for(int i = 0; i < l; i++){
+            projectedPoints[i] = camera.project(points[i]);
+        }
+
+        double[] projectedX = new double[l];
+        double[] projectedY = new double[l];
+        for(int i = 0; i < l; i++){
+            projectedX[i] = projectedPoints[i].getX();
+            projectedY[i] = projectedPoints[i].getY();
+        }
+
+        graphicsContext2D.fillPolygon(projectedX, projectedY, l);
     }
 
     public void fillSphere(Vector position, double radius){
