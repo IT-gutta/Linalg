@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.Vector;
 import math3d.Vector3;
+import math3d.Vector4;
 
 import java.util.Arrays;
 
@@ -18,18 +19,16 @@ public class GraphicsContext3D {
     }
 
     public void strokeLine(double x1, double y1, double z1, double x2, double y2, double z2){
-        double[] start = camera.project(new double[]{x1, y1, z1});
-        double[] end = camera.project(new double[]{x2, y2, z2});
+        Vector4 start = camera.project(new Vector3(x1, y1, z1));
+        Vector4 end = camera.project(new Vector3(x2, y2, z2));
 
-        start[0] = CanvasRenderer2D.toCanvasX(start[0]);
-        start[1] = CanvasRenderer2D.toCanvasY(start[1]);
-        end[0] = CanvasRenderer2D.toCanvasX(end[0]);
-        end[1] = CanvasRenderer2D.toCanvasY(end[1]);
+        /*System.out.println("start" + start.getVector().toString());
+        System.out.println("end" + end.getVector().toString());
 
-        System.out.println("start" + Arrays.toString(start));
-        System.out.println("end" + Arrays.toString(end));
+        System.out.println("startX: " + start.getX() + ", startY: " +start.getY());
+        System.out.println("endX: " + end.getX() + ", endY: " +end.getY());*/
 
-        graphicsContext2D.strokeLine(start[0], start[1], end[0], end[1]);
+        graphicsContext2D.strokeLine(start.getX(), start.getY(), end.getX(), end.getY());
     }
 
     public void fillSphere(Vector position, double radius){

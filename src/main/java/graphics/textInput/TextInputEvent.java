@@ -30,7 +30,8 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
     private final String poiCon = "\\("+flNum+","+flNum+"\\)";
     private final String matCon = "\\["+flNum+","+flNum+";"+flNum+","+flNum+"\\]";
     private final String linCon = "line\\("+varName+","+varName+"\\)";
-    private final String comCon = "("+flNum+"([\\+-])"+posFlNum+"i"+")|("+flNum+"i([\\+-])"+posFlNum+")";
+    //private final String comCon = "("+flNum+"([\\+-])"+posFlNum+"i"+")|("+flNum+"i([\\+-])"+posFlNum+")";
+    private final String comCon = "(i\\*)?" + flNum + "(i|\\*i)?([+-]" + "(i\\*)?" + flNum + "(i|\\*i)?)?";
 
     private static final InputMapBiFunc<Vector, Vector, Vector> vvvOps = new InputMapBiFunc<>(new Vector(),new Vector(),new Vector());
     private static final InputMapBiFunc<Vector, Vector, Double> vvdOps = new InputMapBiFunc<>(new Vector(),new Vector(),0d);

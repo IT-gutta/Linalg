@@ -2,10 +2,12 @@ package canvas3d;
 
 import graphics.DefinedVariables;
 import graphics.VariableContainer;
-import math3d.Vector3;
+import math3d.Vector3Renderer;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+
+import java.text.DecimalFormat;
 
 public abstract class CanvasRenderer3D {
     private static Canvas canvas;
@@ -13,10 +15,15 @@ public abstract class CanvasRenderer3D {
     private static GraphicsContext3D graphicsContext3D;
     public static long deltaTime;
     public static Camera3D camera3D;
+    private static DecimalFormat fpsFormat = new DecimalFormat("0");
 
     public static void start(){
-        Vector3 vector3 = new Vector3(10, 5, -4);
-        DefinedVariables.add(new VariableContainer<Vector3>(vector3, "vector3"));
+        Vector3Renderer iHat = new Vector3Renderer(1, 0, 0);
+        Vector3Renderer jHat = new Vector3Renderer(0, 1, 0);
+        Vector3Renderer kHat = new Vector3Renderer(0, 0, 1);
+        DefinedVariables.add(new VariableContainer<Vector3Renderer>(iHat, "iHat"));
+        DefinedVariables.add(new VariableContainer<Vector3Renderer>(jHat, "jHat"));
+        DefinedVariables.add(new VariableContainer<Vector3Renderer>(kHat, "kHat"));
 
         AnimationTimer animationTimer = new AnimationTimer() {
             long lastFrameTime;
@@ -33,6 +40,9 @@ public abstract class CanvasRenderer3D {
                 lastFrameTime = now;
 
                 DefinedVariables.updateText();
+
+                if(deltaTime > 0)
+                    graphicsContext2D.fillText("FPS: " + 1000/deltaTime, 10, 10);
             }
         };
         animationTimer.start();

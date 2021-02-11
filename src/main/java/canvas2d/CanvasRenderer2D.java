@@ -61,6 +61,9 @@ public abstract class CanvasRenderer2D {
                 lastFrameTime = now;
 
                 DefinedVariables.updateText();
+
+                if(deltaTime > 0)
+                    graphicsContext.fillText("FPS: " + 1000/deltaTime, 10, 10);
             }
         };
         animationTimer.start();
