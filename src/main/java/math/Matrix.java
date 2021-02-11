@@ -1,10 +1,9 @@
 package math;
 
 import exceptions.IllegalNumberOfDimensionsException;
+import math3d.Vector3;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 public class Matrix{
     //TODO fix toString
@@ -63,6 +62,9 @@ public class Matrix{
             throw new IllegalNumberOfDimensionsException("The vectors number of dimensions doesnt match the matrix width");
 
         return new Vector(transform(vector.getVector()));
+    }
+    public Vector3 transform3x3(Vector3 vector3){
+        return new Vector3(transform(vector3.getVector()));
     }
 
     public double[] transform(double[] coords){
