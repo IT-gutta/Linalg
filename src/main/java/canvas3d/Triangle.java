@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import math.Line;
 import math.Point;
+import math.Vector;
 import math3d.Line3;
 import math3d.Vector3;
 
@@ -28,7 +29,7 @@ public class Triangle {
         if(!facingCamera())
             return;
         //Vector3 middle = getCentroid();
-        double brightness = CanvasRenderer3D.getCamera().getLightSource().getBrightness(vertices[0], getNormal());
+        double brightness = CanvasRenderer3D.getCamera().getLightSource().getBrightness(getAverage(), getNormal());
 
 
         gc.setFill(Color.grayRgb((int) (Math.sqrt(brightness) * 255)));
@@ -36,9 +37,9 @@ public class Triangle {
         gc.fillPolygon(vertices);
 
         //gc.setStroke("black");
-        gc.strokeLine(vertices[0], vertices[1]);
-        gc.strokeLine(vertices[1], vertices[2]);
-        gc.strokeLine(vertices[2], vertices[0]);
+//        gc.strokeLine(vertices[0], vertices[1]);
+//        gc.strokeLine(vertices[1], vertices[2]);
+//        gc.strokeLine(vertices[2], vertices[0]);
     }
 
     public boolean facingCamera(){
@@ -80,6 +81,17 @@ public class Triangle {
             throw new Error("FEIL I getCentroid()-funksjonen");
 
         return intersection;
+    }
+
+    public Vector3 getAverage(){
+        Vector3 vec = new Vector3(0, 0, 0);
+        for(int i = 0; i < 3; i++){
+            vec.setElement(0, vec.getElement(0) + vertices[i].getX());
+            vec.setElement(1, vec.getElement(1) + vertices[i].getY());
+            vec.setElement(2, vec.getElement(2) + vertices[i].getZ());
+        }
+        vec.scale(1d/3);
+        return vec;
     }
 
     public Vector3[] getVertices(){

@@ -37,10 +37,12 @@ public abstract class CanvasRenderer3D {
                 deltaTime = (now - lastFrameTime) / 1000000;
                 graphicsContext3D.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 camera3D.updateMatrix();
+                graphicsContext3D.clearPolygons();
 
                 DefinedVariables.get3DRenderables().forEach(r -> {
                     r.getVariable().render(graphicsContext3D, r.getName(), r.getPaint());
                 });
+                graphicsContext3D.drawPolygons();
 
                 lastFrameTime = now;
 

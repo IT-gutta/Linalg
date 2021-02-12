@@ -7,9 +7,16 @@ import math.Vector;
 import math3d.Vector3;
 import math3d.Vector4;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GraphicsContext3D {
     private GraphicsContext graphicsContext2D;
     private Camera3D camera;
+    private List<Vector4> triangles2;
+    private double[] depthBuffer;
+    private int width;
+    private int height;
 
     public GraphicsContext3D(GraphicsContext graphicsContext2D, Camera3D camera){
         this.graphicsContext2D = graphicsContext2D;
@@ -41,7 +48,9 @@ public class GraphicsContext3D {
         Vector4[] projectedPoints = new Vector4[l];
         for(int i = 0; i < l; i++){
             projectedPoints[i] = camera.project(points[i]);
+            triangles2.add(projectedPoints[i]);
         }
+
 
         double[] projectedX = new double[l];
         double[] projectedY = new double[l];
@@ -50,10 +59,23 @@ public class GraphicsContext3D {
             projectedY[i] = projectedPoints[i].getY();
         }
 
+
         graphicsContext2D.fillPolygon(projectedX, projectedY, l);
     }
 
     public void fillSphere(Vector position, double radius){
+
+    }
+
+
+    public void clearPolygons(){
+        width = (int)CanvasRenderer3D.getCanvasWidth();
+        height = (int) CanvasRenderer3D.getCanvasHeight();
+        this.triangles2 = new ArrayList<>();
+        this.depthBuffer = new double[width*height];
+    }
+
+    public void drawPolygons(){
 
     }
 
