@@ -25,7 +25,7 @@ public abstract class CanvasRenderer3D {
         DefinedVariables.add(new VariableContainer<Vector3Renderer>(jHat, "jHat"));
         DefinedVariables.add(new VariableContainer<Vector3Renderer>(kHat, "kHat"));*/
 
-        Mesh mesh = Mesh.fromFile("jalla.obj");
+        Mesh mesh = Mesh.fromFile("chevrolet.obj");
         DefinedVariables.add(new VariableContainer<Mesh>(mesh, "mesh"));
         Cube cube = new Cube();
         DefinedVariables.add(new VariableContainer<Cube>(cube, "cube"));

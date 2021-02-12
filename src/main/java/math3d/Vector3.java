@@ -1,6 +1,5 @@
 package math3d;
 
-import exceptions.IllegalNumberOfDimensionsException;
 import math.Matrix;
 import math.Vector;
 import math.Vectors;
@@ -69,9 +68,9 @@ public class Vector3 extends Vector{
         return new Vector3(v1.getY()*v2.getZ()-v2.getY()*v1.getZ(), -(v1.getX()*v2.getZ()-v2.getX()*v1.getZ()), v1.getX()*v2.getY()-v2.getX()*v1.getY());
     }
 
-    public static Vector3 subtract(Vector3 v1, Vector3 v2) throws IllegalNumberOfDimensionsException {
+    public static Vector3 subtract(Vector3 v1, Vector3 v2) throws IllegalArgumentException {
         if(v1.getDimensions() != v2.getDimensions())
-            throw new IllegalNumberOfDimensionsException("Vectors must have same dimensions");
+            throw new IllegalArgumentException("Vectors must have same dimensions");
 
         double[] u = new double[3];
 
@@ -79,7 +78,7 @@ public class Vector3 extends Vector{
             u[i] = v1.getElement(i) - v2.getElement(i);
         }
         if(Double.isNaN(u[0]))
-            System.out.println(v1);
+            throw new IllegalArgumentException("Input cant be have NaN as an element");
 
         return new Vector3(u);
     }

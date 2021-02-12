@@ -27,7 +27,7 @@ public class Triangle {
     public void render(GraphicsContext3D gc){
         if(!facingCamera())
             return;
-        Vector3 middle = getCentroid();
+        //Vector3 middle = getCentroid();
         double brightness = CanvasRenderer3D.getCamera().getLightSource().getBrightness(vertices[0], getNormal());
 
 
@@ -42,11 +42,25 @@ public class Triangle {
     }
 
     public boolean facingCamera(){
-        return getNormal().dot(Vector3.subtract(vertices[0], CanvasRenderer3D.getCamera().getPosition())) < 0;
+        try {
+            return getNormal().dot(Vector3.subtract(vertices[0], CanvasRenderer3D.getCamera().getPosition())) < 0;
+        }
+        catch (Exception e){
+            System.out.println("facingCamera");
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public Vector3 getNormal(){
-        return Vector3.cross(Vector3.subtract(vertices[1], vertices[0]), Vector3.subtract(vertices[2], vertices[0]));
+        try {
+            return Vector3.cross(Vector3.subtract(vertices[1], vertices[0]), Vector3.subtract(vertices[2], vertices[0]));
+        }
+        catch (Exception e){
+            System.out.println("getNormal");
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public Vector3 getCentroid(){
@@ -60,6 +74,8 @@ public class Triangle {
         Line3 line2 = new Line3(new Vector3((vertices[0].getX() + vertices[2].getX())/2, (vertices[0].getY() + vertices[2].getY())/2, (vertices[0].getZ() + vertices[2].getZ())/2), v2);
 
         Vector3 intersection = line1.intersection(line2);
+//        if(intersection == null)
+//            return null;
         if(intersection == null)
             throw new Error("FEIL I getCentroid()-funksjonen");
 

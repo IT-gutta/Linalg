@@ -1,6 +1,6 @@
 package math;
 
-import exceptions.IllegalNumberOfDimensionsException;
+
 
 public class Matrices {
     public static Matrix getIdentityMatrix(int n) throws IllegalArgumentException{
