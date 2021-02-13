@@ -6,6 +6,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
+import math3d.Vector3;
 
 import java.text.DecimalFormat;
 
@@ -25,10 +26,28 @@ public abstract class CanvasRenderer3D {
         DefinedVariables.add(new VariableContainer<Vector3Renderer>(jHat, "jHat"));
         DefinedVariables.add(new VariableContainer<Vector3Renderer>(kHat, "kHat"));*/
 
-        Mesh mesh = Mesh.fromFile("chevrolet.obj");
+        Mesh mesh = Mesh.fromFile("chevrolet.obj", new Vector3(0, -1, 0));
         DefinedVariables.add(new VariableContainer<Mesh>(mesh, "mesh"));
-        Cube cube = new Cube();
-        DefinedVariables.add(new VariableContainer<Cube>(cube, "cube"));
+        /*Cube cube1 = new Cube(new Vector3(0, 0, 0));
+        DefinedVariables.add(new VariableContainer<Cube>(cube1, "cube"));
+        Cube cube2 = new Cube(new Vector3(-2, 0, 0));
+        DefinedVariables.add(new VariableContainer<Cube>(cube2, "cube2"));
+        Cube cube3 = new Cube(new Vector3(2, 0, 0));
+        DefinedVariables.add(new VariableContainer<Cube>(cube3, "cube3"));
+
+        Cube cube4 = new Cube(new Vector3(0, 0, 2));
+        DefinedVariables.add(new VariableContainer<Cube>(cube4, "cube4"));
+        Cube cube5 = new Cube(new Vector3(-2, 0, 2));
+        DefinedVariables.add(new VariableContainer<Cube>(cube5, "cube5"));
+        Cube cube6 = new Cube(new Vector3(2, 0, 2));
+        DefinedVariables.add(new VariableContainer<Cube>(cube6, "cube6"));
+
+        Cube cube7 = new Cube(new Vector3(0, 0, 4));
+        DefinedVariables.add(new VariableContainer<Cube>(cube7, "cube7"));
+        Cube cube8 = new Cube(new Vector3(-2, 0, 4));
+        DefinedVariables.add(new VariableContainer<Cube>(cube8, "cube8"));
+        Cube cube9 = new Cube(new Vector3(2, 0, 4));
+        DefinedVariables.add(new VariableContainer<Cube>(cube9, "cube9"));*/
 
         AnimationTimer animationTimer = new AnimationTimer() {
             long lastFrameTime;
@@ -38,11 +57,11 @@ public abstract class CanvasRenderer3D {
                 graphicsContext3D.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 camera3D.updateMatrix();
                 graphicsContext3D.clearPolygons();
+                camera3D.getLightSource().update();
 
                 DefinedVariables.get3DRenderables().forEach(r -> {
                     r.getVariable().render(graphicsContext3D, r.getName(), r.getPaint());
                 });
-                graphicsContext3D.drawPolygons();
 
                 lastFrameTime = now;
 

@@ -11,16 +11,16 @@ public class Camera3D{
     private final double zFar = 1000;
     private final double zNear = 10;
 
-    private LightSource lightSource = new LightSource(new Vector3(0, 0, -100));
+    private LightSource lightSource = new LightSource(new Vector3(3, -2, 0));
 
     private Matrix projectionMatrix;
     public Camera3D(){
-        this.position = new Vector3(0, 0, -10);
+        this.position = new Vector3(0, 0, -6);
         this.direction = new Vector3(0, 0, 1);
     }
 
     public Vector4 project(Vector3 vector3){
-        Vector4 input = new Vector4(vector3.getX(), vector3.getY(), vector3.getZ() + 10, 1);
+        Vector4 input = new Vector4(vector3.getX(), vector3.getY(), vector3.getZ() + 6, 1);
         double[] out = projectionMatrix.transform(input.getVector().getVector());
         out[0] /= out[3];
         out[1] /= out[3];

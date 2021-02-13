@@ -13,14 +13,16 @@ import java.util.Scanner;
 
 public class Mesh extends Renderer3D<Vector> {
     private List<Triangle> tris;
-    public Mesh(List<Triangle> tris){
+    private Vector3 mid;
+    public Mesh(List<Triangle> tris, Vector3 mid){
         super(new Vector());
         this.tris = tris;
+        this.mid = mid;
     }
 
-    public static Mesh fromFile(String path){
+    public static Mesh fromFile(String path, Vector3 mid){
         //try(Scanner sc = new Scanner(new File(Mesh.class.getResource(path).toExternalForm().substring(1)))){
-        try(Scanner sc = new Scanner(new File("D:/GitHub/Linalg/target/classes/canvas3d/" + path))){
+        try(Scanner sc = new Scanner(new File("C:/Users/jorge/Documents/GitHub/Linalg/target/classes/canvas3d/" + path))){
             List<Vector3> vertices = new ArrayList<>();
             List<Triangle> triangles = new ArrayList<>();
             while(sc.hasNextLine()){
@@ -34,15 +36,21 @@ public class Mesh extends Renderer3D<Vector> {
 
                 else if(line[0].equals("f")){
                     try {
-                        triangles.add(new Triangle("black", vertices.get(Integer.parseInt(line[1])), vertices.get(Integer.parseInt(line[2])), vertices.get(Integer.parseInt(line[3]))));
+                        Triangle triangle = new Triangle("black", Vector3.add(mid, vertices.get(Integer.parseInt(line[1])-1)), Vector3.add(mid, vertices.get(Integer.parseInt(line[2])-1)), Vector3.add(mid, vertices.get(Integer.parseInt(line[3])-1)));
+                        for(int i = 0; i < 3; i++) {
+                            triangle.getVertices()[i] = Vector3.rotateZ(triangle.getVertices()[i], Math.PI);
+                            triangle.getVertices()[i] = Vector3.rotateY(triangle.getVertices()[i], Math.PI);
+                        }
+                        triangles.add(triangle);
                     }
                     catch (Exception e){
-                        System.out.println(triangles.size());
+                        System.out.println(Arrays.toString(line));
+                        System.out.println(vertices.size());
+                        //e.printStackTrace();
                     }
                 }
             }
-
-            return new Mesh(triangles);
+            return new Mesh(triangles, mid);
         }
         catch (IOException e){
             e.printStackTrace();
@@ -52,10 +60,9 @@ public class Mesh extends Renderer3D<Vector> {
 
     @Override
     public void render(GraphicsContext3D gc, String name, Paint paint) {
-
         for(Triangle tri : tris){
             for(int i = 0; i < 3; i++){
-                tri.getVertices()[i] = Vector3.rotateZ(tri.getVertices()[i], 0.0005 * CanvasRenderer3D.deltaTime);
+                tri.getVertices()[i] = Vector3.rotateY(tri.getVertices()[i], 0.00005 * CanvasRenderer3D.deltaTime);
             }
             tri.render(gc);
         }

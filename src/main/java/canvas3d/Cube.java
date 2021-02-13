@@ -9,18 +9,18 @@ public class Cube extends Renderer3D<Vector>{
     private Vector3[] corners;
     private final String[] colors = {"maroon", "red", "yellow", "grey", "green", "cyan"};
 
-    public Cube(){
+    public Cube(Vector3 mid){
         super(new Vector());
         corners = new Vector3[8];
 
-        corners[0] = new Vector3(0, 0, 0);
-        corners[1] = new Vector3(0, 1, 0);
-        corners[2] = new Vector3(1, 1, 0);
-        corners[3] = new Vector3(1, 0, 0);
-        corners[4] = new Vector3(0, 0, 1);
-        corners[5] = new Vector3(0, 1, 1);
-        corners[6] = new Vector3(1, 1, 1);
-        corners[7] = new Vector3(1, 0, 1);
+        corners[0] = new Vector3(mid.getX()-0.5, mid.getY()-0.5, mid.getZ()-0.5);
+        corners[1] = new Vector3(mid.getX()-0.5, mid.getY()+0.5, mid.getZ()-0.5);
+        corners[2] = new Vector3(mid.getX()+0.5, mid.getY()+0.5, mid.getZ()-0.5);
+        corners[3] = new Vector3(mid.getX()+0.5, mid.getY()-0.5, mid.getZ()-0.5);
+        corners[4] = new Vector3(mid.getX()-0.5, mid.getY()-0.5, mid.getZ()+0.5);
+        corners[5] = new Vector3(mid.getX()-0.5, mid.getY()+0.5, mid.getZ()+0.5);
+        corners[6] = new Vector3(mid.getX()+0.5, mid.getY()+0.5, mid.getZ()+0.5);
+        corners[7] = new Vector3(mid.getX()+0.5, mid.getY()-0.5, mid.getZ()+0.5);
         updateTriangles();
     }
 
@@ -42,7 +42,7 @@ public class Cube extends Renderer3D<Vector>{
 
     @Override
     public void render(GraphicsContext3D gc, String name, Paint paint) {
-        double dThetaX = 0.0005 * CanvasRenderer3D.deltaTime;
+        double dThetaX = 0.001 * CanvasRenderer3D.deltaTime;
         double dThetaZ = 0.0001 * CanvasRenderer3D.deltaTime;
         double dThetaY = 0.0007 * CanvasRenderer3D.deltaTime;
 

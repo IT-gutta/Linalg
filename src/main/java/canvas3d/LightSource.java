@@ -1,12 +1,13 @@
 package canvas3d;
 
-import math.Vectors;
 import math3d.Vector3;
 
 public class LightSource {
     private Vector3 position;
+    private Mesh lightBulb;
     public LightSource(Vector3 position){
         this.position = position;
+        lightBulb = Mesh.fromFile("light.obj", position);
     }
 
     public double getBrightness(Vector3 middlePolygon, Vector3 normalPolygon){
@@ -19,5 +20,10 @@ public class LightSource {
         if(dot <= 0)
             return 0;
         else return dot;
+    }
+
+    public void update(){
+        //fix annet sted
+        position = Vector3.rotateY(position, 0.001*CanvasRenderer3D.deltaTime);
     }
 }

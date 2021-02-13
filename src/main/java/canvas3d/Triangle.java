@@ -2,9 +2,6 @@ package canvas3d;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import math.Line;
-import math.Point;
-import math.Vector;
 import math3d.Line3;
 import math3d.Vector3;
 
@@ -34,7 +31,7 @@ public class Triangle {
 
         gc.setFill(Color.grayRgb((int) (Math.sqrt(brightness) * 255)));
         //gc.setFill(paint);
-        gc.fillPolygon(vertices);
+        gc.fillTriangle(vertices[0], vertices[1], vertices[2]);
 
         //gc.setStroke("black");
 //        gc.strokeLine(vertices[0], vertices[1]);

@@ -82,4 +82,8 @@ public class Vector3 extends Vector{
 
         return new Vector3(u);
     }
+
+    public static Vector3 add(Vector3 v1, Vector3 v2){
+        return new Vector3(v1.getX() + v2.getX(), v1.getY() + v2.getY(), v1.getZ() + v2.getZ());
+    }
 }
