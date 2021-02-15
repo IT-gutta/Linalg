@@ -16,6 +16,10 @@ public class CanvasPane2D extends Pane {
     public CanvasPane2D(double width, double height) {
         canvas = new Canvas(width, height);
         getChildren().add(canvas);
+
+        canvas.setOnMousePressed(startDragEvent);
+        canvas.setOnMouseDragged(endDragEvent);
+        canvas.setOnScroll(scrollEvent);
     }
 
     public Canvas getCanvas() {
@@ -24,10 +28,6 @@ public class CanvasPane2D extends Pane {
 
     @Override
     protected void layoutChildren() {
-        canvas.setOnMousePressed(startDragEvent);
-        canvas.setOnMouseDragged(endDragEvent);
-        canvas.setOnScroll(scrollEvent);
-
         super.layoutChildren();
         final double x = snappedLeftInset();
         final double y = snappedTopInset();

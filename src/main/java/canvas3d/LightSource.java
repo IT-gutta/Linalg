@@ -24,6 +24,6 @@ public class LightSource extends GameObject{
     @Override
     public void update(){
         //fix annet sted
-        //position = Vector3.rotateY(position, 0.001*CanvasRenderer3D.deltaTime);
+        position = Vector3.rotateY(position, 0.001*CanvasRenderer3D.deltaTime);
     }
 }

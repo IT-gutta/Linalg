@@ -1,5 +1,6 @@
 package canvas3d;
 
+import javafx.scene.paint.Color;
 import math3d.Vector3;
 
 import java.io.File;
@@ -10,13 +11,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Mesh extends GameObject{
+    //TODO vector arrow mesh based on magnitude
+
     public Mesh(Triangle[] triangles, Vector3 position){
         super(triangles, position);
     }
 
     public static Mesh fromFile(String path, Vector3 position){
         //try(Scanner sc = new Scanner(new File(Mesh.class.getResource(path).toExternalForm().substring(1)))){
-        try(Scanner sc = new Scanner(new File("C:/Users/jorge/Documents/GitHub/Linalg/target/classes/canvas3d/" + path))){
+        try(Scanner sc = new Scanner(new File("D:/GitHub/Linalg/target/classes/canvas3d/" + path))){
             List<Vector3> vertices = new ArrayList<>();
             List<Triangle> triangles = new ArrayList<>();
             while(sc.hasNextLine()){
@@ -27,7 +30,7 @@ public class Mesh extends GameObject{
 
                 else if(line[0].equals("f")){
                     try {
-                        Triangle triangle = new Triangle(vertices.get(Integer.parseInt(line[1])-1), vertices.get(Integer.parseInt(line[2])-1), vertices.get(Integer.parseInt(line[3])-1), "black", "black", "black");
+                        Triangle triangle = new Triangle(vertices.get(Integer.parseInt(line[1])-1), vertices.get(Integer.parseInt(line[2])-1), vertices.get(Integer.parseInt(line[3])-1), Color.MEDIUMVIOLETRED, Color.MEDIUMVIOLETRED, Color.MEDIUMVIOLETRED);
                         triangles.add(triangle);
                     }
                     catch (Exception e){

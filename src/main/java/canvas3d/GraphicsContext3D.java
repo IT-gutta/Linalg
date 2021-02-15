@@ -16,6 +16,8 @@ public class GraphicsContext3D {
     private double[] depthBuffer;
     private int width;
     private int height;
+    private Color fillColor = Color.BLACK;
+    private Color strokeColor = Color.BLACK;
 
     public GraphicsContext3D(GraphicsContext graphicsContext2D, Camera3D camera){
         this.graphicsContext2D = graphicsContext2D;
@@ -49,7 +51,7 @@ public class GraphicsContext3D {
                 camera.project(p3),
         };
 
-        //rasterizeTriangle(p1.getX(), p1.getY(), p1.getZ(), p2.getX(), p2.getY(), p2.getZ(), p3.getX(), p3.getY(), p3.getZ());
+        //rasterize triangle with color interpolation
         edgeCheckRasterize(
                 projectedPoints[0].getX(), projectedPoints[0].getY(), projectedPoints[0].getZ(), colors[0],
                 projectedPoints[1].getX(), projectedPoints[1].getY(), projectedPoints[1].getZ(), colors[1],
@@ -63,6 +65,8 @@ public class GraphicsContext3D {
                 camera.project(p2),
                 camera.project(p3),
         };
+
+        //rasterize triangle without color interpolation
         edgeCheckRasterize(
                 projectedPoints[0].getX(), projectedPoints[0].getY(), projectedPoints[0].getZ(),
                 projectedPoints[1].getX(), projectedPoints[1].getY(), projectedPoints[1].getZ(),
@@ -70,9 +74,6 @@ public class GraphicsContext3D {
         );
     }
 
-    public void fillSphere(Vector position, double radius){
-
-    }
 
 
     public void clearPolygons(){
@@ -83,7 +84,8 @@ public class GraphicsContext3D {
             depthBuffer[i] = 0;
         }
     }
-
+    
+    //gammel funksjon som ikke funker
     public void rasterizeTriangle(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3){
         Color fill = Color.valueOf(graphicsContext2D.getFill().toString());
         double a1 = (y3 - y1) / (x3 - x1);
@@ -123,6 +125,9 @@ public class GraphicsContext3D {
     }
 
     public void edgeCheckRasterize(double x1, double y1, double z1, Color color1, double x2, double y2, double z2, Color color2, double x3, double y3, double z3, Color color3){
+        if(((x1>width||x1<0) && (y1>height||y1<0)) && ((x2>width||x2<0) && (y2>height||y2<0)) && ((x3>width||x3<0) && (y3>height||y3<0))) // alle tre punnkter utenfor
+            return;
+
         int yMin = (int) Math.round(max(0, min(y1, y2, y3)));
         int yMax = (int) Math.round(min(height-1, max(y1, y2, y3)));
 
@@ -145,6 +150,9 @@ public class GraphicsContext3D {
                 }
 
                 double z = 1/(l1/z1 + l2/z2 + l3/z3);
+//                System.out.println("1:" + "\tred: " + color1.getRed() + "\tgreen: " + color1.getGreen() + "\tblue: " + color1.getBlue());
+//                System.out.println("2:" + "\tred: " + color2.getRed() + "\tgreen: " + color2.getGreen() + "\tblue: " + color2.getBlue());
+//                System.out.println("3:" + "\tred: " + color3.getRed() + "\tgreen: " + color3.getGreen() + "\tblue: " + color3.getBlue());
                 Color color = Color.color(
                         color1.getRed() * l1 + color2.getRed() * l2 + color3.getRed() * l3,
                         color1.getGreen() * l1 + color2.getGreen() * l2 + color3.getGreen() * l3,
@@ -160,7 +168,9 @@ public class GraphicsContext3D {
 
 
     public void edgeCheckRasterize(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3){
-        Color fill = Color.valueOf(graphicsContext2D.getFill().toString());
+        if(((x1>width||x1<0) && (y1>height||y1<0)) && ((x2>width||x2<0) && (y2>height||y2<0)) && ((x3>width||x3<0) && (y3>height||y3<0))) // alle tre punnkter utenfor
+            return;
+
         int yMin = (int) Math.round(max(0, min(y1, y2, y3)));
         int yMax = (int) Math.round(min(height-1, max(y1, y2, y3)));
 
@@ -184,7 +194,7 @@ public class GraphicsContext3D {
 
                 double z = 1/(l1/z1 + l2/z2 + l3/z3);
                 if(z < depthBuffer[y*width + x]){
-                    graphicsContext2D.getPixelWriter().setColor(x, y, fill);
+                    graphicsContext2D.getPixelWriter().setColor(x, y, fillColor);
                     depthBuffer[y*width + x] = z;
                 }
             }
@@ -242,24 +252,26 @@ public class GraphicsContext3D {
 
 
 
+    public void setFill(String color){
+        fillColor = Color.valueOf(color);
+    }
+    public void setFill(Color color){
+        fillColor = color;
+    }
     public void setFill(Paint paint){
         graphicsContext2D.setFill(paint);
     }
-    public void setFill(String color){
-        graphicsContext2D.setFill(Paint.valueOf(color));
+
+    public void setStroke(String color){
+        strokeColor = Color.valueOf(color);
     }
-    public void setFill(Color color){
-        graphicsContext2D.setFill(Paint.valueOf(color.toString()));
+    public void setStroke(Color color){
+        strokeColor = color;
     }
     public void setStroke(Paint paint){
         graphicsContext2D.setStroke(paint);
     }
-    public void setStroke(String color){
-        graphicsContext2D.setStroke(Paint.valueOf(color));
-    }
-    public void setColor(Color color){
-        graphicsContext2D.setStroke(Paint.valueOf(color.toString()));
-    }
+
 
 
     public void clearRect(double x, double y, double w, double h){

@@ -29,11 +29,12 @@ public abstract class CanvasRenderer3D {
         DefinedVariables.add(new VariableContainer<Vector3Renderer>(kHat, "kHat"));*/
 
 
-        /*GameObject mesh = Mesh.fromFile("chevrolet.obj", new Vector3(0, -1, 0));
-        gameObjectList.add(mesh);*/
+        GameObject mesh = Mesh.fromFile("chevrolet.obj", new Vector3(0, -1, 0));
+        mesh.setForward(Vector3.scale(Vector3.FORWARD(), -1));
+        gameObjectList.add(mesh);
 
-        GameObject cube = new Cube(Vector3.ZERO());
-        gameObjectList.add(cube);
+//        GameObject cube = new Cube(Vector3.ZERO());
+//        gameObjectList.add(cube);
 
 
         AnimationTimer animationTimer = new AnimationTimer() {

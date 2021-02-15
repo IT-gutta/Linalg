@@ -5,9 +5,9 @@ import math3d.Vector3;
 
 public class Cube extends GameObject{
     private Vector3[] corners;
-    private final String[] colors = {"maroon", "red", "yellow", "grey", "green", "cyan"};
+    private final String[] colors = {"blue", "red", "yellow", "grey", "green", "cyan"};
     private final Color[][] colorsjall= {
-        {Color.valueOf("maroon"),Color.valueOf("maroon"),Color.valueOf("maroon")},
+        {Color.valueOf("blue"),Color.valueOf("blue"),Color.valueOf("blue")},
         {Color.valueOf("red"),Color.valueOf("red"),Color.valueOf("red")},
         {Color.valueOf("yellow"),Color.valueOf("yellow"),Color.valueOf("yellow")},
         {Color.valueOf("grey"),Color.valueOf("grey"),Color.valueOf("grey")},
