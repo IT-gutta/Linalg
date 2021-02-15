@@ -52,21 +52,18 @@ public abstract class GameObject{
     }
 
     public void rotateOwnX(double angle){
-        forward = Vector3.rotateX(forward, angle);
-        up = Vector3.rotateX(up, angle);
-        right = Vector3.rotateX(right, angle);
+        forward = Vector3.rotate(right, forward, angle);
+        up = Vector3.rotate(right, up, angle);
     }
 
     public void rotateOwnY(double angle){
-        forward = Vector3.rotateY(forward, angle);
-        up = Vector3.rotateY(up, angle);
-        right = Vector3.rotateY(right, angle);
+        forward = Vector3.rotate(up, forward, angle);
+        right = Vector3.rotate(up, right, angle);
     }
 
     public void rotateOwnZ(double angle){
-        forward = Vector3.rotateZ(forward, angle);
-        up = Vector3.rotateZ(up, angle);
-        right = Vector3.rotateZ(right, angle);
+        up = Vector3.rotate(forward, up, angle);
+        right = Vector3.rotate(forward, right, angle);
     }
 
     public void moveForward(double scalar){

@@ -15,7 +15,7 @@ public class CanvasPane3D extends Pane {
 
     private final Canvas canvas;
     private boolean mouseIsPressed;
-    private final double mouseSensitivity = 0.004;
+    private final double mouseSensitivity = 0.000000004;
     private double previousX;
     private double previousY;
 

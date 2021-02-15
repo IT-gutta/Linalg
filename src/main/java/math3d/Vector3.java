@@ -1,5 +1,6 @@
 package math3d;
 
+import math.Matrices;
 import math.Matrix;
 import math.Vector;
 import math.Vectors;
@@ -72,6 +73,19 @@ public class Vector3 extends Vector{
                 {Math.sin(angle), 0, Math.cos(angle)},
         });
         return new Vector3(rotation.transform(vec.getVector()));
+    }
+
+
+    //roterer rundt en angitt akse
+    public static Vector3 rotate(Vector3 axis, Vector3 input, double angle){
+        //TODO fikse denne funksjonen
+        Matrix c = new Matrix(new double[][]{
+                {0, -axis.getZ(), axis.getY()},
+                {axis.getZ(), 0, -axis.getX()},
+                {-axis.getY(), axis.getX(), 0}
+        });
+        Matrix rotationMatrix = Matrices.add(Matrices.getIdentityMatrix(3), Matrices.scale(c, Math.sin(angle)), Matrices.scale(Matrices.product(c, c), 1-Math.cos(angle)));
+        return new Vector3(rotationMatrix.transform(input.getVector()));
     }
 
     public static Vector3 cross(Vector3 v1, Vector3 v2){
