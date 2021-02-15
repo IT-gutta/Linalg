@@ -37,13 +37,23 @@ public class Camera3D extends GameObject{
         projectionMatrix = new Matrix(matrix);
 
 
-        Matrix pointAt = new Matrix(new double[][]{
+        Matrix pointAtMatrix = new Matrix(new double[][]{
                 {right.getX(), up.getX(), forward.getX(), position.getX()},
                 {right.getY(), up.getY(), forward.getY(), position.getY()},
                 {right.getZ(), up.getZ(), forward.getZ(), position.getZ()},
                 {0, 0, 0, 1}
         });
-        lookAtMatrix = pointAt.getInverted();
+        //lookAtMatrix = pointAt.getInverted();
+
+        //denne er helt lik pointAt.getIverted();
+        Matrix lookAt = new Matrix(new double[][]{
+                {right.getX(), right.getY(), right.getZ(), -position.dot(right)},
+                {up.getX(), up.getY(), up.getZ(),  -position.dot(up)},
+                {forward.getX(), forward.getY(), forward.getZ(),  -position.dot(forward)},
+                {0, 0, 0, 1}
+        });
+
+        lookAtMatrix = lookAt;
 
         //System.out.println(lookAtMatrix);
     }
@@ -51,7 +61,7 @@ public class Camera3D extends GameObject{
 
     public Vector4 project(Vector3 vector3){
         Vector4 input = new Vector4(vector3.getX(), vector3.getY(), vector3.getZ(), 1);
-        double[] cameraView = lookAtMatrix.transform(input.getVector().getVector());
+        double[] cameraView = lookAtMatrix.transform(input.getVector());
         double[] out = projectionMatrix.transform(cameraView);
         out[0] /= out[3];
         out[1] /= out[3];
