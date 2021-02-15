@@ -150,11 +150,13 @@ public class Vector implements Transformable {
     public double angle(Vector v){
         return Math.acos(this.dot(v)/(this.getMagnitude()*v.getMagnitude()));
     }
-    public boolean equals(Vector v) throws IllegalArgumentException{
+    public boolean equals(Vector v){
         if(this.getDimensions()!=v.getDimensions())
-            throw new IllegalArgumentException("Vectors must have the same dimensions");
+            return false;
+
         for(int i = 0; i<vector.length; i++){
-            if(vector[i]!=v.getElement(i)) return false;
+            if(vector[i]!=v.getElement(i))
+                return false;
         }
         return true;
     }
@@ -194,5 +196,8 @@ public class Vector implements Transformable {
     public void transform(Matrix m){
         //skriv kode her
     }
+
+
+
 
 }

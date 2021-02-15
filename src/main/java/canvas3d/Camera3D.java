@@ -4,19 +4,35 @@ import math.Matrix;
 import math3d.Vector3;
 import math3d.Vector4;
 
-public class Camera3D{
-    private Vector3 position;
-    private Vector3 direction;
+public class Camera3D extends GameObject{
+    //TODO fix cameraMovement
     private final double fov = Math.PI/2;
     private final double zFar = 1000;
     private final double zNear = 10;
 
-    private LightSource lightSource = new LightSource(new Vector3(3, -2, 0));
+    private LightSource lightSource = new LightSource(new Vector3(1, -2, -2));
 
     private Matrix projectionMatrix;
     public Camera3D(){
-        this.position = new Vector3(0, 0, -6);
-        this.direction = new Vector3(0, 0, 1);
+        super(new Vector3(0, 0, -6), Vector3.FORWARD(), Vector3.UP());
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    public void updateMatrix(){
+        double f = 1d/(Math.tan(fov / 2));
+        double a = CanvasRenderer3D.getCanvasHeight() / CanvasRenderer3D.getCanvasWidth();
+        double q = zFar/(zFar-zNear);
+        double[][] matrix = {
+                {a*f, 0, 0, 0},
+                {0, f, 0, 0},
+                {0, 0, q, -q*zNear},
+                {0, 0, 1, 0}
+        };
+        projectionMatrix = new Matrix(matrix);
     }
 
     public Vector4 project(Vector3 vector3){
@@ -34,25 +50,6 @@ public class Camera3D{
         return new Vector4(out);
     }
 
-    public void updateMatrix(){
-        double f = 1d/(Math.tan(fov / 2));
-        double a = CanvasRenderer3D.getCanvasHeight() / CanvasRenderer3D.getCanvasWidth();
-        double q = zFar/(zFar-zNear);
-        double[][] matrix = {
-                {a*f, 0, 0, 0},
-                {0, f, 0, 0},
-                {0, 0, q, -q*zNear},
-                {0, 0, 1, 0}
-        };
-        projectionMatrix = new Matrix(matrix);
-    }
-
-    public Vector3 getDirection(){
-        return direction;
-    }
-    public Vector3 getPosition(){
-        return position;
-    }
     public LightSource getLightSource(){return lightSource;}
 
     private double cos(double angle){

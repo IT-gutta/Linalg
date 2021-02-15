@@ -6,14 +6,15 @@ import graphics.*;
 import javafx.scene.paint.Paint;
 import math.Matrix;
 
-public class Vector3Renderer extends Renderer3D<Vector3> implements Interpolatable {
+public class Vector3Renderer extends Renderer3D implements Interpolatable {
     private Interpolator interpolator;
     private double theta1 = 0;
     private double theta2 = 0;
+    private Vector3 vector3;
 
 
     public Vector3Renderer(double x, double y, double z){
-        super(new Vector3(x, y, z));
+        this.vector3 = new Vector3(x, y, z);
     }
 
     @Override
@@ -42,18 +43,23 @@ public class Vector3Renderer extends Renderer3D<Vector3> implements Interpolatab
     }
 
     @Override
+    public Object getMath() {
+        return vector3;
+    }
+
+    @Override
     public void render(GraphicsContext3D gc, String name, Paint paint){
         theta1 += 0.005;
         theta2 += 0.01;
         /*Vector3 vec = Vector3.rotateZ(math, theta1);
         vec = Vector3.rotateX(vec, theta2);*/
         gc.setFill(paint);
-        gc.strokeLine(0, 0, 0, math.getX(), math.getY(), math.getZ());
+        gc.strokeLine(0, 0, 0, vector3.getX(), vector3.getY(), vector3.getZ());
     }
 
 
     @Override
     public String toString(){
-        return math.toString();
+        return vector3.toString();
     }
 }

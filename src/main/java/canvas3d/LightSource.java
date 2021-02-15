@@ -2,12 +2,11 @@ package canvas3d;
 
 import math3d.Vector3;
 
-public class LightSource {
-    private Vector3 position;
+public class LightSource extends GameObject{
     private Mesh lightBulb;
     public LightSource(Vector3 position){
-        this.position = position;
-        lightBulb = Mesh.fromFile("light.obj", position);
+        super(position);
+        //lightBulb = Mesh.fromFile("light.obj", position);
     }
 
     public double getBrightness(Vector3 middlePolygon, Vector3 normalPolygon){
@@ -22,8 +21,9 @@ public class LightSource {
         else return dot;
     }
 
+    @Override
     public void update(){
         //fix annet sted
-        position = Vector3.rotateY(position, 0.001*CanvasRenderer3D.deltaTime);
+        //position = Vector3.rotateY(position, 0.001*CanvasRenderer3D.deltaTime);
     }
 }

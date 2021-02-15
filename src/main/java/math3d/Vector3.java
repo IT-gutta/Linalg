@@ -20,6 +20,15 @@ public class Vector3 extends Vector{
     public double getZ(){
         return getElement(2);
     }
+    public void setX(double x){
+        setElement(0, x);
+    }
+    public void setY(double y){
+        setElement(1, y);
+    }
+    public void setZ(double z){
+        setElement(2, z);
+    }
 
 
     public Vector3 normalized(){
@@ -31,10 +40,11 @@ public class Vector3 extends Vector{
 
     //STATISKE UTILITY FUNCTIONS
     public static Vector3 scale(Vector3 vec, double s){
+        double[] doubles = new double[3];
         for(int i = 0; i < 3; i++){
-
+            doubles[i] = vec.getElement(i) * s;
         }
-        return new Vector3();
+        return new Vector3(doubles);
     }
 
     public static Vector3 rotateZ(Vector3 vec, double angle){
@@ -85,5 +95,27 @@ public class Vector3 extends Vector{
 
     public static Vector3 add(Vector3 v1, Vector3 v2){
         return new Vector3(v1.getX() + v2.getX(), v1.getY() + v2.getY(), v1.getZ() + v2.getZ());
+    }
+
+    public static Vector3 add(Vector3... vecs){
+        double[] u = vecs[0].getVector().clone();
+        for(int i = 1; i < vecs.length; i++){
+            for(int j = 0; j < vecs[0].getDimensions(); j++)
+                u[j] += vecs[i].getElement(j);
+        }
+        return new Vector3(u);
+    }
+
+    public static Vector3 UP() {
+        return new Vector3(0, 1, 0);
+    }
+    public static Vector3 FORWARD() {
+        return new Vector3(0, 0, 1);
+    }
+    public static Vector3 RIGHT(){
+        return new Vector3(1, 0, 0);
+    }
+    public static Vector3 ZERO(){
+        return new Vector3(0, 0, 0);
     }
 }
