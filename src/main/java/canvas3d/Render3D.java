@@ -11,6 +11,7 @@ public abstract class Render3D {
     protected Vector3 up;
     protected Vector3 right;
     protected Triangle[] triangles;
+    protected Vector3[] vertices;
 
 
     public Render3D(Triangle[] triangles, Vector3 position, Vector3 forward, Vector3 up){
