@@ -14,9 +14,10 @@ public abstract class Render3D {
     protected Vector3[] vertices;
 
 
-    public Render3D(Triangle[] triangles, Vector3 position, Vector3 forward, Vector3 up){
+    public Render3D(Vector3[] vertices, Triangle[] triangles, Vector3 position, Vector3 forward, Vector3 up){
         this(position, forward, up);
         this.triangles = triangles;
+        this.vertices = vertices;
     }
 
     public Render3D(Vector3 position, Vector3 forward, Vector3 up) {
@@ -35,9 +36,10 @@ public abstract class Render3D {
         this(Vector3.ZERO());
     }
 
-    public Render3D(Triangle[] triangles, Vector3 position){
+    public Render3D(Vector3[] vertices, Triangle[] triangles, Vector3 position){
         this(position);
         this.triangles = triangles;
+        this.vertices = vertices;
     }
 
 

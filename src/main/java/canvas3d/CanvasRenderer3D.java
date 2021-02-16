@@ -34,8 +34,12 @@ public abstract class CanvasRenderer3D {
 //        mesh.setForward(Vector3.scale(Vector3.FORWARD(), -1));
 //        gameObjectList.add(mesh);
 
-        Render3D cube = new Cube(Vector3.ZERO());
-        DefinedVariables.add(cube, "cube");
+//        Render3D cube = new Cube(Vector3.ZERO());
+//        DefinedVariables.add(cube, "cube");
+
+
+        Vector3D vector3D = new Vector3D(1, 1, 1);
+        DefinedVariables.add(vector3D, "vector3d");
 
 
         AnimationTimer animationTimer = new AnimationTimer() {
