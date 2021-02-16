@@ -53,11 +53,8 @@ public class Cube extends GameObject{
         double dThetaZ = 0.002 * CanvasRenderer3D.deltaTime;
         double dThetaY = 0.0007 * CanvasRenderer3D.deltaTime;
 
-        for(int i = 0; i < corners.length; i++){
-            corners[i] = Vector3.rotateX(corners[i], dThetaX);
-            corners[i] = Vector3.rotateZ(corners[i], dThetaZ);
-            corners[i] = Vector3.rotateY(corners[i], dThetaY);
-        }
-        updateTriangles();
+        rotateX(dThetaX);
+        rotateY(dThetaY);
+        rotateZ(dThetaZ);
     }
 }

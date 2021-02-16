@@ -84,7 +84,10 @@ public class Vector3 extends Vector{
                 {axis.getZ(), 0, -axis.getX()},
                 {-axis.getY(), axis.getX(), 0}
         });
-        Matrix rotationMatrix = Matrices.add(Matrices.getIdentityMatrix(3), Matrices.scale(c, Math.sin(angle)), Matrices.scale(Matrices.product(c, c), 1-Math.cos(angle)));
+        Matrix rotationMatrix = Matrices.add(Matrices.scale(Matrices.getIdentityMatrix(3),
+                Math.cos(angle)), Matrices.scale(c, Math.sin(angle)),
+                Matrices.scale(new Matrix(new double[][]{{axis.getX()}, {axis.getY()}, {axis.getZ()}}).multiply(new Matrix(new double[][]{{axis.getX(), axis.getY(), axis.getZ()}})), 1-Math.cos(angle)));
+
         return new Vector3(rotationMatrix.transform(input.getVector()));
     }
 

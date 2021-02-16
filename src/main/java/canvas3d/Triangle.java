@@ -38,7 +38,7 @@ public class Triangle {
 
 
     public void renderAbsolute(GraphicsContext3D gc){
-        if(!facingCamera(getRelativeNormal()))
+        if(!facingCamera(getRelativeNormal(), vertices[0]))
             return;
 
         Vector3 normal = getRelativeNormal();
@@ -69,7 +69,8 @@ public class Triangle {
 
         Vector3 normal = Vector3.cross(Vector3.subtract(pos2, pos1), Vector3.subtract(pos3, pos1));
 
-        if(!facingCamera(normal))
+        //TODO fikse facingCamera funksjonen!!!
+        if(!facingCamera(normal, pos1))
             return;
 
         //color interpolation between vertices
@@ -94,9 +95,9 @@ public class Triangle {
         }
     }
 
-    public boolean facingCamera(Vector3 normal){
+    public boolean facingCamera(Vector3 normal, Vector3 arbitraryPointOnTriangle){
         try {
-            return normal.dot(CanvasRenderer3D.getCamera().forward) < 0;
+            return normal.dot(Vector3.subtract(arbitraryPointOnTriangle, CanvasRenderer3D.getCamera().position)) < 0;
         }
         catch (Exception e){
             System.out.println("FEIL I FACING CAMERA FUNKSJONEN!");

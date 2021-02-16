@@ -15,7 +15,7 @@ public class CanvasPane3D extends Pane {
 
     private final Canvas canvas;
     private boolean mouseIsPressed;
-    private final double mouseSensitivity = 0.000000004;
+    private final double mouseSensitivity = 0.004;
     private double previousX;
     private double previousY;
 
@@ -65,10 +65,13 @@ public class CanvasPane3D extends Pane {
 
 
     private EventHandler<MouseEvent> mouseHandler = mouseEvent -> {
-        double rotationX = (mouseEvent.getX() - previousX) * mouseSensitivity;
-        double rotationY = (mouseEvent.getY() - previousY) * mouseSensitivity;
-        CanvasRenderer3D.getCamera().rotateOwnY(-rotationX);
-        CanvasRenderer3D.getCamera().rotateOwnX(rotationY);
+        double movementX = (mouseEvent.getX() - previousX) * mouseSensitivity;
+        double movementY = (mouseEvent.getY() - previousY) * mouseSensitivity;
+        CanvasRenderer3D.getCamera().rotateY(-movementX);
+
+        //TODO fix pitching
+        //CanvasRenderer3D.getCamera().setForward(Vector3.rotate(CanvasRenderer3D.getCamera().right, CanvasRenderer3D.getCamera().forward, movementY));
+
         previousX = mouseEvent.getX();
         previousY = mouseEvent.getY();
     };
