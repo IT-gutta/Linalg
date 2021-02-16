@@ -13,10 +13,12 @@ graphics\editbuttons\GenericEditButton.class
 graphics\editbuttons\MenuItems.class
 graphics\editbuttons\EditVectorButton.class
 graphics\ToolBar.class
+graphics\textInput\InputParser.class
 math2d\Vector2.class
 math3d\Point3.class
 graphics\VariableContainer.class
 graphics\editbuttons\EditPointButton.class
+graphics\textInput\InputMapFunc.class
 math\Matrices.class
 graphics\editbuttons\EditLineButton.class
 math3d\Vector3.class

@@ -13,5 +13,8 @@ public class Expressions {
     public static double division(double a, double b){
         return a/b;
     }
+    public static Expression differentiate(Expression expression){
+        return Differentiator.getDerivative(expression);
+    }
 }
 

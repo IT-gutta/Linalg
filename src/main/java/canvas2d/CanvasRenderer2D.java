@@ -31,14 +31,14 @@ public abstract class CanvasRenderer2D {
 
     public static void start(){
         Matrix matrix = new Matrix(0, 1, -1, 0);
-        Vector2 vector = new Vector2(2, 2);
-        Line2 line = new Line2(-2, 0, 2, 2);
+        Vector vector = new Vector(2, 2);
+        Line line = new Line(-2, 0, 2, 2);
 
         Grid2 grid2 = new Grid2(0, 0, 5, 5, 1, 1);
         LineSegment2 lineSegment2 = new LineSegment2(-2, 0, -5, -5);
 
-        DefinedVariables.add(vector, "vector");
-        DefinedVariables.add(line, "line");
+        DefinedVariables.add(new VariableContainer<>(vector, "vector"));
+        DefinedVariables.add(new VariableContainer<>(line, "line"));
         DefinedVariables.add(grid2, "grid");
         DefinedVariables.add(lineSegment2, "linesegment");
         DefinedVariables.add(new VariableContainer<>(matrix, "m"));

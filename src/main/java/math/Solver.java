@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class Solver {
+    //TODO Matrix
     public static Matrix toReducedRowEchelon(Matrix m){
         HashMap<Integer, ArrayList<Integer>> pivotIndexes = new HashMap<>();
         while(!m.isRowEchelon()){

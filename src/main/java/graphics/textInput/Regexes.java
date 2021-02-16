@@ -25,15 +25,15 @@ public class Regexes {
     }
 
     public static String vectorN(){
-        return "\\["+flNum+"(,("+flNum+"))*\\]";
+        return "\\[("+flNum+"(,("+flNum+"))*)\\]";
     }
 
     public static String pointN(){
-        return "\\("+flNum+"(,("+flNum+"))*\\)";
+        return "\\(("+flNum+"(,("+flNum+"))*)\\)";
     }
 
     public static String matrix(){
-        return "\\["+flNum+"(,("+flNum+"))*(;"+flNum+"(,("+flNum+"))*)+\\]";
+        return "\\[("+flNum+"(,("+flNum+"))*(;"+flNum+"(,("+flNum+"))*)+)\\]";
     }
 
     public static String scalar(){
@@ -41,7 +41,7 @@ public class Regexes {
     }
 
     public static String complex(){
-        return "(("+flNum+"[+-]"+posFlNum+"?i)|(-?"+posFlNum+"?i[+-]"+posFlNum+")|(-?"+posFlNum+"?i))";
+        return "(("+flNum+"([+-]"+posFlNum+"?)i)|((-?"+posFlNum+"?)i([+-]"+posFlNum+"))|((-?"+posFlNum+"?)i))";
     }
 
     public static void main(String[] args) {

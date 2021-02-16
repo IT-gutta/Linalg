@@ -13,6 +13,7 @@ public class Expression {
     private Expression leftChild;
     private Expression rightChild;
     private String operator;
+    private boolean isPositive = true;
 
     private HashMap<String, BiFunction<Double, Double, Double>> dddOps = new HashMap<>();
     private HashMap<String, Function<Double, Double>> ddOps = new HashMap<>();
@@ -50,7 +51,7 @@ public class Expression {
             return false;
         if(Pattern.matches(".*[+\\-*/^]{2}.*", input))
             return false;
-        if(Pattern.matches(".*\\([\\.+\\-*/^].*", input))
+        if(Pattern.matches(".*\\([\\.+*/^].*", input))
             return false;
         if(Pattern.matches(".*[^0-9e(pi)x]\\..*", input))
             return false;
@@ -60,7 +61,7 @@ public class Expression {
             return false;
         if(Pattern.matches(".*(\\d|e|pi|x)(e|pi|x)", input))
             return false;
-        if(Pattern.matches("[.+\\-*/^].*", input))
+        if(Pattern.matches("[.+*/^].*", input))
             return false;
         if(Pattern.matches(".*[.+\\-*/^]", input))
             return false;
@@ -72,10 +73,20 @@ public class Expression {
     }
 
     public String getExpression() {
-        return expression;
+        if(isPositive)
+            return expression;
+        return "-"+expression;
     }
 
     private void findChildren(){
+        removeBrackets();
+        if(expression.charAt(0)=='-'){
+            isPositive = false;
+            expression = expression.substring(1);
+            expression = flipSign('-', expression);
+        }
+        else if(expression.charAt(0)=='+')
+            expression = expression.substring(1);
         removeBrackets();
         String[] children = splitExpression();
         if(!children[0].equals("")){
@@ -185,7 +196,6 @@ public class Expression {
     }
 
     private String parseComposition(){
-        System.out.println(expression);
         HashSet<String> functions = new HashSet<>();
         functions.add("cos");functions.add("sin");functions.add("abs");functions.add("log");functions.add("tan");
         String f = "(cos|sin|abs|log|tan|)";
@@ -202,27 +212,32 @@ public class Expression {
     }
 
     public double evaluate(double x){
-
+        int c = 1;
+        if(!isPositive)
+            c = -1;
         if(leftChild!=null && rightChild!=null){
-            return dddOps.get(operator).apply(leftChild.evaluate(x), rightChild.evaluate(x));
+            return dddOps.get(operator).apply(leftChild.evaluate(x), rightChild.evaluate(x))*c;
         }
         else if(leftChild!=null){
-            return ddOps.get(operator).apply(leftChild.evaluate(x));
+            return ddOps.get(operator).apply(leftChild.evaluate(x))*c;
         }
         else{
             if(Pattern.matches("e|pi", expression))
-                return constants.get(expression);
+                return constants.get(expression)*c;
             else if(Pattern.matches("x", expression))
-                return x;
+                return x*c;
             else
-                return Double.parseDouble(expression);
+                return Double.parseDouble(expression)*c;
         }
 
     }
 
     private String toString(int depth){
         String indent = new String(new char[depth]).replace("\0", "\t");
-        String result = indent + getExpression() + operator + "\n";
+        String sign = "";
+        if(!isPositive)
+            sign = "-";
+        String result = indent + sign + getExpression() + operator + indent + sign + "\n";
         if(!(leftChild==null))
             result += leftChild.toString(depth+1);
         if(!(rightChild==null)){
@@ -232,7 +247,7 @@ public class Expression {
     }
 
     public static void main(String[] args) {
-        Expression root = new Expression("cos(8*abs(77^9)+3*e^(x-2))");
+        Expression root = new Expression("-cos(x)+7*x");
         System.out.println(root.toString());
         System.out.println(root.evaluate(1));
     }

@@ -3,6 +3,7 @@ package graphics.editbuttons;
 import graphics.Icons;
 import graphics.VariableContainer;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextInputControl;
 import math.Matrix;
 
 public class EditMatrixButton extends GenericEditButton {
@@ -12,7 +13,12 @@ public class EditMatrixButton extends GenericEditButton {
         this.variableContainer = variableContainer;
         MenuItem invert = new MenuItem("Invert", Icons.of("inverse.png", 20));
         invert.setOnAction(actionEvent ->{
-            variableContainer.getVariable().invert2x2();
+            try{
+                variableContainer.getVariable().invert();
+            }
+            catch (Exception e){
+
+            }
         });
 
         addMenuItem(invert);

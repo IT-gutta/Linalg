@@ -50,9 +50,12 @@ public class App extends Application {
         VBox root = new VBox();
 
 
-        Label label = new Label("Input");
+        //Label label = new Label("Input");
         TextField textField = new TextField();
         ToolBar toolBar = new ToolBar();
+
+        Label error = new Label("");
+        error.getStyleClass().add("error");
 
         SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane2D, canvasPane3D);
         splitPane.prefHeightProperty().bind(root.heightProperty());
@@ -62,8 +65,8 @@ public class App extends Application {
         DefinedVariables.getScrollPane().setMinWidth(150);
 
 
-        root.getChildren().addAll(toolBar, label, textField, splitPane);
-        textField.setOnAction(new TextInputEvent(textField));
+        root.getChildren().addAll(toolBar, error, textField, splitPane);
+        textField.setOnAction(new TextInputEvent(textField, error));
 
         scene = new Scene(root);
         scene.getStylesheets().add(resourceURL("stylesheets/style.css"));

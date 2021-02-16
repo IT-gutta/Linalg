@@ -6,8 +6,6 @@ import math3d.Vector3;
 import java.util.ArrayList;
 
 public class Matrix{
-    //TODO fix toString
-    //TODO Add inverse
     private double[][] matrix;
     private int width;
     private int height;
@@ -228,6 +226,9 @@ public class Matrix{
     public Matrix getInverted(){
         return Solver.invertedMatrix(this);
     }
+    public void invert(){
+        matrix = Solver.invertedMatrix(this).getMatrix();
+    }
     public boolean isRowEchelon(){
         for(int i = 0; i<height; i++){
             for(int j = 0; j<i; j++){
@@ -262,7 +263,6 @@ public class Matrix{
         matrix[y][x] = value;
     }
 
-    //TODO ToString doesnt display negative values
     @Override
     public String toString(){
         /*String s = "[\n";

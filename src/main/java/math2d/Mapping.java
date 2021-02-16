@@ -7,7 +7,6 @@ import javafx.scene.paint.Paint;
 import math.Expression;
 
 public class Mapping extends Renderer2D<Expression> {
-    //TODO fix problems related to rendering
     private final double start;
     private final double end;
     private final double step;
