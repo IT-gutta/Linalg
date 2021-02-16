@@ -1,59 +1,69 @@
 package canvas3d;
 
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import math.Vector;
 import math3d.Vector3;
 
-public class Cube extends Renderer3D<Vector>{
-    private Triangle[] tris;
-    private Vector3[] corners;
-    private final String[] colors = {"maroon", "red", "yellow", "grey", "green", "cyan"};
+import java.util.ArrayList;
+import java.util.HashSet;
 
-    public Cube(){
-        super(new Vector());
+public class Cube extends Render3D{
+    private Vector3[] corners;
+    private final String[] colors = {"blue", "red", "yellow", "grey", "green", "cyan"};
+    private final Color[][] colorsjall= {
+        {Color.valueOf("blue"),Color.valueOf("blue"),Color.valueOf("blue")},
+        {Color.valueOf("red"),Color.valueOf("red"),Color.valueOf("red")},
+        {Color.valueOf("yellow"),Color.valueOf("yellow"),Color.valueOf("yellow")},
+        {Color.valueOf("grey"),Color.valueOf("grey"),Color.valueOf("grey")},
+        {Color.valueOf("green"),Color.valueOf("green"),Color.valueOf("green")},
+        {Color.valueOf("cyan"),Color.valueOf("cyan"),Color.valueOf("cyan")}
+    };
+
+    public Cube(Vector3 position){
+        super(position);
         corners = new Vector3[8];
 
-        corners[0] = new Vector3(0, 0, 0);
-        corners[1] = new Vector3(0, 1, 0);
-        corners[2] = new Vector3(1, 1, 0);
-        corners[3] = new Vector3(1, 0, 0);
-        corners[4] = new Vector3(0, 0, 1);
-        corners[5] = new Vector3(0, 1, 1);
-        corners[6] = new Vector3(1, 1, 1);
-        corners[7] = new Vector3(1, 0, 1);
+        corners[0] = new Vector3(-0.5, -0.5, -0.5);
+        corners[1] = new Vector3(-0.5, 0.5, -0.5);
+        corners[2] = new Vector3(0.5, 0.5, -0.5);
+        corners[3] = new Vector3(0.5, -0.5, -0.5);
+        corners[4] = new Vector3(-0.5, -0.5, +0.5);
+        corners[5] = new Vector3(-0.5, 0.5, 0.5);
+        corners[6] = new Vector3(0.5, 0.5, 0.5);
+        corners[7] = new Vector3(0.5, -0.5, 0.5);
         updateTriangles();
     }
 
     public void updateTriangles(){
-        tris = new Triangle[12];
-        tris[0] = new Triangle(colors[0], corners[0], corners[1], corners[2]);
-        tris[1] = new Triangle(colors[0], corners[0], corners[2], corners[3]);
-        tris[2] = new Triangle(colors[1], corners[7], corners[6], corners[5]);
-        tris[3] = new Triangle(colors[1], corners[7], corners[5], corners[4]);
-        tris[4] = new Triangle(colors[2], corners[4], corners[5], corners[1]);
-        tris[5] = new Triangle(colors[2], corners[4], corners[1], corners[0]);
-        tris[6] = new Triangle(colors[3], corners[3], corners[2], corners[6]);
-        tris[7] = new Triangle(colors[3], corners[3], corners[6], corners[7]);
-        tris[8] = new Triangle(colors[4], corners[1], corners[5], corners[6]);
-        tris[9] = new Triangle(colors[4], corners[1], corners[6], corners[2]);
-        tris[10] = new Triangle(colors[5], corners[4], corners[0], corners[3]);
-        tris[11] = new Triangle(colors[5], corners[4], corners[3], corners[7]);
+        triangles = new Triangle[12];
+        triangles[0] = new Triangle(corners[0], corners[1], corners[2], colorsjall[0][0], colorsjall[0][1], colorsjall[0][2]);
+        triangles[1] = new Triangle(corners[0], corners[2], corners[3], colorsjall[0][0], colorsjall[0][1], colorsjall[0][2]);
+        triangles[2] = new Triangle(corners[7], corners[6], corners[5], colorsjall[1][0], colorsjall[1][1], colorsjall[1][2]);
+        triangles[3] = new Triangle(corners[7], corners[5], corners[4], colorsjall[1][0], colorsjall[1][1], colorsjall[1][2]);
+        triangles[4] = new Triangle(corners[4], corners[5], corners[1], colorsjall[2][0], colorsjall[2][1], colorsjall[2][2]);
+        triangles[5] = new Triangle(corners[4], corners[1], corners[0], colorsjall[2][0], colorsjall[2][1], colorsjall[2][2]);
+        triangles[6] = new Triangle(corners[3], corners[2], corners[6], colorsjall[3][0], colorsjall[3][1], colorsjall[3][2]);
+        triangles[7] = new Triangle(corners[3], corners[6], corners[7], colorsjall[3][0], colorsjall[3][1], colorsjall[3][2]);
+        triangles[8] = new Triangle(corners[1], corners[5], corners[6], colorsjall[4][0], colorsjall[4][1], colorsjall[4][2]);
+        triangles[9] = new Triangle(corners[1], corners[6], corners[2], colorsjall[4][0], colorsjall[4][1], colorsjall[4][2]);
+        triangles[10] = new Triangle(corners[4], corners[0], corners[3], colorsjall[5][0], colorsjall[5][1], colorsjall[5][2]);
+        triangles[11] = new Triangle(corners[4], corners[3], corners[7], colorsjall[5][0], colorsjall[5][1], colorsjall[5][2]);
+    }
+
+
+    @Override
+    public void update(String name, Paint paint) {
+        double dThetaX = 0.001 * CanvasRenderer3D.deltaTime;
+        double dThetaZ = 0.002 * CanvasRenderer3D.deltaTime;
+        double dThetaY = 0.0007 * CanvasRenderer3D.deltaTime;
+
+        rotateX(dThetaX);
+        rotateY(dThetaY);
+        rotateZ(dThetaZ);
     }
 
     @Override
-    public void render(GraphicsContext3D gc, String name, Paint paint) {
-        double dThetaX = 0.005;
-        double dThetaZ = 0.01;
-        double dThetaY = 0.007;
-
-        for(int i = 0; i < corners.length; i++){
-            corners[i] = Vector3.rotateX(corners[i], dThetaX);
-            corners[i] = Vector3.rotateZ(corners[i], dThetaZ);
-            corners[i] = Vector3.rotateY(corners[i], dThetaY);
-        }
-        updateTriangles();
-        for(Triangle tri : tris){
-            tri.render(gc);
-        }
+    public Object getMath() {
+        return null;
     }
 }

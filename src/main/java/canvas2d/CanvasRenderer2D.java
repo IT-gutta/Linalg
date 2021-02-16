@@ -1,6 +1,5 @@
 package canvas2d;
 
-import exceptions.IllegalNumberOfDimensionsException;
 import graphics.DefinedVariables;
 import graphics.VariableContainer;
 import math2d.Grid2;
@@ -95,7 +94,7 @@ public abstract class CanvasRenderer2D {
         return canvas.getHeight();
     }
 
-    public static Point toCanvasPoint(Point point) throws IllegalNumberOfDimensionsException {
+    public static Point toCanvasPoint(Point point) throws IllegalArgumentException {
         return new Point(toCanvasX(point.getElement(0)), toCanvasY(point.getElement(1)));
     }
 
@@ -123,7 +122,7 @@ public abstract class CanvasRenderer2D {
 
     public static void accountForChanges(){
         //oppdaterer alle linjer
-        for(VariableContainer<Renderer2D> variableContainer : DefinedVariables.get2DRenderables())
+        for(VariableContainer<Render2D> variableContainer : DefinedVariables.get2DRenderables())
             if(variableContainer.getVariable() instanceof Line2)
                 ((Line2) variableContainer.getVariable()).updateCanvasPoints();
     }

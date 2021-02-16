@@ -3,12 +3,12 @@ package math2d;
 import canvas2d.CanvasRenderer2D;
 import graphics.Interpolatable;
 import graphics.Interpolator;
-import canvas2d.Renderer2D;
+import canvas2d.Render2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.*;
 
-public class Point2 extends Renderer2D<Point> implements Interpolatable {
+public class Point2 extends Render2D<Point> implements Interpolatable {
     private Interpolator interpolator;
 
     public Point2(Point point){

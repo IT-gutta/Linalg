@@ -1,12 +1,13 @@
 package math2d;
 
 import canvas2d.CanvasRenderer2D;
-import canvas2d.Renderer2D;
+import canvas2d.Render2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.Expression;
 
 public class Mapping extends Renderer2D<Expression> {
+    //TODO fix problems related to rendering
     private final double start;
     private final double end;
     private final double step;

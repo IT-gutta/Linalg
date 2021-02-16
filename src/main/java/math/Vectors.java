@@ -1,17 +1,16 @@
 package math;
 
-import exceptions.IllegalNumberOfDimensionsException;
 import graphics.VariableContainer;
 
 import java.util.stream.Stream;
 
 public class Vectors {
-    public static Vector add(Vector... args) throws IllegalNumberOfDimensionsException{
+    public static Vector add(Vector... args) throws IllegalArgumentException{
         int d = args[0].getDimensions();
         double[] u = new double[d];
         for(Vector v:args){
             if(d!=v.getDimensions())
-                throw new IllegalNumberOfDimensionsException("Vectors must have same dimensions");
+                throw new IllegalArgumentException("Vectors must have same dimensions");
             for(int i = 0; i<d; i++){
                 u[i]+=v.getElement(i);
             }
@@ -19,9 +18,9 @@ public class Vectors {
         return new Vector(u);
     }
 
-    public static Vector subtract(Vector v1, Vector v2) throws IllegalNumberOfDimensionsException{
+    public static Vector subtract(Vector v1, Vector v2) throws IllegalArgumentException{
         if(v1.getDimensions() != v2.getDimensions())
-            throw new IllegalNumberOfDimensionsException("Vectors must have same dimensions");
+            throw new IllegalArgumentException("Vectors must have same dimensions");
 
         double[] u = new double[v1.getDimensions()];
 
@@ -31,8 +30,8 @@ public class Vectors {
         return new Vector(u);
     }
 
-    public static double dot(Vector v, Vector u) throws IllegalNumberOfDimensionsException{
-        if(u.getDimensions()!=v.getDimensions()) throw new IllegalNumberOfDimensionsException("Vectors must have the same dimensions");
+    public static double dot(Vector v, Vector u) throws IllegalArgumentException{
+        if(u.getDimensions()!=v.getDimensions()) throw new IllegalArgumentException("Vectors must have the same dimensions");
         double dot = 0;
         for(int i = 0; i< u.getDimensions(); i++){
             dot+=(u.getElement(i)*v.getElement(i));
@@ -71,8 +70,8 @@ public class Vectors {
         return new Vector(p.getPoint());
     }
 
-    public static Vector fromPoints(Point p, Point q) throws IllegalNumberOfDimensionsException{
-        if(p.getDimensions()!=q.getDimensions()) throw new IllegalNumberOfDimensionsException("Illegal number of dimensions");
+    public static Vector fromPoints(Point p, Point q) throws IllegalArgumentException{
+        if(p.getDimensions()!=q.getDimensions()) throw new IllegalArgumentException("Illegal number of dimensions");
         double[] d = new double[p.getDimensions()];
         for(int i = 0; i<p.getDimensions(); i++){
             d[i] = p.getElement(i)-q.getElement(i);
@@ -84,9 +83,9 @@ public class Vectors {
         return new Point(v.getVector());
     }
 
-    public static Complex toComplex(Vector v) throws IllegalNumberOfDimensionsException{
+    public static Complex toComplex(Vector v) throws IllegalArgumentException{
         if(v.getDimensions()!=2)
-            throw new IllegalNumberOfDimensionsException("Vector must be two dimensional");
+            throw new IllegalArgumentException("Vector must be two dimensional");
         return new Complex(v.getElement(0),v.getElement(1));
     }
 

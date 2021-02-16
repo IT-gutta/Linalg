@@ -4,24 +4,25 @@ import canvas2d.CanvasPane2D;
 import canvas2d.CanvasRenderer2D;
 import canvas3d.CanvasPane3D;
 import canvas3d.CanvasRenderer3D;
-import graphics.*;
+import graphics.DefinedVariables;
 import graphics.ToolBar;
 import graphics.textInput.TextInputEvent;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.IOException;
 
 /**
  * JavaFX App
  */
 public class App extends Application {
-    //TODO add 3d-graphics
     //TODO add the ability to select objects in the graphics window
     //TODO add save functionality (save all variables in a file)
     private static Scene scene;

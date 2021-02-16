@@ -2,7 +2,7 @@ package math2d;
 
 import canvas2d.CanvasRenderer2D;
 import graphics.Interpolatable;
-import canvas2d.Renderer2D;
+import canvas2d.Render2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.Line;
@@ -12,7 +12,7 @@ import math.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Line2 extends Renderer2D<Line> implements Interpolatable {
+public class Line2 extends Render2D<Line> implements Interpolatable {
     private Vector2 direction;
     private Point2 start;
     private boolean isInsideCanvas;

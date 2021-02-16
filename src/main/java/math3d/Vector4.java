@@ -28,8 +28,8 @@ public class Vector4 {
     public double getW(){
         return vector.getElement(3);
     }
-    public Vector getVector(){
-        return vector;
+    public double[] getVector(){
+        return vector.getVector();
     }
     public void setX(double x){
         vector.setElement(0, x);

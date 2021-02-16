@@ -1,6 +1,5 @@
 package math;
 
-import exceptions.IllegalNumberOfDimensionsException;
 import math3d.Vector3;
 
 import java.util.ArrayList;
@@ -55,9 +54,9 @@ public class Matrix{
         };
     }
 
-    public Vector transform(Vector vector) throws IllegalNumberOfDimensionsException {
+    public Vector transform(Vector vector) throws IllegalArgumentException {
         if(vector.getDimensions() != width)
-            throw new IllegalNumberOfDimensionsException("The vectors number of dimensions doesnt match the matrix width");
+            throw new IllegalArgumentException("The vectors number of dimensions doesnt match the matrix width");
 
         return new Vector(transform(vector.getVector()));
     }
