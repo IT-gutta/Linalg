@@ -122,7 +122,7 @@ public abstract class CanvasRenderer2D {
 
     public static void accountForChanges(){
         //oppdaterer alle linjer
-        for(VariableContainer<Renderer2D> variableContainer : DefinedVariables.get2DRenderables())
+        for(VariableContainer<Render2D> variableContainer : DefinedVariables.get2DRenderables())
             if(variableContainer.getVariable() instanceof Line2)
                 ((Line2) variableContainer.getVariable()).updateCanvasPoints();
     }

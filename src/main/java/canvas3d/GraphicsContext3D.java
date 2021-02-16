@@ -145,9 +145,8 @@ public class GraphicsContext3D {
 
                 //System.out.println(l1+l2+l3);
 
-                if(l1 < 0 || l2 < 0 || l3 < 0) {
+                if(l1 < 0 || l2 < 0 || l3 < 0)
                     continue;
-                }
 
                 double z = 1/(l1/z1 + l2/z2 + l3/z3);
 //                System.out.println("1:" + "\tred: " + color1.getRed() + "\tgreen: " + color1.getGreen() + "\tblue: " + color1.getBlue());
@@ -188,9 +187,8 @@ public class GraphicsContext3D {
 
                 //System.out.println(l1+l2+l3);
 
-                if(l1 < 0 || l2 < 0 || l3 < 0) {
+                if(l1 < 0 || l2 < 0 || l3 < 0)
                     continue;
-                }
 
                 double z = 1/(l1/z1 + l2/z2 + l3/z3);
                 if(z < depthBuffer[y*width + x]){

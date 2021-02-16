@@ -23,7 +23,6 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
-    //TODO add 3d-graphics
     //TODO add the ability to select objects in the graphics window
     //TODO add save functionality (save all variables in a file)
     private static Scene scene;

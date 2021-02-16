@@ -4,12 +4,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-public abstract class Renderer2D<T> {
+public abstract class Render2D<T> {
     protected T math;
     private boolean isHidden = false;
     //TODO Add the ability for scalars to be rendered along the real axis
     //TODO Add the name of an object to the object in the graphics window
-    public Renderer2D(T mathVariable){
+    public Render2D(T mathVariable){
         this.math = mathVariable;
     }
 

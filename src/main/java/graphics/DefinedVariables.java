@@ -1,7 +1,7 @@
 package graphics;
 
-import canvas2d.Renderer2D;
-import canvas3d.Renderer3D;
+import canvas2d.Render2D;
+import canvas3d.Render3D;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
@@ -54,7 +54,11 @@ public abstract class DefinedVariables {
         map.put(variableContainer.getName(), variableContainer);
     }
 
-    public static void add(Renderer2D r, String name){
+    public static void add(Render2D r, String name){
+        add(new VariableContainer<>(r, name));
+    }
+
+    public static void add(Render3D r, String name){
         add(new VariableContainer<>(r, name));
     }
 
@@ -74,11 +78,11 @@ public abstract class DefinedVariables {
         return scrollPane;
     }
 
-    public static List<VariableContainer<Renderer2D>> get2DRenderables(){
-        return vbox.getChildren().stream().map(node -> (VariableContainer) node).filter(v -> v.getVariable() instanceof Renderer2D && !((Renderer2D) v.getVariable()).isHidden()).map(v -> (VariableContainer<Renderer2D>) v).collect(Collectors.toList());
+    public static List<VariableContainer<Render2D>> get2DRenderables(){
+        return vbox.getChildren().stream().map(node -> (VariableContainer) node).filter(v -> v.getVariable() instanceof Render2D && !((Render2D) v.getVariable()).isHidden()).map(v -> (VariableContainer<Render2D>) v).collect(Collectors.toList());
     }
-    public static List<VariableContainer<Renderer3D>> get3DRenderables(){
-        return vbox.getChildren().stream().map(node -> (VariableContainer) node).filter(v -> v.getVariable() instanceof Renderer3D && !((Renderer3D) v.getVariable()).isHidden()).map(v -> (VariableContainer<Renderer3D>) v).collect(Collectors.toList());
+    public static List<VariableContainer<Render3D>> get3DRenderables(){
+        return vbox.getChildren().stream().map(node -> (VariableContainer) node).filter(v -> v.getVariable() instanceof Render3D && !((Render3D) v.getVariable()).isHidden()).map(v -> (VariableContainer<Render3D>) v).collect(Collectors.toList());
     }
 
     public static void updateText(){

@@ -1,14 +1,13 @@
 package math2d;
 
 import graphics.Interpolatable;
-import canvas2d.Renderer2D;
+import canvas2d.Render2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
-import math.Line;
 import math.Matrix;
 import math.Vector;
 
-public class Grid2 extends Renderer2D implements Interpolatable {
+public class Grid2 extends Render2D implements Interpolatable {
     private final Vector iHat;
     private final Vector jHat;
     private final LineSegment2[] lineSegments;

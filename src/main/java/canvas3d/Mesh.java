@@ -1,6 +1,7 @@
 package canvas3d;
 
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import math3d.Vector3;
 
 import java.io.File;
@@ -9,8 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
-public class Mesh extends GameObject{
+public class Mesh extends Render3D{
     //TODO vector arrow mesh based on magnitude
 
     public Mesh(Triangle[] triangles, Vector3 position){
@@ -20,6 +22,7 @@ public class Mesh extends GameObject{
     public static Mesh fromFile(String path, Vector3 position){
         //try(Scanner sc = new Scanner(new File(Mesh.class.getResource(path).toExternalForm().substring(1)))){
         try(Scanner sc = new Scanner(new File("D:/GitHub/Linalg/target/classes/canvas3d/" + path))){
+
             List<Vector3> vertices = new ArrayList<>();
             List<Triangle> triangles = new ArrayList<>();
             while(sc.hasNextLine()){
@@ -50,7 +53,12 @@ public class Mesh extends GameObject{
 
 
     @Override
-    public void update() {
+    public void update(String name, Paint paint) {
 
+    }
+
+    @Override
+    public Object getMath() {
+        return null;
     }
 }

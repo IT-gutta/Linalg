@@ -1,13 +1,13 @@
 package math2d;
 
 import canvas2d.CanvasRenderer2D;
-import canvas2d.Renderer2D;
+import canvas2d.Render2D;
 import graphics.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.*;
 
-public class LineSegment2 extends Renderer2D<Line> implements Interpolatable {
+public class LineSegment2 extends Render2D<Line> implements Interpolatable {
     private final Point2 start;
     private final Point2 end;
     private Interpolator interpolator;

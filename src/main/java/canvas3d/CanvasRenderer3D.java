@@ -1,5 +1,6 @@
 package canvas3d;
 
+import graphics.DefinedVariables;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -18,7 +19,7 @@ public abstract class CanvasRenderer3D {
     public static Camera3D camera3D;
     private static DecimalFormat fpsFormat = new DecimalFormat("0");
 
-    private static final List<GameObject> gameObjectList = new ArrayList<>();
+    //private static final List<Render3D> gameObjects = new ArrayList<>();
 
     public static void start(){
         /*Vector3Renderer iHat = new Vector3Renderer(1, 0, 0);
@@ -29,12 +30,12 @@ public abstract class CanvasRenderer3D {
         DefinedVariables.add(new VariableContainer<Vector3Renderer>(kHat, "kHat"));*/
 
 
-        GameObject mesh = Mesh.fromFile("chevrolet.obj", new Vector3(10, -1, 0));
-        mesh.setForward(Vector3.scale(Vector3.FORWARD(), -1));
-        gameObjectList.add(mesh);
+//        GameObject mesh = Mesh.fromFile("chevrolet.obj", new Vector3(10, -1, 0));
+//        mesh.setForward(Vector3.scale(Vector3.FORWARD(), -1));
+//        gameObjectList.add(mesh);
 
-        GameObject cube = new Cube(Vector3.ZERO());
-        gameObjectList.add(cube);
+        Render3D cube = new Cube(Vector3.ZERO());
+        DefinedVariables.add(cube, "cube");
 
 
         AnimationTimer animationTimer = new AnimationTimer() {
@@ -45,17 +46,16 @@ public abstract class CanvasRenderer3D {
                 graphicsContext3D.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 camera3D.updateMatrix();
                 graphicsContext3D.clearPolygons();
-                camera3D.getLightSource().update();
 
-                /*DefinedVariables.get3DRenderables().forEach(r -> {
+                DefinedVariables.get3DRenderables().forEach(r -> {
                     r.getVariable().render(graphicsContext3D, r.getName(), r.getPaint());
                 });
-                DefinedVariables.updateText();*/
+                DefinedVariables.updateText();
 
 
-                gameObjectList.forEach(gameObject -> {
-                    gameObject.render(graphicsContext3D);
-                });
+//                gameObjects.forEach(gameObject -> {
+//                    gameObject.render(graphicsContext3D);
+//                });
 
 
 
@@ -73,6 +73,7 @@ public abstract class CanvasRenderer3D {
     public static void setGraphicsContext(GraphicsContext graphicsContext2D) {
         CanvasRenderer3D.graphicsContext2D = graphicsContext2D;
         camera3D = new Camera3D();
+        DefinedVariables.add(camera3D, "Camera");
         CanvasRenderer3D.graphicsContext3D = new GraphicsContext3D(graphicsContext2D, camera3D);
     }
 

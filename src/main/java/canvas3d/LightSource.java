@@ -1,8 +1,9 @@
 package canvas3d;
 
+import javafx.scene.paint.Paint;
 import math3d.Vector3;
 
-public class LightSource extends GameObject{
+public class LightSource extends Render3D{
     private Mesh lightBulb;
     public LightSource(Vector3 position){
         super(position);
@@ -22,8 +23,18 @@ public class LightSource extends GameObject{
     }
 
     @Override
-    public void update(){
+    public void update(String name, Paint paint){
         //fix annet sted
         position = Vector3.rotateY(position, 0.001*CanvasRenderer3D.deltaTime);
+    }
+
+    @Override
+    public Object getMath() {
+        return null;
+    }
+
+    @Override
+    public String toString(){
+        return position.toString();
     }
 }

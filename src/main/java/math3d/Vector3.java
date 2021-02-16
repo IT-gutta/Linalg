@@ -104,9 +104,11 @@ public class Vector3 extends Vector{
         for(int i = 0; i<3; i++){
             u[i] = v1.getElement(i) - v2.getElement(i);
         }
-        if(Double.isNaN(u[0]))
-            throw new IllegalArgumentException("Input cant be have NaN as an element");
-
+        if(Double.isNaN(u[0])) {
+            System.out.println("bjarte");
+            System.out.println(v2);
+            throw new IllegalArgumentException("Input cant have NaN as an element");
+        }
         return new Vector3(u);
     }
 

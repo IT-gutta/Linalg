@@ -1,8 +1,10 @@
 package canvas3d;
 
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import math3d.Vector3;
 
-public abstract class GameObject{
+public abstract class Render3D {
     //TODO add spheres
     protected Vector3 position;
     protected Vector3 forward;
@@ -10,12 +12,13 @@ public abstract class GameObject{
     protected Vector3 right;
     protected Triangle[] triangles;
 
-    public GameObject(Triangle[] triangles, Vector3 position, Vector3 forward, Vector3 up){
+
+    public Render3D(Triangle[] triangles, Vector3 position, Vector3 forward, Vector3 up){
         this(position, forward, up);
         this.triangles = triangles;
     }
 
-    public GameObject(Vector3 position, Vector3 forward, Vector3 up) {
+    public Render3D(Vector3 position, Vector3 forward, Vector3 up) {
         this.position = position;
         this.forward = forward.normalized();
         this.up = up.normalized();
@@ -23,15 +26,15 @@ public abstract class GameObject{
         this.right = this.right.normalized();
     }
 
-    public GameObject(Vector3 position){
+    public Render3D(Vector3 position){
         this(position, Vector3.FORWARD(), Vector3.UP());
     }
 
-    public GameObject(){
+    public Render3D(){
         this(Vector3.ZERO());
     }
 
-    public GameObject(Triangle[] triangles, Vector3 position){
+    public Render3D(Triangle[] triangles, Vector3 position){
         this(position);
         this.triangles = triangles;
     }
@@ -80,8 +83,8 @@ public abstract class GameObject{
     }
 
 
-    public void render(GraphicsContext3D gc){
-        update();
+    public void render(GraphicsContext3D gc, String name, Paint paint){
+        update(name, paint);
 
         if(triangles == null) //ingenting som skal renderes
             return;
@@ -91,7 +94,8 @@ public abstract class GameObject{
     }
 
 
-    public abstract void update();
+
+    public abstract void update(String name, Paint paint);
 
 
     public Vector3 getPosition() {
@@ -109,4 +113,23 @@ public abstract class GameObject{
     public Vector3 getRight() {
         return right;
     }
+
+
+
+
+
+    //gamle ting som er viktig for geogebra-delen
+    private boolean isHidden = false;
+    //TODO Add the name of an object to the object in the graphics window (as 3D text?)
+
+    public abstract Object getMath();
+    public boolean isHidden(){
+        return isHidden;
+    };
+    public void show(){
+        isHidden = false;
+    };
+    public void hide(){
+        isHidden = true;
+    };
 }

@@ -1,9 +1,13 @@
 package canvas3d;
 
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import math3d.Vector3;
 
-public class Cube extends GameObject{
+import java.util.ArrayList;
+import java.util.HashSet;
+
+public class Cube extends Render3D{
     private Vector3[] corners;
     private final String[] colors = {"blue", "red", "yellow", "grey", "green", "cyan"};
     private final Color[][] colorsjall= {
@@ -48,7 +52,7 @@ public class Cube extends GameObject{
 
 
     @Override
-    public void update() {
+    public void update(String name, Paint paint) {
         double dThetaX = 0.001 * CanvasRenderer3D.deltaTime;
         double dThetaZ = 0.002 * CanvasRenderer3D.deltaTime;
         double dThetaY = 0.0007 * CanvasRenderer3D.deltaTime;
@@ -56,5 +60,10 @@ public class Cube extends GameObject{
         rotateX(dThetaX);
         rotateY(dThetaY);
         rotateZ(dThetaZ);
+    }
+
+    @Override
+    public Object getMath() {
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package canvas3d;
 
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import math3d.Line3;
 import math3d.Vector3;
 
@@ -146,5 +147,14 @@ public class Triangle {
 
     private double brightness(Vector3 point, Vector3 normal){
         return Math.sqrt(CanvasRenderer3D.getCamera().getLightSource().getBrightness(point, normal));
+    }
+
+
+    public void setColor(Color color){
+        this.color = color;
+    }
+
+    public void setColors(Color[] colors){
+        this.colors = colors;
     }
 }

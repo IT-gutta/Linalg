@@ -1,27 +1,36 @@
 package canvas3d;
 
+import graphics.DefinedVariables;
+import javafx.scene.paint.Paint;
 import math.Matrix;
 import math3d.Vector3;
 import math3d.Vector4;
 
-public class Camera3D extends GameObject{
+public class Camera3D extends Render3D{
     //TODO fix cameraMovement
     //TODO implement some sort of clipping of the triangles (when they are at the edge of canvas)
     private final double fov = Math.PI/2;
-    private final double zFar = 1000;
-    private final double zNear = 10;
+    private final double zFar = 1000; //vet egt ikke hva denne gjør, men den må være høyere enn zNear for at det skal funke hehe
+    private final double zNear = 200; //bestemmer rendering distance
 
-    private LightSource lightSource = new LightSource(new Vector3(1, 2, -4));
+    private LightSource lightSource;
 
     private Matrix projectionMatrix;
     private Matrix lookAtMatrix;
     public Camera3D(){
         super(new Vector3(0, 0, -6), Vector3.FORWARD(), Vector3.UP());
+        lightSource = new LightSource(new Vector3(1, 2, -4));
+        DefinedVariables.add(lightSource, "LightBulb");
     }
 
     @Override
-    public void update() {
+    public void update(String name, Paint paint) {
 
+    }
+
+    @Override
+    public Object getMath() {
+        return null;
     }
 
     public void updateMatrix(){
@@ -43,7 +52,7 @@ public class Camera3D extends GameObject{
                 {right.getZ(), up.getZ(), forward.getZ(), position.getZ()},
                 {0, 0, 0, 1}
         });
-        //lookAtMatrix = pointAt.getInverted();
+        //lookAtMatrix = pointAtMatrix.getInverted();
 
         //denne er helt lik pointAt.getIverted();
         Matrix lookAt = new Matrix(new double[][]{
@@ -82,5 +91,11 @@ public class Camera3D extends GameObject{
     }
     private double sin(double angle){
         return Math.sin(angle);
+    }
+
+
+    @Override
+    public String toString(){
+        return position.toString();
     }
 }

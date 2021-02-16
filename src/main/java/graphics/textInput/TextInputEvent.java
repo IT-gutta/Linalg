@@ -1,7 +1,6 @@
 package graphics.textInput;
 
-import canvas2d.Renderer2D;
-import canvas3d.Renderer3D;
+import canvas3d.Render3D;
 import graphics.DefinedVariables;
 import graphics.VariableContainer;
 import javafx.event.ActionEvent;
@@ -16,7 +15,6 @@ import math3d.Vector3;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

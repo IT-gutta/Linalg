@@ -67,7 +67,12 @@ public class CanvasPane3D extends Pane {
     private EventHandler<MouseEvent> mouseHandler = mouseEvent -> {
         double movementX = (mouseEvent.getX() - previousX) * mouseSensitivity;
         double movementY = (mouseEvent.getY() - previousY) * mouseSensitivity;
-        CanvasRenderer3D.getCamera().rotateY(-movementX);
+
+        CanvasRenderer3D.getCamera().setPosition(Vector3.rotateY(CanvasRenderer3D.getCamera().position, movementX));
+//        Vector3 vel = Vector3.scale(Vector3.UP(), (Math.pow(10, -16)*movementY));
+//        System.out.println(CanvasRenderer3D.getCamera().position);
+//        CanvasRenderer3D.getCamera().setPosition(Vector3.add(CanvasRenderer3D.getCamera().position, vel));
+        CanvasRenderer3D.getCamera().pointAt(Vector3.ZERO());
 
         //TODO fix pitching
         //CanvasRenderer3D.getCamera().setForward(Vector3.rotate(CanvasRenderer3D.getCamera().right, CanvasRenderer3D.getCamera().forward, movementY));
