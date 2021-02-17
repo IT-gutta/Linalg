@@ -56,6 +56,10 @@ public class VariableContainer<T> extends HBox {
     public Paint getPaint(){
         return Paint.valueOf(colorPicker.getValue().toString());
     }
+
+    public Color getColor(){
+        return colorPicker.getValue();
+    }
     @Override
     public String toString(){
         if(variable instanceof Mapping)

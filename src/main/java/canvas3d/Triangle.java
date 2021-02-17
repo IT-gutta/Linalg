@@ -1,7 +1,6 @@
 package canvas3d;
 
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import math3d.Line3;
 import math3d.Vector3;
 
@@ -10,6 +9,7 @@ public class Triangle {
     private Color[] colors;
     private Color[] adjustedColors;
     private Color color;
+    private boolean shouldInterpolateColors = true;
 
     public Triangle(Vector3 p1, Vector3 p2, Vector3 p3, String color){
         this(p1, p2, p3, Color.valueOf(color));
@@ -44,7 +44,7 @@ public class Triangle {
 
         Vector3 normal = getRelativeNormal();
         //color interpolation between vertices
-        if(colors != null){
+        if(shouldInterpolateColors && colors != null){
             for (int i = 0; i < 3; i++) {
                 adjustedColors[i] = Color.hsb(colors[i].getHue(), colors[i].getSaturation(), brightness(vertices[i], normal));
             }
@@ -75,7 +75,7 @@ public class Triangle {
             return;
 
         //color interpolation between vertices
-        if(colors != null){
+        if(shouldInterpolateColors && colors != null){
             adjustedColors[0] = Color.hsb(colors[0].getHue(), colors[0].getSaturation(), brightness(pos1, normal));
             adjustedColors[1] = Color.hsb(colors[1].getHue(), colors[1].getSaturation(), brightness(pos2, normal));
             adjustedColors[2] = Color.hsb(colors[2].getHue(), colors[2].getSaturation(), brightness(pos3, normal));
@@ -156,5 +156,9 @@ public class Triangle {
 
     public void setColors(Color[] colors){
         this.colors = colors;
+    }
+
+    public void setInterpolateColors(boolean bool){
+        this.shouldInterpolateColors = bool;
     }
 }

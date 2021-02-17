@@ -1,7 +1,6 @@
 package canvas3d;
 
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import math3d.Vector3;
 
 import java.io.File;
@@ -10,22 +9,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class Mesh extends Render3D{
     //TODO vector arrow mesh based on magnitude
 
-    public Mesh(Vector3[] vertices, Triangle[] triangles, Vector3 position){
-        super(vertices, triangles, position);
-    }
+    public Mesh(String path, Vector3 position, double scale){
+        super(position);
 
-    public Mesh(Mesh mesh){
-        super(mesh.vertices, mesh.triangles, mesh.position);
-    }
-
-    public static Mesh fromFile(String path, Vector3 position, double scale){
         //try(Scanner sc = new Scanner(new File(Mesh.class.getResource(path).toExternalForm().substring(1)))){
-        try(Scanner sc = new Scanner(new File("D:/GitHub/Linalg/target/classes/canvas3d/" + path))){
+        try(Scanner sc = new Scanner(new File("C:\\Users\\jorge\\Documents\\GitHub\\Linalg\\target\\classes\\canvas3d\\" + path))){
 
             List<Vector3> vertices = new ArrayList<>();
             List<Triangle> triangles = new ArrayList<>();
@@ -47,11 +39,11 @@ public class Mesh extends Render3D{
                     }
                 }
             }
-            return new Mesh(vertices.toArray(new Vector3[0]), triangles.toArray(new Triangle[0]), position);
+            this.vertices = vertices.toArray(new Vector3[0]);
+            this.triangles = triangles.toArray(new Triangle[0]);
         }
         catch (IOException e){
             e.printStackTrace();
-            return null;
         }
     }
 
@@ -62,7 +54,7 @@ public class Mesh extends Render3D{
 
 
     @Override
-    public void update(String name, Paint paint) {
+    public void update(String name, Color color) {
 
     }
 

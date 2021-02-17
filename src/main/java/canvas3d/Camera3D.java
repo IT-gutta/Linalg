@@ -1,7 +1,7 @@
 package canvas3d;
 
 import graphics.DefinedVariables;
-import javafx.scene.paint.Paint;
+import javafx.scene.paint.Color;
 import math.Matrix;
 import math3d.Vector3;
 import math3d.Vector4;
@@ -24,7 +24,7 @@ public class Camera3D extends Render3D{
     }
 
     @Override
-    public void update(String name, Paint paint) {
+    public void update(String name, Color color) {
 
     }
 

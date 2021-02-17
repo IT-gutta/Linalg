@@ -1,7 +1,6 @@
 package canvas3d;
 
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import math3d.Vector3;
 
 public abstract class Render3D {
@@ -86,8 +85,8 @@ public abstract class Render3D {
     }
 
 
-    public void render(GraphicsContext3D gc, String name, Paint paint){
-        update(name, paint);
+    public void render(GraphicsContext3D gc, String name, Color color){
+        update(name, color);
 
         if(triangles == null) //ingenting som skal renderes
             return;
@@ -98,7 +97,7 @@ public abstract class Render3D {
 
 
 
-    public abstract void update(String name, Paint paint);
+    public abstract void update(String name, Color color);
 
 
     public Vector3 getPosition() {

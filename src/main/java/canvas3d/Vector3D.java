@@ -1,24 +1,23 @@
 package canvas3d;
 
-import canvas3d.GraphicsContext3D;
-import canvas3d.Render3D;
-import canvas3d.Triangle;
-import graphics.*;
+import graphics.Interpolatable;
+import graphics.Interpolator;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import math.Matrix;
 import math3d.Vector3;
 
-public class Vector3D extends Render3D implements Interpolatable {
+public class Vector3D extends Mesh implements Interpolatable {
     private Interpolator interpolator;
-    private Mesh vectorMesh;
     private Vector3 vector3;
 
 
     public Vector3D(double x, double y, double z){
-        this.vector3 = new Vector3(x, y, z);
-        vectorMesh = Mesh.fromFile("vector.obj", Vector3.ZERO(), vector3.getMagnitude());
-        vectorMesh.pointAt();
+        super("vector.obj", Vector3.ZERO(), 1);
+        vector3 = new Vector3(x, y, z);
+        scale(vector3.getMagnitude());
+
+        for(Triangle triangle : triangles)
+            triangle.setInterpolateColors(false);
     }
 
     @Override
@@ -47,14 +46,9 @@ public class Vector3D extends Render3D implements Interpolatable {
     }
 
     @Override
-    public void update(String name, Paint paint) {
-        for(Triangle triangle : vectorMesh.triangles)
-            triangle.setColor(Color.valueOf(paint.toString()));
-    }
-
-    @Override
-    public void render(GraphicsContext3D gc, String name, Paint paint){
-        vectorMesh.render(gc, name, paint);
+    public void update(String name, Color color) {
+        for(Triangle triangle : triangles)
+            triangle.setColor(color);
     }
 
     @Override

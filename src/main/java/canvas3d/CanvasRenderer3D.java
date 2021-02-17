@@ -5,11 +5,8 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
-import math3d.Vector3;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class CanvasRenderer3D {
     private static Canvas canvas;
@@ -30,16 +27,21 @@ public abstract class CanvasRenderer3D {
         DefinedVariables.add(new VariableContainer<Vector3Renderer>(kHat, "kHat"));*/
 
 
-//        GameObject mesh = Mesh.fromFile("chevrolet.obj", new Vector3(10, -1, 0));
-//        mesh.setForward(Vector3.scale(Vector3.FORWARD(), -1));
-//        gameObjectList.add(mesh);
+        /*Render3D mesh = new Mesh("chevrolet.obj", new Vector3(0, 0, 0), 1);
+        mesh.setForward(Vector3.scale(Vector3.FORWARD(), -1));
+        DefinedVariables.add(mesh, "chevrolet");*/
 
 //        Render3D cube = new Cube(Vector3.ZERO());
 //        DefinedVariables.add(cube, "cube");
 
 
-        Vector3D vector3D = new Vector3D(1, 1, 1);
-        DefinedVariables.add(vector3D, "vector3d");
+        Vector3D x = new Vector3D(1, 0, 0);
+        Vector3D y = new Vector3D(0, 1, 0);
+        Vector3D z = new Vector3D(0, 0, 1);
+
+        DefinedVariables.add(x, "x");
+        DefinedVariables.add(y, "y");
+        DefinedVariables.add(z, "z");
 
 
         AnimationTimer animationTimer = new AnimationTimer() {
@@ -52,7 +54,7 @@ public abstract class CanvasRenderer3D {
                 graphicsContext3D.clearPolygons();
 
                 DefinedVariables.get3DRenderables().forEach(r -> {
-                    r.getVariable().render(graphicsContext3D, r.getName(), r.getPaint());
+                    r.getVariable().render(graphicsContext3D, r.getName(), r.getColor());
                 });
                 DefinedVariables.updateText();
 
