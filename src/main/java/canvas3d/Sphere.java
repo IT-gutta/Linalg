@@ -1,10 +1,10 @@
 package canvas3d;
 
-import javafx.scene.paint.Paint;
+import javafx.scene.paint.Color;
 
 public class Sphere extends Render3D{
     @Override
-    public void update(String name, Paint paint) {
+    public void update(String name, Color color) {
 
     }
 

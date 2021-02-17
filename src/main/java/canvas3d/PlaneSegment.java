@@ -1,6 +1,6 @@
 package canvas3d;
 
-import javafx.scene.paint.Paint;
+import javafx.scene.paint.Color;
 import math3d.Vector3;
 
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class PlaneSegment extends Render3D{
 
 
     @Override
-    public void update(String name, Paint paint) {
+    public void update(String name, Color color) {
 
     }
 

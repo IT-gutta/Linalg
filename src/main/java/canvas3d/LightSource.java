@@ -1,6 +1,6 @@
 package canvas3d;
 
-import javafx.scene.paint.Paint;
+import javafx.scene.paint.Color;
 import math3d.Vector3;
 
 public class LightSource extends Render3D{
@@ -23,9 +23,8 @@ public class LightSource extends Render3D{
     }
 
     @Override
-    public void update(String name, Paint paint){
-        //fix annet sted
-        position = Vector3.rotateY(position, 0.001*CanvasRenderer3D.deltaTime);
+    public void update(String name, Color color){
+        //position = Vector3.rotateY(position, 0.001*CanvasRenderer3D.deltaTime);
     }
 
     @Override

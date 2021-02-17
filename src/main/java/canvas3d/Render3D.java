@@ -1,7 +1,6 @@
 package canvas3d;
 
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import math3d.Vector3;
 
 public abstract class Render3D {
@@ -14,9 +13,10 @@ public abstract class Render3D {
     protected Vector3[] vertices;
 
 
-    public Render3D(Triangle[] triangles, Vector3 position, Vector3 forward, Vector3 up){
+    public Render3D(Vector3[] vertices, Triangle[] triangles, Vector3 position, Vector3 forward, Vector3 up){
         this(position, forward, up);
         this.triangles = triangles;
+        this.vertices = vertices;
     }
 
     public Render3D(Vector3 position, Vector3 forward, Vector3 up) {
@@ -35,9 +35,10 @@ public abstract class Render3D {
         this(Vector3.ZERO());
     }
 
-    public Render3D(Triangle[] triangles, Vector3 position){
+    public Render3D(Vector3[] vertices, Triangle[] triangles, Vector3 position){
         this(position);
         this.triangles = triangles;
+        this.vertices = vertices;
     }
 
 
@@ -84,8 +85,8 @@ public abstract class Render3D {
     }
 
 
-    public void render(GraphicsContext3D gc, String name, Paint paint){
-        update(name, paint);
+    public void render(GraphicsContext3D gc, String name, Color color){
+        update(name, color);
 
         if(triangles == null) //ingenting som skal renderes
             return;
@@ -96,7 +97,7 @@ public abstract class Render3D {
 
 
 
-    public abstract void update(String name, Paint paint);
+    public abstract void update(String name, Color color);
 
 
     public Vector3 getPosition() {

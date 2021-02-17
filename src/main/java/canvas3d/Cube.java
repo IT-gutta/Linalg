@@ -1,11 +1,7 @@
 package canvas3d;
 
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import math3d.Vector3;
-
-import java.util.ArrayList;
-import java.util.HashSet;
 
 public class Cube extends Render3D{
     private Vector3[] corners;
@@ -52,7 +48,7 @@ public class Cube extends Render3D{
 
 
     @Override
-    public void update(String name, Paint paint) {
+    public void update(String name, Color color) {
         double dThetaX = 0.001 * CanvasRenderer3D.deltaTime;
         double dThetaZ = 0.002 * CanvasRenderer3D.deltaTime;
         double dThetaY = 0.0007 * CanvasRenderer3D.deltaTime;
