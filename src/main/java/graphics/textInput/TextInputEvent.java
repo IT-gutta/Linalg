@@ -14,12 +14,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TextInputEvent implements EventHandler<ActionEvent>{
+    private static final ArrayList<InputMapTriFunc> triFuncMaps = new ArrayList<>();
     private static final ArrayList<InputMapBiFunc> biFuncMaps = new ArrayList<>();
     private static final ArrayList<InputMapFunc> funcMaps = new ArrayList<>();
 
     private final TextField inputField;
     private final Label errorField;
     private Matcher m;
+
+    private static final InputMapTriFunc<Expression, Double, Double, Double> edddOps = new InputMapTriFunc<>(new Expression("0"),0d,0d, 0d);
 
     private static final InputMapBiFunc<Vector, Vector, Vector> vvvOps = new InputMapBiFunc<>(new Vector(),new Vector(),new Vector());
     private static final InputMapBiFunc<Vector, Vector, Double> vvdOps = new InputMapBiFunc<>(new Vector(),new Vector(),0d);
@@ -31,6 +34,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
     private static final InputMapBiFunc<Complex, Complex, Complex> cccOps = new InputMapBiFunc<>(new Complex(),new Complex(), new Complex());
     private static final InputMapBiFunc<Complex, Double, Complex> cdcOps = new InputMapBiFunc<>(new Complex(),0d, new Complex());
     private static final InputMapBiFunc<Matrix, Vector, Vector> mvvOps = new InputMapBiFunc<>(new Matrix(), new Vector(), new Vector());
+    private static final InputMapBiFunc<Expression, Double, Double> eddOps = new InputMapBiFunc<>(new Expression("0"),0d, 0d);
 
 
     private static final InputMapFunc<Vector, Double> vdOps = new InputMapFunc<>(new Vector(), 0d);
@@ -42,6 +46,8 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
     }
 
     public static void fillOpMaps(){
+        edddOps.put("sum", TriFunctions.seriesEval);
+        triFuncMaps.add(edddOps);
         vvvOps.put("add", Vectors::add);vvvOps.put("subtract", Vectors::subtract);
         biFuncMaps.add(vvvOps);
         vvdOps.put("dot", Vectors::dot); vvdOps.put("angle", Vectors::angle);
@@ -137,11 +143,51 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                     legal = true;
                 }
             }
-            //Double
-            if(Pattern.matches(Regexes.varDec+Regexes.flNum, inp)){
-                m = Pattern.compile(Regexes.varDec+Regexes.flNum).matcher(inp);
-                if(m.find())
-                    DefinedVariables.add(new VariableContainer<Double>(Double.parseDouble(m.group(2)), m.group(1)));
+            //Double from function
+            if(Pattern.matches(Regexes.varDec+Regexes.varName+"\\("+Regexes.varName+"\\)", inp)) {
+                m = Pattern.compile(Regexes.varDec+Regexes.varName+"\\("+Regexes.varName+"\\)").matcher(inp);
+                if (m.find()) {
+                    System.out.println(1);
+                    Expression f = (Expression) DefinedVariables.get(m.group(2)).getMath();
+                    Double x = (Double)DefinedVariables.get(m.group(3)).getMath();
+                    DefinedVariables.add(new VariableContainer<Double>(f.evaluate(x), m.group(1)));
+                    legal = true;
+                }
+            }
+            if(!legal){
+                    m = Pattern.compile(Regexes.varDec+"(.*)").matcher(inp);
+                    if(m.find()){
+                        try{
+                            Expression e = new Expression(m.group(2));
+                            DefinedVariables.add(new VariableContainer<Double>(e.evaluate(0), m.group(1)));
+                        }
+                        catch (Exception e){
+                            errorField.setText(e.getMessage());
+                        }
+                    }
+                    legal = true;
+            }
+            //check for triFunction input
+            for(InputMapTriFunc map:triFuncMaps){
+                for(Object o:map.getMap().keySet()){
+                    String f = (String)o;
+                    String func = Regexes.varDec+f+"\\("+Regexes.varName+","+Regexes.varName+","+Regexes.varName+"\\)";
+                    m = Pattern.compile(func).matcher(inp);
+                    if(m.find()){
+                        VariableContainer a = DefinedVariables.get(m.group(2));
+                        VariableContainer b = DefinedVariables.get(m.group(3));
+                        VariableContainer c = DefinedVariables.get(m.group(4));
+                        if(a.getMath().getClass().equals(map.getInput1().getClass()) && b.getMath().getClass().equals(map.getInput2().getClass()) && c.getMath().getClass().equals(map.getInput3().getClass())){
+                            try{
+                                DefinedVariables.add(new VariableContainer<>(map.apply(f, map.getInput1().getClass().cast(a.getMath()), map.getInput2().getClass().cast(b.getMath()), map.getInput3().getClass().cast(c.getMath())), m.group(1)));
+                                legal = true;
+                            }
+                            catch (Exception e){
+                                errorField.setText(e.getMessage());
+                            }
+                        }
+                    }
+                }
             }
             //check for biFunction input
             for(InputMapBiFunc map:biFuncMaps){
@@ -152,14 +198,8 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                     if(m.find()){
                         VariableContainer a = DefinedVariables.get(m.group(2));
                         VariableContainer b = DefinedVariables.get(m.group(3));
-                        System.out.println(a);
-                        System.out.println(b);
-                        System.out.println(a.getMath().getClass());
-                        System.out.println(b.getMath().getClass());
                         if(a.getMath().getClass().equals(map.getInput1().getClass()) && b.getMath().getClass().equals(map.getInput2().getClass())){
                             try{
-                                System.out.println(a);
-                                System.out.println(b);
                                 DefinedVariables.add(new VariableContainer<>(map.apply(f, map.getInput1().getClass().cast(a.getMath()), map.getInput2().getClass().cast(b.getMath())), m.group(1)));
                                 legal = true;
                             }

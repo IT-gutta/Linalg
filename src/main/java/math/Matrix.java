@@ -312,5 +312,6 @@ public class Matrix{
 
         System.out.println(m.det());
         System.out.println(m);
+
     }
 }
