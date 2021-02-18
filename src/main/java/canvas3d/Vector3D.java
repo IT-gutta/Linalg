@@ -14,10 +14,9 @@ public class Vector3D extends Mesh implements Interpolatable {
     public Vector3D(double x, double y, double z){
         super("vector.obj", Vector3.ZERO(), 1);
         vector3 = new Vector3(x, y, z);
+        System.out.println("mag: " +vector3.getMagnitude());
         scale(vector3.getMagnitude());
-
-        for(Triangle triangle : triangles)
-            triangle.setInterpolateColors(false);
+        setForward(vector3);
     }
 
     @Override
@@ -47,8 +46,7 @@ public class Vector3D extends Mesh implements Interpolatable {
 
     @Override
     public void update(String name, Color color) {
-        for(Triangle triangle : triangles)
-            triangle.setColor(color);
+        setColor(color);
     }
 
     @Override

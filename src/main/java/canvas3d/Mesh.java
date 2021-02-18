@@ -17,7 +17,8 @@ public class Mesh extends Render3D{
         super(position);
 
         //try(Scanner sc = new Scanner(new File(Mesh.class.getResource(path).toExternalForm().substring(1)))){
-        try(Scanner sc = new Scanner(new File("C:\\Users\\jorge\\Documents\\GitHub\\Linalg\\target\\classes\\canvas3d\\" + path))){
+        //"C:\\Users\\jorge\\Documents\\GitHub\\Linalg\\target\\classes\\canvas3d\\"
+        try(Scanner sc = new Scanner(new File("D:\\GitHub\\Linalg\\target\\classes\\canvas3d\\" + path))){
 
             List<Vector3> vertices = new ArrayList<>();
             List<Triangle> triangles = new ArrayList<>();
@@ -51,6 +52,7 @@ public class Mesh extends Render3D{
         for(Vector3 vertex : vertices)
             vertex.scale(scalar);
     }
+
 
 
     @Override

@@ -43,9 +43,18 @@ public abstract class Render3D {
 
 
     public void setForward(Vector3 forward){
+        //TODO fix når nye forward er lik gamle up
         this.forward = forward.normalized();
-        this.up = Vector3.subtract(up, Vector3.scale(forward, forward.dot(up))).normalized();
+        if(this.forward.equals(this.up)) //roter 90 grader om en vilkårlig akse foreløpig??
+            this.up = Vector3.rotateZ(this.up, Math.PI / 2);
+        else
+            this.up = Vector3.subtract(up, Vector3.scale(this.forward, this.forward.dot(up))).normalized();
+
         this.right = Vector3.cross(up, forward).normalized();
+
+
+        System.out.println("up: " + up);
+        System.out.println("forward: " + this.forward);
     }
 
     public void setPosition(Vector3 position){
@@ -98,6 +107,27 @@ public abstract class Render3D {
 
 
     public abstract void update(String name, Color color);
+
+    public void setColor(Color color){
+        for(Triangle triangle : triangles){
+            triangle.setColor(color);
+            triangle.setInterpolateColors(false);
+        }
+    }
+
+    public void setColors(Color[] colors){
+        for(Triangle triangle : triangles){
+            triangle.setColors(colors);
+            triangle.setInterpolateColors(true);
+        }
+    }
+
+    public void setColors(Color c1, Color c2, Color c3){
+        for(Triangle triangle : triangles){
+            triangle.setColors(new Color[]{c1, c2, c3});
+            triangle.setInterpolateColors(true);
+        }
+    }
 
 
     public Vector3 getPosition() {
