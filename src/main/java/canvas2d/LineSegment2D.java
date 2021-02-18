@@ -1,21 +1,23 @@
-package math2d;
+package canvas2d;
 
-import canvas2d.CanvasRenderer2D;
-import canvas2d.Render2D;
 import graphics.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.*;
 
-public class LineSegment2 extends Render2D<Line> implements Interpolatable {
-    private final Point2 start;
-    private final Point2 end;
+public class LineSegment2D extends Render2D implements Interpolatable {
+    private final Point2D start;
+    private final Point2D end;
     private Interpolator interpolator;
 
-    public LineSegment2(double x1, double y1, double x2, double y2){
-        super(new Line(x1, y1, x2-x1, y2-y1));
-        start = new Point2(x1, y1);
-        end = new Point2(x2, y2);
+    public LineSegment2D(double x1, double y1, double x2, double y2){
+        start = new Point2D(x1, y1);
+        end = new Point2D(x2, y2);
+    }
+
+    @Override
+    public Object getMath() {
+        return null;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class LineSegment2 extends Render2D<Line> implements Interpolatable {
 
         gc.setStroke(paint);
 
-        gc.strokeLine(CanvasRenderer2D.toCanvasX(start.getX()), CanvasRenderer2D.toCanvasY(start.getY()), CanvasRenderer2D.toCanvasX(end.getX()), CanvasRenderer2D.toCanvasY(end.getY()));
+        gc.strokeLine(CanvasRenderer2D.toCanvasX(start.getPoint().getX()), CanvasRenderer2D.toCanvasY(start.getPoint().getY()), CanvasRenderer2D.toCanvasX(end.getPoint().getX()), CanvasRenderer2D.toCanvasY(end.getPoint().getY()));
     }
 
     @Override

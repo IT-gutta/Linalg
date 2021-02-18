@@ -33,6 +33,8 @@ public class Vector3 extends Vector{
 
 
     public Vector3 normalized(){
+        if(getMagnitude() == 0)
+            throw new IllegalStateException("Vector cant be the zero vector");
         Vector vec = Vectors.scale(this, 1d/getMagnitude());
         return new Vector3(vec.getVector());
     }

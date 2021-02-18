@@ -35,7 +35,6 @@ public class ShowHideButton extends Region {
         else {
             render2D = null;
             imageView.setImage(hidden);
-            System.out.println("hei");
         }
 
         getChildren().add(imageView);

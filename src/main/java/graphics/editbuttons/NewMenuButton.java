@@ -4,15 +4,19 @@ import graphics.DefinedVariables;
 import graphics.DoubleFormatter;
 import graphics.Icons;
 import graphics.VariableContainer;
-import math2d.Line2;
-import math2d.Point2;
-import math2d.Vector2;
-import javafx.scene.control.*;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
-import math.*;
+import math.Complex;
+import math.Matrix;
+import canvas2d.Line2D;
+import canvas2d.Point2D;
+import canvas2d.Vector2D;
 import regex.RegexUtils;
 
 public class NewMenuButton extends MenuButton {
@@ -44,7 +48,7 @@ public class NewMenuButton extends MenuButton {
                 if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
-                DefinedVariables.add(new Vector2((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
+                DefinedVariables.add(new Vector2D((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
             });
         });
 
@@ -100,7 +104,7 @@ public class NewMenuButton extends MenuButton {
                 if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
-                DefinedVariables.add(new Line2(new Point2((double) aInput.getTextFormatter().getValue(), (double) bInput.getTextFormatter().getValue()), new Vector2((double) cInput.getTextFormatter().getValue(), (double) dInput.getTextFormatter().getValue())), dialog.getEditor().getText());
+                DefinedVariables.add(new Line2D(new Point2D((double) aInput.getTextFormatter().getValue(), (double) bInput.getTextFormatter().getValue()), new Vector2D((double) cInput.getTextFormatter().getValue(), (double) dInput.getTextFormatter().getValue())), dialog.getEditor().getText());
             });
         });
 
@@ -143,7 +147,7 @@ public class NewMenuButton extends MenuButton {
                 if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
 
-                DefinedVariables.add(new Point2((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
+                DefinedVariables.add(new Point2D((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue()), dialog.getEditor().getText());
             });
         });
 

@@ -1,20 +1,20 @@
 package graphics.editbuttons;
 
-import graphics.VariableContainer;
-import math2d.Vector2;
 import graphics.DoubleFormatter;
+import graphics.VariableContainer;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import math.Vector;
 import org.linalgfx.App;
 import regex.RegexUtils;
 
 public class EditVectorButton extends GenericEditButton {
-    private final VariableContainer<Vector2> variableContainer;
-    public EditVectorButton(VariableContainer<Vector2> variableContainer){
+    private final VariableContainer<Vector> variableContainer;
+    public EditVectorButton(VariableContainer<Vector> variableContainer){
         super(variableContainer);
         this.variableContainer = variableContainer;
 
@@ -23,22 +23,26 @@ public class EditVectorButton extends GenericEditButton {
             clearDialog();
 
             var vectorInput = new HBox();
-            TextField xInput = DoubleFormatter.getTextField(variableContainer.getVariable().getX());
-            TextField yInput = DoubleFormatter.getTextField(variableContainer.getVariable().getY());
+            TextField[] coordInputs = new TextField[variableContainer.getVariable().getDimensions()];
+            for(int i = 0; i < coordInputs.length; i++){
+                coordInputs[i] = DoubleFormatter.getTextField(variableContainer.getVariable().getElement(i));
+            }
 
             dialog.getEditor().setText(getContainer().getName());
 
-            vectorInput.getChildren().addAll(new Text("Enter x, y :   "), xInput, yInput);
+            vectorInput.getChildren().add(new Text("Enter x, y :   "));
+            vectorInput.getChildren().addAll(coordInputs);
+
             dialog.setGraphic(vectorInput);
             dialog.setHeaderText("Edit vector");
             dialog.setContentText("Enter name:");
 
 
             dialog.showAndWait().ifPresent(response ->{
-                variableContainer.getVariable().setX((double) xInput.getTextFormatter().getValue());
-                variableContainer.getVariable().setY((double) yInput.getTextFormatter().getValue());
+                for(int i = 0; i < coordInputs.length; i++){
+                    variableContainer.getVariable().setElement(i, (double) coordInputs[i].getTextFormatter().getValue());
+                }
                 getContainer().updateContentText();
-
 
 
                 String name = dialog.getEditor().getText();
@@ -59,6 +63,5 @@ public class EditVectorButton extends GenericEditButton {
 
 
         addMenuItem(edit);
-        addMenuItem(MenuItems.transformMenuItem(variableContainer));
     }
 }
