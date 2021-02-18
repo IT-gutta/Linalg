@@ -1,8 +1,6 @@
-package math2d;
+package canvas2d;
 
-import canvas2d.CanvasRenderer2D;
 import graphics.Interpolatable;
-import canvas2d.Render2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.Line;
@@ -12,9 +10,10 @@ import math.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Line2 extends Render2D<Line> implements Interpolatable {
-    private Vector2 direction;
-    private Point2 start;
+public class Line2D extends Render2D implements Interpolatable {
+    private Vector2D direction;
+    private Point2D start;
+    private Line line;
     private boolean isInsideCanvas;
 
     private double canvasStartX = 0;
@@ -22,15 +21,14 @@ public class Line2 extends Render2D<Line> implements Interpolatable {
     private double canvasEndX = 0;
     private double canvasEndY = 0;
 
-    public Line2(Point2 start, Vector2 direction){
-        this(start.getX(), start.getY(), direction.getX(), direction.getY());
+    public Line2D(Point2D start, Vector2D direction){
         this.start = start;
         this.direction = direction;
+        this.line = new Line(start.getPoint(), direction.getVector());
     }
-    public Line2(double sx, double sy,double dx,double dy){
-        super(new Line(sx, sy, dx, dy));
-        this.start = new Point2(sx, sy);
-        this.direction = new Vector2(dx, dy);
+
+    public Line2D(double sx, double sy, double ex, double ey){
+        this(new Point2D(sx, sy), new Vector2D(ex, ey));
     }
 
 
@@ -50,6 +48,11 @@ public class Line2 extends Render2D<Line> implements Interpolatable {
 
 
     @Override
+    public Object getMath() {
+        return line;
+    }
+
+    @Override
     public void render(GraphicsContext gc, String name, Paint paint){
         //linear interpolation of transformation
         handleInterpolation();
@@ -66,13 +69,13 @@ public class Line2 extends Render2D<Line> implements Interpolatable {
 
 
     public void updateCanvasPoints(){
-        if(Math.abs(direction.getX()) <= 0.001 / CanvasRenderer2D.unitSize){
+        if(Math.abs(direction.getVector().getX()) <= 0.001 / CanvasRenderer2D.unitSize){
             //vertical linje
             isInsideCanvas = true;
-            if(start.getX() <= CanvasRenderer2D.fromCanvasX(CanvasRenderer2D.getCanvasWidth()) && start.getX() >= CanvasRenderer2D.fromCanvasX(0))
+            if(start.getPoint().getX() <= CanvasRenderer2D.fromCanvasX(CanvasRenderer2D.getCanvasWidth()) && start.getPoint().getX() >= CanvasRenderer2D.fromCanvasX(0))
                 isInsideCanvas = true;
-            canvasStartX = CanvasRenderer2D.toCanvasX(start.getX());
-            canvasEndX = CanvasRenderer2D.toCanvasX(start.getX());
+            canvasStartX = CanvasRenderer2D.toCanvasX(start.getPoint().getX());
+            canvasEndX = CanvasRenderer2D.toCanvasX(start.getPoint().getX());
             canvasStartY = 0;
             canvasEndY = CanvasRenderer2D.getCanvasHeight();
             return;
@@ -127,11 +130,11 @@ public class Line2 extends Render2D<Line> implements Interpolatable {
     }
 
     private double getA(){
-        return direction.getY() / direction.getX();
+        return direction.getVector().getY() / direction.getVector().getX();
     }
 
     private double getB(){
-        return start.getY() - getA()*start.getX();
+        return start.getPoint().getY() - getA()*start.getPoint().getX();
     }
 
     private double getYFromX(double x){

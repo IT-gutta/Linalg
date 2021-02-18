@@ -84,7 +84,7 @@ public class VariableContainer<T> extends HBox {
         if(variable instanceof Render3D)
             return ((Render3D) variable).getMath();
         else if(variable instanceof Render2D)
-            return ((Render2D<?>) variable).getMath();
+            return ((Render2D) variable).getMath();
         else
             return getVariable();
     }

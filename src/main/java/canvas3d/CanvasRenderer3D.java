@@ -1,10 +1,13 @@
 package canvas3d;
 
 import graphics.DefinedVariables;
+import graphics.VariableContainer;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import math.Matrix;
 
 import java.text.DecimalFormat;
 
@@ -39,10 +42,20 @@ public abstract class CanvasRenderer3D {
         Vector3D y = new Vector3D(0, 1, 0);
         Vector3D z = new Vector3D(0, 0, 1);
 
+
         DefinedVariables.add(x, "x");
         DefinedVariables.add(y, "y");
         DefinedVariables.add(z, "z");
 
+        Vector3D vector1 = new Vector3D(3, 3, 3);
+        DefinedVariables.add(vector1, "vector1");
+
+        Matrix rotate3 = new Matrix(new double[][]{
+                {0, -1, 0},
+                {0, 0, -1},
+                {1, 0, 0}
+        });
+        DefinedVariables.add(new VariableContainer<>(rotate3, "rotate3"));
 
         AnimationTimer animationTimer = new AnimationTimer() {
             long lastFrameTime;
@@ -59,13 +72,8 @@ public abstract class CanvasRenderer3D {
                 DefinedVariables.updateText();
 
 
-//                gameObjects.forEach(gameObject -> {
-//                    gameObject.render(graphicsContext3D);
-//                });
 
-
-
-
+                graphicsContext2D.setFont(new Font(13));
                 graphicsContext2D.setFill(Paint.valueOf("black"));
                 if(deltaTime > 0)
                     graphicsContext2D.fillText("FPS: " + 1000/deltaTime, 10, 10);

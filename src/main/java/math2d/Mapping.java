@@ -6,17 +6,17 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.Expression;
 
-public class Mapping extends Render2D<Expression> {
+public class Mapping extends Render2D {
     //TODO fix problems related to rendering
     private final double start;
     private final double end;
     private final double step;
     private String name;
+    private Expression expression;
 
 
     public Mapping(String expression){
-        super(new Expression(expression));
-
+        this.expression = new Expression(expression);
         start = -10;
         end = 10;
         step = 1;
@@ -24,13 +24,18 @@ public class Mapping extends Render2D<Expression> {
 
 
     public double evaluate(double x){
-        return math.evaluate(x);
+        return expression.evaluate(x);
     }
 
 
     @Override
     public String toString(){
-        return math.getExpression();
+        return expression.getExpression();
+    }
+
+    @Override
+    public Object getMath() {
+        return expression;
     }
 
     @Override

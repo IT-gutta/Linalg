@@ -2,10 +2,6 @@ package canvas2d;
 
 import graphics.DefinedVariables;
 import graphics.VariableContainer;
-import math2d.Grid2;
-import math2d.Line2;
-import math2d.LineSegment2;
-import math2d.Vector2;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -30,16 +26,16 @@ public abstract class CanvasRenderer2D {
 
     public static void start(){
         Matrix matrix = new Matrix(0, 1, -1, 0);
-        Vector2 vector = new Vector2(2, 2);
-        Line2 line = new Line2(-2, 0, 2, 2);
+        Vector2D vector = new Vector2D(2, 2);
+        Line2D line = new Line2D(-2, 0, 2, 2);
 
-        Grid2 grid2 = new Grid2(0, 0, 5, 5, 1, 1);
-        LineSegment2 lineSegment2 = new LineSegment2(-2, 0, -5, -5);
+        Grid2D grid2D = new Grid2D(0, 0, 5, 5, 1, 1);
+        LineSegment2D lineSegment2D = new LineSegment2D(-2, 0, -5, -5);
 
         DefinedVariables.add(vector, "vector");
         DefinedVariables.add(line, "line");
-        DefinedVariables.add(grid2, "grid");
-        DefinedVariables.add(lineSegment2, "linesegment");
+        DefinedVariables.add(grid2D, "grid");
+        DefinedVariables.add(lineSegment2D, "linesegment");
         DefinedVariables.add(new VariableContainer<>(matrix, "m"));
 
 
@@ -123,8 +119,8 @@ public abstract class CanvasRenderer2D {
     public static void accountForChanges(){
         //oppdaterer alle linjer
         for(VariableContainer<Render2D> variableContainer : DefinedVariables.get2DRenderables())
-            if(variableContainer.getVariable() instanceof Line2)
-                ((Line2) variableContainer.getVariable()).updateCanvasPoints();
+            if(variableContainer.getVariable() instanceof Line2D)
+                ((Line2D) variableContainer.getVariable()).updateCanvasPoints();
     }
 
 

@@ -16,9 +16,7 @@ public class Mesh extends Render3D{
     public Mesh(String path, Vector3 position, double scale){
         super(position);
 
-        //try(Scanner sc = new Scanner(new File(Mesh.class.getResource(path).toExternalForm().substring(1)))){
-        //"C:\\Users\\jorge\\Documents\\GitHub\\Linalg\\target\\classes\\canvas3d\\"
-        try(Scanner sc = new Scanner(new File("D:\\GitHub\\Linalg\\target\\classes\\canvas3d\\" + path))){
+        try(Scanner sc = new Scanner(new File(getClass().getResource(path).toExternalForm().replace("file:/", "")))){
 
             List<Vector3> vertices = new ArrayList<>();
             List<Triangle> triangles = new ArrayList<>();

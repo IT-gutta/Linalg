@@ -10,8 +10,8 @@ public class Camera3D extends Render3D{
     //TODO fix cameraMovement
     //TODO implement some sort of clipping of the triangles (when they are at the edge of canvas)
     private final double fov = Math.PI/2;
-    private final double zFar = 1000; //vet egt ikke hva denne gjør, men den må være høyere enn zNear for at det skal funke hehe
-    private final double zNear = 200; //bestemmer rendering distance
+    private final double zFar = 150; //vet egt ikke hva denne gjør, men den må være høyere enn zNear for at det skal funke hehe
+    private final double zNear = 80; //bestemmer rendering distance
 
     private LightSource lightSource;
 

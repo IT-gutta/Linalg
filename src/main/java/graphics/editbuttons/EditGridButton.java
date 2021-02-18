@@ -1,11 +1,11 @@
 package graphics.editbuttons;
 
-import math2d.Grid2;
+import canvas2d.Grid2D;
 import graphics.VariableContainer;
 
 public class EditGridButton extends GenericEditButton {
-    private final VariableContainer<Grid2> variableContainer;
-    public EditGridButton(VariableContainer<Grid2> variableContainer){
+    private final VariableContainer<Grid2D> variableContainer;
+    public EditGridButton(VariableContainer<Grid2D> variableContainer){
         super(variableContainer);
         this.variableContainer = variableContainer;
 

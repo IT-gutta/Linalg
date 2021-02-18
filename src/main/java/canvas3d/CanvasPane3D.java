@@ -6,7 +6,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import math3d.Vector3;
 
@@ -68,7 +67,7 @@ public class CanvasPane3D extends Pane {
         double movementX = (mouseEvent.getX() - previousX) * mouseSensitivity;
         double movementY = (mouseEvent.getY() - previousY) * mouseSensitivity;
 
-        CanvasRenderer3D.getCamera().setPosition(Vector3.rotateY(CanvasRenderer3D.getCamera().position, movementX));
+        CanvasRenderer3D.getCamera().setPosition(Vector3.rotateY(CanvasRenderer3D.getCamera().position, -movementX));
 //        Vector3 vel = Vector3.scale(Vector3.UP(), (Math.pow(10, -16)*movementY));
 //        System.out.println(CanvasRenderer3D.getCamera().position);
 //        CanvasRenderer3D.getCamera().setPosition(Vector3.add(CanvasRenderer3D.getCamera().position, vel));

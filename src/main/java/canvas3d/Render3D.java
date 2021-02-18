@@ -42,19 +42,34 @@ public abstract class Render3D {
     }
 
 
-    public void setForward(Vector3 forward){
-        //TODO fix når nye forward er lik gamle up
-        this.forward = forward.normalized();
-        if(this.forward.equals(this.up)) //roter 90 grader om en vilkårlig akse foreløpig??
-            this.up = Vector3.rotateZ(this.up, Math.PI / 2);
-        else
-            this.up = Vector3.subtract(up, Vector3.scale(this.forward, this.forward.dot(up))).normalized();
+    public void setForward(Vector3 forward) {
+        if(forward.equals(Vector3.ZERO()))
+            throw new IllegalArgumentException("Forward cant be null vector");
+        //TODO fix new up after setting forward
+        /*if (forward.equals(this.up)) //roter 90 grader om en vilkårlig akse foreløpig??¨
+            this.up = Vector3.scale(this.forward, -1);
 
+        else
+            this.up = Vector3.subtract(up, Vector3.scale(forward, forward.dot(up))).normalized();*/
+        //setter en random up-vektor
+        if(forward.getZ() == 0){
+            if(forward.getY() == 0)
+                this.up = new Vector3(0, 1, 0);
+            else
+                this.up = new Vector3(1, -forward.getX() / forward.getY(), 0).normalized();
+        }
+        else
+            this.up = new Vector3(0, 1, -forward.getY() / forward.getZ()).normalized();
+
+
+        System.out.println(this.up);
+        this.forward = forward.normalized();
         this.right = Vector3.cross(up, forward).normalized();
 
-
-        System.out.println("up: " + up);
+        System.out.println("dot: " + this.forward.dot(this.up));
+        /*System.out.println("up: " + up);
         System.out.println("forward: " + this.forward);
+        System.out.println("right" + right);*/
     }
 
     public void setPosition(Vector3 position){

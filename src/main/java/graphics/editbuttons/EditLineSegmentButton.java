@@ -1,11 +1,11 @@
 package graphics.editbuttons;
 
 import graphics.VariableContainer;
-import math2d.LineSegment2;
+import canvas2d.LineSegment2D;
 
 public class EditLineSegmentButton extends GenericEditButton{
-    private final VariableContainer<LineSegment2> variableContainer;
-    public EditLineSegmentButton(VariableContainer<LineSegment2> variableContainer){
+    private final VariableContainer<LineSegment2D> variableContainer;
+    public EditLineSegmentButton(VariableContainer<LineSegment2D> variableContainer){
         super(variableContainer);
         this.variableContainer = variableContainer;
 

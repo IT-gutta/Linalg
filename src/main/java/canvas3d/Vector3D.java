@@ -12,22 +12,17 @@ public class Vector3D extends Mesh implements Interpolatable {
 
 
     public Vector3D(double x, double y, double z){
-        super("vector.obj", Vector3.ZERO(), 1);
+        super("vectorfix.obj", Vector3.ZERO(), 1);
         vector3 = new Vector3(x, y, z);
-        System.out.println("mag: " +vector3.getMagnitude());
         scale(vector3.getMagnitude());
         setForward(vector3);
     }
 
     @Override
     public void startInterpolation(Matrix m, int millis) {
-        /*double[] vec = vector.getVector();
-        double[] endPos = m.transform(vec);
-        double startAngle = Math.atan2(vec[1], vec[0]);
-        double endAngle = startAngle + Vectors.angle2(vec, endPos);
-        double startLength = Math.sqrt(Math.pow(vec[0], 2) + Math.pow(vec[1], 2));
-        double endLength = Math.sqrt(Math.pow(endPos[0], 2) + Math.pow(endPos[1], 2));
-        interpolator = new Interpolator(millis, new double[]{startLength, startAngle}, new double[]{endLength, endAngle});*/
+        double[] start = vector3.getVector();
+        double[] end = m.transform(vector3.getVector());
+        interpolator = new Interpolator(millis, start, end);
     }
 
     @Override
@@ -35,10 +30,12 @@ public class Vector3D extends Mesh implements Interpolatable {
 
         if(interpolator != null){
             interpolator.handle();
-            /*
-            setX(interpolator.get(0) * Math.cos(interpolator.get(1)));
-            setY(interpolator.get(0) * Math.sin(interpolator.get(1)));
-            setZ(interpolator.get(0) * Math.sin(interpolator.get(1)));*/
+            vector3.setX(interpolator.get(0));
+            vector3.setY(interpolator.get(1));
+            vector3.setZ(interpolator.get(2));
+
+            setForward(vector3);
+
             if(interpolator.isFinished())
                 interpolator = null;
         }
@@ -46,7 +43,21 @@ public class Vector3D extends Mesh implements Interpolatable {
 
     @Override
     public void update(String name, Color color) {
-        setColor(color);
+        handleInterpolation();
+    }
+
+    @Override
+    public void render(GraphicsContext3D gc, String name, Color color){
+        for(Triangle triangle : triangles){
+            triangle.setColor(color);
+            triangle.setInterpolateColors(false);
+            triangle.render(gc, position, forward, up, right);
+        }
+        /*gc.strokeLine(0, 0, 0, forward.getX(), forward.getY(), forward.getZ());
+        gc.strokeLine(0, 0, 0, right.getX(), right.getY(), right.getZ());
+        gc.strokeLine(0, 0, 0, up.getX(), up.getY(), up.getZ());*/
+
+        gc.fillText(name, Vector3.add(vector3, Vector3.scale(forward, 0.1)));
     }
 
     @Override

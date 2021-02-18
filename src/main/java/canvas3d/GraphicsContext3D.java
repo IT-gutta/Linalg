@@ -1,9 +1,11 @@
 package canvas3d;
 
+import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import math.Vector;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import math3d.Vector3;
 import math3d.Vector4;
 
@@ -22,6 +24,21 @@ public class GraphicsContext3D {
     public GraphicsContext3D(GraphicsContext graphicsContext2D, Camera3D camera){
         this.graphicsContext2D = graphicsContext2D;
         this.camera = camera;
+    }
+
+    public void fillText(String text, Vector3 position){
+        if(width == 0 || height == 0)
+            return;
+
+
+        Vector4 pos = camera.project(position);
+        graphicsContext2D.setTextAlign(TextAlignment.CENTER);
+        graphicsContext2D.setTextBaseline(VPos.CENTER);
+        double size = -(pos.getZ() - 172) - 320;
+        if(size < 0)
+            size = 0;
+        graphicsContext2D.setFont(new Font(size));
+        graphicsContext2D.fillText(text, pos.getX(), pos.getY());
     }
 
     public void strokeLine(double x1, double y1, double z1, double x2, double y2, double z2){

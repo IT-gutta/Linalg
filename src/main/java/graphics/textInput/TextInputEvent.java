@@ -1,6 +1,5 @@
 package graphics.textInput;
 
-import canvas3d.Render3D;
 import graphics.DefinedVariables;
 import graphics.VariableContainer;
 import javafx.event.ActionEvent;
@@ -8,7 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import math.*;
 import math2d.Mapping;
-import math2d.Point2;
+import canvas2d.Point2D;
 import math2d.Vector2;
 import math3d.Point3;
 import math3d.Vector3;
@@ -102,7 +101,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
             if(Pattern.matches(Regexes.varDec+Regexes.point(2), inp)){
                 m = Pattern.compile(Regexes.varDec+Regexes.point(2)).matcher(inp);
                 if(m.find()){
-                    DefinedVariables.add(new VariableContainer(new Point2(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4))), m.group(1)));
+                    DefinedVariables.add(new VariableContainer(new Point2D(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(4))), m.group(1)));
                 }
             }
             //Point 3d
