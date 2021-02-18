@@ -9,14 +9,11 @@ math2d\Vector2.class
 math3d\Point3.class
 graphics\VariableContainer.class
 graphics\editbuttons\EditPointButton.class
-math2d\Grid2.class
 graphics\editbuttons\EditMatrixButton.class
-math2d\LineSegment2.class
 graphics\DoubleFormatter.class
 math2d\Point2.class
 canvas3d\PlaneSegment.class
 graphics\editbuttons\NewMenuButton.class
-math2d\Line2.class
 math2d\Mapping.class
 math\Solver.class
 graphics\editbuttons\MenuItems.class

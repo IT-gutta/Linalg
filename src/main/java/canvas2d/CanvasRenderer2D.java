@@ -30,8 +30,8 @@ public abstract class CanvasRenderer2D {
         Vector vector = new Vector(2, 2);
         Line line = new Line(-2, 0, 2, 2);
 
-        Grid2 grid2 = new Grid2(0, 0, 5, 5, 1, 1);
-        LineSegment2 lineSegment2 = new LineSegment2(-2, 0, -5, -5);
+        Grid2D grid2 = new Grid2D(0, 0, 5, 5, 1, 1);
+        LineSegment2D lineSegment2 = new LineSegment2D(-2, 0, -5, -5);
         Expression f = new Expression("x^5");
         Expression g = Differentiator.getDerivative(f);
 
@@ -124,8 +124,8 @@ public abstract class CanvasRenderer2D {
     public static void accountForChanges(){
         //oppdaterer alle linjer
         for(VariableContainer<Render2D> variableContainer : DefinedVariables.get2DRenderables())
-            if(variableContainer.getVariable() instanceof Line2)
-                ((Line2) variableContainer.getVariable()).updateCanvasPoints();
+            if(variableContainer.getVariable() instanceof Line2D)
+                ((Line2D) variableContainer.getVariable()).updateCanvasPoints();
     }
 
 
