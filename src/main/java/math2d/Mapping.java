@@ -23,7 +23,7 @@ public class Mapping extends Render2D {
     }
 
     public Mapping(Expression expression){
-        super(expression);
+        this.expression = expression;
 
         start = -10;
         end = 10;
@@ -38,7 +38,7 @@ public class Mapping extends Render2D {
 
     @Override
     public String toString(){
-        return expression.getExpression();
+        return expression.toString();
     }
 
     @Override
