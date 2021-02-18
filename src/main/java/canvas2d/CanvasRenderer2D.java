@@ -2,10 +2,7 @@ package canvas2d;
 
 import graphics.DefinedVariables;
 import graphics.VariableContainer;
-import math2d.Grid2;
-import math2d.Line2;
-import math2d.LineSegment2;
-import math2d.Vector2;
+import math2d.*;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -35,12 +32,16 @@ public abstract class CanvasRenderer2D {
 
         Grid2 grid2 = new Grid2(0, 0, 5, 5, 1, 1);
         LineSegment2 lineSegment2 = new LineSegment2(-2, 0, -5, -5);
+        Expression f = new Expression("x^5");
+        Expression g = Differentiator.getDerivative(f);
 
         DefinedVariables.add(new VariableContainer<>(vector, "vector"));
         DefinedVariables.add(new VariableContainer<>(line, "line"));
         DefinedVariables.add(grid2, "grid");
         DefinedVariables.add(lineSegment2, "linesegment");
         DefinedVariables.add(new VariableContainer<>(matrix, "m"));
+        DefinedVariables.add(new VariableContainer(new Mapping(f), "f"));
+        DefinedVariables.add(new VariableContainer(new Mapping(g),"g"));
 
 
         accountForChanges();
@@ -218,5 +219,13 @@ public abstract class CanvasRenderer2D {
         if(actual.getElement(0) < 0 || actual.getElement(0) > CanvasRenderer2D.getCanvasWidth() || actual.getElement(1) < 0 || actual.getElement(1) > CanvasRenderer2D.getCanvasHeight())
             return false;
         return true;
+    }
+
+    public static void main(String[] args) {
+        Expression f = new Expression("x^5+x^4+3");
+        Expression g = Differentiator.getDerivative(f);
+        System.out.println(f);
+        System.out.println(g);
+        System.out.println(g.evaluate(1));
     }
 }

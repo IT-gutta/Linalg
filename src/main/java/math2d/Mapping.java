@@ -22,6 +22,14 @@ public class Mapping extends Render2D<Expression> {
         step = 1;
     }
 
+    public Mapping(Expression expression){
+        super(expression);
+
+        start = -10;
+        end = 10;
+        step = 1;
+    }
+
 
     public double evaluate(double x){
         return math.evaluate(x);

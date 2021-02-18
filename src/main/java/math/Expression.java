@@ -32,6 +32,31 @@ public class Expression {
         findChildren();
     }
 
+    public String getOperator(){
+        return operator;
+    }
+
+    public void setLeftChild(Expression expression){
+        leftChild = expression;
+    }
+
+    public Expression getLeftChild(){
+        return leftChild;
+    }
+
+    public Expression getRightChild(){
+        return rightChild;
+    }
+
+    public void setRightChild(Expression expression){
+        rightChild = expression;
+    }
+
+    public void setOperator(String operator){
+        this.operator = operator;
+    }
+
+
     private boolean checkInput(String input){
         String f = "[(cos)(sin)(abs)(tan)(log)]";
         if(input.length()==0)
@@ -207,8 +232,16 @@ public class Expression {
         throw new IllegalArgumentException();
     }
 
-    public String toString(){
+    public String debugToString(){
         return toString(0);
+    }
+    public String toString(){
+        if(rightChild==null){
+            if(leftChild==null)
+                return expression;
+            return "("+operator + "("+leftChild+"))";
+        }
+        return "("+leftChild+operator+rightChild+")";
     }
 
     public double evaluate(double x){
