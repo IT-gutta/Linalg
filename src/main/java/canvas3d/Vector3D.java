@@ -23,6 +23,7 @@ public class Vector3D extends Mesh implements Interpolatable {
         double[] start = vector3.getVector();
         double[] end = m.transform(vector3.getVector());
         interpolator = new Interpolator(millis, start, end);
+        System.out.println("started interpolatoin");
     }
 
     @Override
@@ -48,6 +49,8 @@ public class Vector3D extends Mesh implements Interpolatable {
 
     @Override
     public void render(GraphicsContext3D gc, String name, Color color){
+        update(name, color);
+
         for(Triangle triangle : triangles){
             triangle.setColor(color);
             triangle.setInterpolateColors(false);

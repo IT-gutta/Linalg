@@ -29,22 +29,24 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
+        //2d canvas initialization
         CanvasPane2D canvasPane2D = new CanvasPane2D(16*30, 9*30);
-        //CanvasPane3D canvasPane3D = new CanvasPane3D(16*30, 9*30);
         Canvas canvas2D = canvasPane2D.getCanvas();
-        //Canvas canvas3D = canvasPane3D.getCanvas();
-
         GraphicsContext graphicsContext2D = canvas2D.getGraphicsContext2D();
-        //GraphicsContext graphicsContext3D = canvas3D.getGraphicsContext2D();
-
         CanvasRenderer2D.setCanvas(canvas2D);
         CanvasRenderer2D.setGraphicsContext(graphicsContext2D);
         CanvasRenderer2D.setUnitSize(40);
         CanvasRenderer2D.start();
 
-        //CanvasRenderer3D.setCanvas(canvas3D);
-        //CanvasRenderer3D.setGraphicsContext(graphicsContext3D);
-        //CanvasRenderer3D.start();
+        //3d canvas initialization
+        CanvasPane3D canvasPane3D = new CanvasPane3D(16*30, 9*30);
+        Canvas canvas3D = canvasPane3D.getCanvas();
+        GraphicsContext graphicsContext3D = canvas3D.getGraphicsContext2D();
+        CanvasRenderer3D.setCanvas(canvas3D);
+        CanvasRenderer3D.setGraphicsContext(graphicsContext3D);
+        CanvasRenderer3D.start();
+
 
         DefinedVariables.getScrollPane().getStyleClass().add("variables");
 
@@ -58,8 +60,8 @@ public class App extends Application {
         Label error = new Label("");
         error.getStyleClass().add("error");
 
-        //SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane2D, canvasPane3D);
-        SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane2D);
+        SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane2D, canvasPane3D);
+        //SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane2D);
         splitPane.prefHeightProperty().bind(root.heightProperty());
 
         TextInputEvent.fillOpMaps();
