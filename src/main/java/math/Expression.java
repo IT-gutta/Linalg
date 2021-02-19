@@ -236,12 +236,15 @@ public class Expression {
         return toString(0);
     }
     public String toString(){
+        String sign = "";
+        if(!isPositive)
+            sign = "-";
         if(rightChild==null){
             if(leftChild==null)
-                return expression;
-            return "("+operator + "("+leftChild+"))";
+                return sign+expression;
+            return "("+sign+operator + "("+leftChild+"))";
         }
-        return "("+leftChild+operator+rightChild+")";
+        return sign+"("+leftChild+operator+rightChild+")";
     }
 
     public double evaluate(double x){
@@ -270,7 +273,7 @@ public class Expression {
         String sign = "";
         if(!isPositive)
             sign = "-";
-        String result = indent + sign + getExpression() + operator + indent + sign + "\n";
+        String result = indent + sign + getExpression() + "\top:"+operator+"\n";
         if(!(leftChild==null))
             result += leftChild.toString(depth+1);
         if(!(rightChild==null)){
@@ -278,11 +281,50 @@ public class Expression {
         }
         return result;
     }
+    public boolean isPositive() {
+        return isPositive;
+    }
+    public void setToNegative(){
+        isPositive = false;
+    }
+    public void simplify(){
+        findZeroMult("");
+    }
+    public String findZeroMult(String path){
+        System.out.println(path);
+        if(operator.equals("*")) {
+            if (leftChild.getExpression().equals("0") || rightChild.getExpression().equals("0"))
+            return path;
+        }
+        else if(operator==null)
+           return "";
+        else{
+           String pathL = findZeroMult(path+"L");
+           String pathR = findZeroMult(path+"R");
+           if(!pathL.equals(""))
+               return pathL;
+           else if(!pathR.equals(""))
+               return pathR;
+        }
+        return "";
+    }
+
+    public void fixExpression(){
+        if(rightChild==null){
+            if(leftChild!=null)
+                expression = "("+operator + "("+leftChild+"))";
+            return;
+        }
+        leftChild.fixExpression();
+        rightChild.fixExpression();
+        expression = "("+leftChild+operator+rightChild+")";
+    }
 
     public static void main(String[] args) {
         Expression root = new Expression("-cos(x)+7*x");
         System.out.println(root.toString());
         System.out.println(root.evaluate(1));
     }
+
 }
 

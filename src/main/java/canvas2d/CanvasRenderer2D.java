@@ -223,13 +223,14 @@ public abstract class CanvasRenderer2D {
 
     public static void main(String[] args) {
         Differentiator.fillDerivatives();
-        Expression f = new Expression("cos(x)");
-        Expression g = Differentiator.getDerivative(f);
-        System.out.println(f);
+        Expression f = new Expression("x^4");
+        Expression g = Differentiator.derivative(f);
         System.out.println(g);
-        System.out.println(g.evaluate(1));
-        System.out.println(g.evaluate(4));
-        System.out.println(g.evaluate(7));
-        System.out.println(g.evaluate(12));
+        System.out.println(g.debugToString());
+        System.out.println(g.findZeroMult(""));
+//        System.out.println(g.evaluate(1));
+//        System.out.println(g.evaluate(4));
+//        System.out.println(g.evaluate(7));
+//        System.out.println(g.evaluate(12));
     }
 }

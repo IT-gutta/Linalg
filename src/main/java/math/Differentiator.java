@@ -13,6 +13,11 @@ public class Differentiator {
         derivatives.put("tan", "1/cos($)^2");
         derivatives.put("exp", "exp($)");
     }
+    public static Expression derivative(Expression expression){
+        Expression d = getDerivative(expression);
+        d.fixExpression();
+        return d;
+    }
     public static Expression getDerivative(Expression expression){
         Expression derivative = new Expression("0");
         Expression derivativeL = new Expression("0");
@@ -21,6 +26,8 @@ public class Differentiator {
         Expression derivativeB = new Expression("0");
         Expression derivativeX = new Expression("0");
         Expression derivativeY = new Expression("0");
+        if(!expression.isPositive())
+            derivative.setToNegative();
         if(expression.getOperator()!=null){
             if(expression.getOperator().equals("+")){
                 derivative.setLeftChild(getDerivative(expression.getLeftChild()));
@@ -93,6 +100,8 @@ public class Differentiator {
         else
             if(expression.getExpression().equals("x"))
                 return new Expression("1");
+            else if(expression.getExpression().equals("-x"))
+                return new Expression("-1");
             else
                 return new Expression("0");
         return derivative;
