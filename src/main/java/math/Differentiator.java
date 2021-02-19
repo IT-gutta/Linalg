@@ -84,7 +84,10 @@ public class Differentiator {
             }
             else if(expression.getOperator()!=null){
                 derivative.setLeftChild(getDerivative(expression.getLeftChild()));
-                derivative.setRightChild(new Expression(derivatives.get(expression.getOperator().replace("$", expression.getExpression()))));
+                System.out.println(expression.getOperator());
+                System.out.println(derivatives.get(expression.getOperator()));
+                derivative.setRightChild(new Expression(derivatives.get(expression.getOperator()).replace("$",expression.getLeftChild().getExpression())));
+                derivative.setOperator("*");
             }
         }
         else

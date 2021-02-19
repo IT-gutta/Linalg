@@ -32,7 +32,7 @@ public abstract class CanvasRenderer2D {
 
         Grid2D grid2 = new Grid2D(0, 0, 5, 5, 1, 1);
         LineSegment2D lineSegment2 = new LineSegment2D(-2, 0, -5, -5);
-        Expression f = new Expression("x^5");
+        Expression f = new Expression("x");
         Expression g = Differentiator.getDerivative(f);
 
         DefinedVariables.add(new VariableContainer<>(vector, "vector"));
@@ -222,10 +222,14 @@ public abstract class CanvasRenderer2D {
     }
 
     public static void main(String[] args) {
-        Expression f = new Expression("x^5+x^4+3");
+        Differentiator.fillDerivatives();
+        Expression f = new Expression("cos(x)");
         Expression g = Differentiator.getDerivative(f);
         System.out.println(f);
         System.out.println(g);
         System.out.println(g.evaluate(1));
+        System.out.println(g.evaluate(4));
+        System.out.println(g.evaluate(7));
+        System.out.println(g.evaluate(12));
     }
 }
