@@ -23,7 +23,7 @@ public abstract class MenuItems {
                 if(DefinedVariables.contains(name)){
                     VariableContainer v = DefinedVariables.get(name);
                     if(v.getVariable() instanceof Matrix)
-                        variableContainer.getVariable().startInterpolation((Matrix) v.getVariable(), 1000);
+                        variableContainer.getVariable().startInterpolation((Matrix) v.getVariable(), 2000);
                 }
             });
         });
