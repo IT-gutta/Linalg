@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import math3d.Vector3;
 
@@ -24,7 +25,7 @@ public class CanvasPane3D extends Pane {
         canvas.addEventFilter(MouseEvent.ANY, (e) -> canvas.requestFocus());
 
         getChildren().add(canvas);
-
+        canvas.setOnScroll(scrollHandler);
         canvas.setOnKeyPressed(keyHandler);
         canvas.setOnMouseDragged(mouseHandler);
         canvas.setOnMousePressed(event -> {
@@ -100,5 +101,9 @@ public class CanvasPane3D extends Pane {
 
         else if(keyEvent.getCode().equals(KeyCode.S))
             CanvasRenderer3D.getCamera().moveForward(-0.5);
+    };
+
+    private EventHandler<ScrollEvent> scrollHandler = scrollEvent ->{
+      CanvasRenderer3D.getCamera().moveForward(-0.1 * scrollEvent.getDeltaY());
     };
 }
