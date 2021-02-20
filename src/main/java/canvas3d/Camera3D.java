@@ -10,8 +10,8 @@ public class Camera3D extends Render3D{
     //TODO fix cameraMovement
     //TODO implement some sort of clipping of the triangles (when they are at the edge of canvas)
     private final double fov = Math.PI/2;
-    private final double zFar = 150; //vet egt ikke hva denne gjør, men den må være høyere enn zNear for at det skal funke hehe
-    private final double zNear = 80; //bestemmer rendering distance
+    private final double zFar = 100; //vet egt ikke hva denne gjør, men den må være høyere enn zNear for at det skal funke hehe
+    private final double zNear = 0.1; //bestemmer rendering distance
 
     private LightSource lightSource;
 
@@ -46,12 +46,12 @@ public class Camera3D extends Render3D{
         projectionMatrix = new Matrix(matrix);
 
 
-        Matrix pointAtMatrix = new Matrix(new double[][]{
-                {right.getX(), up.getX(), forward.getX(), position.getX()},
-                {right.getY(), up.getY(), forward.getY(), position.getY()},
-                {right.getZ(), up.getZ(), forward.getZ(), position.getZ()},
-                {0, 0, 0, 1}
-        });
+//        Matrix pointAtMatrix = new Matrix(new double[][]{
+//                {right.getX(), up.getX(), forward.getX(), position.getX()},
+//                {right.getY(), up.getY(), forward.getY(), position.getY()},
+//                {right.getZ(), up.getZ(), forward.getZ(), position.getZ()},
+//                {0, 0, 0, 1}
+//        });
         //lookAtMatrix = pointAtMatrix.getInverted();
 
         //denne er helt lik pointAt.getIverted();
@@ -72,6 +72,11 @@ public class Camera3D extends Render3D{
         Vector4 input = new Vector4(vector3.getX(), vector3.getY(), vector3.getZ(), 1);
         double[] cameraView = lookAtMatrix.transform(input.getVector());
         double[] out = projectionMatrix.transform(cameraView);
+        System.out.println("z:"+out[2]);
+
+        if(out[2] < 0 || out[2] > zFar)
+            return null;
+
         out[0] /= out[3];
         out[1] /= out[3];
 
@@ -80,6 +85,8 @@ public class Camera3D extends Render3D{
         out[1] += 1d;
         out[0] *= CanvasRenderer3D.getCanvasWidth() / 2;
         out[1] *= CanvasRenderer3D.getCanvasHeight() / 2;
+
+        System.out.println("width" + CanvasRenderer3D.getCanvasWidth());
 
         return new Vector4(out);
     }

@@ -9,6 +9,8 @@ import javafx.scene.text.TextAlignment;
 import math3d.Vector3;
 import math3d.Vector4;
 
+import java.util.Arrays;
+
 public class GraphicsContext3D {
     //TODO fix rasterizer when outside canvas
     //TODO optimize rasterizer
@@ -32,6 +34,9 @@ public class GraphicsContext3D {
 
 
         Vector4 pos = camera.project(position);
+        if(pos == null)
+            return;
+
         graphicsContext2D.setTextAlign(TextAlignment.CENTER);
         graphicsContext2D.setTextBaseline(VPos.CENTER);
         double size = -(pos.getZ() - 172) - 320;
@@ -44,6 +49,9 @@ public class GraphicsContext3D {
     public void strokeLine(double x1, double y1, double z1, double x2, double y2, double z2){
         Vector4 start = camera.project(new Vector3(x1, y1, z1));
         Vector4 end = camera.project(new Vector3(x2, y2, z2));
+
+        if(start == null || end == null) //her må det clippes
+            return;
 
         /*System.out.println("start" + start.getVector().toString());
         System.out.println("end" + end.getVector().toString());
@@ -68,6 +76,11 @@ public class GraphicsContext3D {
                 camera.project(p3),
         };
 
+        for(Vector4 v : projectedPoints) { //her må det gjøres 2d clipping
+            if (v == null)
+                return;
+        }
+
         //rasterize triangle with color interpolation
         edgeCheckRasterize(
                 projectedPoints[0].getX(), projectedPoints[0].getY(), projectedPoints[0].getZ(), colors[0],
@@ -82,6 +95,11 @@ public class GraphicsContext3D {
                 camera.project(p2),
                 camera.project(p3),
         };
+
+        for(Vector4 v : projectedPoints) { //her må det gjøres 2d clipping
+            if (v == null)
+                return;
+        }
 
         //rasterize triangle without color interpolation
         edgeCheckRasterize(
@@ -98,7 +116,7 @@ public class GraphicsContext3D {
         height = (int) CanvasRenderer3D.getCanvasHeight();
         this.depthBuffer = new double[width*height];
         for(int i = 0; i < depthBuffer.length; i++){
-            depthBuffer[i] = 0;
+            depthBuffer[i] = Double.MAX_VALUE;
         }
     }
     
@@ -133,7 +151,7 @@ public class GraphicsContext3D {
         for(int y = minY; y < maxY; y++){
             for(int x = minXes[y-minY]; x < maxXes[y-minY]; x++){
                 double depth = z1;//fikse dette
-                if(depth > depthBuffer[y*width + x]) {
+                if(depth < depthBuffer[y*width + x]) {
                     graphicsContext2D.getPixelWriter().setColor(x, y, fill);
                     depthBuffer[y*width + x] = depth;
                 }
@@ -187,11 +205,16 @@ public class GraphicsContext3D {
         if(((x1>width||x1<0) && (y1>height||y1<0)) && ((x2>width||x2<0) && (y2>height||y2<0)) && ((x3>width||x3<0) && (y3>height||y3<0))) // alle tre punnkter utenfor
             return;
 
+
         int yMin = (int) Math.round(max(0, min(y1, y2, y3)));
         int yMax = (int) Math.round(min(height-1, max(y1, y2, y3)));
 
         int xMin = (int) Math.round(max(0, min(x1, x2, x3)));
         int xMax = (int) Math.round(min(width-1, max(x1, x2, x3)));
+
+
+//        System.out.println("yMin: " + yMin + ", yMax: " + yMax);
+//        System.out.println("xMin: " + xMin + ", xMax: " + xMax);
 
 
         double oneOverArea = 1 / cross(x2-x1, y2-y1, x3-x1, y3-y1);

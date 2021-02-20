@@ -44,5 +44,8 @@ public class Vector4 {
         vector.setElement(3, w);
     }
 
-
+    @Override
+    public String toString(){
+        return vector.toString();
+    }
 }
