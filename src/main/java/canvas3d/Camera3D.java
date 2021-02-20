@@ -72,7 +72,7 @@ public class Camera3D extends Render3D{
         Vector4 input = new Vector4(vector3.getX(), vector3.getY(), vector3.getZ(), 1);
         double[] cameraView = lookAtMatrix.transform(input.getVector());
         double[] out = projectionMatrix.transform(cameraView);
-        System.out.println("z:"+out[2]);
+        //System.out.println("z:"+out[2]);
 
         if(out[2] < 0 || out[2] > zFar)
             return null;
@@ -86,7 +86,7 @@ public class Camera3D extends Render3D{
         out[0] *= CanvasRenderer3D.getCanvasWidth() / 2;
         out[1] *= CanvasRenderer3D.getCanvasHeight() / 2;
 
-        System.out.println("width" + CanvasRenderer3D.getCanvasWidth());
+        //System.out.println("width" + CanvasRenderer3D.getCanvasWidth());
 
         return new Vector4(out);
     }

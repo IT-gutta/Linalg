@@ -62,11 +62,14 @@ public abstract class Render3D {
             this.up = new Vector3(0, 1, -forward.getY() / forward.getZ()).normalized();
 
 
-        System.out.println(this.up);
         this.forward = forward.normalized();
         this.right = Vector3.cross(up, forward).normalized();
+        if(Math.abs(this.forward.dot(this.up)) > Math.pow(10, -10)){
+            throw new Error("Det er en error i setforward funksjonen på Render3D, dot = " + this.forward.dot(this.up));
+        }
 
-        System.out.println("dot: " + this.forward.dot(this.up));
+
+        //System.out.println("dot: " + this.forward.dot(this.up));
         /*System.out.println("up: " + up);
         System.out.println("forward: " + this.forward);
         System.out.println("right" + right);*/

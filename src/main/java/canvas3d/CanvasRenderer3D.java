@@ -8,6 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import math.Matrix;
+import math3d.Vector3;
 
 import java.text.DecimalFormat;
 
@@ -30,15 +31,15 @@ public abstract class CanvasRenderer3D {
         DefinedVariables.add(new VariableContainer<Vector3Renderer>(kHat, "kHat"));*/
 
 
-        /*Render3D mesh = new Mesh("chevrolet.obj", new Vector3(0, 0, 0), 1);
+        Render3D mesh = new Mesh("chevrolet.obj", new Vector3(0, 0, 0), 1);
         mesh.setForward(Vector3.scale(Vector3.FORWARD(), -1));
-        DefinedVariables.add(mesh, "chevrolet");*/
+        DefinedVariables.add(mesh, "chevrolet");
 
 //        Render3D cube = new Cube(Vector3.ZERO());
 //        DefinedVariables.add(cube, "cube");
 
 
-        Vector3D x = new Vector3D(1, 0, 0);
+        /*Vector3D x = new Vector3D(1, 0, 0);
         Vector3D y = new Vector3D(0, 1, 0);
         Vector3D z = new Vector3D(0, 0, 1);
 
@@ -48,7 +49,7 @@ public abstract class CanvasRenderer3D {
         DefinedVariables.add(z, "z");
 
         Vector3D vector1 = new Vector3D(3, 3, 3);
-        DefinedVariables.add(vector1, "vector1");
+        DefinedVariables.add(vector1, "vector1");*/
 
         Matrix rotate3 = new Matrix(new double[][]{
                 {0, -1, 0},
