@@ -13,8 +13,6 @@ graphics\editbuttons\EditMatrixButton.class
 graphics\DoubleFormatter.class
 math2d\Point2.class
 canvas3d\PlaneSegment.class
-graphics\editbuttons\NewMenuButton.class
-math2d\Mapping.class
 math\Solver.class
 graphics\editbuttons\MenuItems.class
 graphics\editbuttons\EditVectorButton.class
