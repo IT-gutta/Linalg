@@ -39,6 +39,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
 
     private static final InputMapFunc<Vector, Double> vdOps = new InputMapFunc<>(new Vector(), 0d);
     private static final InputMapFunc<Matrix, Matrix> mmOps = new InputMapFunc<>(new Matrix(), new Matrix());
+    private static final InputMapFunc<Expression, Expression> eeOps = new InputMapFunc<>(new Expression("0"), new Expression("0"));
 
     public TextInputEvent(TextField inputField, Label errorField) {
         this.inputField = inputField;
@@ -72,6 +73,8 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
         funcMaps.add(vdOps);
         mmOps.put("inverse", Solver::invertedMatrix);
         funcMaps.add(mmOps);
+//        eeOps.put("derivative", Differentiator::derivative);
+//        funcMaps.add(eeOps);
     }
     @Override
     public void handle(ActionEvent actionEvent) {
@@ -232,6 +235,13 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
         }
         //function declaration
         else if(Pattern.matches(Regexes.funDec+".*", inp)){
+            m = Pattern.compile(Regexes.funDec+"derivative\\("+Regexes.varName+"\\)").matcher(inp);
+            if(m.find()){
+                System.out.println(m.group(2));
+                Expression e = Differentiator.derivative((Expression)DefinedVariables.get(m.group(2)).getMath());
+                System.out.println(e);
+                DefinedVariables.add(new VariableContainer(new Mapping(e), m.group(1)));
+            }
             try{
                 m = Pattern.compile(Regexes.funDec+"(.*)").matcher(inp);
                 if(m.find())

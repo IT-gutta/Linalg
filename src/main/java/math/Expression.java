@@ -1,5 +1,7 @@
 package math;
 
+import graphics.textInput.Regexes;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,6 +16,9 @@ public class Expression {
     private Expression rightChild;
     private String operator;
     private boolean isPositive = true;
+    private boolean isLeaf = true;
+    private HashMap<Character, Expression> children = new HashMap<>();
+    private HashMap<Character, Character> oppositeChild = new HashMap<>();
 
     private HashMap<String, BiFunction<Double, Double, Double>> dddOps = new HashMap<>();
     private HashMap<String, Function<Double, Double>> ddOps = new HashMap<>();
@@ -21,6 +26,7 @@ public class Expression {
 
 
     public Expression(String input) throws IllegalArgumentException{
+
         if(!checkInput(input))
             throw new IllegalArgumentException();
         this.expression = input;
@@ -50,6 +56,13 @@ public class Expression {
 
     public void setRightChild(Expression expression){
         rightChild = expression;
+    }
+
+    public void setChild(char c, Expression expression){
+        if(c=='L')
+            leftChild = expression;
+        if(c=='R')
+            rightChild = expression;
     }
 
     public void setOperator(String operator){
@@ -104,6 +117,7 @@ public class Expression {
     }
 
     private void findChildren(){
+        isLeaf = true;
         removeBrackets();
         if(expression.charAt(0)=='-'){
             isPositive = false;
@@ -117,9 +131,11 @@ public class Expression {
         if(!children[0].equals("")){
             leftChild = new Expression(children[0]);
             rightChild = new Expression(children[1]);
+            isLeaf = false;
         }
         else if(expression.contains("(")){
-            leftChild = new Expression(parseComposition());;
+            leftChild = new Expression(parseComposition());
+            isLeaf = false;
         }
     }
 
@@ -287,34 +303,134 @@ public class Expression {
     public void setToNegative(){
         isPositive = false;
     }
-    public void simplify(){
-        findZeroMult("");
+    public boolean isLeaf(){
+        return isLeaf;
     }
-    public String findZeroMult(String path){
-        System.out.println(path);
-        if(operator.equals("*")) {
-            if (leftChild.getExpression().equals("0") || rightChild.getExpression().equals("0"))
-            return path;
+    public void simplify(){
+       while(cleanup());
+    }
+
+    private void resetNode(String expression){
+        leftChild = null;
+        rightChild = null;
+        operator = null;
+        isLeaf = true;
+        this.expression = expression;
+        findChildren();
+    }
+
+    private boolean cleanup(){
+        if(leftChild!=null && rightChild!=null){
+            if(operator.equals("*")){
+                if(leftChild.getExpression().equals("0") || rightChild.expression.equals("0")){
+                    resetNode("0");
+                    return true;
+                }
+                if(leftChild.getExpression().equals("1")){
+                    resetNode(rightChild.getExpression());
+                    return true;
+                }
+                if(rightChild.getExpression().equals("1")){
+                    resetNode(leftChild.getExpression());
+                    return true;
+                }
+                if(leftChild.isLeaf() && rightChild.isLeaf()){
+                    System.out.println(expression);
+                    if(Pattern.matches(Regexes.posFlNum, leftChild.getExpression()) && Pattern.matches(Regexes.posFlNum, rightChild.getExpression())){
+                        resetNode(Double.toString(Double.parseDouble(leftChild.getExpression())*Double.parseDouble(rightChild.getExpression())));
+                        return true;
+                    }
+                }
+            }
+            if(operator.equals("/")){
+                if(leftChild.getExpression().equals("0")){
+                    resetNode("0");
+                    return true;
+                }
+                if(rightChild.getExpression().equals("1")){
+                    resetNode(leftChild.getExpression());
+                    return true;
+                }
+                if(leftChild.isLeaf() && rightChild.isLeaf()){
+                    if(Pattern.matches(Regexes.posFlNum, leftChild.getExpression()) && Pattern.matches(Regexes.posFlNum, rightChild.getExpression())){
+                        resetNode(Double.toString(Double.parseDouble(leftChild.getExpression())/Double.parseDouble(rightChild.getExpression())));
+                        return true;
+                    }
+                }
+            }
+            if(operator.equals("+")){
+                if(leftChild.getExpression().equals("0")){
+                    resetNode(rightChild.getExpression());
+                    return true;
+                }
+                if(rightChild.getExpression().equals("0")){
+                    resetNode(leftChild.getExpression());
+                    return true;
+                }
+                if(leftChild.isLeaf() && rightChild.isLeaf()){
+                    if(Pattern.matches(Regexes.posFlNum, leftChild.getExpression()) && Pattern.matches(Regexes.posFlNum, rightChild.getExpression())){
+                       resetNode(Double.toString(Double.parseDouble(leftChild.getExpression())+Double.parseDouble(rightChild.getExpression())));
+                        return true;
+                    }
+                }
+            }
+            if(operator.equals("-")){
+                if(leftChild.getExpression().equals("0")){
+                   resetNode(rightChild.getExpression());
+                   isPositive = !isPositive;
+                   return true;
+                }
+                if(rightChild.getExpression().equals("0")){
+                    resetNode(leftChild.getExpression());
+                    return true;
+                }
+                if(leftChild.isLeaf() && rightChild.isLeaf()){
+                    if(Pattern.matches(Regexes.posFlNum, leftChild.getExpression()) && Pattern.matches(Regexes.posFlNum, rightChild.getExpression())){
+                        resetNode(Double.toString(Double.parseDouble(leftChild.getExpression())-Double.parseDouble(rightChild.getExpression())));
+                        return true;
+                    }
+                }
+            }
+            if(operator.equals("^")){
+                if(leftChild.getExpression().equals("0")){
+                    resetNode("0");
+                    return true;
+                }
+                if(rightChild.getExpression().equals("0")){
+                    resetNode("1");
+                    return true;
+                }
+                if(leftChild.getExpression().equals("1")){
+                    resetNode("1");
+                    return true;
+                }
+                if(rightChild.getExpression().equals("1")){
+                    resetNode(leftChild.getExpression());
+                    return true;
+                }
+                if(leftChild.isLeaf() && rightChild.isLeaf()){
+                    if(Pattern.matches(Regexes.posFlNum, leftChild.getExpression()) && Pattern.matches(Regexes.posFlNum, rightChild.getExpression())){
+                       resetNode(Double.toString(Math.pow(Double.parseDouble(leftChild.getExpression()),Double.parseDouble(rightChild.getExpression()))));
+                        return true;
+                    }
+                }
+            }
+            return leftChild.cleanup()||rightChild.cleanup();
         }
-        else if(operator==null)
-           return "";
-        else{
-           String pathL = findZeroMult(path+"L");
-           String pathR = findZeroMult(path+"R");
-           if(!pathL.equals(""))
-               return pathL;
-           else if(!pathR.equals(""))
-               return pathR;
-        }
-        return "";
+        return false;
     }
 
     public void fixExpression(){
         if(rightChild==null){
-            if(leftChild!=null)
+            if(leftChild!=null){
                 expression = "("+operator + "("+leftChild+"))";
+                isLeaf = false;
+                return;
+            }
+            isLeaf = true;
             return;
         }
+        isLeaf = false;
         leftChild.fixExpression();
         rightChild.fixExpression();
         expression = "("+leftChild+operator+rightChild+")";

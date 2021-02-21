@@ -16,6 +16,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import math.Differentiator;
 
 import java.io.IOException;
 
@@ -29,6 +30,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
+        Differentiator.fillDerivatives();
 
         //2d canvas initialization
         CanvasPane2D canvasPane2D = new CanvasPane2D(16*30, 9*30);

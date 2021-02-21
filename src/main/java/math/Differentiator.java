@@ -16,6 +16,8 @@ public class Differentiator {
     public static Expression derivative(Expression expression){
         Expression d = getDerivative(expression);
         d.fixExpression();
+        d.simplify();
+        d.fixExpression();
         return d;
     }
     public static Expression getDerivative(Expression expression){

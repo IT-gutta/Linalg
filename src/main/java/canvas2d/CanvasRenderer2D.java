@@ -26,22 +26,22 @@ public abstract class CanvasRenderer2D {
 
 
     public static void start(){
-        Matrix matrix = new Matrix(0, 1, -1, 0);
-        Vector vector = new Vector(2, 2);
-        Line line = new Line(-2, 0, 2, 2);
-
-        Grid2D grid2 = new Grid2D(0, 0, 5, 5, 1, 1);
-        LineSegment2D lineSegment2 = new LineSegment2D(-2, 0, -5, -5);
-        Expression f = new Expression("x");
-        Expression g = Differentiator.getDerivative(f);
-
-        DefinedVariables.add(new VariableContainer<>(vector, "vector"));
-        DefinedVariables.add(new VariableContainer<>(line, "line"));
-        DefinedVariables.add(grid2, "grid");
-        DefinedVariables.add(lineSegment2, "linesegment");
-        DefinedVariables.add(new VariableContainer<>(matrix, "m"));
-        DefinedVariables.add(new VariableContainer(new Mapping(f), "f"));
-        DefinedVariables.add(new VariableContainer(new Mapping(g),"g"));
+//        Matrix matrix = new Matrix(0, 1, -1, 0);
+//        Vector vector = new Vector(2, 2);
+//        Line line = new Line(-2, 0, 2, 2);
+//
+//        Grid2D grid2 = new Grid2D(0, 0, 5, 5, 1, 1);
+//        LineSegment2D lineSegment2 = new LineSegment2D(-2, 0, -5, -5);
+//        Expression f = new Expression("x^5");
+//        Expression g = Differentiator.derivative(f);
+//
+//        DefinedVariables.add(new VariableContainer<>(vector, "vector"));
+//        DefinedVariables.add(new VariableContainer<>(line, "line"));
+//        DefinedVariables.add(grid2, "grid");
+//        DefinedVariables.add(lineSegment2, "linesegment");
+//        DefinedVariables.add(new VariableContainer<>(matrix, "m"));
+//        DefinedVariables.add(new VariableContainer(new Mapping(f), "f"));
+//        DefinedVariables.add(new VariableContainer(new Mapping(g),"g"));
 
 
         accountForChanges();
@@ -223,11 +223,10 @@ public abstract class CanvasRenderer2D {
 
     public static void main(String[] args) {
         Differentiator.fillDerivatives();
-        Expression f = new Expression("x^4");
+        Expression f = new Expression("x^3");
         Expression g = Differentiator.derivative(f);
         System.out.println(g);
-        System.out.println(g.debugToString());
-        System.out.println(g.findZeroMult(""));
+
 //        System.out.println(g.evaluate(1));
 //        System.out.println(g.evaluate(4));
 //        System.out.println(g.evaluate(7));
