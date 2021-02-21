@@ -19,19 +19,19 @@ import canvas2d.Point2D;
 import canvas2d.Vector2D;
 import regex.RegexUtils;
 
-public class NewMenuButton extends MenuButton {
+public class AddButton2D extends MenuButton {
     //TODO Add support for more variables (grid, linesegment and more) in the new menu window
     private TextInputDialog dialog;
 
-    public NewMenuButton() {
-        super("New");
+    public AddButton2D() {
+        super("Add 2D Shape");
         setGraphic(Icons.of("addnew.png", 30));
         getStyleClass().add("transparent-button");
         getStyleClass().add("new-menu-button");
         clearDialog();
 
 
-        MenuItem vector = new MenuItem("2DVector", Icons.of("vector.png", 20));
+        MenuItem vector = new MenuItem("Vector 2D", Icons.of("vector.png", 20));
         vector.getStyleClass().add("new-menu-item");
         vector.setOnAction(actionEvent -> {
             clearDialog();
@@ -41,7 +41,7 @@ public class NewMenuButton extends MenuButton {
 
             vectorInput.getChildren().addAll(new Text("Enter x, y :   "), xInput, yInput);
             dialog.setGraphic(vectorInput);
-            dialog.setHeaderText("2DVector");
+            dialog.setHeaderText("Vector 2D");
             dialog.setContentText("Enter name:");
             dialog.showAndWait().ifPresent(response ->{
 
@@ -52,7 +52,7 @@ public class NewMenuButton extends MenuButton {
             });
         });
 
-        MenuItem matrix = new MenuItem("Matrix", Icons.of("matrix2d.png", 20));
+        MenuItem matrix = new MenuItem("Matrix 2x2", Icons.of("matrix2d.png", 20));
         matrix.getStyleClass().add("new-menu-item");
         matrix.setOnAction(actionEvent -> {
             clearDialog();
@@ -70,7 +70,7 @@ public class NewMenuButton extends MenuButton {
 
             matrixInputRows.getChildren().addAll(new Text("Enter values:   "), aRow, bRow);
             dialog.setGraphic(matrixInputRows);
-            dialog.setHeaderText("2x2Matrix");
+            dialog.setHeaderText("Matrix 2x2");
             dialog.setContentText("Enter name:");
             dialog.showAndWait().ifPresent(response ->{
                 if(!RegexUtils.isValidName(dialog.getEditor().getText()))

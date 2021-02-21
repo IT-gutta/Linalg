@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import math3d.Vector3;
 
@@ -24,7 +25,7 @@ public class CanvasPane3D extends Pane {
         canvas.addEventFilter(MouseEvent.ANY, (e) -> canvas.requestFocus());
 
         getChildren().add(canvas);
-
+        canvas.setOnScroll(scrollHandler);
         canvas.setOnKeyPressed(keyHandler);
         canvas.setOnMouseDragged(mouseHandler);
         canvas.setOnMousePressed(event -> {
@@ -67,13 +68,17 @@ public class CanvasPane3D extends Pane {
         double movementX = (mouseEvent.getX() - previousX) * mouseSensitivity;
         double movementY = (mouseEvent.getY() - previousY) * mouseSensitivity;
 
+        //set yaw
         CanvasRenderer3D.getCamera().setPosition(Vector3.rotateY(CanvasRenderer3D.getCamera().position, -movementX));
-//        Vector3 vel = Vector3.scale(Vector3.UP(), (Math.pow(10, -16)*movementY));
-//        System.out.println(CanvasRenderer3D.getCamera().position);
-//        CanvasRenderer3D.getCamera().setPosition(Vector3.add(CanvasRenderer3D.getCamera().position, vel));
+
+
+        /*Vector3 vel = Vector3.scale(Vector3.UP(), movementY);
+        //System.out.println(CanvasRenderer3D.getCamera().position);
+        CanvasRenderer3D.getCamera().setPosition(Vector3.rotate(CanvasRenderer3D.getCamera().right, CanvasRenderer3D.getCamera().position, movementY*0.01));
+        */
         CanvasRenderer3D.getCamera().pointAt(Vector3.ZERO());
 
-        //TODO fix pitching
+        //TODO fix camera pitching
         //CanvasRenderer3D.getCamera().setForward(Vector3.rotate(CanvasRenderer3D.getCamera().right, CanvasRenderer3D.getCamera().forward, movementY));
 
         previousX = mouseEvent.getX();
@@ -100,5 +105,9 @@ public class CanvasPane3D extends Pane {
 
         else if(keyEvent.getCode().equals(KeyCode.S))
             CanvasRenderer3D.getCamera().moveForward(-0.5);
+    };
+
+    private EventHandler<ScrollEvent> scrollHandler = scrollEvent ->{
+        CanvasRenderer3D.getCamera().position.scale(1 - scrollEvent.getDeltaY() / 300);
     };
 }

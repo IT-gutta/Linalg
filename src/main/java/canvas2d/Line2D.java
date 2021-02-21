@@ -2,7 +2,6 @@ package canvas2d;
 
 import graphics.Interpolatable;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Paint;
 import math.Line;
 import math.Matrix;
 import math.Point;
@@ -53,7 +52,7 @@ public class Line2D extends Render2D implements Interpolatable {
     }
 
     @Override
-    public void render(GraphicsContext gc, String name, Paint paint){
+    public void render(GraphicsContext gc){
         //linear interpolation of transformation
         handleInterpolation();
 

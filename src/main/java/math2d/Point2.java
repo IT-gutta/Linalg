@@ -2,7 +2,9 @@ package math2d;
 
 import math.Point;
 
-public class Point2 extends Point {
+import java.io.Serializable;
+
+public class Point2 extends Point implements Serializable {
     public Point2(double x, double y){
         super(x, y);
     }

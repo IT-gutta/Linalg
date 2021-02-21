@@ -2,7 +2,9 @@ package math;
 
 import graphics.VariableContainer;
 
-public class Line implements Transformable {
+import java.io.Serializable;
+
+public class Line implements Transformable, Serializable {
     //TODO fix toString
     private VariableContainer<Line> wrapper;
     private Point start;

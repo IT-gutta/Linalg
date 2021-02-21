@@ -5,7 +5,9 @@ import math.Matrix;
 import math.Vector;
 import math.Vectors;
 
-public class Vector3 extends Vector{
+import java.io.Serializable;
+
+public class Vector3 extends Vector implements Serializable {
     public Vector3(double... args){
         super(args);
         if(args.length != 3)

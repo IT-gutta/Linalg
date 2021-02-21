@@ -1,7 +1,12 @@
 package math3d;
 
-public class Point3 {
-    public Point3(double a, double b, double c){
+import math.Point;
 
+import java.io.Serializable;
+
+public class Point3 extends Point implements Serializable {
+    public Point3(double x, double y, double z){
+        super(x, y, z);
     }
+
 }

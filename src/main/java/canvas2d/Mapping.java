@@ -1,9 +1,8 @@
-package math2d;
+package canvas2d;
 
 import canvas2d.CanvasRenderer2D;
 import canvas2d.Render2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Paint;
 import math.Expression;
 
 public class Mapping extends Render2D {
@@ -47,7 +46,7 @@ public class Mapping extends Render2D {
     }
 
     @Override
-    public void render(GraphicsContext gc, String name, Paint paint) {
+    public void render(GraphicsContext gc) {
         gc.setLineWidth(1.5);
         gc.setStroke(paint);
         //non-transformable

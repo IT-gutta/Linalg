@@ -4,12 +4,14 @@ import javafx.scene.paint.Color;
 import math3d.Line3;
 import math3d.Vector3;
 
-public class Triangle {
+import java.io.Serializable;
+
+public class Triangle implements Serializable {
     private Vector3[] vertices;
     private Color[] colors;
     private Color[] adjustedColors;
     private Color color;
-    private boolean shouldInterpolateColors = true;
+    private boolean shouldInterpolateColors;
 
     public Triangle(Vector3 p1, Vector3 p2, Vector3 p3, String color){
         this(p1, p2, p3, Color.valueOf(color));
@@ -70,7 +72,6 @@ public class Triangle {
 
         Vector3 normal = Vector3.cross(Vector3.subtract(pos2, pos1), Vector3.subtract(pos3, pos1));
 
-        //TODO fikse facingCamera funksjonen!!!
         if(!facingCamera(normal, pos1))
             return;
 
@@ -91,9 +92,11 @@ public class Triangle {
         }
         //simple grayscale fill based on brightness from lightSource
         else {
-            gc.setFill(Color.grayRgb((int) brightness(Vector3.scale(Vector3.add(pos1, pos2, pos3), 0.33333333), normal)));
+            Color fill = Color.grayRgb((int) (255 * brightness(Vector3.scale(Vector3.add(pos1, pos2, pos3), 0.33333333), normal)));
+            gc.setFill(fill);
             gc.fillTriangle(pos1, pos2, pos3);
         }
+
     }
 
     public boolean facingCamera(Vector3 normal, Vector3 arbitraryPointOnTriangle){

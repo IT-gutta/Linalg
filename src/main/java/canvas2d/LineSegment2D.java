@@ -2,7 +2,6 @@ package canvas2d;
 
 import graphics.*;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Paint;
 import math.*;
 
 public class LineSegment2D extends Render2D implements Interpolatable {
@@ -21,7 +20,7 @@ public class LineSegment2D extends Render2D implements Interpolatable {
     }
 
     @Override
-    public void render(GraphicsContext gc, String name, Paint paint){
+    public void render(GraphicsContext gc){
         gc.setLineWidth(1);
         //linear interpolation for the points
         handleInterpolation();

@@ -1,12 +1,10 @@
 package canvas3d;
 
-import graphics.Interpolatable;
 import graphics.Interpolator;
-import javafx.scene.paint.Color;
 import math.Matrix;
 import math3d.Vector3;
 
-public class Vector3D extends Mesh implements Interpolatable {
+public class Vector3D extends Mesh {
     private Interpolator interpolator;
     private Vector3 vector3;
 
@@ -14,7 +12,7 @@ public class Vector3D extends Mesh implements Interpolatable {
     public Vector3D(double x, double y, double z){
         super("vectorfix.obj", Vector3.ZERO(), 1);
         vector3 = new Vector3(x, y, z);
-        scale(vector3.getMagnitude());
+        setScale(vector3.getMagnitude());
         setForward(vector3);
     }
 
@@ -43,17 +41,15 @@ public class Vector3D extends Mesh implements Interpolatable {
     }
 
     @Override
-    public void update(String name, Color color) {
+    public void beforeRender() {
         handleInterpolation();
     }
 
     @Override
-    public void render(GraphicsContext3D gc, String name, Color color){
-        update(name, color);
+    public void render(GraphicsContext3D gc){
+        beforeRender();
 
         for(Triangle triangle : triangles){
-            triangle.setColor(color);
-            triangle.setInterpolateColors(false);
             triangle.render(gc, position, forward, up, right);
         }
         /*gc.strokeLine(0, 0, 0, forward.getX(), forward.getY(), forward.getZ());

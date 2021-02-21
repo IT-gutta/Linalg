@@ -2,9 +2,10 @@ package math;
 
 import graphics.*;
 
+import java.io.Serializable;
 import java.util.stream.DoubleStream;
 
-public class Vector implements Transformable {
+public class Vector implements Transformable, Serializable {
 
     private double[] vector;
     private Interpolator interpolator;

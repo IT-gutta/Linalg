@@ -10,14 +10,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import math2d.Mapping;
+import canvas2d.Mapping;
 
-public class VariableContainer<T> extends HBox {
+import java.io.Serializable;
+
+public class VariableContainer<T> extends HBox implements Serializable {
     private T variable;
     private String name;
-    private final Text contentField;
-    private final Text nameField;
-    private final ColorPicker colorPicker;
+    private final transient Text contentField;
+    private final transient Text nameField;
+    private final transient ColorPicker colorPicker;
     //private final Pane spacer = new Pane();
 
 
@@ -46,6 +48,18 @@ public class VariableContainer<T> extends HBox {
         getChildren().addAll(showHideButton, colorPicker, editButton, nameWrapper);
 
         getStyleClass().add("variable");
+
+
+        colorPicker.setOnAction(a ->{
+            setColor(colorPicker.getValue());
+        });
+    }
+
+    public void setColor(Color color){
+        if(variable instanceof Render3D)
+            ((Render3D) variable).setColor(color);
+        else if(variable instanceof Render2D)
+            ((Render2D) variable).setPaint(getPaint());
     }
 
 
@@ -93,6 +107,7 @@ public class VariableContainer<T> extends HBox {
         if(DefinedVariables.contains(name))
             throw new IllegalArgumentException("Name already exist!");
 
+        //dette kan kanskje gjøres på en bedre måte
         DefinedVariables.remove(this);
 
         this.name = name;
@@ -100,6 +115,11 @@ public class VariableContainer<T> extends HBox {
         updateContentText();
 
         DefinedVariables.add(this);
+
+        if(variable instanceof Render3D)
+            ((Render3D) variable).setName(name);
+        else if(variable instanceof Render2D)
+            ((Render2D) variable).setName(name);
     }
 
     public void updateContentText(){
