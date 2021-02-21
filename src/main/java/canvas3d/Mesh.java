@@ -1,6 +1,5 @@
 package canvas3d;
 
-import javafx.scene.paint.Color;
 import math3d.Vector3;
 
 import java.io.File;
@@ -11,10 +10,17 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Mesh extends Render3D{
+    protected double currentScale;
+    protected double scaleX = 1;
+    protected double scaleY = 1;
+    protected double scaleZ = 1;
+
     //TODO vector arrow mesh based on magnitude
 
     public Mesh(String path, Vector3 position, double scale){
         super(position);
+
+        currentScale = scale;
 
         try(Scanner sc = new Scanner(new File(getClass().getResource(path).toExternalForm().replace("file:/", "")))){
 
@@ -28,7 +34,7 @@ public class Mesh extends Render3D{
 
                 else if(line[0].equals("f")){
                     try {
-                        Triangle triangle = new Triangle(vertices.get(Integer.parseInt(line[1])-1), vertices.get(Integer.parseInt(line[2])-1), vertices.get(Integer.parseInt(line[3])-1), Color.MEDIUMVIOLETRED, Color.MEDIUMVIOLETRED, Color.MEDIUMVIOLETRED);
+                        Triangle triangle = new Triangle(vertices.get(Integer.parseInt(line[1])-1), vertices.get(Integer.parseInt(line[2])-1), vertices.get(Integer.parseInt(line[3])-1));
                         triangles.add(triangle);
                     }
                     catch (Exception e){
@@ -46,15 +52,17 @@ public class Mesh extends Render3D{
         }
     }
 
-    public void scale(double scalar){
-        for(Vector3 vertex : vertices)
-            vertex.scale(scalar);
+    public void setScale(double scale){
+        for (Vector3 vertex : vertices) {
+            vertex.scale(scale / currentScale);
+        }
+        currentScale = scale;
     }
 
 
 
     @Override
-    public void update(String name, Color color) {
+    public void beforeRender() {
 
     }
 

@@ -2,7 +2,6 @@ package canvas2d;
 
 import graphics.DefinedVariables;
 import graphics.VariableContainer;
-import math2d.*;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -27,8 +26,8 @@ public abstract class CanvasRenderer2D {
 
     public static void start(){
         Matrix matrix = new Matrix(0, 1, -1, 0);
-        Vector vector = new Vector(2, 2);
-        Line line = new Line(-2, 0, 2, 2);
+        Vector2D vector = new Vector2D(2, 2);
+        Line2D line = new Line2D(-2, 0, 2, 2);
 
         Grid2D grid2 = new Grid2D(0, 0, 5, 5, 1, 1);
         LineSegment2D lineSegment2 = new LineSegment2D(-2, 0, -5, -5);
@@ -55,7 +54,7 @@ public abstract class CanvasRenderer2D {
                 graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 drawLines();
                 DefinedVariables.get2DRenderables().forEach(r -> {
-                    r.getVariable().render(graphicsContext, r.getName(), r.getPaint());
+                    r.getVariable().render(graphicsContext);
                 });
 
                 lastFrameTime = now;

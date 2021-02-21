@@ -2,7 +2,6 @@ package canvas2d;
 
 import graphics.Interpolatable;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Paint;
 import math.Matrix;
 import math.Vector;
 
@@ -54,12 +53,12 @@ public class Grid2D extends Render2D implements Interpolatable {
     }
 
     @Override
-    public void render(GraphicsContext gc, String name, Paint paint) {
+    public void render(GraphicsContext gc) {
         gc.setStroke(paint);
         //gc.setLineWidth(1);
         for(LineSegment2D line : lineSegments) {
             line.handleInterpolation();
-            line.render(gc, name, paint);
+            line.render(gc);
         }
     }
 

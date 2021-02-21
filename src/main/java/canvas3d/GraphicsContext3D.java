@@ -39,9 +39,7 @@ public class GraphicsContext3D {
 
         graphicsContext2D.setTextAlign(TextAlignment.CENTER);
         graphicsContext2D.setTextBaseline(VPos.CENTER);
-        double size = -(pos.getZ() - 172) - 320;
-        if(size < 0)
-            size = 0;
+        double size = (1 - pos.getZ()) * 15;
         graphicsContext2D.setFont(new Font(size));
         graphicsContext2D.fillText(text, pos.getX(), pos.getY());
     }

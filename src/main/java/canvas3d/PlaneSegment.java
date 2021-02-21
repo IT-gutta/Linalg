@@ -69,7 +69,7 @@ public class PlaneSegment extends Render3D{
 
 
     @Override
-    public void update(String name, Color color) {
+    public void beforeRender() {
 
     }
 

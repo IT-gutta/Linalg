@@ -23,7 +23,7 @@ public class LightSource extends Render3D{
     }
 
     @Override
-    public void update(String name, Color color){
+    public void beforeRender(){
         //position = Vector3.rotateY(position, 0.001*CanvasRenderer3D.deltaTime);
     }
 

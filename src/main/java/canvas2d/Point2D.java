@@ -1,9 +1,7 @@
 package canvas2d;
 
-import canvas2d.CanvasRenderer2D;
 import graphics.Interpolatable;
 import graphics.Interpolator;
-import canvas2d.Render2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.*;
@@ -48,7 +46,7 @@ public class Point2D extends Render2D implements Interpolatable {
     }
 
     @Override
-    public void render(GraphicsContext gc, String name, Paint paint){
+    public void render(GraphicsContext gc){
         double[] p = point2.getPoint();
         //linear interpolation
         handleInterpolation();

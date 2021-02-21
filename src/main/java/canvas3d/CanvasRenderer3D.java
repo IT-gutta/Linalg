@@ -8,6 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import math.Matrix;
+import math.Point;
 import math3d.Vector3;
 
 import java.text.DecimalFormat;
@@ -23,23 +24,18 @@ public abstract class CanvasRenderer3D {
     //private static final List<Render3D> gameObjects = new ArrayList<>();
 
     public static void start(){
-        /*Vector3Renderer iHat = new Vector3Renderer(1, 0, 0);
-        Vector3Renderer jHat = new Vector3Renderer(0, 1, 0);
-        Vector3Renderer kHat = new Vector3Renderer(0, 0, 1);
-        DefinedVariables.add(new VariableContainer<Vector3Renderer>(iHat, "iHat"));
-        DefinedVariables.add(new VariableContainer<Vector3Renderer>(jHat, "jHat"));
-        DefinedVariables.add(new VariableContainer<Vector3Renderer>(kHat, "kHat"));*/
+//        Render3D mesh = new Mesh("chevrolet.obj", new Vector3(0, 0, 0), 1);
+//        mesh.setForward(Vector3.scale(Vector3.FORWARD(), -1));
+//        DefinedVariables.add(mesh, "chevrolet");
 
-
-        Render3D mesh = new Mesh("chevrolet.obj", new Vector3(0, 0, 0), 1);
-        mesh.setForward(Vector3.scale(Vector3.FORWARD(), -1));
-        DefinedVariables.add(mesh, "chevrolet");
-
-//        Render3D cube = new Cube(Vector3.ZERO());
+//        Render3D cube = new Cube(Vector3.ZERO(), 1);
 //        DefinedVariables.add(cube, "cube");
+//
+//        Point3D point3D = new Point3D(5, 2, 0);
+//        DefinedVariables.add(point3D, "point3d");
 
 
-        /*Vector3D x = new Vector3D(1, 0, 0);
+        Vector3D x = new Vector3D(1, 0, 0);
         Vector3D y = new Vector3D(0, 1, 0);
         Vector3D z = new Vector3D(0, 0, 1);
 
@@ -47,16 +43,17 @@ public abstract class CanvasRenderer3D {
         DefinedVariables.add(x, "x");
         DefinedVariables.add(y, "y");
         DefinedVariables.add(z, "z");
+//
+//        Sphere sphere = new Sphere(Vector3.ZERO(), 3);
+//        DefinedVariables.add(sphere, "sphere");
 
-        Vector3D vector1 = new Vector3D(3, 3, 3);
-        DefinedVariables.add(vector1, "vector1");*/
 
-        Matrix rotate3 = new Matrix(new double[][]{
-                {0, -1, 0},
-                {0, 0, -1},
-                {1, 0, 0}
-        });
-        DefinedVariables.add(new VariableContainer<>(rotate3, "rotate3"));
+//        Matrix rotate3 = new Matrix(new double[][]{
+//                {0, -1, 0},
+//                {0, 0, -1},
+//                {1, 0, 0}
+//        });
+//        DefinedVariables.add(new VariableContainer<>(rotate3, "rotate3"));
 
         AnimationTimer animationTimer = new AnimationTimer() {
             long lastFrameTime;
@@ -68,7 +65,7 @@ public abstract class CanvasRenderer3D {
                 graphicsContext3D.clearPolygons();
 
                 DefinedVariables.get3DRenderables().forEach(r -> {
-                    r.getVariable().render(graphicsContext3D, r.getName(), r.getColor());
+                    r.getVariable().render(graphicsContext3D);
                 });
                 DefinedVariables.updateText();
 

@@ -1,6 +1,8 @@
 package math;
 
-public class Point implements Transformable {
+import java.io.Serializable;
+
+public class Point implements Transformable, Serializable {
     private double[] point;
 
     public Point(double... args){

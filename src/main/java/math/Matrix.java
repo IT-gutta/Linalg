@@ -2,9 +2,10 @@ package math;
 
 import math3d.Vector3;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Matrix{
+public class Matrix implements Serializable {
     private double[][] matrix;
     private int width;
     private int height;

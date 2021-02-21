@@ -1,6 +1,8 @@
 package math;
 
-public class Complex{
+import java.io.Serializable;
+
+public class Complex implements Serializable {
     private double re;
     private double im;
     private double length;

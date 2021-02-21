@@ -3,7 +3,6 @@ package canvas2d;
 import graphics.Interpolatable;
 import graphics.Interpolator;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Paint;
 import math.Matrix;
 import math.Vector;
 import math.Vectors;
@@ -18,7 +17,7 @@ public class Vector2D extends Render2D implements Interpolatable {
     }
 
     @Override
-    public void render(GraphicsContext gc, String name, Paint paint){
+    public void render(GraphicsContext gc){
         //linear interpolation
         handleInterpolation();
 

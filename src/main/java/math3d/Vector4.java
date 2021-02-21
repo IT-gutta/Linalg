@@ -2,7 +2,9 @@ package math3d;
 
 import math.Vector;
 
-public class Vector4 {
+import java.io.Serializable;
+
+public class Vector4 implements Serializable {
     private Vector vector;
     public Vector4(double... ds){
         if(ds.length != 4)

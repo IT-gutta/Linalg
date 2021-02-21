@@ -2,7 +2,9 @@ package math2d;
 
 import math.Vector;
 
-public class Vector2 extends Vector{
+import java.io.Serializable;
+
+public class Vector2 extends Vector implements Serializable {
     public Vector2(double x, double y){
         super(x, y);
     }

@@ -10,7 +10,7 @@ public class Camera3D extends Render3D{
     //TODO fix cameraMovement
     //TODO implement some sort of clipping of the triangles (when they are at the edge of canvas)
     private final double fov = Math.PI/2;
-    private final double zFar = 100; //vet egt ikke hva denne gjør, men den må være høyere enn zNear for at det skal funke hehe
+    private final double zFar = 40; //vet egt ikke hva denne gjør, men den må være høyere enn zNear for at det skal funke hehe
     private final double zNear = 0.1; //bestemmer rendering distance
 
     private LightSource lightSource;
@@ -19,14 +19,22 @@ public class Camera3D extends Render3D{
     private Matrix lookAtMatrix;
     public Camera3D(){
         super(new Vector3(0, 0, -6), Vector3.FORWARD(), Vector3.UP());
-        lightSource = new LightSource(new Vector3(1, 2, -4));
+        lightSource = new LightSource(new Vector3(10, 4, -20));
         DefinedVariables.add(lightSource, "LightBulb");
     }
 
     @Override
-    public void update(String name, Color color) {
+    public void beforeRender() {
 
     }
+
+//    //lightsource på camera
+//    @Override
+//    public void setPosition(Vector3 position){
+//        lightSource.setPosition(position);
+//        super.setPosition(position);
+//    }
+
 
     @Override
     public Object getMath() {
@@ -36,7 +44,7 @@ public class Camera3D extends Render3D{
     public void updateMatrix(){
         double f = 1d/(Math.tan(fov / 2));
         double a = CanvasRenderer3D.getCanvasHeight() / CanvasRenderer3D.getCanvasWidth();
-        double q = zFar/(zFar-zNear);
+        double q = 1/(zFar-zNear);
         double[][] matrix = {
                 {a*f, 0, 0, 0},
                 {0, -f, 0, 0},
@@ -74,7 +82,7 @@ public class Camera3D extends Render3D{
         double[] out = projectionMatrix.transform(cameraView);
         //System.out.println("z:"+out[2]);
 
-        if(out[2] < 0 || out[2] > zFar)
+        if(out[2] < 0 || out[2] > 1)
             return null;
 
         out[0] /= out[3];

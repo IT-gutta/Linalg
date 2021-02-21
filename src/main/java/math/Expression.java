@@ -1,5 +1,6 @@
 package math;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,16 +9,16 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Expression {
+public class Expression  implements Serializable {
     private String expression;
     private Expression leftChild;
     private Expression rightChild;
     private String operator;
     private boolean isPositive = true;
 
-    private HashMap<String, BiFunction<Double, Double, Double>> dddOps = new HashMap<>();
-    private HashMap<String, Function<Double, Double>> ddOps = new HashMap<>();
-    private HashMap<String, Double> constants = new HashMap<>();
+    private transient HashMap<String, BiFunction<Double, Double, Double>> dddOps = new HashMap<>();
+    private transient HashMap<String, Function<Double, Double>> ddOps = new HashMap<>();
+    private transient HashMap<String, Double> constants = new HashMap<>();
 
 
     public Expression(String input) throws IllegalArgumentException{

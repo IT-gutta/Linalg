@@ -7,7 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import math.*;
-import math2d.Mapping;
+import canvas2d.Mapping;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

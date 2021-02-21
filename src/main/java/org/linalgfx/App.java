@@ -6,6 +6,7 @@ import canvas3d.CanvasPane3D;
 import canvas3d.CanvasRenderer3D;
 import graphics.DefinedVariables;
 import graphics.ToolBar;
+import graphics.VariableContainer;
 import graphics.textInput.TextInputEvent;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -17,7 +18,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * JavaFX App
@@ -104,24 +107,43 @@ public class App extends Application {
     }
 
 
-//    public static void saveToFile(){
-//        try {
-//            FileOutputStream fos = new FileOutputStream("/list.out");
-//            ObjectOutputStream oos = new ObjectOutputStream(fos);
-//            //oos.writeObject(DefinedVariables.getVBox().getChildren());
-//            oos.flush();
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public static void loadFromFile(){
-//        try {
-//            FileInputStream fos = new FileInputStream("/list.out");
-//            ObjectInputStream oos = new ObjectInputStream(fos);
-//            //Def.setList((List<Renderable>) oos.readObject());
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//    }
+    public static void saveToFile(){
+        try {
+            FileOutputStream fos = new FileOutputStream(App.class.getResource("current_save.txt").toExternalForm().replace("file:/", ""), false);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            for(Object o : DefinedVariables.getVBox().getChildren())
+                oos.writeObject(o);
+
+            oos.writeObject(null);
+            oos.flush();
+
+            oos.close();
+            fos.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadFromFile(){
+        try {
+            FileInputStream fis = new FileInputStream(App.class.getResource("current_save.txt").toExternalForm().replace("file:/", ""));
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            List<VariableContainer> list = new ArrayList<>();
+            //get all objects
+            VariableContainer v = (VariableContainer) ois.readObject();
+            do{
+                list.add(v);
+                v = (VariableContainer) ois.readObject();
+            } while(v != null);
+
+            DefinedVariables.getVBox().getChildren().clear();
+            DefinedVariables.getVBox().getChildren().addAll(list);
+
+            fis.close();
+            ois.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }

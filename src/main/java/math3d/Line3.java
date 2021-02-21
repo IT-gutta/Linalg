@@ -1,6 +1,8 @@
 package math3d;
 
-public class Line3 {
+import java.io.Serializable;
+
+public class Line3 implements Serializable {
     private Vector3 point;
     private Vector3 direction;
     public Line3(Vector3 point, Vector3 direction){

@@ -1,16 +1,23 @@
 package canvas3d;
 
+import graphics.Interpolatable;
+import graphics.Interpolator;
 import javafx.scene.paint.Color;
+import math.Matrix;
+import math.Transformable;
 import math3d.Vector3;
 
-public abstract class Render3D {
-    //TODO add spheres
+import java.io.Serializable;
+
+public abstract class Render3D implements Interpolatable, Serializable  {
+    protected String name;
     protected Vector3 position;
     protected Vector3 forward;
     protected Vector3 up;
     protected Vector3 right;
     protected Triangle[] triangles;
     protected Vector3[] vertices;
+    protected Interpolator interpolator;
 
 
     public Render3D(Vector3[] vertices, Triangle[] triangles, Vector3 position, Vector3 forward, Vector3 up){
@@ -112,8 +119,9 @@ public abstract class Render3D {
     }
 
 
-    public void render(GraphicsContext3D gc, String name, Color color){
-        update(name, color);
+    public void render(GraphicsContext3D gc){
+        beforeRender();
+        handleInterpolation();
 
         if(triangles == null) //ingenting som skal renderes
             return;
@@ -124,7 +132,11 @@ public abstract class Render3D {
 
 
 
-    public abstract void update(String name, Color color);
+    public abstract void beforeRender();
+
+    public void setName(String name){
+        this.name = name;
+    }
 
     public void setColor(Color color){
         for(Triangle triangle : triangles){
@@ -182,4 +194,61 @@ public abstract class Render3D {
     public void hide(){
         isHidden = true;
     };
+
+
+    @Override
+    public void startInterpolation(Matrix m, int millis) {
+//        Vector3[] transformedVertices = new Vector3[vertices.length];
+//        for(int i = 0; i < vertices.length; i++){
+//            transformedVertices[i] = new Vector3(m.transform(vertices[i].getVector()));
+//        }
+        double[] startForward = forward.getVector();
+        double[] startRight = right.getVector();
+        double[] startUp = up.getVector();
+        double[] startPosition = position.getVector();
+
+        double[] endForward = m.transform(startForward);
+        double[] endRight = m.transform(startRight);
+        double[] endUp = m.transform(startUp);
+        double[] endPosition = m.transform(startPosition);
+
+        double[] starts = new double[12];
+        double[] ends = new double[12];
+
+        for(int i = 0; i < 3; i++){
+            starts[i] = startForward[i];
+            starts[3 + i] = startRight[i];
+            starts[6 + i] = startUp[i];
+            starts[9 + i] = startPosition[i];
+
+            ends[i] = endForward[i];
+            ends[3 + i] = endRight[i];
+            ends[6 + i] = endUp[i];
+            ends[9 + i] = endPosition[i];
+        }
+        interpolator = new Interpolator(millis, starts, ends);
+    }
+
+    @Override
+    public void handleInterpolation() {
+        if(interpolator != null){
+            interpolator.handle();
+
+            forward.setX(interpolator.get(0));
+            forward.setY(interpolator.get(1));
+            forward.setZ(interpolator.get(2));
+            right.setX(interpolator.get(3));
+            right.setY(interpolator.get(4));
+            right.setZ(interpolator.get(5));
+            up.setX(interpolator.get(6));
+            up.setY(interpolator.get(7));
+            up.setZ(interpolator.get(8));
+            position.setX(interpolator.get(9));
+            position.setY(interpolator.get(10));
+            position.setZ(interpolator.get(11));
+
+            if(interpolator.isFinished())
+                interpolator = null;
+        }
+    }
 }
