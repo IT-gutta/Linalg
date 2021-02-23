@@ -53,21 +53,21 @@ public abstract class Render3D implements Interpolatable, Serializable  {
         if(forward.equals(Vector3.ZERO()))
             throw new IllegalArgumentException("Forward cant be null vector");
         //TODO fix new up after setting forward
-        /*if (forward.equals(this.up)) //roter 90 grader om en vilkårlig akse foreløpig??¨
+        if (forward.equals(this.up) || forward.equals(Vector3.scale(this.up, -1))) //roter 90 grader om en vilkårlig akse foreløpig??¨
             this.up = Vector3.scale(this.forward, -1);
 
         else
-            this.up = Vector3.subtract(up, Vector3.scale(forward, forward.dot(up))).normalized();*/
+            this.up = Vector3.subtract(up, Vector3.scale(forward, forward.dot(up))).normalized();
         //setter en random up-vektor
-        if(forward.getZ() == 0){
-            if(forward.getY() == 0)
-                this.up = new Vector3(0, 1, 0);
-            else
-                this.up = new Vector3(1, -forward.getX() / forward.getY(), 0).normalized();
-        }
-        else
-            this.up = new Vector3(0, 1, -forward.getY() / forward.getZ()).normalized();
-
+//        if(forward.getZ() == 0){
+//            if(forward.getY() == 0)
+//                this.up = new Vector3(0, 1, 0);
+//            else
+//                this.up = new Vector3(1, -forward.getX() / forward.getY(), 0).normalized();
+//        }
+//        else
+//            this.up = new Vector3(0, 1, -forward.getY() / forward.getZ()).normalized();
+        this.up = Vector3.subtract(up, Vector3.scale(forward, forward.dot(up))).normalized();
 
         this.forward = forward.normalized();
         this.right = Vector3.cross(up, forward).normalized();

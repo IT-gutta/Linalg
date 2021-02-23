@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Triangle implements Serializable {
     private Vector3[] vertices;
     private Color[] colors;
-    private Color[] adjustedColors;
+    private Color[] adjustedColors = new Color[3];
     private Color color;
     private boolean shouldInterpolateColors;
 
@@ -27,14 +27,12 @@ public class Triangle implements Serializable {
 
     public Triangle(Vector3 p1, Vector3 p2, Vector3 p3, Color c1, Color c2, Color c3){
         this.vertices = new Vector3[]{p1, p2, p3};
-        this.colors = new Color[]{c1, c2, c3};
-        this.adjustedColors = new Color[3];
+        setColors(new Color[]{c1, c2, c3});
     }
 
     public Triangle(Vector3 p1, Vector3 p2, Vector3 p3, String c1, String c2, String c3){
         this.vertices = new Vector3[]{p1, p2, p3};
-        this.colors = new Color[]{Color.valueOf(c1), Color.valueOf(c2), Color.valueOf(c3)};
-        this.adjustedColors = new Color[3];
+        setColors(new Color[]{Color.valueOf(c1), Color.valueOf(c2), Color.valueOf(c3)});
     }
 
 
@@ -155,10 +153,13 @@ public class Triangle implements Serializable {
 
     public void setColor(Color color){
         this.color = color;
+        this.shouldInterpolateColors = false;
     }
 
     public void setColors(Color[] colors){
         this.colors = colors;
+        this.adjustedColors = new Color[3];
+        this.shouldInterpolateColors = true;
     }
 
     public void setInterpolateColors(boolean bool){

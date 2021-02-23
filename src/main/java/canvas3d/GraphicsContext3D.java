@@ -68,6 +68,10 @@ public class GraphicsContext3D {
     }
 
     public void fillTriangle(Vector3 p1, Vector3 p2, Vector3 p3, Color[] colors){
+        if(width == 0 || height == 0)
+            return;
+
+
         Vector4[] projectedPoints = new Vector4[]{
                 camera.project(p1),
                 camera.project(p2),
@@ -88,6 +92,9 @@ public class GraphicsContext3D {
     }
 
     public void fillTriangle(Vector3 p1, Vector3 p2, Vector3 p3){
+        if(width == 0 || height == 0)
+            return;
+
         Vector4[] projectedPoints = new Vector4[]{
                 camera.project(p1),
                 camera.project(p2),

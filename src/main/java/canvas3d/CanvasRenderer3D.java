@@ -5,11 +5,13 @@ import graphics.VariableContainer;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import math.Matrix;
 import math.Point;
 import math3d.Vector3;
+import terraingeneration.NoiseTerrainMesh;
 
 import java.text.DecimalFormat;
 
@@ -24,9 +26,10 @@ public abstract class CanvasRenderer3D {
     //private static final List<Render3D> gameObjects = new ArrayList<>();
 
     public static void start(){
-//        Render3D mesh = new Mesh("chevrolet.obj", new Vector3(0, 0, 0), 1);
-//        mesh.setForward(Vector3.scale(Vector3.FORWARD(), -1));
-//        DefinedVariables.add(mesh, "chevrolet");
+//        Mesh chevrolet = new Mesh("chevrolet.obj", new Vector3(0, 0, 0), 1);
+//        chevrolet.setForward(Vector3.scale(Vector3.FORWARD(), -1));
+//        DefinedVariables.add(chevrolet, "chevrolet");
+//        chevrolet.setColors(Color.AZURE, Color.AZURE, Color.AZURE);
 
 //        Render3D cube = new Cube(Vector3.ZERO(), 1);
 //        DefinedVariables.add(cube, "cube");
@@ -35,15 +38,15 @@ public abstract class CanvasRenderer3D {
 //        DefinedVariables.add(point3D, "point3d");
 
 
-        Vector3D x = new Vector3D(1, 0, 0);
-        Vector3D y = new Vector3D(0, 1, 0);
-        Vector3D z = new Vector3D(0, 0, 1);
-
-
-        DefinedVariables.add(x, "x");
-        DefinedVariables.add(y, "y");
-        DefinedVariables.add(z, "z");
+//        Vector3D x = new Vector3D(1, 0, 0);
+//        Vector3D y = new Vector3D(0, 1, 0);
+//        Vector3D z = new Vector3D(0, 0, 1);
 //
+//
+//        DefinedVariables.add(x, "x");
+//        DefinedVariables.add(y, "y");
+//        DefinedVariables.add(z, "z");
+////
 //        Sphere sphere = new Sphere(Vector3.ZERO(), 3);
 //        DefinedVariables.add(sphere, "sphere");
 
@@ -54,6 +57,9 @@ public abstract class CanvasRenderer3D {
 //                {1, 0, 0}
 //        });
 //        DefinedVariables.add(new VariableContainer<>(rotate3, "rotate3"));
+
+        NoiseTerrainMesh terrain = new NoiseTerrainMesh(100);
+        DefinedVariables.add(terrain, "terrain");
 
         AnimationTimer animationTimer = new AnimationTimer() {
             long lastFrameTime;

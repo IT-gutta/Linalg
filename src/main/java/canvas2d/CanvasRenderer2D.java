@@ -5,8 +5,10 @@ import graphics.VariableContainer;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import math.*;
+import terraingeneration.PerlinNoiseMap;
 
 import java.text.DecimalFormat;
 
@@ -25,45 +27,45 @@ public abstract class CanvasRenderer2D {
 
 
     public static void start(){
-        Matrix matrix = new Matrix(0, 1, -1, 0);
-        Vector2D vector = new Vector2D(2, 2);
-        Line2D line = new Line2D(-2, 0, 2, 2);
-
-        Grid2D grid2 = new Grid2D(0, 0, 5, 5, 1, 1);
-        LineSegment2D lineSegment2 = new LineSegment2D(-2, 0, -5, -5);
-        Expression f = new Expression("x^5");
-        Expression g = Differentiator.getDerivative(f);
-
-        DefinedVariables.add(new VariableContainer<>(vector, "vector"));
-        DefinedVariables.add(new VariableContainer<>(line, "line"));
-        DefinedVariables.add(grid2, "grid");
-        DefinedVariables.add(lineSegment2, "linesegment");
-        DefinedVariables.add(new VariableContainer<>(matrix, "m"));
-        DefinedVariables.add(new VariableContainer(new Mapping(f), "f"));
-        DefinedVariables.add(new VariableContainer(new Mapping(g),"g"));
+//        Matrix matrix = new Matrix(0, 1, -1, 0);
+//        Vector2D vector = new Vector2D(2, 2);
+//        Line2D line = new Line2D(-2, 0, 2, 2);
+//
+//        Grid2D grid2 = new Grid2D(0, 0, 5, 5, 1, 1);
+//        LineSegment2D lineSegment2 = new LineSegment2D(-2, 0, -5, -5);
+//        Expression f = new Expression("x^5");
+//        Expression g = Differentiator.getDerivative(f);
+//
+//        DefinedVariables.add(new VariableContainer<>(vector, "vector"));
+//        DefinedVariables.add(new VariableContainer<>(line, "line"));
+//        DefinedVariables.add(grid2, "grid");
+//        DefinedVariables.add(lineSegment2, "linesegment");
+//        DefinedVariables.add(new VariableContainer<>(matrix, "m"));
+//        DefinedVariables.add(new VariableContainer(new Mapping(f), "f"));
+//        DefinedVariables.add(new VariableContainer(new Mapping(g),"g"));
 
 
         accountForChanges();
-
 
         AnimationTimer animationTimer = new AnimationTimer() {
             long lastFrameTime;
             @Override
             public void handle(long now) {
-                deltaTime = (now - lastFrameTime) / 1000000;
-                graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                drawLines();
-                DefinedVariables.get2DRenderables().forEach(r -> {
-                    r.getVariable().render(graphicsContext);
-                });
+//                deltaTime = (now - lastFrameTime) / 1000000;
+//                graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//                drawLines();
+//                DefinedVariables.get2DRenderables().forEach(r -> {
+//                    r.getVariable().render(graphicsContext);
+//                });
+//
+//                lastFrameTime = now;
+//
+//                DefinedVariables.updateText();
+//
+//                graphicsContext.setFill(Paint.valueOf("black"));
+//                if(deltaTime > 0)
+//                    graphicsContext.fillText("FPS: " + 1000/deltaTime, 10, 10);
 
-                lastFrameTime = now;
-
-                DefinedVariables.updateText();
-
-                graphicsContext.setFill(Paint.valueOf("black"));
-                if(deltaTime > 0)
-                    graphicsContext.fillText("FPS: " + 1000/deltaTime, 10, 10);
             }
         };
         animationTimer.start();

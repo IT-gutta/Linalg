@@ -71,11 +71,8 @@ public class CanvasPane3D extends Pane {
         //set yaw
         CanvasRenderer3D.getCamera().setPosition(Vector3.rotateY(CanvasRenderer3D.getCamera().position, -movementX));
 
+//        CanvasRenderer3D.getCamera().setPosition(Vector3.rotate(CanvasRenderer3D.getCamera().right, CanvasRenderer3D.getCamera().position, movementY*0.01));
 
-        /*Vector3 vel = Vector3.scale(Vector3.UP(), movementY);
-        //System.out.println(CanvasRenderer3D.getCamera().position);
-        CanvasRenderer3D.getCamera().setPosition(Vector3.rotate(CanvasRenderer3D.getCamera().right, CanvasRenderer3D.getCamera().position, movementY*0.01));
-        */
         CanvasRenderer3D.getCamera().pointAt(Vector3.ZERO());
 
         //TODO fix camera pitching
