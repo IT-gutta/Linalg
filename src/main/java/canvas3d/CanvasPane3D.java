@@ -71,7 +71,7 @@ public class CanvasPane3D extends Pane {
 
         //set yaw
         CanvasRenderer3D.getCamera().rotateY(-movementX);
-//        CanvasRenderer3D.getCamera().rotateX(movementY);
+        //CanvasRenderer3D.getCamera().rotateOwnRight(movementY);
 
 //        CanvasRenderer3D.getCamera().setPosition(Vector3.rotate(CanvasRenderer3D.getCamera().right, CanvasRenderer3D.getCamera().position, movementY*0.01));
 
@@ -104,6 +104,9 @@ public class CanvasPane3D extends Pane {
 
         else if(keyEvent.getCode().equals(KeyCode.S))
             CanvasRenderer3D.getCamera().BACK = true;
+
+        else if(keyEvent.getCode().equals(KeyCode.CONTROL))
+            CanvasRenderer3D.getCamera().CONTROL = true;
     };
 
     private EventHandler<KeyEvent> keyUpHandler = keyEvent ->{
@@ -126,6 +129,9 @@ public class CanvasPane3D extends Pane {
 
         else if(keyEvent.getCode().equals(KeyCode.S))
             CanvasRenderer3D.getCamera().BACK = false;
+
+        else if(keyEvent.getCode().equals(KeyCode.CONTROL))
+            CanvasRenderer3D.getCamera().CONTROL = false;
     };
 
     private EventHandler<ScrollEvent> scrollHandler = scrollEvent ->{

@@ -8,17 +8,14 @@ import java.io.Serializable;
 
 public class Triangle implements Serializable {
     private Vector3[] vertices;
-    private Color[] colors;
     private Color[] adjustedColors = new Color[3];
-    private Color color;
+    private Material material;
+    private Material[] materials;
     private boolean shouldInterpolateColors;
 
-    public Triangle(Vector3 p1, Vector3 p2, Vector3 p3, String color){
-        this(p1, p2, p3, Color.valueOf(color));
-    }
     public Triangle(Vector3 p1, Vector3 p2, Vector3 p3, Color color){
         this.vertices = new Vector3[]{p1, p2, p3};
-        this.color = color;
+        this.material = new Material(color);
     }
 
     public Triangle(Vector3 p1, Vector3 p2, Vector3 p3){
@@ -30,9 +27,9 @@ public class Triangle implements Serializable {
         setColors(new Color[]{c1, c2, c3});
     }
 
-    public Triangle(Vector3 p1, Vector3 p2, Vector3 p3, String c1, String c2, String c3){
+    public Triangle(Vector3 p1, Vector3 p2, Vector3 p3, Material m1, Material m2, Material m3){
         this.vertices = new Vector3[]{p1, p2, p3};
-        setColors(new Color[]{Color.valueOf(c1), Color.valueOf(c2), Color.valueOf(c3)});
+        setMaterials(new Material[]{m1, m2, m3});
     }
 
 
@@ -44,16 +41,16 @@ public class Triangle implements Serializable {
 
         Vector3 normal = getRelativeNormal();
         //color interpolation between vertices
-        if(shouldInterpolateColors && colors != null){
+        if(shouldInterpolateColors && materials != null){
             for (int i = 0; i < 3; i++) {
-                adjustedColors[i] = Color.hsb(colors[i].getHue(), colors[i].getSaturation(), brightness(vertices[i], normal));
+                adjustedColors[i] = materials[i].getColor(brightness(vertices[i], normal));
             }
             gc.fillTriangle(vertices[0], vertices[1], vertices[2], adjustedColors);
         }
 
         //simple fill color
-        else if(color != null){
-            gc.setFill(Color.hsb(color.getHue(), color.getSaturation(), brightness(getAverage(), normal)));
+        else if(material != null){
+            gc.setFill(material.getColor(brightness(getAverage(), normal)));
             gc.fillTriangle(vertices[0], vertices[1], vertices[2]);
         }
         //simple grayscale fill based on brightness from lightSource
@@ -74,18 +71,19 @@ public class Triangle implements Serializable {
             return;
 
         //color interpolation between vertices
-        if(shouldInterpolateColors && colors != null){
-            adjustedColors[0] = Color.hsb(colors[0].getHue(), colors[0].getSaturation(), brightness(pos1, normal));
-            adjustedColors[1] = Color.hsb(colors[1].getHue(), colors[1].getSaturation(), brightness(pos2, normal));
-            adjustedColors[2] = Color.hsb(colors[2].getHue(), colors[2].getSaturation(), brightness(pos3, normal));
+        if(shouldInterpolateColors && materials != null){
+            adjustedColors[0] = materials[0].getColor(brightness(pos1, normal));
+            adjustedColors[1] = materials[1].getColor(brightness(pos2, normal));
+            adjustedColors[2] = materials[2].getColor(brightness(pos3, normal));
+
 
             gc.fillTriangle(pos1, pos2, pos3, adjustedColors);
         }
 
         //simple fill color
-        else if(color != null){
+        else if(material != null){
 
-            gc.setFill(Color.hsb(color.getHue(), color.getSaturation(), brightness(Vector3.scale(Vector3.add(pos1, pos2, pos3), 0.33333333), normal)));
+            gc.setFill(material.getColor(brightness(Vector3.scale(Vector3.add(pos1, pos2, pos3), 0.33333333), normal)));
             gc.fillTriangle(pos1, pos2, pos3);
         }
         //simple grayscale fill based on brightness from lightSource
@@ -147,18 +145,37 @@ public class Triangle implements Serializable {
     }
 
     private double brightness(Vector3 point, Vector3 normal){
-        return Math.sqrt(CanvasRenderer3D.getCamera().getLightSource().getBrightness(point, normal));
+        return Math.sqrt(CanvasRenderer3D.getCamera().getLightSource().getBrightness(point, normal)) * 0.8 + 0.1;
     }
 
 
     public void setColor(Color color){
-        this.color = color;
+        this.material = new Material(color);
         this.shouldInterpolateColors = false;
     }
 
     public void setColors(Color[] colors){
-        this.colors = colors;
-        this.adjustedColors = new Color[3];
+        if(colors.length != 3)
+            throw new IllegalArgumentException("Length of colorarray must be 3");
+
+        Material[] mats = new Material[colors.length];
+        for(int i = 0; i < colors.length; i++)
+            mats[i] = new Material(colors[i]);
+
+        this.materials = mats;
+        this.shouldInterpolateColors = true;
+    }
+
+    public void setMaterial(Material material){
+        this.material = material;
+        this.shouldInterpolateColors = false;
+    }
+
+    public void setMaterials(Material[] materials){
+        if(materials.length != 3)
+            throw new IllegalArgumentException("Length of material array must be 3");
+
+        this.materials = materials;
         this.shouldInterpolateColors = true;
     }
 

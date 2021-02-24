@@ -4,7 +4,8 @@ import math2d.Vector2;
 
 public class PerlinNoiseMap {
     public double get(double y, double x){
-        return perlin(x+10000, y+10000);
+        //sørger for at man ikke prøver å sample et negativt tall
+        return perlin(x+100000, y+100000);
     }
 
     private double interpolate(double a0, double a1, double w){

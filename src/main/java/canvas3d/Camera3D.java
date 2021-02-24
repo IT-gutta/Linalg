@@ -14,8 +14,8 @@ public class Camera3D extends Render3D{
     //TODO fix cameraMovement
     //TODO implement some sort of clipping of the triangles (when they are at the edge of canvas)
     private final double fov = Math.PI/2;
-    private final double zFar = 30; //vet egt ikke hva denne gjør, men den må være høyere enn zNear for at det skal funke hehe
-    private final double zNear = 0.1; //bestemmer rendering distance
+    private final double zFar = 50; // bestemmer rendering distance
+    private final double zNear = 0.1; //bestemmer rendering closest distance
 //    private enum Key{W, A, S, D, SPACE, SHIFT};
 //    private Set<Key> keysPressed = new HashSet<>();
     private LightSource lightSource;
@@ -24,26 +24,28 @@ public class Camera3D extends Render3D{
     private Matrix lookAtMatrix;
     public Camera3D(){
         super(new Vector3(0, 0, -6), Vector3.FORWARD(), Vector3.UP());
-        lightSource = new LightSource(new Vector3(10, 4, -20));
+        lightSource = new LightSource(new Vector3(0, 100000, 0));
         DefinedVariables.add(lightSource, "LightBulb");
     }
 
     @Override
     public void beforeRender() {
-        double speed = movementSpeed * CanvasRenderer3D.deltaTime;
+        double speed = movementSpeed * CanvasRenderer3D.deltaTime / 50;
+        if(CONTROL)
+            speed *= 2;
         //update movement
         if(FORWARD)
-            moveForward(movementSpeed);
+            moveForward(speed);
         if(BACK)
-            moveForward(-movementSpeed);
+            moveForward(-speed);
         if(RIGHT)
-            moveRight(movementSpeed);
+            moveRight(speed);
         if(LEFT)
-            moveRight(-movementSpeed);
+            moveRight(-speed);
         if(UP)
-            moveUp(movementSpeed);
+            moveUp(speed);
         if(DOWN)
-            moveUp(-movementSpeed);
+            moveUp(-speed);
     }
 
 //    //lightsource på camera
@@ -118,6 +120,9 @@ public class Camera3D extends Render3D{
     }
 
     public LightSource getLightSource(){return lightSource;}
+    public double getRenderingDistance(){
+        return zFar;
+    }
 
     private double cos(double angle){
         return Math.cos(angle);
@@ -141,4 +146,5 @@ public class Camera3D extends Render3D{
     public boolean BACK;
     public boolean UP;
     public boolean DOWN;
+    public boolean CONTROL;
 }

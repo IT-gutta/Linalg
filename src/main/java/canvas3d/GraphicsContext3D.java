@@ -23,6 +23,12 @@ public class GraphicsContext3D {
     private Color fillColor = Color.BLACK;
     private Color strokeColor = Color.BLACK;
 
+    private enum RenderMode{
+        STANDARD, OPENGL
+    }
+
+    private RenderMode renderMode = RenderMode.STANDARD;
+
     public GraphicsContext3D(GraphicsContext graphicsContext2D, Camera3D camera){
         this.graphicsContext2D = graphicsContext2D;
         this.camera = camera;
@@ -232,7 +238,7 @@ public class GraphicsContext3D {
 
                 //System.out.println(l1+l2+l3);
 
-                if(l1 < 0 || l2 < 0 || l3 < 0)
+                if(l1 < 0 || l2 < 0 || l3 < 0) // utenfor trekanten
                     continue;
 
                 double z = 1/(l1/z1 + l2/z2 + l3/z3);
@@ -256,26 +262,16 @@ public class GraphicsContext3D {
 
     private double max(double v1, double v2, double v3){
         if (v1 > v2) {
-            if (v3 > v1)
-                return v3;
-            return v1;
+            return max(v1, v3);
         }
-
-        if (v3 > v2)
-            return v3;
-        return v2;
+        return max(v2, v3);
     }
 
     private double min(double v1, double v2, double v3){
         if (v1 < v2) {
-            if (v3 < v1)
-                return v3;
-            return v1;
+            return min(v1, v3);
         }
-
-        if (v3 < v2)
-            return v3;
-        return v2;
+        return min(v2, v3);
     }
 
     private double max(double v1, double v2){

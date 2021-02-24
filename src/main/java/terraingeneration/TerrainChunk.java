@@ -1,5 +1,6 @@
 package terraingeneration;
 
+import canvas3d.Material;
 import canvas3d.Mesh;
 import canvas3d.Triangle;
 import javafx.scene.paint.Color;
@@ -10,24 +11,27 @@ import java.util.List;
 
 public class TerrainChunk extends Mesh {
     private double[] heightMap;
-    private Color[] colorMap;
+    private Material[] materialMap;
     private PerlinNoiseMap perlinNoise;
     public TerrainChunk(Vector3 position, int size, PerlinNoiseMap perlinNoise){
         super(position);
         int nVertices = size +1;
         this.perlinNoise = perlinNoise;
         heightMap = new double[nVertices*nVertices];
-        colorMap = new Color[nVertices*nVertices];
+        materialMap = new Material[nVertices*nVertices];
         vertices = new Vector3[nVertices*nVertices];
 
         for(int z = 0; z < nVertices; z++){
             for(int x = 0; x < nVertices; x++) {
-                double height = perlinNoise.get((z+position.getZ())/15, (x+position.getX())/15);
-                if(height < 0) //f0r å få vannet til å bli flatt
-                    height = 0;
+                double height1 = perlinNoise.get((z+position.getZ())/20, (x+position.getX())/20);
+                double height2 = 0.5 * perlinNoise.get((z+position.getZ())/10, (x+position.getX())/10);
+                double height3 = 0.25 * perlinNoise.get((z+position.getZ())/5, (x+position.getX())/5);
+                double height = height1 + height2 + height3;
+                if(height < -0.2) //f0r å få vannet til å bli flatt
+                    height = -0.2;
                 heightMap[z*nVertices + x] = height;
-                colorMap[z*nVertices + x] = heightToColor(height);
-                vertices[z*nVertices + x] = new Vector3((x-nVertices/2), (1 + heightMap[z*nVertices + x]) * 10 - 10, (z-nVertices/2));
+                materialMap[z*nVertices + x] = materialFromHeight(height);
+                vertices[z*nVertices + x] = new Vector3((x-(double)nVertices/2), (1 + heightMap[z*nVertices + x]) * 10 - 10, (z-(double)nVertices/2));
             }
         }
 //        this.triangles = new Triangle[(size-1)*(size-1) * 2];
@@ -36,30 +40,30 @@ public class TerrainChunk extends Mesh {
             for(int x = 0; x < nVertices-1; x++){
                 triangles.add(new Triangle(
                         vertices[y*nVertices+x], vertices[(y+1)*nVertices +x], vertices[(y+1)*nVertices + x + 1],
-                        colorMap[y*nVertices+x], colorMap[(y+1)*nVertices +x], colorMap[(y+1)*nVertices + x + 1]));
+                        materialMap[y*nVertices+x], materialMap[(y+1)*nVertices +x], materialMap[(y+1)*nVertices + x + 1]));
 
 
                 triangles.add(new Triangle(
                         vertices[y*nVertices+x], vertices[(y+1)*nVertices +x + 1], vertices[y*nVertices + x + 1],
-                        colorMap[y*nVertices+x], colorMap[(y+1)*nVertices +x + 1], colorMap[y*nVertices + x + 1]));
+                        materialMap[y*nVertices+x], materialMap[(y+1)*nVertices +x + 1], materialMap[y*nVertices + x + 1]));
             }
         }
         //faktiske triangle array som renderes av superklassen
         this.triangles = triangles.toArray(new Triangle[0]);
     }
 
-    private Color heightToColor(double height){
-        if(height <= 0) //water
-            return Color.LIGHTBLUE;
-        if(height < 0.15) //sand
-            return Color.rgb(237, 201, 175);
+    private Material materialFromHeight(double height){
+        if(height <= -0.2) //water
+            return Material.WATER;
+        if(height < -0.1) //sand
+            return Material.SAND;
 //        if(height < 0.3) //dirt
 //            return Color.rgb(131,101,57);
 
-        if(height < 0.6) //fjell
-            return Color.rgb(	50,	50,	50);
+        if(height < 0.3) //fjell
+            return Material.MOUNTAIN;
 
         //snø
-        return Color.rgb(255, 255, 255);
+        return Material.SNOW;
     }
 }

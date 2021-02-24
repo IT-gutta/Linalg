@@ -9,7 +9,8 @@ import java.util.HashMap;
 
 public class InfiniteTerrain extends Render3D {
     private HashMap<String, TerrainChunk> terrainChunkHashMap;
-    public final int chunkSize = 30;
+    public final int chunkSize = 16;
+    private final double divRoot2 = 1/Math.sqrt(2);
     private final PerlinNoiseMap perlinNoiseMap = new PerlinNoiseMap();
     public InfiniteTerrain(){
         this.terrainChunkHashMap = new HashMap<>();
@@ -17,11 +18,14 @@ public class InfiniteTerrain extends Render3D {
 
     @Override
     public void render(GraphicsContext3D gc){
+        double viewDistance = CanvasRenderer3D.getCamera().getRenderingDistance();
         int currentChunkX = (int) Math.round(CanvasRenderer3D.getCamera().getPosition().getX() / chunkSize);
         int currentChunkZ = (int) Math.round(CanvasRenderer3D.getCamera().getPosition().getZ() / chunkSize);
 
-        for(int x = currentChunkX - 1; x <= currentChunkX + 1; x++){
-            for(int z = currentChunkZ - 1; z <= currentChunkZ + 1; z++){
+        int numberOfChunksXZ = (int) Math.round(viewDistance * divRoot2 / chunkSize);
+
+        for(int x = currentChunkX - numberOfChunksXZ; x <= currentChunkX + numberOfChunksXZ; x++){
+            for(int z = currentChunkZ - numberOfChunksXZ; z <= currentChunkZ + numberOfChunksXZ; z++){
                 String stringKey = ""+x+z;
                 if(terrainChunkHashMap.containsKey(stringKey))
                     terrainChunkHashMap.get(stringKey).render(gc);

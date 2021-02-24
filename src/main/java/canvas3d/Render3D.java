@@ -108,6 +108,21 @@ public abstract class Render3D implements Interpolatable, Serializable  {
         right = Vector3.rotateZ(right, angle);
     }
 
+    public void rotateOwnRight(double angle){
+        forward = Vector3.rotate(right, forward, angle);
+        up = Vector3.rotate(right, up, angle);
+    }
+
+    public void rotateOwnUp(double angle){
+        forward = Vector3.rotate(up, forward, angle);
+        right = Vector3.rotate(up, right, angle);
+    }
+
+    public void rotateOwnForward(double angle){
+        up = Vector3.rotate(forward, up, angle);
+        right = Vector3.rotate(forward, right, angle);
+    }
+
     public void moveForward(double scalar){
         position = Vector3.add(position, Vector3.scale(forward, scalar));
     }
