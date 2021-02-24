@@ -4,8 +4,8 @@ import graphics.Interpolatable;
 import graphics.Interpolator;
 import javafx.scene.paint.Color;
 import math.Matrix;
-import math.Transformable;
 import math3d.Vector3;
+import terraingeneration.TerrainChunk;
 
 import java.io.Serializable;
 
@@ -125,6 +125,10 @@ public abstract class Render3D implements Interpolatable, Serializable  {
 
         if(triangles == null) //ingenting som skal renderes
             return;
+
+        if(this instanceof TerrainChunk)
+            CanvasRenderer3D.chunksRenderedCount++;
+
 
         for(Triangle tri : triangles)
             tri.render(gc, position, forward, up, right);

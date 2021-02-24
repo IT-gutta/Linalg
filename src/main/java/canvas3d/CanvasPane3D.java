@@ -26,7 +26,8 @@ public class CanvasPane3D extends Pane {
 
         getChildren().add(canvas);
         canvas.setOnScroll(scrollHandler);
-        canvas.setOnKeyPressed(keyHandler);
+        canvas.setOnKeyPressed(keyDownHandler);
+        canvas.setOnKeyReleased(keyUpHandler);
         canvas.setOnMouseDragged(mouseHandler);
         canvas.setOnMousePressed(event -> {
             previousX = event.getX();
@@ -69,11 +70,12 @@ public class CanvasPane3D extends Pane {
         double movementY = (mouseEvent.getY() - previousY) * mouseSensitivity;
 
         //set yaw
-        CanvasRenderer3D.getCamera().setPosition(Vector3.rotateY(CanvasRenderer3D.getCamera().position, -movementX));
+        CanvasRenderer3D.getCamera().rotateY(-movementX);
+//        CanvasRenderer3D.getCamera().rotateX(movementY);
 
 //        CanvasRenderer3D.getCamera().setPosition(Vector3.rotate(CanvasRenderer3D.getCamera().right, CanvasRenderer3D.getCamera().position, movementY*0.01));
 
-        CanvasRenderer3D.getCamera().pointAt(Vector3.ZERO());
+        //CanvasRenderer3D.getCamera().pointAt(Vector3.ZERO());
 
         //TODO fix camera pitching
         //CanvasRenderer3D.getCamera().setForward(Vector3.rotate(CanvasRenderer3D.getCamera().right, CanvasRenderer3D.getCamera().forward, movementY));
@@ -82,26 +84,48 @@ public class CanvasPane3D extends Pane {
         previousY = mouseEvent.getY();
     };
 
-    private EventHandler<KeyEvent> keyHandler = keyEvent ->{
+    private EventHandler<KeyEvent> keyDownHandler = keyEvent ->{
         //System.out.println("Character: " + keyEvent.getCode());
 
         if(keyEvent.getCode().equals(KeyCode.SPACE))
-            CanvasRenderer3D.getCamera().moveUp(0.5);
+            CanvasRenderer3D.getCamera().UP = true;
 
         else if(keyEvent.getCode().equals(KeyCode.SHIFT))
-            CanvasRenderer3D.getCamera().moveUp(-0.5);
+            CanvasRenderer3D.getCamera().DOWN = true;
 
         else if(keyEvent.getCode().equals(KeyCode.D))
-            CanvasRenderer3D.getCamera().moveRight(0.5);
+            CanvasRenderer3D.getCamera().RIGHT = true;
 
         else if(keyEvent.getCode().equals(KeyCode.A))
-            CanvasRenderer3D.getCamera().moveRight(-0.5);
+            CanvasRenderer3D.getCamera().LEFT = true;
 
         else if(keyEvent.getCode().equals(KeyCode.W))
-            CanvasRenderer3D.getCamera().moveForward(0.5);
+            CanvasRenderer3D.getCamera().FORWARD = true;
 
         else if(keyEvent.getCode().equals(KeyCode.S))
-            CanvasRenderer3D.getCamera().moveForward(-0.5);
+            CanvasRenderer3D.getCamera().BACK = true;
+    };
+
+    private EventHandler<KeyEvent> keyUpHandler = keyEvent ->{
+        //System.out.println("Character: " + keyEvent.getCode());
+
+        if(keyEvent.getCode().equals(KeyCode.SPACE))
+            CanvasRenderer3D.getCamera().UP = false;
+
+        else if(keyEvent.getCode().equals(KeyCode.SHIFT))
+            CanvasRenderer3D.getCamera().DOWN = false;
+
+        else if(keyEvent.getCode().equals(KeyCode.D))
+            CanvasRenderer3D.getCamera().RIGHT = false;
+
+        else if(keyEvent.getCode().equals(KeyCode.A))
+            CanvasRenderer3D.getCamera().LEFT = false;
+
+        else if(keyEvent.getCode().equals(KeyCode.W))
+            CanvasRenderer3D.getCamera().FORWARD = false;
+
+        else if(keyEvent.getCode().equals(KeyCode.S))
+            CanvasRenderer3D.getCamera().BACK = false;
     };
 
     private EventHandler<ScrollEvent> scrollHandler = scrollEvent ->{

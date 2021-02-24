@@ -4,7 +4,7 @@ import math2d.Vector2;
 
 public class PerlinNoiseMap {
     public double get(double y, double x){
-        return perlin(x, y);
+        return perlin(x+10000, y+10000);
     }
 
     private double interpolate(double a0, double a1, double w){

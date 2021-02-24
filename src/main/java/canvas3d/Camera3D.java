@@ -1,18 +1,23 @@
 package canvas3d;
 
 import graphics.DefinedVariables;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import math.Matrix;
 import math3d.Vector3;
 import math3d.Vector4;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Camera3D extends Render3D{
     //TODO fix cameraMovement
     //TODO implement some sort of clipping of the triangles (when they are at the edge of canvas)
     private final double fov = Math.PI/2;
-    private final double zFar = 40; //vet egt ikke hva denne gjør, men den må være høyere enn zNear for at det skal funke hehe
+    private final double zFar = 30; //vet egt ikke hva denne gjør, men den må være høyere enn zNear for at det skal funke hehe
     private final double zNear = 0.1; //bestemmer rendering distance
-
+//    private enum Key{W, A, S, D, SPACE, SHIFT};
+//    private Set<Key> keysPressed = new HashSet<>();
     private LightSource lightSource;
 
     private Matrix projectionMatrix;
@@ -25,7 +30,20 @@ public class Camera3D extends Render3D{
 
     @Override
     public void beforeRender() {
-
+        double speed = movementSpeed * CanvasRenderer3D.deltaTime;
+        //update movement
+        if(FORWARD)
+            moveForward(movementSpeed);
+        if(BACK)
+            moveForward(-movementSpeed);
+        if(RIGHT)
+            moveRight(movementSpeed);
+        if(LEFT)
+            moveRight(-movementSpeed);
+        if(UP)
+            moveUp(movementSpeed);
+        if(DOWN)
+            moveUp(-movementSpeed);
     }
 
 //    //lightsource på camera
@@ -113,4 +131,14 @@ public class Camera3D extends Render3D{
     public String toString(){
         return position.toString();
     }
+
+
+    //KEYPRESSES and movement
+    private double movementSpeed = 1;
+    public boolean FORWARD;
+    public boolean LEFT;
+    public boolean RIGHT;
+    public boolean BACK;
+    public boolean UP;
+    public boolean DOWN;
 }

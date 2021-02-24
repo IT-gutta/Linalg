@@ -1,17 +1,12 @@
 package canvas3d;
 
 import graphics.DefinedVariables;
-import graphics.VariableContainer;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import math.Matrix;
-import math.Point;
-import math3d.Vector3;
-import terraingeneration.NoiseTerrainMesh;
+import terraingeneration.InfiniteTerrain;
 
 import java.text.DecimalFormat;
 
@@ -22,6 +17,8 @@ public abstract class CanvasRenderer3D {
     public static long deltaTime;
     public static Camera3D camera3D;
     private static DecimalFormat fpsFormat = new DecimalFormat("0");
+    public static int chunksRenderedCount;
+    public static int chunksSpawnedCount;
 
     //private static final List<Render3D> gameObjects = new ArrayList<>();
 
@@ -58,13 +55,17 @@ public abstract class CanvasRenderer3D {
 //        });
 //        DefinedVariables.add(new VariableContainer<>(rotate3, "rotate3"));
 
-        NoiseTerrainMesh terrain = new NoiseTerrainMesh(100);
-        DefinedVariables.add(terrain, "terrain");
+//        TerrainChunk terrain = new TerrainChunk(Vector3.ZERO(), 100, new PerlinNoiseMap());
+//        DefinedVariables.add(terrain, "terrain");
+
+        InfiniteTerrain infiniteTerrain = new InfiniteTerrain();
+        DefinedVariables.add(infiniteTerrain, "terrain");
 
         AnimationTimer animationTimer = new AnimationTimer() {
             long lastFrameTime;
             @Override
             public void handle(long now) {
+                chunksRenderedCount = 0;
                 deltaTime = (now - lastFrameTime) / 1000000;
                 graphicsContext3D.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 camera3D.updateMatrix();
