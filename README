@@ -1,0 +1,19 @@
+Dette er en brukermanual for programmet
+Programmet består av tre hovedvinduer: variabeloversikten, 2D-grafikkfelt og 3D-grafikkfelt.
+I tillegg tar programmet imot brukerinput gjennom et inputfield og gjennom egne menyer på toppen av vinduet.
+Grafikkfeltenes funksjon er å fremvise de definerte variablene i hendholdsvis 2D og 3D.
+Variabler defineres gjennom knapppene på toppen eller inputfeltet.
+I inputfeltet defineres variabler gjennom å skrive <variabelnavn>=
+Etterfulgt av en av følgende patterns:
+[1.0,-5.7, ... ] for vektor
+(1.0,-5.7, ... ) for punkt
+1.0 - 2i for et komplekst tall
+-1.2 eller et aritmetisk uttrykk med en av programmets matematiske funksjoner* for et reelt tall [eksempel a = cos(32+9)^2.3]
+[-5,1.3 ... ;2,-4 ... -2.4,5] for matrise
+
+i tillegg dette
+
+
+*programmets definerte funksjoner er for øyeblikket cos(), sin(), tan(), log(), abs()
+
+
