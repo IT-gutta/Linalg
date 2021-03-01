@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import math3d.Vector3;
 import math3d.Vector4;
@@ -45,8 +46,9 @@ public class GraphicsContext3D {
 
         graphicsContext2D.setTextAlign(TextAlignment.CENTER);
         graphicsContext2D.setTextBaseline(VPos.CENTER);
-        double size = (1 - pos.getZ()) * 15;
-        graphicsContext2D.setFont(new Font(size));
+        double size = (1 - Math.pow(pos.getZ(), 1d /3)) * 25;
+        graphicsContext2D.setFont(Font.font("Arial", FontWeight.BOLD, size));
+
         graphicsContext2D.fillText(text, pos.getX(), pos.getY());
     }
 

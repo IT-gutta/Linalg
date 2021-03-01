@@ -52,9 +52,6 @@ public class Vector3D extends Mesh {
         for(Triangle triangle : triangles){
             triangle.render(gc, position, forward, up, right);
         }
-        /*gc.strokeLine(0, 0, 0, forward.getX(), forward.getY(), forward.getZ());
-        gc.strokeLine(0, 0, 0, right.getX(), right.getY(), right.getZ());
-        gc.strokeLine(0, 0, 0, up.getX(), up.getY(), up.getZ());*/
 
         gc.fillText(name, Vector3.add(vector3, Vector3.scale(forward, 0.1)));
     }

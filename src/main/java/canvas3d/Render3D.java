@@ -52,27 +52,24 @@ public abstract class Render3D implements Interpolatable, Serializable  {
     public void setForward(Vector3 forward) {
         if(forward.equals(Vector3.ZERO()))
             throw new IllegalArgumentException("Forward cant be null vector");
-        //TODO fix new up after setting forward
-        if (forward.equals(this.up) || forward.equals(Vector3.scale(this.up, -1))) //roter 90 grader om en vilkårlig akse foreløpig??¨
+
+        Vector3 f = forward.normalized();
+        double tol = Math.pow(10, -8);
+
+        if(f.dot(this.up) < -(1-tol))
+            this.up = Vector3.scale(this.forward, 1);
+        else if(f.dot(this.up) > 1-tol)
             this.up = Vector3.scale(this.forward, -1);
 
-        else
-            this.up = Vector3.subtract(up, Vector3.scale(forward, forward.dot(up))).normalized();
-        //setter en random up-vektor
-//        if(forward.getZ() == 0){
-//            if(forward.getY() == 0)
-//                this.up = new Vector3(0, 1, 0);
-//            else
-//                this.up = new Vector3(1, -forward.getX() / forward.getY(), 0).normalized();
-//        }
-//        else
-//            this.up = new Vector3(0, 1, -forward.getY() / forward.getZ()).normalized();
-        this.up = Vector3.subtract(up, Vector3.scale(forward, forward.dot(up))).normalized();
+        else{
+            this.up = Vector3.subtract(up, Vector3.scale(f, f.dot(up))).normalized();
+        }
 
-        this.forward = forward.normalized();
-        this.right = Vector3.cross(up, forward).normalized();
-        if(Math.abs(this.forward.dot(this.up)) > Math.pow(10, -10)){
-            throw new Error("Det er en error i setforward funksjonen på Render3D, dot = " + this.forward.dot(this.up));
+        this.forward = Vector3.copy(f);
+        this.right = Vector3.cross(up, f); //kan egt ta bort normalized
+
+        if(Math.abs(this.forward.dot(this.up)) > tol){
+            System.out.println("Det er en error i setforward funksjonen på Render3D, dot = " + this.forward.dot(this.up));
         }
 
 
@@ -158,6 +155,9 @@ public abstract class Render3D implements Interpolatable, Serializable  {
     }
 
     public void setColor(Color color){
+        if(triangles == null) //ingenting som skal endres
+            return;
+
         for(Triangle triangle : triangles){
             triangle.setColor(color);
             triangle.setInterpolateColors(false);
@@ -165,6 +165,9 @@ public abstract class Render3D implements Interpolatable, Serializable  {
     }
 
     public void setColors(Color[] colors){
+        if(triangles == null) //ingenting som skal endres
+            return;
+
         for(Triangle triangle : triangles){
             triangle.setColors(colors);
             triangle.setInterpolateColors(true);
@@ -172,6 +175,9 @@ public abstract class Render3D implements Interpolatable, Serializable  {
     }
 
     public void setColors(Color c1, Color c2, Color c3){
+        if(triangles == null) //ingenting som skal endres
+            return;
+
         for(Triangle triangle : triangles){
             triangle.setColors(new Color[]{c1, c2, c3});
             triangle.setInterpolateColors(true);
@@ -221,6 +227,8 @@ public abstract class Render3D implements Interpolatable, Serializable  {
 //        for(int i = 0; i < vertices.length; i++){
 //            transformedVertices[i] = new Vector3(m.transform(vertices[i].getVector()));
 //        }
+
+        //TODO dette er meget unødvendig, kan bare ha en funksjon med en progress
         double[] startForward = forward.getVector();
         double[] startRight = right.getVector();
         double[] startUp = up.getVector();

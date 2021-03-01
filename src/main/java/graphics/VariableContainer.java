@@ -50,6 +50,13 @@ public class VariableContainer<T> extends HBox implements Serializable {
         getStyleClass().add("variable");
 
 
+        //set name for renderables
+        if(variable instanceof Render3D)
+            ((Render3D) variable).setName(name);
+        else if(variable instanceof Render2D)
+            ((Render2D) variable).setName(name);
+
+
         colorPicker.setOnAction(a ->{
             setColor(colorPicker.getValue());
         });

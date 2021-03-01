@@ -15,7 +15,7 @@ public class CanvasPane3D extends Pane {
 
     private final Canvas canvas;
     private boolean mouseIsPressed;
-    private final double mouseSensitivity = 0.004;
+    private final double mouseSensitivity = 1;
     private double previousX;
     private double previousY;
 
@@ -66,26 +66,32 @@ public class CanvasPane3D extends Pane {
 
 
     private EventHandler<MouseEvent> mouseHandler = mouseEvent -> {
-        double movementX = (mouseEvent.getX() - previousX) * mouseSensitivity;
-        double movementY = (mouseEvent.getY() - previousY) * mouseSensitivity;
-
-        //set yaw
-        CanvasRenderer3D.getCamera().rotateY(-movementX);
-        //CanvasRenderer3D.getCamera().rotateOwnRight(movementY);
-
-//        CanvasRenderer3D.getCamera().setPosition(Vector3.rotate(CanvasRenderer3D.getCamera().right, CanvasRenderer3D.getCamera().position, movementY*0.01));
-
-        //CanvasRenderer3D.getCamera().pointAt(Vector3.ZERO());
-
         //TODO fix camera pitching
-        //CanvasRenderer3D.getCamera().setForward(Vector3.rotate(CanvasRenderer3D.getCamera().right, CanvasRenderer3D.getCamera().forward, movementY));
+
+        Camera3D camera = CanvasRenderer3D.getCamera();
+        double movementX = (mouseEvent.getX() - previousX) * mouseSensitivity * CanvasRenderer3D.deltaTime / CanvasRenderer3D.getCanvasWidth();
+        double movementY = (mouseEvent.getY() - previousY) * mouseSensitivity * CanvasRenderer3D.deltaTime / CanvasRenderer3D.getCanvasHeight();
+
+        //fps camera
+        if(CanvasRenderer3D.cameraMode == CanvasRenderer3D.CameraMode.FPS){
+            camera.rotateY(-movementX / 3);
+        }
+
+        //standard camera
+        else{
+            camera.setPosition(Vector3.rotateY(camera.position, -movementX));
+            //camera.setPosition(Vector3.add(camera.position, Vector3.scale(Vector3.UP(), movementY)));
+            camera.pointAt(Vector3.ZERO());
+        }
+
 
         previousX = mouseEvent.getX();
         previousY = mouseEvent.getY();
     };
 
     private EventHandler<KeyEvent> keyDownHandler = keyEvent ->{
-        //System.out.println("Character: " + keyEvent.getCode());
+        if(CanvasRenderer3D.cameraMode == CanvasRenderer3D.CameraMode.STANDARD)
+            return;
 
         if(keyEvent.getCode().equals(KeyCode.SPACE))
             CanvasRenderer3D.getCamera().UP = true;
@@ -135,6 +141,10 @@ public class CanvasPane3D extends Pane {
     };
 
     private EventHandler<ScrollEvent> scrollHandler = scrollEvent ->{
+        if(CanvasRenderer3D.cameraMode == CanvasRenderer3D.CameraMode.FPS)
+            return;
+
+        //skal kun funke med vanlig mode
         CanvasRenderer3D.getCamera().position.scale(1 - scrollEvent.getDeltaY() / 300);
     };
 }

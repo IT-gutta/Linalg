@@ -129,6 +129,10 @@ public class Vector3 extends Vector implements Serializable {
         return new Vector3(u);
     }
 
+    public static Vector3 copy(Vector3 vector3){
+        return new Vector3(vector3.getVector().clone());
+    }
+
     public static Vector3 UP() {
         return new Vector3(0, 1, 0);
     }

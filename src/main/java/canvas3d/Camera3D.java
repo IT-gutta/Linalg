@@ -46,6 +46,11 @@ public class Camera3D extends Render3D{
             moveUp(speed);
         if(DOWN)
             moveUp(-speed);
+
+        if(CanvasRenderer3D.cameraMode == CanvasRenderer3D.CameraMode.STANDARD) {
+            position = Vector3.rotateY(position, 0.003);
+            pointAt(Vector3.ZERO());
+        }
     }
 
 //    //lightsource på camera

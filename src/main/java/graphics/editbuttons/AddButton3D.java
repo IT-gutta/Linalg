@@ -23,6 +23,7 @@ import math.Complex;
 import math.Matrix;
 import math3d.Vector3;
 import regex.RegexUtils;
+import terraingeneration.InfiniteTerrain;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -37,6 +38,22 @@ public class AddButton3D extends MenuButton {
         getStyleClass().add("transparent-button");
         getStyleClass().add("new-menu-button");
         clearDialog();
+
+        MenuItem infiniteTerrain = new MenuItem("Infinite Terrain");
+        infiniteTerrain.getStyleClass().add("new-menu-item");
+        infiniteTerrain.setOnAction(actionEvent -> {
+            clearDialog();
+
+            dialog.setHeaderText("Infinite Terrain Generator");
+            dialog.setContentText("Enter name:");
+            dialog.showAndWait().ifPresent(response ->{
+
+                if(!RegexUtils.isValidName(dialog.getEditor().getText()))
+                    return;
+
+                DefinedVariables.add(new InfiniteTerrain(), dialog.getEditor().getText());
+            });
+        });
 
 
         MenuItem vector = new MenuItem("Vector 3D", Icons.of("vector.png", 20));
@@ -200,7 +217,7 @@ public class AddButton3D extends MenuButton {
             });
         });
 
-        getItems().addAll(vector, matrix, point, cube, sphere);
+        getItems().addAll(infiniteTerrain, vector, matrix, point, cube, sphere);
     }
 
 

@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import math3d.Vector3;
 import terraingeneration.InfiniteTerrain;
 
 import java.text.DecimalFormat;
@@ -19,6 +20,8 @@ public abstract class CanvasRenderer3D {
     private static DecimalFormat fpsFormat = new DecimalFormat("0");
     public static int chunksRenderedCount;
     public static int chunksSpawnedCount;
+    public enum CameraMode{STANDARD, FPS};
+    public static CameraMode cameraMode = CameraMode.STANDARD;
 
     //private static final List<Render3D> gameObjects = new ArrayList<>();
 
@@ -58,8 +61,17 @@ public abstract class CanvasRenderer3D {
 //        TerrainChunk terrain = new TerrainChunk(Vector3.ZERO(), 100, new PerlinNoiseMap());
 //        DefinedVariables.add(terrain, "terrain");
 
-        InfiniteTerrain infiniteTerrain = new InfiniteTerrain();
-        DefinedVariables.add(infiniteTerrain, "terrain");
+//        InfiniteTerrain infiniteTerrain = new InfiniteTerrain();
+//        DefinedVariables.add(infiniteTerrain, "terrain");
+
+        Vector3D v1 = new Vector3D(1, 0, -1);
+        Vector3D v2 = new Vector3D(1, Math.sqrt(2), 1);
+        Vector3D v3 = new Vector3D(1, -Math.sqrt(2), 1);
+
+        DefinedVariables.add(v1, "v1");
+        DefinedVariables.add(v2, "v2");
+        DefinedVariables.add(v3, "v3");
+
 
         AnimationTimer animationTimer = new AnimationTimer() {
             long lastFrameTime;
@@ -111,4 +123,5 @@ public abstract class CanvasRenderer3D {
     public static Camera3D getCamera(){
         return camera3D;
     }
+
 }
