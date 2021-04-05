@@ -2,9 +2,13 @@ package math3d;
 
 import java.io.Serializable;
 
+/**
+ * Represents a plane in three dimensions
+ */
 public class Plane implements Serializable {
-    private Vector3 point;
-    private Vector3 normal;
+    private final Vector3 point;
+    private final Vector3 normal;
+
     public Plane(Vector3 point, Vector3 normal){
         this.point = point;
         this.normal = normal;
@@ -16,6 +20,9 @@ public class Plane implements Serializable {
         this.normal = normal;
     }
 
+    /**
+     * Returns the point of intersection with a line as a Vector
+     */
     public Vector3 lineIntersection(Line3 line){
         //TODO fix line intersection with plane for clipping
         return null;

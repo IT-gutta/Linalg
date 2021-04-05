@@ -7,6 +7,9 @@ import math.Vectors;
 
 import java.io.Serializable;
 
+/**
+ * Represents a three dimensional vector
+ */
 public class Vector3 extends Vector implements Serializable {
     public Vector3(double... args){
         super(args);
@@ -14,26 +17,46 @@ public class Vector3 extends Vector implements Serializable {
             throw new IllegalArgumentException("Illegal dimension");
     }
 
+    /**
+     * Returns the x coordinate of the vector
+     */
     public double getX(){
         return getElement(0);
     }
+    /**
+     * Returns the y coordinate of the vector
+     */
     public double getY(){
         return getElement(1);
     }
+    /**
+     * Returns the z coordinate of the vector
+     */
     public double getZ(){
         return getElement(2);
     }
+    /**
+     * Sets the x coordinate of the vector
+     */
     public void setX(double x){
         setElement(0, x);
     }
+    /**
+     * Sets the y coordinate of the vector
+     */
     public void setY(double y){
         setElement(1, y);
     }
+    /**
+     * Sets the z coordinate of the vector
+     */
     public void setZ(double z){
         setElement(2, z);
     }
 
-
+    /**
+     * Returns the vector scaled such that its magnitude is 1
+     */
     public Vector3 normalized(){
         if(getMagnitude() == 0)
             throw new IllegalStateException("Vector cant be the zero vector");
@@ -43,7 +66,10 @@ public class Vector3 extends Vector implements Serializable {
 
 
 
-    //STATISKE UTILITY FUNCTIONS
+    //Static utility functions
+    /**
+     * Returns the vector scaled by a double
+     */
     public static Vector3 scale(Vector3 vec, double s){
         double[] doubles = new double[3];
         for(int i = 0; i < 3; i++){
@@ -52,6 +78,9 @@ public class Vector3 extends Vector implements Serializable {
         return new Vector3(doubles);
     }
 
+    /**
+     * ??
+     */
     public static Vector3 rotateZ(Vector3 vec, double angle){
         Matrix rotation = new Matrix(new double[][]{
                 {Math.cos(angle), -Math.sin(angle), 0},
@@ -61,6 +90,9 @@ public class Vector3 extends Vector implements Serializable {
         return new Vector3(rotation.transform(vec.getVector()));
     }
 
+    /**
+     * ??
+     */
     public static Vector3 rotateX(Vector3 vec, double angle){
         Matrix rotation = new Matrix(new double[][]{
                 {1, 0, 0},
@@ -70,6 +102,9 @@ public class Vector3 extends Vector implements Serializable {
         return new Vector3(rotation.transform(vec.getVector()));
     }
 
+    /**
+     * ??
+     */
     public static Vector3 rotateY(Vector3 vec, double angle){
         Matrix rotation = new Matrix(new double[][]{
                 {Math.cos(angle), 0, -Math.sin(angle)},
@@ -80,7 +115,9 @@ public class Vector3 extends Vector implements Serializable {
     }
 
 
-    //roterer rundt en angitt akse
+    /**
+     * ??
+     */
     public static Vector3 rotate(Vector3 axis, Vector3 input, double angle){
         //TODO fikse denne funksjonen
         Matrix c = new Matrix(new double[][]{
@@ -95,10 +132,16 @@ public class Vector3 extends Vector implements Serializable {
         return new Vector3(rotationMatrix.transform(input.getVector()));
     }
 
+    /**
+     * Returns the cross product of two vectors
+     */
     public static Vector3 cross(Vector3 v1, Vector3 v2){
         return new Vector3(v1.getY()*v2.getZ()-v2.getY()*v1.getZ(), -(v1.getX()*v2.getZ()-v2.getX()*v1.getZ()), v1.getX()*v2.getY()-v2.getX()*v1.getY());
     }
 
+    /**
+     * Returns the difference of two vectors
+     */
     public static Vector3 subtract(Vector3 v1, Vector3 v2) throws IllegalArgumentException {
         if(v1.getDimensions() != v2.getDimensions())
             throw new IllegalArgumentException("Vectors must have same dimensions");
@@ -116,10 +159,16 @@ public class Vector3 extends Vector implements Serializable {
         return new Vector3(u);
     }
 
+    /**
+     * Returns the sum of two vectors
+     */
     public static Vector3 add(Vector3 v1, Vector3 v2){
         return new Vector3(v1.getX() + v2.getX(), v1.getY() + v2.getY(), v1.getZ() + v2.getZ());
     }
 
+    /**
+     * Returns the sum of vectors
+     */
     public static Vector3 add(Vector3... vecs){
         double[] u = vecs[0].getVector().clone();
         for(int i = 1; i < vecs.length; i++){
@@ -129,19 +178,37 @@ public class Vector3 extends Vector implements Serializable {
         return new Vector3(u);
     }
 
+    /**
+     * Returns a copy of a vector
+     */
     public static Vector3 copy(Vector3 vector3){
         return new Vector3(vector3.getVector().clone());
     }
 
+    /**
+     * Returns a Vector3 with coordinates [0,1,0]
+     */
     public static Vector3 UP() {
         return new Vector3(0, 1, 0);
     }
+
+    /**
+     * Returns a Vector3 with coordinates [0,0,1]
+     */
     public static Vector3 FORWARD() {
         return new Vector3(0, 0, 1);
     }
+
+    /**
+     * Returns a Vector3 with coordinates [1,0,0]
+     */
     public static Vector3 RIGHT(){
         return new Vector3(1, 0, 0);
     }
+
+    /**
+     * Returns a Vector3 with coordinates [0,0,0]
+     */
     public static Vector3 ZERO(){
         return new Vector3(0, 0, 0);
     }

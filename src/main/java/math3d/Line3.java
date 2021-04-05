@@ -2,14 +2,21 @@ package math3d;
 
 import java.io.Serializable;
 
+/**
+ * Represents a three dimensional line
+ */
 public class Line3 implements Serializable {
-    private Vector3 point;
-    private Vector3 direction;
+    private final Vector3 point;
+    private final Vector3 direction;
+
     public Line3(Vector3 point, Vector3 direction){
         this.point = point;
         this.direction = direction;
     }
 
+    /**
+     * Returns the intersection point of the Line and another Line as a Vector
+     */
     public Vector3 intersection(Line3 other){
         if(direction.isParallel(other.direction)) // alle punkter
             return null;
