@@ -4,8 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+/**
+ * Handles the solving of linear algebra problems
+ */
 public class Solver {
     //TODO Matrix
+    /**
+     * Returns the Matrix reduced to row echelon form
+     */
     public static Matrix toReducedRowEchelon(Matrix m){
         HashMap<Integer, ArrayList<Integer>> pivotIndexes = new HashMap<>();
         while(!m.isRowEchelon()){
@@ -50,6 +56,9 @@ public class Solver {
         return m;
     }
 
+    /**
+     * Returns a mapping from an index to a list of indexes representing the pivot indexes of a Matrix
+     */
     private static HashMap<Integer, ArrayList<Integer>> findPivotIndexes(Matrix m){
         HashMap<Integer, ArrayList<Integer>> pivotIndexes = new HashMap<>();
         for(int i = 0; i<m.getHeight(); i++)
@@ -65,6 +74,9 @@ public class Solver {
         return pivotIndexes;
     }
 
+    /**
+     * Returns the inverse of the Matrix
+     */
     public static Matrix invertedMatrix(Matrix matrix) throws IllegalArgumentException{
         if(matrix.getWidth()!=matrix.getHeight() || matrix.det()==0)
             throw new IllegalArgumentException();
@@ -78,6 +90,9 @@ public class Solver {
         return new Matrix(ansM);
     }
 
+    /**
+     * Returns the solution to a system of linear equations as a Vector
+     */
     public static Vector solveLinSys(Matrix matrix, Vector v) throws IllegalArgumentException{
         if(matrix.getHeight()!=matrix.getWidth() || matrix.getWidth()!=v.getDimensions() || matrix.det()==0)
             throw new IllegalArgumentException();

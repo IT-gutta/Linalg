@@ -5,15 +5,20 @@ import math3d.Vector3;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Represents a mathematical matrix
+ */
 public class Matrix implements Serializable {
     private double[][] matrix;
     private int width;
     private int height;
+
     public Matrix(double[][] matrix){
         this.matrix = matrix;
         width = matrix[0].length;
         height = matrix.length;
     }
+
     public Matrix(int height, int width){
         this.height = height;
         this.width = width;
@@ -31,18 +36,26 @@ public class Matrix implements Serializable {
 
     public Matrix(){
         this(1,1);
-        double[][] dArr = {{0}};
-        matrix = dArr;
+        matrix = new double[][]{{0}};
     }
 
+    /**
+     * Returns the width of the Matrix
+     */
     public int getWidth(){
         return width;
     }
 
+    /**
+     * Returns the height of the Matrix
+     */
     public int getHeight(){
         return height;
     }
 
+    /**
+     * Inverts a 2x2 Matrix
+     */
     public void invert2x2(){
         double determinant = matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0];
         if(determinant <= 0.0000001)
@@ -55,16 +68,19 @@ public class Matrix implements Serializable {
         };
     }
 
+    /**
+     * Returns the product of the Matrix and a Vector
+     */
     public Vector transform(Vector vector) throws IllegalArgumentException {
         if(vector.getDimensions() != width)
             throw new IllegalArgumentException("The vectors number of dimensions doesnt match the matrix width");
 
         return new Vector(transform(vector.getVector()));
     }
-    public Vector3 transform3x3(Vector3 vector3){
-        return new Vector3(transform(vector3.getVector()));
-    }
 
+    /**
+     * Returns the product of the Matrix and a Vector represented by an array
+     */
     public double[] transform(double[] coords){
         double[][] allColumns = getAllColumns();
 
@@ -82,21 +98,9 @@ public class Matrix implements Serializable {
         return sum;
     }
 
-    /*public Matrix multiply(Matrix other){
-        if(width != other.height)
-            throw new IllegalArgumentException("Illegal size of matrices");
-        double[][] m = new double[height][other.width];
-
-        for(int i = 0; i < height; i++){
-            for(int j = 0; j < other.width; j++){
-                for(int k = 0; k < width; k++){
-                    m[i][j] += matrix[i][k] * other.matrix[k][j];
-                }
-            }
-        }
-        return new Matrix(m);
-    }*/
-
+    /**
+     * Returns the product of the Matrix and another Matrix
+     */
     public Matrix multiply(Matrix other){
         if(width != other.height)
             throw new IllegalArgumentException("Illegal size of matrices");
@@ -110,10 +114,16 @@ public class Matrix implements Serializable {
         return new Matrix(m);
     }
 
+    /**
+     * Returns the Matrix as a two-dimensional array
+     */
     public double[][] getMatrix(){
         return matrix;
     }
 
+    /**
+     * Returns the specified column as an array
+     */
     public double[] getColumn(int columnNumber){
         double[] col = new double[height];
         for(int i = 0; i < height; i++){
@@ -122,6 +132,9 @@ public class Matrix implements Serializable {
         return col;
     }
 
+    /**
+     * Returns a list of all columns
+     */
     public double[][] getAllColumns(){
         var vecs = new double[width][height];
         for(int column = 0; column < width; column++){
@@ -130,6 +143,9 @@ public class Matrix implements Serializable {
         return vecs;
     }
 
+    /**
+     * Returns the determinant of the Matrix
+     */
     public double det(){
         if(width==1){
             return matrix[0][0];
@@ -142,6 +158,9 @@ public class Matrix implements Serializable {
         return sum;
     }
 
+    /**
+     * Support function for calculating the determinant
+     */
     private Matrix getDetMatrix(int x, int y){
         double[][] newMatrix = new double[height-1][width-1];
         int counter = 0;
@@ -156,6 +175,9 @@ public class Matrix implements Serializable {
         return new Matrix(newMatrix);
     }
 
+    /**
+     * Scales a given row by a double
+     */
     public void scaleRow(int row, double scale) throws IllegalArgumentException{
         if(row>=height)
             throw new IllegalArgumentException();
@@ -164,12 +186,18 @@ public class Matrix implements Serializable {
         }
     }
 
+    /**
+     * Returns a given row as an array
+     */
     public double[] getRow(int row)throws IllegalArgumentException{
         if(row>=height)
             throw new IllegalArgumentException();
         return matrix[row];
     }
 
+    /**
+     * Returns a given row scaled by a double as an array
+     */
     public double[] getScaledRow(int row, double scale) throws IllegalArgumentException{
         double[] scaledRow = new double[getWidth()];
         for(int i = 0; i<width; i++){
@@ -177,6 +205,10 @@ public class Matrix implements Serializable {
         }
         return scaledRow;
     }
+
+    /**
+     * Adds a row onto another row
+     */
     public void addRowToRow(int row1, double[] row2) throws IllegalArgumentException{
         if(row1>=height || width!=row2.length)
             throw new IllegalArgumentException();
@@ -184,12 +216,20 @@ public class Matrix implements Serializable {
             matrix[row1][i]+=row2[i];
         }
     }
+
+    /**
+     * Swaps the position of two rows
+     */
     public void swapRows(int row1, int row2) throws IllegalArgumentException{
         if(row1>=width || row2>=width)
             throw new IllegalArgumentException();
         double[] r1 = matrix[row1]; double[] r2 = matrix[row2];
         matrix[row1] = r2; matrix[row2] = r1;
     }
+
+    /**
+     * Appends a Vector to the right side of the Matrix
+     */
     public void append(Vector v){
         for(int i = 0; i<height; i++){
             double[] d = new double[width+1];
@@ -200,6 +240,10 @@ public class Matrix implements Serializable {
         }
         width+=1;
     }
+
+    /**
+     * Appends a Matrix to the right side of the Matrix
+     */
     public void append(Matrix m){
         double[][] newM = new double[height][2*height];
         for(int i = 0; i<height; i++){
@@ -209,6 +253,10 @@ public class Matrix implements Serializable {
         width+=m.getWidth();
         matrix = newM;
     }
+
+    /**
+     * Returns true if the Matrix is an identity Matrix, else false
+     */
     public boolean isIdentityMatrix(){
         for(int i = 0; i<height; i++){
             for(int j = 0; j<height; j++){
@@ -223,12 +271,24 @@ public class Matrix implements Serializable {
         }
         return true;
     }
+
+    /**
+     * Returns the inverse of the Matrix
+     */
     public Matrix getInverted(){
         return Solver.invertedMatrix(this);
     }
+
+    /**
+     * Inverts the Matrix
+     */
     public void invert(){
         matrix = Solver.invertedMatrix(this).getMatrix();
     }
+
+    /**
+     * Returns true if the Matrix is on row echelon form, else false
+     */
     public boolean isRowEchelon(){
         for(int i = 0; i<height; i++){
             for(int j = 0; j<i; j++){
@@ -241,6 +301,9 @@ public class Matrix implements Serializable {
         return true;
     }
 
+    /**
+     * ??
+     */
     public ArrayList<Vector> getBasisVectors(){
         ArrayList<Vector> vectors = new ArrayList<>();
         for(int x = 0; x < width; x++){
@@ -254,11 +317,16 @@ public class Matrix implements Serializable {
         return vectors;
     }
 
-
+    /**
+     * Returns the element in a given position
+     */
     public double get(int y, int x){
         return matrix[y][x];
     }
 
+    /**
+     * Sets the element in a given position
+     */
     public void set(int y, int x, double value){
         matrix[y][x] = value;
     }

@@ -10,6 +10,9 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Represents a mathematical function as a binary tree where each node is an Expression-object
+ */
 public class Expression {
     private String expression;
     private Expression leftChild;
@@ -17,12 +20,12 @@ public class Expression {
     private String operator;
     private boolean isPositive = true;
     private boolean isLeaf = true;
-    private HashMap<Character, Expression> children = new HashMap<>();
-    private HashMap<Character, Character> oppositeChild = new HashMap<>();
+    private final HashMap<Character, Expression> children = new HashMap<>();
+    private final HashMap<Character, Character> oppositeChild = new HashMap<>();
 
-    private HashMap<String, BiFunction<Double, Double, Double>> dddOps = new HashMap<>();
-    private HashMap<String, Function<Double, Double>> ddOps = new HashMap<>();
-    private HashMap<String, Double> constants = new HashMap<>();
+    private final HashMap<String, BiFunction<Double, Double, Double>> dddOps = new HashMap<>();
+    private final HashMap<String, Function<Double, Double>> ddOps = new HashMap<>();
+    private final HashMap<String, Double> constants = new HashMap<>();
 
 
     public Expression(String input) throws IllegalArgumentException{
@@ -38,38 +41,51 @@ public class Expression {
         findChildren();
     }
 
+    /**
+     * Returns the operator of the node
+     */
     public String getOperator(){
         return operator;
     }
 
+    /**
+     * Sets the left child of the Expression
+     */
     public void setLeftChild(Expression expression){
         leftChild = expression;
     }
 
+    /**
+     * Returns the left child of the Expression
+     */
     public Expression getLeftChild(){
         return leftChild;
     }
 
+    /**
+     * Returns the right child of the Expression
+     */
     public Expression getRightChild(){
         return rightChild;
     }
 
+    /**
+     * Sets the right child of the Expression
+     */
     public void setRightChild(Expression expression){
         rightChild = expression;
     }
 
-    public void setChild(char c, Expression expression){
-        if(c=='L')
-            leftChild = expression;
-        if(c=='R')
-            rightChild = expression;
-    }
-
+    /**
+     * Sets the operator of the expression
+     */
     public void setOperator(String operator){
         this.operator = operator;
     }
 
-
+    /**
+     * Validates a function given as a string, returns false if invalid, else true
+     */
     private boolean checkInput(String input){
         String f = "[(cos)(sin)(abs)(tan)(log)]";
         if(input.length()==0)
@@ -110,12 +126,18 @@ public class Expression {
         return true;
     }
 
+    /**
+     * Returns the Expression as a string
+     */
     public String getExpression() {
         if(isPositive)
             return expression;
         return "-"+expression;
     }
 
+    /**
+     * Sets the children of an Expression from its string representation, and continues to do this recursively
+     */
     private void findChildren(){
         isLeaf = true;
         removeBrackets();
@@ -139,6 +161,9 @@ public class Expression {
         }
     }
 
+    /**
+     * Removes excess brackets from the Expression
+     */
     private void removeBrackets(){
         boolean run = true;
         while(run && expression.length()>1){
@@ -155,6 +180,9 @@ public class Expression {
         }
     }
 
+    /**
+     * Returns a string where all operations of a given type are inverted
+     */
     private String flipSign(Character sign, String expression){
         int bracketDepth = 0;
         for(int i = 0; i<expression.length(); i++){
@@ -180,6 +208,9 @@ public class Expression {
         return expression;
     }
 
+    /**
+     * Splits the expression into two new Expressions and an operator
+     */
     private String[] splitExpression(){
         ArrayList<Integer> plus = new ArrayList<>();
         ArrayList<Integer> minus = new ArrayList<>();
@@ -236,6 +267,9 @@ public class Expression {
         return new String[]{lc,rc};
     }
 
+    /**
+     * Parses a predefined function and returns it as a string
+     */
     private String parseComposition(){
         HashSet<String> functions = new HashSet<>();
         functions.add("cos");functions.add("sin");functions.add("abs");functions.add("log");functions.add("tan");
@@ -248,9 +282,16 @@ public class Expression {
         throw new IllegalArgumentException();
     }
 
+    /**
+     * Returns the tree who's root is the current Expression as a debug-friendly string
+     */
     public String debugToString(){
         return toString(0);
     }
+
+    /**
+     * Returns the Expression as a string
+     */
     public String toString(){
         String sign = "";
         if(!isPositive)
@@ -263,6 +304,9 @@ public class Expression {
         return sign+"("+leftChild+operator+rightChild+")";
     }
 
+    /**
+     * Evaluates the function in a given point
+     */
     public double evaluate(double x){
         int c = 1;
         if(!isPositive)
@@ -284,6 +328,9 @@ public class Expression {
 
     }
 
+    /**
+     * Recursive support function for debugToString
+     */
     private String toString(int depth){
         String indent = new String(new char[depth]).replace("\0", "\t");
         String sign = "";
@@ -297,19 +344,38 @@ public class Expression {
         }
         return result;
     }
+
+    /**
+     * Returns true if the Expression is positive, else false
+     */
     public boolean isPositive() {
         return isPositive;
     }
+
+    /**
+     * Makes the Expression negative
+     */
     public void setToNegative(){
         isPositive = false;
     }
+
+    /**
+     * Returns true if the Expression is a leaf node, else false
+     */
     public boolean isLeaf(){
         return isLeaf;
     }
+
+    /**
+     * Simplifies the expression
+     */
     public void simplify(){
        while(cleanup());
     }
 
+    /**
+     * Resets the Expression
+     */
     private void resetNode(String expression){
         leftChild = null;
         rightChild = null;
@@ -319,6 +385,9 @@ public class Expression {
         findChildren();
     }
 
+    /**
+     * Simplifies the expression once
+     */
     private boolean cleanup(){
         if(leftChild!=null && rightChild!=null){
             if(operator.equals("*")){
@@ -420,6 +489,9 @@ public class Expression {
         return false;
     }
 
+    /**
+     * Fixes contradictory fields
+     */
     public void fixExpression(){
         if(rightChild==null){
             if(leftChild!=null){

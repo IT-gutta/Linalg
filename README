@@ -5,15 +5,17 @@ Grafikkfeltenes funksjon er å fremvise de definerte variablene i hendholdsvis 2
 Variabler defineres gjennom knapppene på toppen eller inputfeltet.
 I inputfeltet defineres variabler gjennom å skrive <variabelnavn>=
 Etterfulgt av en av følgende patterns:
-[1.0,-5.7, ... ] for vektor
-(1.0,-5.7, ... ) for punkt
-1.0 - 2i for et komplekst tall
--1.2 eller et aritmetisk uttrykk med en av programmets matematiske funksjoner* for et reelt tall [eksempel a = cos(32+9)^2.3]
-[-5,1.3 ... ;2,-4 ... -2.4,5] for matrise
+v = [1.0,-5.7, ... ] for vektor
+p = (1.0,-5.7, ... ) for punkt
+c = 1.0 - 2i for et komplekst tall
+n = -1.2 eller et aritmetisk uttrykk med en av programmets matematiske funksjoner* for et reelt tall [eksempel m = cos(32+9)^2.3]
+A = [-5,1.3 ... ;2,-4 ... -2.4,5] for matrise
 
-i tillegg dette
+I tillegg dette er det mulig å definere nye variabler ved å sette inn definerte variable i en rekke funksjoner*
 
 
-*programmets definerte funksjoner er for øyeblikket cos(), sin(), tan(), log(), abs()
+*programmets definerte numeriske funksjoner er for øyeblikket:
+ cos(x), sin(x), tan(x), log(x), abs(x) fra scalar til scalar
+
 
 

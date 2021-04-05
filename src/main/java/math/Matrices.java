@@ -1,8 +1,12 @@
 package math;
 
-
-
+/**
+ * Support class for Matrix
+ */
 public class Matrices {
+    /**
+     * Returns the an n-dimensional identity Matrix
+     */
     public static Matrix getIdentityMatrix(int n) throws IllegalArgumentException{
         if(n<=0)
             throw new IllegalArgumentException();
@@ -12,6 +16,10 @@ public class Matrices {
         }
         return new Matrix(m);
     }
+
+    /**
+     * Returns the product of two Matrices
+     */
     public static Matrix product(Matrix m1, Matrix m2){
         if(m1.getWidth() != m2.getHeight())
             throw new IllegalArgumentException("Illegal size of matrices");
@@ -26,6 +34,9 @@ public class Matrices {
         return new Matrix(m);
     }
 
+    /**
+     * Returns the Matrix scaled by s
+     */
     public static Matrix scale(Matrix matrix, double s){
         double[][] newMatrix = new double[matrix.getHeight()][matrix.getWidth()];
         for(int y = 0; y < newMatrix.length; y++){
@@ -36,6 +47,9 @@ public class Matrices {
         return new Matrix(newMatrix);
     }
 
+    /**
+     *  Returns a sum of Matrices
+     */
     public static Matrix add(Matrix... matrices){
         int width = matrices[0].getWidth();
         int height = matrices[0].getHeight();

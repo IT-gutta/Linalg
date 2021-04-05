@@ -31,14 +31,14 @@ public abstract class CanvasRenderer2D {
 //        Vector2D vector = new Vector2D(2, 2);
 //        Line2D line = new Line2D(-2, 0, 2, 2);
 //
-//        Grid2D grid2 = new Grid2D(0, 0, 5, 5, 1, 1);
-//        LineSegment2D lineSegment2 = new LineSegment2D(-2, 0, -5, -5);
+        Grid2D grid2 = new Grid2D(0, 0, 5, 5, 1, 1);
+        LineSegment2D lineSegment2 = new LineSegment2D(-2, 0, -5, -5);
 //        Expression f = new Expression("x^5");
 //        Expression g = Differentiator.getDerivative(f);
 //
 //        DefinedVariables.add(new VariableContainer<>(vector, "vector"));
 //        DefinedVariables.add(new VariableContainer<>(line, "line"));
-//        DefinedVariables.add(grid2, "grid");
+        DefinedVariables.add(grid2, "grid");
 //        DefinedVariables.add(lineSegment2, "linesegment");
 //        DefinedVariables.add(new VariableContainer<>(matrix, "m"));
 //        DefinedVariables.add(new VariableContainer(new Mapping(f), "f"));
@@ -224,7 +224,7 @@ public abstract class CanvasRenderer2D {
 
     public static void main(String[] args) {
         Expression f = new Expression("x^5+x^4+3");
-        Expression g = Differentiator.getDerivative(f);
+        Expression g = Differentiator.derivative(f);
         System.out.println(f);
         System.out.println(g);
         System.out.println(g.evaluate(1));

@@ -3,9 +3,15 @@ package math;
 import java.util.HashMap;
 import java.util.function.Function;
 
+/**
+ * Handles differentiation of an Expression-object
+ */
 public class Differentiator {
     private static final HashMap<String, String> derivatives = new HashMap<>();
 
+    /**
+     * Fills known derivatives into a hashmap
+     */
     public static void fillDerivatives(){
         derivatives.put("sin", "cos($)");
         derivatives.put("cos", "-sin($)");
@@ -13,6 +19,10 @@ public class Differentiator {
         derivatives.put("tan", "1/cos($)^2");
         derivatives.put("exp", "exp($)");
     }
+
+    /**
+     * Returns the derivative of an Expression
+     */
     public static Expression derivative(Expression expression){
         Expression d = getDerivative(expression);
         d.fixExpression();
@@ -20,7 +30,10 @@ public class Differentiator {
         d.fixExpression();
         return d;
     }
-    public static Expression getDerivative(Expression expression){
+    /**
+     * Returns an unsimplified derivative of an Expression
+     */
+    private static Expression getDerivative(Expression expression){
         Expression derivative = new Expression("0");
         Expression derivativeL = new Expression("0");
         Expression derivativeR = new Expression("0");
