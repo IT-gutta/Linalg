@@ -1,6 +1,13 @@
 package math;
 
+/**
+ * Contains operations that use the TriFunction interface
+ */
 public class TriFunctions {
+
+    /**
+     * Returns the value of a series
+     */
     public static TriFunction<Expression, Double, Double, Double> seriesEval = (f, a, b) ->{
         int A = (int)Math.floor(a);
         int B = (int)Math.floor(b);
