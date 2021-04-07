@@ -2,6 +2,9 @@ package graphics.textInput;
 
 import java.util.regex.Pattern;
 
+/**
+ * Stores some regexes used in parsing
+ */
 public class Regexes {
     public static final String flNum = "(-?[0-9]+(\\.?[0-9]+)?)";
     public static final String posFlNum = "([0-9]+(\\.?[0-9]+)?)";

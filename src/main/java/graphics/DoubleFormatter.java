@@ -7,8 +7,15 @@ import javafx.util.StringConverter;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
+/**
+ * Handles formatting of real numbers
+ */
+
 public class DoubleFormatter{
 
+    /**
+     * ??
+     */
     public static TextFormatter<Double> getFormatter(){
         Pattern validEditingState = Pattern.compile("-?(([1-9][0-9]*)|0)?(\\.[0-9]*)?");
 
@@ -43,12 +50,18 @@ public class DoubleFormatter{
         return new TextFormatter<>(converter, 0.0, filter);
     }
 
+    /**
+     * Returns a TextField with the specified attributes
+     */
     public static TextField getTextField(){
         var textField = new TextField();
         textField.setTextFormatter(getFormatter());
         return textField;
     }
 
+    /**
+     * Returns a TextField with the specified attributes and a default value
+     */
     public static TextField getTextField(double current){
         var textField = new TextField();
         textField.setTextFormatter(getFormatter());

@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Handles textual user input
+ */
 public class TextInputEvent implements EventHandler<ActionEvent>{
     private static final ArrayList<InputMapTriFunc> triFuncMaps = new ArrayList<>();
     private static final ArrayList<InputMapBiFunc> biFuncMaps = new ArrayList<>();
@@ -46,6 +49,9 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
         this.errorField = errorField;
     }
 
+    /**
+     * Fills hashmaps between textual representations of functions and mathematical functions in the program
+     */
     public static void fillOpMaps(){
         edddOps.put("sum", TriFunctions.seriesEval);
         triFuncMaps.add(edddOps);
@@ -76,6 +82,11 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
 //        eeOps.put("derivative", Differentiator::derivative);
 //        funcMaps.add(eeOps);
     }
+
+    /**
+     * Parses the input by comparing it to regexes and functions from the maps and stores the result as a
+     * defined variable if the input produces a valid variable
+     */
     @Override
     public void handle(ActionEvent actionEvent) {
         boolean legal = false;

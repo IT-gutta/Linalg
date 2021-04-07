@@ -14,6 +14,9 @@ import canvas2d.Mapping;
 
 import java.io.Serializable;
 
+/**
+ * Handles the textual representation of mathematical variables in the GUI
+ */
 public class VariableContainer<T> extends HBox implements Serializable {
     private T variable;
     private String name;
@@ -62,6 +65,9 @@ public class VariableContainer<T> extends HBox implements Serializable {
         });
     }
 
+    /**
+     * Sets the color of the VariableContainer
+     */
     public void setColor(Color color){
         if(variable instanceof Render3D)
             ((Render3D) variable).setColor(color);
@@ -69,15 +75,23 @@ public class VariableContainer<T> extends HBox implements Serializable {
             ((Render2D) variable).setPaint(getPaint());
     }
 
-
+    /**
+     * Deletes the variable container
+     */
     public void delete(){
         DefinedVariables.remove(getName());
     }
 
+    /**
+     * Returns the Paint selected in the colorPicker
+     */
     public Paint getPaint(){
         return Paint.valueOf(colorPicker.getValue().toString());
     }
 
+    /**
+     * Returns the Color selected in the colorPicker
+     */
     public Color getColor(){
         return colorPicker.getValue();
     }
@@ -93,14 +107,23 @@ public class VariableContainer<T> extends HBox implements Serializable {
         return other.variable.equals(variable);
     }
 
+    /**
+     * Returns the name of a variable as a String
+     */
     public String getName(){
         return name;
     }
 
+    /**
+     * Returns the variable from the container
+     */
     public T getVariable(){
         return variable;
     }
 
+    /**
+     * Returns the mathematical variable object from of the variable from the container
+     */
     public Object getMath(){
         if(variable instanceof Render3D)
             return ((Render3D) variable).getMath();
@@ -110,6 +133,9 @@ public class VariableContainer<T> extends HBox implements Serializable {
             return getVariable();
     }
 
+    /**
+     * Sets the name of the VariableContainer
+     */
     public void setName(String name) throws IllegalArgumentException{
         if(DefinedVariables.contains(name))
             throw new IllegalArgumentException("Name already exist!");
@@ -129,15 +155,24 @@ public class VariableContainer<T> extends HBox implements Serializable {
             ((Render2D) variable).setName(name);
     }
 
+    /**
+     * Updates the representation of the variable in the GUI
+     */
     public void updateContentText(){
         contentField.setText(variable.toString());
     }
 
+    /**
+     * Updates the name of the variable in the GUI
+     */
     private void updateNameText(){
         String[] classPath = variable.getClass().getName().split("\\.");
         nameField.setText("(" + classPath[classPath.length-1] + ")\t" + name);
     }
 
+    /**
+     * Sets the variable of the VariableContainer
+     */
     public void setVariable(T variable){
         this.variable = variable;
         contentField.setText(variable.toString());

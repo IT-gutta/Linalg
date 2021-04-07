@@ -2,6 +2,9 @@ package graphics;
 
 import canvas2d.CanvasRenderer2D;
 
+/**
+ * Handles interpolation for animations
+ */
 public class Interpolator {
     private final double[] starts;
     private final double[] ends;
@@ -19,6 +22,9 @@ public class Interpolator {
         this.actuals = new double[ends.length];
     }
 
+    /**
+     * ??
+     */
     public void handle(){
         progressAngle += Math.PI/2 / millis * CanvasRenderer2D.deltaTime;
         progress = Math.sin(progressAngle);
@@ -31,10 +37,16 @@ public class Interpolator {
             actuals[i] = starts[i] + progress * (ends[i] - starts[i]);
         }
     }
+    /**
+     * Returns true if the interpolation is complete, else false
+     */
     public boolean isFinished(){
         return progress == 1;
     }
 
+    /**
+     * ??
+     */
     public double get(int i){
         return actuals[i];
     }
