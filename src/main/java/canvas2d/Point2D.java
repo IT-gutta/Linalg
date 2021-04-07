@@ -7,6 +7,9 @@ import javafx.scene.paint.Paint;
 import math.*;
 import math2d.Point2;
 
+/**
+ * Represents a graphical two dimensional point
+ */
 public class Point2D extends Render2D implements Interpolatable {
     private Interpolator interpolator;
     private Point2 point2;
@@ -15,7 +18,9 @@ public class Point2D extends Render2D implements Interpolatable {
         this.point2 = new Point2(x, y);
     }
 
-
+    /**
+     * ??
+     */
     @Override
     public void startInterpolation(Matrix m, int millis) {
         double[] p = point2.getPoint();
@@ -27,6 +32,9 @@ public class Point2D extends Render2D implements Interpolatable {
         interpolator = new Interpolator(millis, new double[]{startLength, startAngle}, new double[]{endLength, endAngle});
     }
 
+    /**
+     * ??
+     */
     @Override
     public void handleInterpolation() {
         if(interpolator != null){
@@ -39,12 +47,17 @@ public class Point2D extends Render2D implements Interpolatable {
         }
     }
 
-
+    /**
+     * Returns the mathematical point
+     */
     @Override
     public Object getMath() {
         return point2;
     }
 
+    /**
+     * Renders the point onto the 2D canvas
+     */
     @Override
     public void render(GraphicsContext gc){
         double[] p = point2.getPoint();
@@ -62,6 +75,9 @@ public class Point2D extends Render2D implements Interpolatable {
         }
     }
 
+    /**
+     * Returns point2
+     */
     public Point2 getPoint(){
         return point2;
     }

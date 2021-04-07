@@ -5,6 +5,9 @@ import canvas2d.Render2D;
 import javafx.scene.canvas.GraphicsContext;
 import math.Expression;
 
+/**
+ * Represents a graphical function from R to R
+ */
 public class Mapping extends Render2D {
     //TODO fix problems related to rendering
     private final double start;
@@ -29,7 +32,9 @@ public class Mapping extends Render2D {
         step = 1;
     }
 
-
+    /**
+     * Returns the function evaluated at a given x
+     */
     public double evaluate(double x){
         return expression.evaluate(x);
     }
@@ -40,11 +45,17 @@ public class Mapping extends Render2D {
         return expression.toString();
     }
 
+    /**
+     * Returns the Expression underlying the mapping
+     */
     @Override
     public Object getMath() {
         return expression;
     }
 
+    /**
+     * Renders the function onto the 2D canvas
+     */
     @Override
     public void render(GraphicsContext gc) {
         gc.setLineWidth(1.5);

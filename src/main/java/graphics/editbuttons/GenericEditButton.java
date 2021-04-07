@@ -14,6 +14,9 @@ import javafx.stage.Modality;
 import math.*;
 import regex.RegexUtils;
 
+/**
+ * ??
+ */
 public class GenericEditButton extends MenuButton {
     private final VariableContainer variableContainer;
     protected TextInputDialog dialog;

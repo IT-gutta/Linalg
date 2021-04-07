@@ -6,6 +6,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 
+/**
+ * Handles moving and zooming on the canvas rendering the 2D graphics
+ */
 public class CanvasPane2D extends Pane {
 
     private final Canvas canvas;
@@ -13,6 +16,7 @@ public class CanvasPane2D extends Pane {
     private double startDragY;
     //private double scrollScale = Math.pow(2,(double)1/5);
     private final double scrollScale = 0.1;
+
     public CanvasPane2D(double width, double height) {
         canvas = new Canvas(width, height);
         getChildren().add(canvas);
@@ -22,10 +26,16 @@ public class CanvasPane2D extends Pane {
         canvas.setOnScroll(scrollEvent);
     }
 
+    /**
+     * Returns the canvas
+     */
     public Canvas getCanvas() {
         return canvas;
     }
 
+    /**
+     * ??
+     */
     @Override
     protected void layoutChildren() {
         super.layoutChildren();
@@ -43,11 +53,17 @@ public class CanvasPane2D extends Pane {
         CanvasRenderer2D.accountForChanges();
     }
 
+    /**
+     * Registers the start of a drag on the canvas element
+     */
     private EventHandler<MouseEvent> startDragEvent = mouse -> {
         startDragX = mouse.getX();
         startDragY = mouse.getY();
     };
 
+    /**
+     * Updates the offset of the coordinate system in relation to the progression of the drag event
+     */
     private EventHandler<MouseEvent> endDragEvent = mouse -> {
         double endDragX = mouse.getX();
         double endDragY = mouse.getY();
@@ -61,6 +77,9 @@ public class CanvasPane2D extends Pane {
         startDragY = mouse.getY();
     };
 
+    /**
+     * ??
+     */
     private double clampScroll(double val){
         if(Math.abs(val) < 1.05)
             return 1.05;
@@ -69,6 +88,9 @@ public class CanvasPane2D extends Pane {
         return Math.abs(val);
     }
 
+    /**
+     * Registers and handles scrolling
+     */
     private EventHandler<ScrollEvent> scrollEvent = event ->{
         if(event.getDeltaY() > 0)
             CanvasRenderer2D.scaleUnitSize(clampScroll(event.getDeltaY()));

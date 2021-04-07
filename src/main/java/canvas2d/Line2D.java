@@ -9,6 +9,9 @@ import math.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a graphical two dimensional line
+ */
 public class Line2D extends Render2D implements Interpolatable {
     private Vector2D direction;
     private Point2D start;
@@ -30,14 +33,18 @@ public class Line2D extends Render2D implements Interpolatable {
         this(new Point2D(sx, sy), new Vector2D(ex, ey));
     }
 
-
-
+    /**
+     * ??
+     */
     @Override
     public void startInterpolation(Matrix m, int millis) {
         start.startInterpolation(m, millis);
         direction.startInterpolation(m, millis);
     }
 
+    /**
+     * ??
+     */
     @Override
     public void handleInterpolation() {
         direction.handleInterpolation();
@@ -45,12 +52,17 @@ public class Line2D extends Render2D implements Interpolatable {
         updateCanvasPoints();
     }
 
-
+    /**
+     * Returns a mathematical line object
+     */
     @Override
     public Object getMath() {
         return line;
     }
 
+    /**
+     * Renders the line onto the 2D canvas
+     */
     @Override
     public void render(GraphicsContext gc){
         //linear interpolation of transformation
@@ -66,7 +78,9 @@ public class Line2D extends Render2D implements Interpolatable {
         gc.strokeLine(canvasStartX, canvasStartY, canvasEndX, canvasEndY);
     }
 
-
+    /**
+     * ??
+     */
     public void updateCanvasPoints(){
         if(Math.abs(direction.getVector().getX()) <= 0.001 / CanvasRenderer2D.unitSize){
             //vertical linje
@@ -128,18 +142,30 @@ public class Line2D extends Render2D implements Interpolatable {
         //System.out.println("x1: " + canvasStartX + ", y1: " + canvasStartY + ", x2: " + canvasEndX + ", y2: " + canvasEndY);
     }
 
+    /**
+     * Returns the slope of the line
+     */
     private double getA(){
         return direction.getVector().getY() / direction.getVector().getX();
     }
 
+    /**
+     * Returns the intersection between the line and the y-axis
+     */
     private double getB(){
         return start.getPoint().getY() - getA()*start.getPoint().getX();
     }
 
+    /**
+     * Returns the y value of the line given an x value
+     */
     private double getYFromX(double x){
         return getA() * x + getB();
     }
 
+    /**
+     * Returns the y value of the line given an x value
+     */
     private double getXFromY(double y){
         return (y - getB()) / getA();
     }

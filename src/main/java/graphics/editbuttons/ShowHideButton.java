@@ -8,12 +8,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import org.linalgfx.App;
 
+/**
+ * Represents the button used to toggle graphical representation of defined variables
+ */
 public class ShowHideButton extends Region {
     private final Render2D render2D;
     private final Render3D render3D;
     private final Image visible = new Image(App.resourceURL("images/visible.png"));
     private final Image hidden = new Image(App.resourceURL("images/hidden.png"));
     private final ImageView imageView = new ImageView();
+
+    /**
+     * Creates a button for a specific variable
+     */
     public ShowHideButton(Object variable){
         super();
         if(variable instanceof Render2D) {

@@ -8,6 +8,9 @@ import math.Vector;
 import math.Vectors;
 import math2d.Vector2;
 
+/**
+ * Represents a graphical two dimensional vector
+ */
 public class Vector2D extends Render2D implements Interpolatable {
     private Interpolator interpolator;
     private Vector2 vector2;
@@ -16,6 +19,9 @@ public class Vector2D extends Render2D implements Interpolatable {
         this.vector2 = new Vector2(x, y);
     }
 
+    /**
+     * Renders the vector onto the 2D canvas
+     */
     @Override
     public void render(GraphicsContext gc){
         //linear interpolation
@@ -55,6 +61,9 @@ public class Vector2D extends Render2D implements Interpolatable {
         gc.fillPolygon(xCoords, yCoords, 3);
     }
 
+    /**
+     * ??
+     */
     @Override
     public void handleInterpolation() {
         if(interpolator != null){
@@ -72,6 +81,9 @@ public class Vector2D extends Render2D implements Interpolatable {
         return vector2.toString();
     }
 
+    /**
+     * ??
+     */
     @Override
     public void startInterpolation(Matrix m, int millis){
         double[] vec = vector2.getVector();
@@ -83,11 +95,17 @@ public class Vector2D extends Render2D implements Interpolatable {
         interpolator = new Interpolator(millis, new double[]{startLength, startAngle}, new double[]{endLength, endAngle});
     }
 
+    /**
+     * Represents the mathematical vector
+     */
     @Override
     public Object getMath() {
         return vector2;
     }
 
+    /**
+     * Returns vector2
+     */
     public Vector2 getVector(){
         return vector2;
     }
