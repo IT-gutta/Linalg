@@ -15,6 +15,8 @@ public class CameraModeButton extends CheckBox {
                 CanvasRenderer3D.cameraMode = CanvasRenderer3D.CameraMode.FPS;
             else {
                 CanvasRenderer3D.cameraMode = CanvasRenderer3D.CameraMode.STANDARD;
+                //when using this mode, cant allow elevation because of a bug with roll
+                CanvasRenderer3D.getCamera().getPosition().setY(0);
                 CanvasRenderer3D.getCamera().pointAt(Vector3.ZERO());
             }
         });

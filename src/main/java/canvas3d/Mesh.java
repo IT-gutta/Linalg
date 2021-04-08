@@ -27,12 +27,12 @@ public class Mesh extends Render3D{
     /**
      * This constructor takes in a path to an obj or text file, which is then read and translated into vertices and triangles
      */
-    public Mesh(String path, Vector3 position, double scale){
+    public Mesh(String relativePath, Vector3 position, double scale){
         super(position);
 
         currentScale = scale;
 
-        try(Scanner sc = new Scanner(new File(getClass().getResource(path).toExternalForm().replace("file:/", "")))){
+        try(Scanner sc = new Scanner(new File(getClass().getResource(relativePath).toExternalForm().replace("file:/", "")))){
 
             List<Vector3> vertices = new ArrayList<>();
             List<Triangle> triangles = new ArrayList<>();
