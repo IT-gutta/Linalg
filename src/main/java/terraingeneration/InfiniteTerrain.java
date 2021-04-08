@@ -6,7 +6,9 @@ import canvas3d.Render3D;
 import math3d.Vector3;
 
 import java.util.HashMap;
-
+/**
+ * Infinite 3D terrain that automatically generates new chunks or loads previously generated ones near the position of the player/camera
+ */
 public class InfiniteTerrain extends Render3D {
     private HashMap<String, TerrainChunk> terrainChunkHashMap;
     public final int chunkSize = 16;

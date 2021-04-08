@@ -18,7 +18,10 @@ import canvas2d.Line2D;
 import canvas2d.Point2D;
 import canvas2d.Vector2D;
 import regex.RegexUtils;
-
+/**
+ * The button to press for adding new elements in the 2D canvas, fills up the MenuItem list with clickable menuItems
+ * for creating different types of 2D elements (vectors, points etc.)
+ */
 public class AddButton2D extends MenuButton {
     //TODO Add support for more variables (grid, linesegment and more) in the new menu window
     private TextInputDialog dialog;

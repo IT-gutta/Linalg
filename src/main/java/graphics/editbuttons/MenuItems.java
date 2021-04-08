@@ -9,11 +9,14 @@ import javafx.scene.control.TextInputDialog;
 import math.Matrix;
 
 /**
- * ??
+ * Abstract helper class for different MenuItems
  */
 public abstract class MenuItems {
-
-    public static MenuItem transformMenuItem(VariableContainer<? extends Interpolatable> variableContainer){
+    /**
+     * Returns a new MenuItem which has the functionality to interpolate the given variable
+     * Takes in only variables which have underlying 2D or 3D objects which are interpolatable
+     */
+    public static MenuItem interpolateMenuItem(VariableContainer<? extends Interpolatable> variableContainer){
         MenuItem transform = new MenuItem("Transform", Icons.of("transform.png", 20));
         transform.setOnAction(actionEvent ->{
             TextInputDialog dialog = new TextInputDialog();

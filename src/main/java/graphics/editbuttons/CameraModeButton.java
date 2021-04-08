@@ -3,7 +3,9 @@ package graphics.editbuttons;
 import canvas3d.CanvasRenderer3D;
 import javafx.scene.control.CheckBox;
 import math3d.Vector3;
-
+/**
+ * Checkbox for selecting cameramode to view the 3D canvas
+ */
 public class CameraModeButton extends CheckBox {
     public CameraModeButton(){
         super("FPS camera");

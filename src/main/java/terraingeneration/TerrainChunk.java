@@ -9,6 +9,9 @@ import math3d.Vector3;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TerrainChunk which is created procedurally when the player/camera is moving
+ */
 public class TerrainChunk extends Mesh {
     private double[] heightMap;
     private Material[] materialMap;
@@ -52,6 +55,9 @@ public class TerrainChunk extends Mesh {
         this.triangles = triangles.toArray(new Triangle[0]);
     }
 
+    /**
+     * Returns the type of material to be used for a vertex depending on the height
+     */
     private Material materialFromHeight(double height){
         if(height <= -0.2) //water
             return Material.WATER;

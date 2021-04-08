@@ -1,13 +1,24 @@
 package terraingeneration;
 
 import math2d.Vector2;
-
+/**
+ * This class contains a 2 dimensional noisemap, where the noise is generated using some code from wikipedia written i C, but
+ * translated to Java, source: https://en.wikipedia.org/wiki/Perlin_noise
+ * Perlin noise is a techique used for creating pseudo random numbers, where it is important that inputs which are close together
+ * get outputs also close together (relatively speaking)
+ */
 public class PerlinNoiseMap {
+    /**
+     * Returns the perlin noise value for a point x,y
+     */
     public double get(double y, double x){
         //sørger for at man ikke prøver å sample et negativt tall
         return perlin(x+100000, y+100000);
     }
 
+    /** Function to linearly interpolate between a0 and a1
+     * Weight w should be in the range [0.0, 1.0]
+     */
     private double interpolate(double a0, double a1, double w){
         /* // You may want clamping by inserting:
          * if (0.0 > w) return a0;
@@ -23,14 +34,18 @@ public class PerlinNoiseMap {
          * return (a1 - a0) * ((w * (w * 6.0 - 15.0) + 10.0) * w * w * w) + a0;
          */
     }
-
+    /**
+     * Create random direction vector
+     */
     private Vector2 randomGradient(int ix, int iy) {
         // Random float. No precomputed gradients mean this works for any number of grid coordinates
         double random = 2920 * Math.sin(ix * 21942 + iy * 171324 + 8912) * Math.cos(ix * 23157 * iy * 217832 + 9758);
         return new Vector2(Math.cos(random), Math.sin(random));
     }
-
-    private double dotGridGradient(int ix, int iy, double x, double y) {
+    /**
+     * Computes the dot product of the distance and gradient vectors.
+     */
+     private double dotGridGradient(int ix, int iy, double x, double y) {
         // Get gradient from integer coordinates
         Vector2 gradient = randomGradient(ix, iy);
 
@@ -42,7 +57,9 @@ public class PerlinNoiseMap {
         return (dx*gradient.getX() + dy*gradient.getY());
     }
 
-    // Compute Perlin noise at coordinates x, y
+    /**
+     * Compute Perlin noise at coordinates x, y
+     */
     private double perlin(double x, double y) {
         // Determine grid cell coordinates
         int x0 = (int)x;

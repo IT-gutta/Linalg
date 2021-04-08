@@ -8,7 +8,7 @@ import canvas2d.CanvasRenderer2D;
 public class Interpolator {
     private final double[] starts;
     private final double[] ends;
-    private double[] actuals;
+    private final double[] actuals;
     private double progress;
     private double progressAngle;
     private final double millis;
@@ -23,7 +23,9 @@ public class Interpolator {
     }
 
     /**
-     * ??
+     * Handles the interpolation process for each double in the list of doubles, and sets the array of actual/current values
+     * according to a sine function which moves in output from 0 to 1
+     * (making the interpolation more "smooth", not so linear and rigid)
      */
     public void handle(){
         progressAngle += Math.PI/2 / millis * CanvasRenderer2D.deltaTime;
@@ -45,7 +47,7 @@ public class Interpolator {
     }
 
     /**
-     * ??
+     * Returns the current value for the interpolated double with index 4
      */
     public double get(int i){
         return actuals[i];

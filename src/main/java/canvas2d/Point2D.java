@@ -18,9 +18,7 @@ public class Point2D extends Render2D implements Interpolatable {
         this.point2 = new Point2(x, y);
     }
 
-    /**
-     * ??
-     */
+
     @Override
     public void startInterpolation(Matrix m, int millis) {
         double[] p = point2.getPoint();
@@ -32,9 +30,6 @@ public class Point2D extends Render2D implements Interpolatable {
         interpolator = new Interpolator(millis, new double[]{startLength, startAngle}, new double[]{endLength, endAngle});
     }
 
-    /**
-     * ??
-     */
     @Override
     public void handleInterpolation() {
         if(interpolator != null){

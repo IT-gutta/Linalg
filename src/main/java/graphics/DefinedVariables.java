@@ -127,7 +127,7 @@ public abstract class DefinedVariables {
     }
 
     /**
-     * ??
+     * Ensures that the text visible on screen is updated with the underlying mathematical objects state
      */
     public static void updateText(){
        vbox.getChildren().forEach(n -> ((VariableContainer) n).updateContentText());

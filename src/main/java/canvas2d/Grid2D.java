@@ -72,9 +72,7 @@ public class Grid2D extends Render2D implements Interpolatable {
         }
     }
 
-    /**
-     * ??
-     */
+
     @Override
     public void startInterpolation(Matrix matrix, int millis){
         iHat.transform(matrix);
@@ -83,9 +81,7 @@ public class Grid2D extends Render2D implements Interpolatable {
             line.startInterpolation(matrix, millis);
     }
 
-    /**
-     * ??
-     */
+
     @Override
     public void handleInterpolation() {
         for(LineSegment2D line : lineSegments) {

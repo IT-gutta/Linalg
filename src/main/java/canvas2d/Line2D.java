@@ -33,18 +33,13 @@ public class Line2D extends Render2D implements Interpolatable {
         this(new Point2D(sx, sy), new Vector2D(ex, ey));
     }
 
-    /**
-     * ??
-     */
     @Override
     public void startInterpolation(Matrix m, int millis) {
         start.startInterpolation(m, millis);
         direction.startInterpolation(m, millis);
     }
 
-    /**
-     * ??
-     */
+
     @Override
     public void handleInterpolation() {
         direction.handleInterpolation();
@@ -61,7 +56,7 @@ public class Line2D extends Render2D implements Interpolatable {
     }
 
     /**
-     * Renders the line onto the 2D canvas
+     * Renders the line onto the canvas
      */
     @Override
     public void render(GraphicsContext gc){
@@ -79,7 +74,8 @@ public class Line2D extends Render2D implements Interpolatable {
     }
 
     /**
-     * ??
+     * Updates the points of intersection with the canvas, so that the line only has to be drawn between
+     * the two intersection points when rendering to canvas
      */
     public void updateCanvasPoints(){
         if(Math.abs(direction.getVector().getX()) <= 0.001 / CanvasRenderer2D.unitSize){

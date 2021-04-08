@@ -34,7 +34,7 @@ public class CanvasPane2D extends Pane {
     }
 
     /**
-     * ??
+     * Handles the canvas binding to the canvasPane when the pane is stretched/squeezed
      */
     @Override
     protected void layoutChildren() {
@@ -78,7 +78,7 @@ public class CanvasPane2D extends Pane {
     };
 
     /**
-     * ??
+     * Clamps the scroll amount, so that it is not possible to scroll too fast
      */
     private double clampScroll(double val){
         if(Math.abs(val) < 1.05)

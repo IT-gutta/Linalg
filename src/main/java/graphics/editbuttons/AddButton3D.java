@@ -27,7 +27,10 @@ import terraingeneration.InfiniteTerrain;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
-
+/**
+ * The button to press for adding new elements in the 3D canvas, fills up the MenuItem list with clickable menuItems
+ * for creating different types of 3D elements (vectors, points etc.)
+ */
 public class AddButton3D extends MenuButton {
     //TODO Add support for more variables (grid, linesegment and more) in the new menu window
     private TextInputDialog dialog;

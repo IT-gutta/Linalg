@@ -39,18 +39,14 @@ public class LineSegment2D extends Render2D implements Interpolatable {
         gc.strokeLine(CanvasRenderer2D.toCanvasX(start.getPoint().getX()), CanvasRenderer2D.toCanvasY(start.getPoint().getY()), CanvasRenderer2D.toCanvasX(end.getPoint().getX()), CanvasRenderer2D.toCanvasY(end.getPoint().getY()));
     }
 
-    /**
-     * ??
-     */
+
     @Override
     public void startInterpolation(Matrix m, int millis) {
         start.startInterpolation(m , millis);
         end.startInterpolation(m, millis);
     }
 
-    /**
-     * ??
-     */
+
     @Override
     public void handleInterpolation() {
         start.handleInterpolation();

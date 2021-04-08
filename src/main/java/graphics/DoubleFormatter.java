@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class DoubleFormatter{
 
     /**
-     * ??
+     * Returns a TextFormatter for formatting doubles, used in almost all inputfields where the user should input a number
      */
     public static TextFormatter<Double> getFormatter(){
         Pattern validEditingState = Pattern.compile("-?(([1-9][0-9]*)|0)?(\\.[0-9]*)?");

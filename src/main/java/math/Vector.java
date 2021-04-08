@@ -8,10 +8,6 @@ import java.util.stream.DoubleStream;
 public class Vector implements Transformable, Serializable {
 
     private double[] vector;
-    private Interpolator interpolator;
-
-    private final double arrowTipLength = 12;
-    private final double arrowSideLength = 7;
 
     public Vector(double... args){
         vector = args;
@@ -63,7 +59,7 @@ public class Vector implements Transformable, Serializable {
         for(double element:vector){
             sum+=Math.pow(element,2);
         }
-        double scale = Math.sqrt(m/sum);
+        double scale = Math.sqrt(m/sum); //Dette stemmer vel ikke??
         for(int i = 0; i<vector.length; i++){
             vector[i]*=scale;
         }
