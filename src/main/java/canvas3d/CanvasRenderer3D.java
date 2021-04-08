@@ -6,11 +6,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import math3d.Vector3;
-import terraingeneration.InfiniteTerrain;
 
 import java.text.DecimalFormat;
-
+/**
+ * Handles rendering of 3D objects onto the canvas
+ */
 public abstract class CanvasRenderer3D {
     private static Canvas canvas;
     private static GraphicsContext graphicsContext2D;
@@ -25,6 +25,9 @@ public abstract class CanvasRenderer3D {
 
     //private static final List<Render3D> gameObjects = new ArrayList<>();
 
+    /**
+     * Starts an animation timer
+     */
     public static void start(){
 //        Mesh chevrolet = new Mesh("chevrolet.obj", new Vector3(0, 0, 0), 1);
 //        chevrolet.setForward(Vector3.scale(Vector3.FORWARD(), -1));
@@ -81,7 +84,7 @@ public abstract class CanvasRenderer3D {
                 deltaTime = (now - lastFrameTime) / 1000000;
                 graphicsContext3D.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 camera3D.updateMatrix();
-                graphicsContext3D.clearPolygons();
+                graphicsContext3D.clearDepthBuffer();
 
                 DefinedVariables.get3DRenderables().forEach(r -> {
                     r.getVariable().render(graphicsContext3D);
@@ -101,6 +104,9 @@ public abstract class CanvasRenderer3D {
         animationTimer.start();
     }
 
+    /**
+     * Initializes the Camera3D and the 3D graphic context (which internally is using the canvas 2D graphics context)
+     */
     public static void setGraphicsContext(GraphicsContext graphicsContext2D) {
         CanvasRenderer3D.graphicsContext2D = graphicsContext2D;
         camera3D = new Camera3D();

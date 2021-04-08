@@ -2,13 +2,18 @@ package canvas3d;
 
 import graphics.Interpolatable;
 import graphics.Interpolator;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import math.Matrix;
 import math3d.Vector3;
 import terraingeneration.TerrainChunk;
 
 import java.io.Serializable;
-
+/**
+ * Is inherited by all classes that can be rendered onto the 3D canvas
+ * This class contains a name, position, vectors that describe how the object is rotated i space
+ * and all the triangles and vertices that the rendered object contains
+ */
 public abstract class Render3D implements Interpolatable, Serializable  {
     protected String name;
     protected Vector3 position;
@@ -48,7 +53,9 @@ public abstract class Render3D implements Interpolatable, Serializable  {
         this.vertices = vertices;
     }
 
-
+    /**
+     * Sets the forward direction of the object, which then tries to set the other directions naturally according to the new forward
+     */
     public void setForward(Vector3 forward) {
         if(forward.equals(Vector3.ZERO()))
             throw new IllegalArgumentException("Forward cant be null vector");
@@ -66,71 +73,95 @@ public abstract class Render3D implements Interpolatable, Serializable  {
         }
 
         this.forward = Vector3.copy(f);
-        this.right = Vector3.cross(up, f); //kan egt ta bort normalized
+        this.right = Vector3.cross(up, f);
 
         if(Math.abs(this.forward.dot(this.up)) > tol){
             System.out.println("Det er en error i setforward funksjonen på Render3D, dot = " + this.forward.dot(this.up));
         }
-
-
-        //System.out.println("dot: " + this.forward.dot(this.up));
-        /*System.out.println("up: " + up);
-        System.out.println("forward: " + this.forward);
-        System.out.println("right" + right);*/
     }
 
     public void setPosition(Vector3 position){
         this.position = position;
     }
 
+    /**
+     * Sets the forward vectors such that the object points at the given input vector
+     */
     public void pointAt(Vector3 target){
         setForward(Vector3.subtract(target, position));
     }
 
+    /**
+     * Rotates the object around the x axis
+     */
     public void rotateX(double angle){
         forward = Vector3.rotateX(forward, angle);
         up = Vector3.rotateX(up, angle);
         right = Vector3.rotateX(right, angle);
     }
-
+    /**
+     * Rotates the object around the y axis
+     */
     public void rotateY(double angle){
         forward = Vector3.rotateY(forward, angle);
         up = Vector3.rotateY(up, angle);
         right = Vector3.rotateY(right, angle);
     }
-
+    /**
+     * Rotates the object around the z axis
+     */
     public void rotateZ(double angle){
         forward = Vector3.rotateZ(forward, angle);
         up = Vector3.rotateZ(up, angle);
         right = Vector3.rotateZ(right, angle);
     }
 
+    /**
+     * Rotates the object around its own right axis, aka tilt
+     */
     public void rotateOwnRight(double angle){
         forward = Vector3.rotate(right, forward, angle);
         up = Vector3.rotate(right, up, angle);
     }
 
+    /**
+     * Rotates the object around its own up axis, aka spin
+     */
     public void rotateOwnUp(double angle){
         forward = Vector3.rotate(up, forward, angle);
         right = Vector3.rotate(up, right, angle);
     }
 
+    /**
+     * Rotates the object around its own forward axis, aka roll
+     */
     public void rotateOwnForward(double angle){
         up = Vector3.rotate(forward, up, angle);
         right = Vector3.rotate(forward, right, angle);
     }
 
+    /**
+     * Moves the object along its forward vector based on the scalar
+     */
     public void moveForward(double scalar){
         position = Vector3.add(position, Vector3.scale(forward, scalar));
     }
+    /**
+     * Moves the object along its right vector based on the scalar
+     */
     public void moveRight(double scalar){
         position = Vector3.add(position, Vector3.scale(right, scalar));
     }
+    /**
+     * Moves the object along its up vector based on the scalar
+     */
     public void moveUp(double scalar){
         position = Vector3.add(position, Vector3.scale(up, scalar));
     }
 
-
+    /**
+     * Renders the object to the 3D canvas, if this method is not overridden, it defaults to just rendering all the triangles
+     */
     public void render(GraphicsContext3D gc){
         beforeRender();
         handleInterpolation();
@@ -147,7 +178,10 @@ public abstract class Render3D implements Interpolatable, Serializable  {
     }
 
 
-
+    /**
+     * This method is called before each object is rendered, and it must be implemented so that the object for example can
+     * set the color before render
+     */
     public abstract void beforeRender();
 
     public void setName(String name){
@@ -160,7 +194,7 @@ public abstract class Render3D implements Interpolatable, Serializable  {
 
         for(Triangle triangle : triangles){
             triangle.setColor(color);
-            triangle.setInterpolateColors(false);
+            triangle.setShouldInterpolateColors(false);
         }
     }
 
@@ -170,7 +204,7 @@ public abstract class Render3D implements Interpolatable, Serializable  {
 
         for(Triangle triangle : triangles){
             triangle.setColors(colors);
-            triangle.setInterpolateColors(true);
+            triangle.setShouldInterpolateColors(true);
         }
     }
 
@@ -180,7 +214,7 @@ public abstract class Render3D implements Interpolatable, Serializable  {
 
         for(Triangle triangle : triangles){
             triangle.setColors(new Color[]{c1, c2, c3});
-            triangle.setInterpolateColors(true);
+            triangle.setShouldInterpolateColors(true);
         }
     }
 
@@ -205,30 +239,41 @@ public abstract class Render3D implements Interpolatable, Serializable  {
 
 
 
-    //gamle ting som er viktig for geogebra-delen
     private boolean isHidden = false;
-    //TODO Add the name of an object to the object in the graphics window (as 3D text?)
 
+    /**
+     * Returns the mathematical object underlying the Render2D, if no such object exists, null is returned
+     */
     public abstract Object getMath();
+
+    /**
+     * Returns true is the Render2D is hidden, else false
+     */
     public boolean isHidden(){
         return isHidden;
     };
+
+    /**
+     * Toggles isHidden to false
+     */
     public void show(){
         isHidden = false;
     };
+
+    /**
+     * Toggles isHidden to true
+     */
     public void hide(){
         isHidden = true;
     };
 
 
+    /**
+     * Default implementation of the startInterpolation function which is
+     * necessary for the default implementation of handleInterpolation to work
+     */
     @Override
     public void startInterpolation(Matrix m, int millis) {
-//        Vector3[] transformedVertices = new Vector3[vertices.length];
-//        for(int i = 0; i < vertices.length; i++){
-//            transformedVertices[i] = new Vector3(m.transform(vertices[i].getVector()));
-//        }
-
-        //TODO dette er meget unødvendig, kan bare ha en funksjon med en progress
         double[] startForward = forward.getVector();
         double[] startRight = right.getVector();
         double[] startUp = up.getVector();
@@ -256,6 +301,10 @@ public abstract class Render3D implements Interpolatable, Serializable  {
         interpolator = new Interpolator(millis, starts, ends);
     }
 
+    /**
+     * Default implementation of the handleInterpolation, which just interpolates all direction vectors and the position vector
+     * between their start and end vector
+     */
     @Override
     public void handleInterpolation() {
         if(interpolator != null){

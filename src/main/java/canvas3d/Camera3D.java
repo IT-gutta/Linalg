@@ -9,16 +9,18 @@ import math3d.Vector4;
 
 import java.util.HashSet;
 import java.util.Set;
-
+/**
+ * Movable camera which represents the player
+ * Responable for translating points in 3D space and return their projected version on the canvas, including depth-information
+ */
 public class Camera3D extends Render3D{
     //TODO fix cameraMovement
     //TODO implement some sort of clipping of the triangles (when they are at the edge of canvas)
     private final double fov = Math.PI/2;
     private final double zFar = 50; // bestemmer rendering distance
     private final double zNear = 0.1; //bestemmer rendering closest distance
-//    private enum Key{W, A, S, D, SPACE, SHIFT};
-//    private Set<Key> keysPressed = new HashSet<>();
-    private LightSource lightSource;
+
+    private final LightSource lightSource;
 
     private Matrix projectionMatrix;
     private Matrix lookAtMatrix;
@@ -28,6 +30,9 @@ public class Camera3D extends Render3D{
         DefinedVariables.add(lightSource, "LightBulb");
     }
 
+    /**
+     * Handles movement of the camera/player
+     */
     @Override
     public void beforeRender() {
         double speed = movementSpeed * CanvasRenderer3D.deltaTime / 50;
@@ -66,6 +71,10 @@ public class Camera3D extends Render3D{
         return null;
     }
 
+    /**
+     * Updates the matrices lookAtMatrix and projectionMatrix, which are used in the project method to project a poin
+     * from 3D space to 2D (the details for how these matrices are constructed is to complex to explain here)
+     */
     public void updateMatrix(){
         double f = 1d/(Math.tan(fov / 2));
         double a = CanvasRenderer3D.getCanvasHeight() / CanvasRenderer3D.getCanvasWidth();
@@ -96,11 +105,13 @@ public class Camera3D extends Render3D{
         });
 
         lookAtMatrix = lookAt;
-
-        //System.out.println(lookAtMatrix);
     }
 
-
+    /**
+     * Projects a point from 3D space to 2D Space and returns a 4D vector with extra info about the depth
+     * by first transforming based on camera position and angle, and then projecting this point as if the
+     * viewer was positioned at (0, 0, 0) facing the z positive direction
+     */
     public Vector4 project(Vector3 vector3){
         Vector4 input = new Vector4(vector3.getX(), vector3.getY(), vector3.getZ(), 1);
         double[] cameraView = lookAtMatrix.transform(input.getVector());
@@ -127,13 +138,6 @@ public class Camera3D extends Render3D{
     public LightSource getLightSource(){return lightSource;}
     public double getRenderingDistance(){
         return zFar;
-    }
-
-    private double cos(double angle){
-        return Math.cos(angle);
-    }
-    private double sin(double angle){
-        return Math.sin(angle);
     }
 
 

@@ -16,28 +16,15 @@ public abstract class Render2D implements Serializable {
     //TODO Add the name of an object to the object in the graphics window
 
     /**
-     * Sets the name of the Render2D
+     * Represents the Render2D onto the canvas
+     * This method gets called on every defined 2D variable every animation loop
      */
-    public void setName(String name){
-        this.name = name;
-    }
-
-    /**
-     * Sets the color of the Render2D
-     */
-    public void setPaint(Paint paint){
-        this.paint = paint;
-    }
+    public abstract void render(GraphicsContext gc);
 
     /**
      * Returns the mathematical object underlying the Render2D, if no such object exists, null is returned
      */
     public abstract Object getMath();
-
-    /**
-     * Represents the Render2D onto the canvas
-     */
-    public abstract void render(GraphicsContext gc);
 
     /**
      * Returns true is the Render2D is hidden, else false
@@ -59,4 +46,18 @@ public abstract class Render2D implements Serializable {
     public void hide(){
         isHidden = true;
     };
+
+    /**
+     * Sets the name of the Render2D
+     */
+    public void setName(String name){
+        this.name = name;
+    }
+
+    /**
+     * Sets the color of the Render2D
+     */
+    public void setPaint(Paint paint){
+        this.paint = paint;
+    }
 }

@@ -3,7 +3,10 @@ package canvas3d;
 import graphics.Interpolator;
 import math.Matrix;
 import math3d.Vector3;
-
+/**
+ * A 3D vector which is rendered to the canvas as a Mesh which looks like an arrow, and is scaled according to the
+ * magnitude of the vector
+ */
 public class Vector3D extends Mesh {
     private Interpolator interpolator;
     private Vector3 vector3;
@@ -12,7 +15,7 @@ public class Vector3D extends Mesh {
     public Vector3D(double x, double y, double z){
         super("vectorfix.obj", Vector3.ZERO(), 1);
         vector3 = new Vector3(x, y, z);
-        setScale(vector3.getMagnitude());
+        setScale(vector3.getMagnitude()/2);
         setForward(vector3);
     }
 
@@ -21,18 +24,17 @@ public class Vector3D extends Mesh {
         double[] start = vector3.getVector();
         double[] end = m.transform(vector3.getVector());
         interpolator = new Interpolator(millis, start, end);
-        System.out.println("started interpolatoin");
     }
 
     @Override
     public void handleInterpolation() {
-
         if(interpolator != null){
             interpolator.handle();
             vector3.setX(interpolator.get(0));
             vector3.setY(interpolator.get(1));
             vector3.setZ(interpolator.get(2));
 
+            setScale(vector3.getMagnitude()/2);
             setForward(vector3);
 
             if(interpolator.isFinished())
