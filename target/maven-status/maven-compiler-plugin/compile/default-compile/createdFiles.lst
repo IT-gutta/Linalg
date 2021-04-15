@@ -1,3 +1,4 @@
+graphics\textInput\OperatorMaps.class
 graphics\DoubleFormatter$1.class
 graphics\editbuttons\ShowHideButton.class
 graphics\editbuttons\EditLineSegmentButton.class
@@ -20,4 +21,5 @@ graphics\textInput\InputMapFunc.class
 math\Matrices.class
 graphics\editbuttons\EditLineButton.class
 math3d\Vector3.class
+write\Writable.class
 graphics\DefinedVariables.class
