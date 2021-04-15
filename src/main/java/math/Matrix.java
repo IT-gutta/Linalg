@@ -39,6 +39,16 @@ public class Matrix implements Serializable {
         matrix = new double[][]{{0}};
     }
 
+    public boolean equals(Matrix matrix){
+        if(getWidth()!=matrix.getWidth() || getHeight()!= matrix.getHeight())
+            return false;
+        for(int i = 0; i<height; i++){
+            if(!new Vector(getRow(i)).equals(new Vector(matrix.getRow(i))))
+                return false;
+        }
+        return true;
+    }
+
     /**
      * Returns the width of the Matrix
      */

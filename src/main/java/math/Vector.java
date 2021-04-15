@@ -63,7 +63,7 @@ public class Vector implements Transformable, Serializable {
         for(double element:vector){
             sum+=Math.pow(element,2);
         }
-        double scale = Math.sqrt(m/sum);
+        double scale = m/Math.sqrt(sum);
         for(int i = 0; i<vector.length; i++){
             vector[i]*=scale;
         }
@@ -206,20 +206,20 @@ public class Vector implements Transformable, Serializable {
     public boolean isParallel(Vector v) throws IllegalArgumentException{
         if(!this.hasSameDimensions(v))
             throw new IllegalArgumentException("Vectors must have same dimensions");
-
-        double x = v.getElement(0);
-        int j = 0;
-        while(x == 0d){
-            j++;
-            if(j >= this.getDimensions())
-                return true;
-
-            x = v.getElement(j);
+        int i = 0;
+        double scale;
+        while(true){
+            if(((v.getElement(i)!=0)? 1 : 0)+((getElement(i)!=0)? 1 : 0)==1){
+                return false;
+            }
+            else if(getElement(i)!=0 && v.getElement(i)!=0){
+                scale = v.getElement(i)/getElement(i);
+                break;
+            }
         }
-        double scale = vector[j]/x;
-
-        for(int i = 1; i<this.getDimensions(); i++){
-            if(scale*v.getElement(i)==vector[i]) return false;
+        for(i = i; i<getDimensions(); i++){
+            if(getElement(i)*scale!=v.getElement(i))
+                return false;
         }
         return true;
     }

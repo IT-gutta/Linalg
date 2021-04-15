@@ -96,7 +96,7 @@ public class Solver {
     public static Vector solveLinSys(Matrix matrix, Vector v) throws IllegalArgumentException{
         if(matrix.getHeight()!=matrix.getWidth() || matrix.getWidth()!=v.getDimensions() || matrix.det()==0)
             throw new IllegalArgumentException();
-        Matrix m = new Matrix(matrix.getMatrix());
+        Matrix m = new Matrix(matrix.getMatrix().clone());
         m.append(v);
         m = toReducedRowEchelon(m);
         return new Vector(m.getColumn(m.getHeight()));
