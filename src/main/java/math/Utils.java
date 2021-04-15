@@ -50,17 +50,17 @@ public class Utils {
     }
 
     /**
-     * ??
+     * Returns the sum from start to (including) end of a function from Z to R
      */
     public double sum(int start, int end, IntToDoubleFunction function){
-        return IntStream.rangeClosed(start, end).mapToDouble(i -> function.applyAsDouble(i)).sum();
+        return IntStream.rangeClosed(start, end).mapToDouble(function).sum();
     }
 
     /**
-     * ??
+     * Returns the sum from start to (including) end of a function from Z to Z
      */
     public int sum(int start, int end, IntUnaryOperator function){
-        return IntStream.rangeClosed(start, end).map(i -> function.applyAsInt(i)).sum();
+        return IntStream.rangeClosed(start, end).map(function).sum();
     }
 
     /**

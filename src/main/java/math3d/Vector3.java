@@ -66,7 +66,7 @@ public class Vector3 extends Vector implements Serializable {
 
 
 
-    //Static utility functions
+    //STATIC UTILITY FUNCTIONS
     /**
      * Returns the vector scaled by a double
      */
@@ -79,7 +79,7 @@ public class Vector3 extends Vector implements Serializable {
     }
 
     /**
-     * ??
+     * Returns the vector rotated angle radians around the z axis
      */
     public static Vector3 rotateZ(Vector3 vec, double angle){
         Matrix rotation = new Matrix(new double[][]{
@@ -91,7 +91,7 @@ public class Vector3 extends Vector implements Serializable {
     }
 
     /**
-     * ??
+     * Returns the vector rotated angle radians around the x axis
      */
     public static Vector3 rotateX(Vector3 vec, double angle){
         Matrix rotation = new Matrix(new double[][]{
@@ -103,7 +103,7 @@ public class Vector3 extends Vector implements Serializable {
     }
 
     /**
-     * ??
+     * Returns the vector rotated angle radians around the y axis
      */
     public static Vector3 rotateY(Vector3 vec, double angle){
         Matrix rotation = new Matrix(new double[][]{
@@ -116,7 +116,7 @@ public class Vector3 extends Vector implements Serializable {
 
 
     /**
-     * ??
+     * Returns the vector rotated angle radians around an arbitrary axis given as a direction vector
      */
     public static Vector3 rotate(Vector3 axis, Vector3 input, double angle){
         //TODO fikse denne funksjonen

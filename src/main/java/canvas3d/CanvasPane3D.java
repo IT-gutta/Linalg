@@ -10,7 +10,9 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import math3d.Vector3;
 
-
+/**
+ * Handles moving and zooming on the canvas rendering the 3D graphics
+ */
 public class CanvasPane3D extends Pane {
 
     private final Canvas canvas;
@@ -38,17 +40,18 @@ public class CanvasPane3D extends Pane {
             this.mouseIsPressed = false;
         });
     }
-
+    /**
+     * Returns the canvas
+     */
     public Canvas getCanvas() {
         return canvas;
     }
 
+    /**
+     * Handles the canvas binding to the canvasPane when the pane is stretched/squeezed
+     */
     @Override
     protected void layoutChildren() {
-//        canvas.setOnMousePressed(startDragEvent);
-//        canvas.setOnMouseDragged(endDragEvent);
-//        canvas.setOnScroll(scrollEvent);
-
         super.layoutChildren();
         final double x = snappedLeftInset();
         final double y = snappedTopInset();
@@ -64,7 +67,9 @@ public class CanvasPane3D extends Pane {
         CanvasRenderer2D.accountForChanges();
     }
 
-
+    /**
+     * Handles mouse movement, and acts differently based on the camera movement mode selected
+     */
     private EventHandler<MouseEvent> mouseHandler = mouseEvent -> {
         //TODO fix camera pitching
 
@@ -89,6 +94,9 @@ public class CanvasPane3D extends Pane {
         previousY = mouseEvent.getY();
     };
 
+    /**
+     * Handles key inputs, and moves the player/camera accordingly
+     */
     private EventHandler<KeyEvent> keyDownHandler = keyEvent ->{
         if(CanvasRenderer3D.cameraMode == CanvasRenderer3D.CameraMode.STANDARD)
             return;
@@ -140,6 +148,10 @@ public class CanvasPane3D extends Pane {
             CanvasRenderer3D.getCamera().CONTROL = false;
     };
 
+    /**
+     * Handles mouse scroll, zooms out (aka moves the camera further away or closer to the origin) only if cameramode
+     * is set to STANDARD, else returns without doing anything
+     */
     private EventHandler<ScrollEvent> scrollHandler = scrollEvent ->{
         if(CanvasRenderer3D.cameraMode == CanvasRenderer3D.CameraMode.FPS)
             return;

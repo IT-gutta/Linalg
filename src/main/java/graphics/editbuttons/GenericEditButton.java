@@ -15,7 +15,8 @@ import math.*;
 import regex.RegexUtils;
 
 /**
- * ??
+ * Generic menubutton which has basic editing functionality for all DefinedVariables, which include editing name and deleting element
+ * This class is extended for all other types of editButtons that require this basic functionality
  */
 public class GenericEditButton extends MenuButton {
     private final VariableContainer variableContainer;
@@ -43,23 +44,33 @@ public class GenericEditButton extends MenuButton {
 
         //if transformable
         if(variableContainer.getVariable() instanceof Interpolatable)
-            addMenuItem(MenuItems.transformMenuItem(variableContainer));
+            addMenuItem(MenuItems.interpolateMenuItem(variableContainer));
     }
 
-
+    /**
+     * Adds a MenuItem to the list of pickable menuitems (appears in the dropdown menu when the MenuButton is pressed)
+     */
     public void addMenuItem(MenuItem menuItem){
         getItems().add(menuItem);
     }
 
+    /**
+     * Deletes the variables which is associated with this GenericEditButton
+     */
     public void delete(){
         variableContainer.delete();
     }
-
+    /**
+     * Clears the modal window / modal dialog which is used for requesting input from user
+     */
     protected void clearDialog(){
         dialog = new TextInputDialog("");
         dialog.initModality(Modality.APPLICATION_MODAL);
     }
 
+    /**
+     * Handles the process of changing a name based on input from user
+     */
     protected void handleChangeName(boolean isRetry){
         clearDialog();
 
@@ -94,7 +105,9 @@ public class GenericEditButton extends MenuButton {
         return variableContainer;
     }
 
-
+    /**
+     * Static function for returning a specialized editButton based on what type of variable is in the input
+     */
     public static <T> GenericEditButton getEditButton(VariableContainer<T> variableContainer){
         if(variableContainer.getVariable() instanceof Vector)
             return new EditVectorButton((VariableContainer<Vector>) variableContainer);

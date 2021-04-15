@@ -6,6 +6,10 @@ import math3d.Vector3;
 
 import java.io.Serializable;
 
+/**
+ * Triangle, used in every mesh drawn to the 3D canvas
+ * Keeps track of corners and color/material info
+ */
 public class Triangle implements Serializable {
     private Vector3[] vertices;
     private Color[] adjustedColors = new Color[3];
@@ -34,12 +38,16 @@ public class Triangle implements Serializable {
 
 
 
-
+    /**
+     * Renders the triangle with no respect to the Render3D object's direction and position
+     * (renders it at the origin facing the positive z direction)
+     */
     public void renderAbsolute(GraphicsContext3D gc){
-        if(!facingCamera(getRelativeNormal(), vertices[0]))
+        Vector3 normal = getAbsoluteNormal();
+
+        if(!facingCamera(normal, vertices[0]))
             return;
 
-        Vector3 normal = getRelativeNormal();
         //color interpolation between vertices
         if(shouldInterpolateColors && materials != null){
             for (int i = 0; i < 3; i++) {
@@ -58,7 +66,9 @@ public class Triangle implements Serializable {
             gc.setFill(Color.grayRgb((int) brightness(getAverage(), normal)));
     }
 
-    //render med relativt til objektets posisjon og retning
+    /**
+     * Renders the triangle relative to the Render3D objects position and direction
+     */
     public void render(GraphicsContext3D gc, Vector3 origin, Vector3 forward, Vector3 up, Vector3 right){
 
         Vector3 pos1 = Vector3.add(origin, Vector3.scale(right, vertices[0].getX()), Vector3.scale(up, vertices[0].getY()), Vector3.scale(forward, vertices[0].getZ()));
@@ -95,6 +105,9 @@ public class Triangle implements Serializable {
 
     }
 
+    /**
+     * Returns true if this triangle's normal vector is facing the camera, else false
+     */
     public boolean facingCamera(Vector3 normal, Vector3 arbitraryPointOnTriangle){
         try {
             return normal.dot(Vector3.subtract(arbitraryPointOnTriangle, CanvasRenderer3D.getCamera().position)) < 0;
@@ -106,7 +119,10 @@ public class Triangle implements Serializable {
         return false;
     }
 
-    public Vector3 getRelativeNormal(){
+    /**
+     * Returns the normal, as if the Render3D object is postitioned at the origin facing the positive z direction
+     */
+    public Vector3 getAbsoluteNormal(){
         try {
             return Vector3.cross(Vector3.subtract(vertices[1], vertices[0]), Vector3.subtract(vertices[2], vertices[0]));
         }
@@ -117,8 +133,11 @@ public class Triangle implements Serializable {
         return null;
     }
 
+    /**
+     * Returns the centroid of the triangle
+     */
     public Vector3 getCentroid(){
-        Vector3 normal = getRelativeNormal();
+        Vector3 normal = getAbsoluteNormal();
         Vector3 r1 = new Vector3(vertices[0].getX()-vertices[1].getX(), vertices[0].getY()-vertices[1].getY(), vertices[0].getZ()-vertices[1].getZ());
         Vector3 r2 = new Vector3(vertices[0].getX()-vertices[2].getX(), vertices[0].getY()-vertices[2].getY(), vertices[0].getZ()-vertices[2].getZ());
         Vector3 v1 = Vector3.cross(normal, r1);
@@ -136,6 +155,9 @@ public class Triangle implements Serializable {
         return intersection;
     }
 
+    /**
+     * Returns the midpoint/average point of the corners
+     */
     private Vector3 getAverage(){
         return Vector3.scale(Vector3.add(vertices[0], vertices[1], vertices[2]), 0.3333333333);
     }
@@ -144,16 +166,26 @@ public class Triangle implements Serializable {
         return vertices;
     }
 
+    /**
+     * Returns the brightness of a point and a normal vector by using the LightSource brightness method
+     */
     private double brightness(Vector3 point, Vector3 normal){
         return Math.sqrt(CanvasRenderer3D.getCamera().getLightSource().getBrightness(point, normal)) * 0.8 + 0.1;
     }
 
-
+    /**
+     * Sets the color, and also sets the shouldInterpolateColors to false to indicate that only a single color should be used
+     * when rasterizing the triangle
+     */
     public void setColor(Color color){
         this.material = new Material(color);
         this.shouldInterpolateColors = false;
     }
 
+    /**
+     * Sets the color array, and also sets the shouldInterpolateColors to true to indicate that color interpolation should be used
+     * when rasterizing the triangle
+     */
     public void setColors(Color[] colors){
         if(colors.length != 3)
             throw new IllegalArgumentException("Length of colorarray must be 3");
@@ -166,11 +198,19 @@ public class Triangle implements Serializable {
         this.shouldInterpolateColors = true;
     }
 
+    /**
+     * Sets the material, and also sets the shouldInterpolateColors to false to indicate that only a single color should be used
+     * when rasterizing the triangle
+     */
     public void setMaterial(Material material){
         this.material = material;
         this.shouldInterpolateColors = false;
     }
 
+    /**
+     * Sets the color array, and also sets the shouldInterpolateColors to true to indicate that color interpolation should be used
+     * when rasterizing the triangle
+     */
     public void setMaterials(Material[] materials){
         if(materials.length != 3)
             throw new IllegalArgumentException("Length of material array must be 3");
@@ -179,7 +219,7 @@ public class Triangle implements Serializable {
         this.shouldInterpolateColors = true;
     }
 
-    public void setInterpolateColors(boolean bool){
+    public void setShouldInterpolateColors(boolean bool){
         this.shouldInterpolateColors = bool;
     }
 }

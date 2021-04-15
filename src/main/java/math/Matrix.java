@@ -9,6 +9,7 @@ import java.util.ArrayList;
  * Represents a mathematical matrix
  */
 public class Matrix implements Serializable {
+    //TODO fix matrix-matrix multiplication!
     private double[][] matrix;
     private int width;
     private int height;
@@ -343,19 +344,6 @@ public class Matrix implements Serializable {
 
     @Override
     public String toString(){
-        /*String s = "[\n";
-        for(int y = 0; y < height; y++){
-            s += "[";
-            for(int x = 0; x < width; x++){
-                s += matrix[y][x];
-                if(x != width-1)
-                    s += ", ";
-            }
-            s+= "]\n";
-        }
-
-        s += "]";
-        return s;*/
         int[] paddings = new int[width];
         for(int i = 0; i < height; i++){
             for(int j = 0; j < width; j++){

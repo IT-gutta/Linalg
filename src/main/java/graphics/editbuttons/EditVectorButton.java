@@ -11,7 +11,9 @@ import javafx.scene.text.Text;
 import math.Vector;
 import org.linalgfx.App;
 import regex.RegexUtils;
-
+/**
+ * MenuButton with MenuItems (options) for editing mathematical or 2D vectors
+ */
 public class EditVectorButton extends GenericEditButton {
     private final VariableContainer<Vector> variableContainer;
     public EditVectorButton(VariableContainer<Vector> variableContainer){

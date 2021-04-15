@@ -7,6 +7,7 @@ import canvas3d.CanvasRenderer3D;
 import graphics.DefinedVariables;
 import graphics.ToolBar;
 import graphics.VariableContainer;
+import graphics.textInput.OperatorMaps;
 import graphics.textInput.TextInputEvent;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -24,15 +25,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * JavaFX App
+ * JavaFX Application which handles the layout of the GUI
  */
 public class App extends Application {
     //TODO add the ability to select objects in the graphics window
     //TODO add save functionality (save all variables in a file)
     private static Scene scene;
 
+    /**
+     * The start method instantiates the canvaspanes, and starts the canvas animation loops, as well as
+     * define the other visible elemements like the toolBar and the inputField
+     */
     @Override
     public void start(Stage stage) throws IOException {
+        VBox root = new VBox();
 
         Differentiator.fillDerivatives();
 
@@ -53,30 +59,28 @@ public class App extends Application {
         CanvasRenderer3D.setGraphicsContext(graphicsContext3D);
         CanvasRenderer3D.start();
 
-
         DefinedVariables.getScrollPane().getStyleClass().add("variables");
 
-        VBox root = new VBox();
-
-
-        //Label label = new Label("Input");
+        Label label = new Label("Input: ");
         TextField textField = new TextField();
         ToolBar toolBar = new ToolBar();
-
         Label error = new Label("");
         error.getStyleClass().add("error");
+        textField.setOnAction(new TextInputEvent(textField, error));
 
         SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane2D, canvasPane3D);
-        //SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane2D);
         splitPane.prefHeightProperty().bind(root.heightProperty());
+        //SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane2D);
 
-        TextInputEvent.fillOpMaps();
+
+
+        OperatorMaps.fillOpMaps();
 
         DefinedVariables.getScrollPane().setMinWidth(150);
 
 
         root.getChildren().addAll(toolBar, error, textField, splitPane);
-        textField.setOnAction(new TextInputEvent(textField, error));
+
 
         scene = new Scene(root);
         scene.getStylesheets().add(resourceURL("stylesheets/style.css"));
@@ -87,29 +91,43 @@ public class App extends Application {
 
         stage.show();
     }
-
+    /**
+     * Stops the javafx application and terminates gui
+     */
     @Override
     public void stop(){
         System.exit(0);
     }
 
+    /**
+     * Returns the full external path of a resource relative to the resource folder for this class (App)
+     */
     public static String resourceURL(String path){
         return App.class.getResource(path).toExternalForm();
     }
 
-
+    /**
+     * Launches the program
+     */
     public static void main(String[] args) {
         launch();
     }
-
+    /**
+     * Returns width of the entire GUI
+     */
     public static double getWidth(){
         return scene.getWidth();
     }
+    /**
+     * Returns height of the enire gui
+     */
     public static double getHeight(){
         return scene.getHeight();
     }
 
-
+    /**
+     * Saves the application state to a file
+     */
     public static void saveToFile(){
         try {
             FileOutputStream fos = new FileOutputStream(App.class.getResource("current_save.txt").toExternalForm().replace("file:/", ""), false);
@@ -127,6 +145,9 @@ public class App extends Application {
         }
     }
 
+    /**
+     * Loads the application state to a file
+     */
     public static void loadFromFile(){
         try {
             FileInputStream fis = new FileInputStream(App.class.getResource("current_save.txt").toExternalForm().replace("file:/", ""));

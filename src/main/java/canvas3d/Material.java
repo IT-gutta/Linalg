@@ -1,7 +1,10 @@
 package canvas3d;
 
 import javafx.scene.paint.Color;
-
+/**
+ * Material which can be used instead of color, and also keeps track of the reflectivity of a material aka how much
+ * it should reflect light
+ */
 public class Material {
     private Color color;
     private double reflectivity;
@@ -16,6 +19,9 @@ public class Material {
         this.reflectivity = reflectivity;
     }
 
+    /**
+     * Returns the color of this material, which takes in to account the brightness and reflectivity
+     */
     public Color getColor(double brightness){
         return Color.hsb(color.getHue(), color.getSaturation(), brightness * reflectivity);
     }

@@ -5,9 +5,13 @@ import javafx.scene.image.ImageView;
 import org.linalgfx.App;
 
 /**
- * ??
+ * Helper class for loading simple images (icons)
  */
 public abstract class Icons {
+
+    /**
+     * Tries loading an image from file and return an ImageView containing that image which can be displayed
+     */
     public static ImageView of(String fileName, double size){
         try {
             ImageView imageView = new ImageView(new Image(App.resourceURL("images/" + fileName)));

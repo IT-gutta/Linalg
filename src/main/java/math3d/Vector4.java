@@ -16,12 +16,6 @@ public class Vector4 implements Serializable {
         this.vector = new Vector(ds);
     }
 
-    public Vector4(Vector vec){
-        if(vec.getDimensions() != 4)
-            throw new IllegalArgumentException("Illegal dimension!");
-        this.vector = vec;
-    }
-
     /**
      * Returns the x coordinate of the vector
      */

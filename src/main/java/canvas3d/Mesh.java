@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Render3D which holds a mesh (set of vertices and triangles) which can be rendered to the canvas
+ */
 public class Mesh extends Render3D{
     protected double currentScale;
     protected double scaleX = 1;
@@ -20,16 +23,16 @@ public class Mesh extends Render3D{
         super(position);
     }
 
-    public Mesh(){
-        super();
-    }
 
-    public Mesh(String path, Vector3 position, double scale){
+    /**
+     * This constructor takes in a path to an obj or text file, which is then read and translated into vertices and triangles
+     */
+    public Mesh(String relativePath, Vector3 position, double scale){
         super(position);
 
         currentScale = scale;
 
-        try(Scanner sc = new Scanner(new File(getClass().getResource(path).toExternalForm().replace("file:/", "")))){
+        try(Scanner sc = new Scanner(new File(getClass().getResource(relativePath).toExternalForm().replace("file:/", "")))){
 
             List<Vector3> vertices = new ArrayList<>();
             List<Triangle> triangles = new ArrayList<>();
@@ -59,6 +62,9 @@ public class Mesh extends Render3D{
         }
     }
 
+    /**
+     * Sets the scale of the mesh
+     */
     public void setScale(double scale){
         for (Vector3 vertex : vertices) {
             vertex.scale(scale / currentScale);

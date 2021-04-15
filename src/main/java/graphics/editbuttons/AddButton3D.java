@@ -3,18 +3,15 @@ package graphics.editbuttons;
 import canvas2d.Line2D;
 import canvas2d.Point2D;
 import canvas2d.Vector2D;
-import canvas3d.Cube;
-import canvas3d.Point3D;
-import canvas3d.Sphere;
-import canvas3d.Vector3D;
+import canvas3d.*;
 import graphics.DefinedVariables;
 import graphics.DoubleFormatter;
 import graphics.Icons;
 import graphics.VariableContainer;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -27,7 +24,10 @@ import terraingeneration.InfiniteTerrain;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
-
+/**
+ * The button to press for adding new elements in the 3D canvas, fills up the MenuItem list with clickable menuItems
+ * for creating different types of 3D elements (vectors, points etc.)
+ */
 public class AddButton3D extends MenuButton {
     //TODO Add support for more variables (grid, linesegment and more) in the new menu window
     private TextInputDialog dialog;
@@ -39,19 +39,39 @@ public class AddButton3D extends MenuButton {
         getStyleClass().add("new-menu-button");
         clearDialog();
 
-        MenuItem infiniteTerrain = new MenuItem("Infinite Terrain");
+        MenuItem infiniteTerrain = new MenuItem("Mesh");
         infiniteTerrain.getStyleClass().add("new-menu-item");
         infiniteTerrain.setOnAction(actionEvent -> {
             clearDialog();
 
-            dialog.setHeaderText("Infinite Terrain Generator");
+            dialog.setHeaderText("Choose a mesh to create");
             dialog.setContentText("Enter name:");
+
+            //Creates a set of radiobuttons to pick what mesh to create
+            RadioButton terrain = new RadioButton("Infinite Terrain");
+            RadioButton chevrolet = new RadioButton("Chevrolet");
+
+            dialog.getDialogPane().setGraphic(new HBox(terrain, chevrolet));
+
+            ToggleGroup toggleGroup = new ToggleGroup();
+            terrain.setToggleGroup(toggleGroup);
+            terrain.setSelected(true);
+            chevrolet.setToggleGroup(toggleGroup);
+
+
+
             dialog.showAndWait().ifPresent(response ->{
 
                 if(!RegexUtils.isValidName(dialog.getEditor().getText()))
                     return;
+                String selected = ((RadioButton) toggleGroup.getSelectedToggle()).getText();
 
-                DefinedVariables.add(new InfiniteTerrain(), dialog.getEditor().getText());
+                if(selected.equals("Infinite Terrain"))
+                    DefinedVariables.add(new InfiniteTerrain(), dialog.getEditor().getText());
+                else if(selected.equals("Chevrolet"))
+                    DefinedVariables.add(new Mesh("chevrolet.obj", Vector3.ZERO(), 1), dialog.getEditor().getText());
+                else
+                    System.out.println("Did not understand: "+ selected);
             });
         });
 

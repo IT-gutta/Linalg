@@ -11,7 +11,13 @@ import math3d.Vector3;
 import math3d.Vector4;
 
 import java.util.Arrays;
-
+/**
+ * A custom graphics context which utilizes the graphics context 2D provided by the canvas to rasterize different mathematical
+ * consepts to the screen (triangles and lines)
+ * This uses a custom code for the rasterization process which is not optimal, but works pretty well. The process would be able
+ * to be run a lot quicker if it could utilize the graphics card, and not just the cpu because of the incredible number of
+ * cores in a gpu compared to a cpu
+ */
 public class GraphicsContext3D {
     //TODO fix rasterizer when outside canvas
     //TODO optimize rasterizer
@@ -35,6 +41,10 @@ public class GraphicsContext3D {
         this.camera = camera;
     }
 
+    /**
+     * Fills text which is centered at a given 3D position, after projecting the point to the canvas and changing
+     * the font size based on the distance from the camera
+     */
     public void fillText(String text, Vector3 position){
         if(width == 0 || height == 0)
             return;
@@ -52,6 +62,9 @@ public class GraphicsContext3D {
         graphicsContext2D.fillText(text, pos.getX(), pos.getY());
     }
 
+    /**
+     * Strokes a line based on the 3d coordinate input
+     */
     public void strokeLine(double x1, double y1, double z1, double x2, double y2, double z2){
         Vector4 start = camera.project(new Vector3(x1, y1, z1));
         Vector4 end = camera.project(new Vector3(x2, y2, z2));
@@ -59,15 +72,11 @@ public class GraphicsContext3D {
         if(start == null || end == null) //her må det clippes
             return;
 
-        /*System.out.println("start" + start.getVector().toString());
-        System.out.println("end" + end.getVector().toString());
-
-        System.out.println("startX: " + start.getX() + ", startY: " +start.getY());
-        System.out.println("endX: " + end.getX() + ", endY: " +end.getY());*/
-
         graphicsContext2D.strokeLine(start.getX(), start.getY(), end.getX(), end.getY());
     }
-
+    /**
+     * Strokes a line based on the 3d coordinate input
+     */
     public void strokeLine(Vector3 start, Vector3 end){
         Vector4 start4 = camera.project(start);
         Vector4 end4 = camera.project(end);
@@ -75,6 +84,10 @@ public class GraphicsContext3D {
         graphicsContext2D.strokeLine(start4.getX(), start4.getY(), end4.getX(), end4.getY());
     }
 
+    /**
+     * Fills a triangle which has corners p1, p2, p3 and uses a color array to keep track of the colors in each corner
+     * to interpolate between these colors while rasterizing
+     */
     public void fillTriangle(Vector3 p1, Vector3 p2, Vector3 p3, Color[] colors){
         if(width == 0 || height == 0)
             return;
@@ -99,6 +112,9 @@ public class GraphicsContext3D {
 
     }
 
+    /**
+     * Fills a triangle which has corners p1, p2, p3
+     */
     public void fillTriangle(Vector3 p1, Vector3 p2, Vector3 p3){
         if(width == 0 || height == 0)
             return;
@@ -123,8 +139,10 @@ public class GraphicsContext3D {
     }
 
 
-
-    public void clearPolygons(){
+    /**
+     * Clears the depth buffer, called before each animation loop
+     */
+    public void clearDepthBuffer(){
         width = (int)CanvasRenderer3D.getCanvasWidth();
         height = (int) CanvasRenderer3D.getCanvasHeight();
         this.depthBuffer = new double[width*height];
@@ -132,46 +150,11 @@ public class GraphicsContext3D {
             depthBuffer[i] = Double.MAX_VALUE;
         }
     }
-    
-    //gammel funksjon som ikke funker
-    public void rasterizeTriangle(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3){
-        Color fill = Color.valueOf(graphicsContext2D.getFill().toString());
-        double a1 = (y3 - y1) / (x3 - x1);
-        double b1 = y1 - a1*x1;
 
-        double a2 = (y2 - y1) / (x2 - x1);
-        double b2 = y1 - a2*x1;
-
-        double a3 = (y2 - y3) / (x2 - x3);
-        double b3 = y3 - a3*x3;
-
-
-
-        int minY = (int) Math.round(Math.max(Math.min(Math.min(y1, y2), y3), 0));
-        int maxY = (int) Math.round(Math.min(Math.max(Math.max(y1, y2), y3), height-1));
-
-        if(maxY == minY)
-            return;//FIX
-        int[] minXes = new int[maxY-minY];
-        int[] maxXes = new int[maxY-minY];
-
-
-        for(int i = minY; i < maxY; i++) {
-            minXes[i - minY] = Math.round(Math.max(Math.min(Math.min(Math.round((y1-b1)/a1), Math.round((y2-b2)/a2)), Math.round((y3-b3)/a3)), 0));
-            maxXes[i - minY] = Math.round(Math.min(Math.max(Math.max(Math.round((y1-b1)/a1), Math.round((y2-b2)/a2)), Math.round((y3-b3)/a3)), width-1));
-        }
-
-        for(int y = minY; y < maxY; y++){
-            for(int x = minXes[y-minY]; x < maxXes[y-minY]; x++){
-                double depth = z1;//fikse dette
-                if(depth < depthBuffer[y*width + x]) {
-                    graphicsContext2D.getPixelWriter().setColor(x, y, fill);
-                    depthBuffer[y*width + x] = depth;
-                }
-            }
-        }
-    }
-
+    /**
+     * Rasterizer which rasterizes a triangle based on 2D input points and uses barycentric coordinates to interpolate
+     * between the colors of the corners and fill each pixel of the triangle accordingly
+     */
     public void edgeCheckRasterize(double x1, double y1, double z1, Color color1, double x2, double y2, double z2, Color color2, double x3, double y3, double z3, Color color3){
         if(((x1>width||x1<0) && (y1>height||y1<0)) && ((x2>width||x2<0) && (y2>height||y2<0)) && ((x3>width||x3<0) && (y3>height||y3<0))) // alle tre punnkter utenfor
             return;
@@ -191,15 +174,12 @@ public class GraphicsContext3D {
                 double l2 = edgeFunction(x3, y3, x1, y1, x, y) * oneOverArea;
                 double l3 = edgeFunction(x1, y1, x2, y2, x, y) * oneOverArea;
 
-                //System.out.println(l1+l2+l3);
 
                 if(l1 < 0 || l2 < 0 || l3 < 0)
                     continue;
 
                 double z = 1/(l1/z1 + l2/z2 + l3/z3);
-//                System.out.println("1:" + "\tred: " + color1.getRed() + "\tgreen: " + color1.getGreen() + "\tblue: " + color1.getBlue());
-//                System.out.println("2:" + "\tred: " + color2.getRed() + "\tgreen: " + color2.getGreen() + "\tblue: " + color2.getBlue());
-//                System.out.println("3:" + "\tred: " + color3.getRed() + "\tgreen: " + color3.getGreen() + "\tblue: " + color3.getBlue());
+
                 Color color = Color.color(
                         color1.getRed() * l1 + color2.getRed() * l2 + color3.getRed() * l3,
                         color1.getGreen() * l1 + color2.getGreen() * l2 + color3.getGreen() * l3,
@@ -213,7 +193,10 @@ public class GraphicsContext3D {
         }
     }
 
-
+    /**
+     * Rasterizer which rasterizes a triangle based on 2D input points and colors all pixels with the fillColor
+     * which has been set in the setter function
+     */
     public void edgeCheckRasterize(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3){
         if(((x1>width||x1<0) && (y1>height||y1<0)) && ((x2>width||x2<0) && (y2>height||y2<0)) && ((x3>width||x3<0) && (y3>height||y3<0))) // alle tre punnkter utenfor
             return;
@@ -224,10 +207,6 @@ public class GraphicsContext3D {
 
         int xMin = (int) Math.round(max(0, min(x1, x2, x3)));
         int xMax = (int) Math.round(min(width-1, max(x1, x2, x3)));
-
-
-//        System.out.println("yMin: " + yMin + ", yMax: " + yMax);
-//        System.out.println("xMin: " + xMin + ", xMax: " + xMax);
 
 
         double oneOverArea = 1 / cross(x2-x1, y2-y1, x3-x1, y3-y1);
@@ -252,33 +231,53 @@ public class GraphicsContext3D {
         }
     }
 
+    /**
+     * Basically a cross product of the vectors: Vector1 from corner 1 of the triangle to corner 2
+     * (corner 2 is the next corner when walking clockwise from corner 1),
+     * Vector2: from corner 1 of the triangle to an arbitrary point
+     * It returns the signed area of the parallelogram spanned by the two vectors
+     * If the value is negative, the arbitrary point is outside the triangle, else it is inside or on the edge
+     */
     private double edgeFunction(double x1, double y1, double x2, double y2, double x3, double y3){
         return cross(x2-x1, y2-y1, x3-x1, y3-y1);
     }
 
+    /**
+     * Returns the 2D cross product of the two input-vectors, aka a double representing the signed area spanned by the
+     * two vectors
+     */
     private double cross(double x1, double y1, double x2, double y2){
         return (x1*y2) - (y1*x2);
     }
 
 
-
+    /**
+     * Returns the maximum value of three values
+     */
     private double max(double v1, double v2, double v3){
         if (v1 > v2) {
             return max(v1, v3);
         }
         return max(v2, v3);
     }
-
+    /**
+     * Returns the minimum value of three values
+     */
     private double min(double v1, double v2, double v3){
         if (v1 < v2) {
             return min(v1, v3);
         }
         return min(v2, v3);
     }
-
+    /**
+     * Returns the maximum value of two values
+     */
     private double max(double v1, double v2){
         return v1 > v2 ? v1 : v2;
     }
+    /**
+     * Returns the minimum value of three values
+     */
     private double min(double v1, double v2){
         return v1 < v2 ? v1 : v2;
     }
@@ -314,7 +313,9 @@ public class GraphicsContext3D {
     }
 
 
-
+    /**
+     * Clears all pixels of the 2D canvas
+     */
     public void clearRect(double x, double y, double w, double h){
         graphicsContext2D.clearRect(x, y, w, h);
     }

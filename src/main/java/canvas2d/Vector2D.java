@@ -61,9 +61,7 @@ public class Vector2D extends Render2D implements Interpolatable {
         gc.fillPolygon(xCoords, yCoords, 3);
     }
 
-    /**
-     * ??
-     */
+
     @Override
     public void handleInterpolation() {
         if(interpolator != null){
@@ -81,9 +79,7 @@ public class Vector2D extends Render2D implements Interpolatable {
         return vector2.toString();
     }
 
-    /**
-     * ??
-     */
+
     @Override
     public void startInterpolation(Matrix m, int millis){
         double[] vec = vector2.getVector();

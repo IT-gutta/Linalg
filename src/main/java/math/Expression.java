@@ -5,6 +5,7 @@ import graphics.textInput.Regexes;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -101,6 +102,7 @@ public class Expression {
         }
         if(bracketCount!=0)
             return false;
+
         if(Pattern.matches(".*[^0-9\\.e(pi)x\\+\\*\\-/\\^"+f+"].*", input))
             return false;
         if(Pattern.matches(".*[+\\-*/^]{2}.*", input))
@@ -176,7 +178,8 @@ public class Expression {
                     break;
                 }
             }
-            if(run) expression = expression.substring(1,expression.length()-1);
+            if(run)
+                expression = expression.substring(1,expression.length()-1);
         }
     }
 
@@ -271,8 +274,7 @@ public class Expression {
      * Parses a predefined function and returns it as a string
      */
     private String parseComposition(){
-        HashSet<String> functions = new HashSet<>();
-        functions.add("cos");functions.add("sin");functions.add("abs");functions.add("log");functions.add("tan");
+        //Set<String> functions = Set.of("cos", "sin", "abs", "log", "tan");
         String f = "(cos|sin|abs|log|tan|)";
         Matcher m = Pattern.compile(f+"\\((.+)\\)").matcher(expression);
         if(m.find()){
@@ -325,7 +327,6 @@ public class Expression {
             else
                 return Double.parseDouble(expression)*c;
         }
-
     }
 
     /**
@@ -484,7 +485,7 @@ public class Expression {
                     }
                 }
             }
-            return leftChild.cleanup()||rightChild.cleanup();
+            return leftChild.cleanup() || rightChild.cleanup();
         }
         return false;
     }
