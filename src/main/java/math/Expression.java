@@ -1,6 +1,7 @@
 package math;
 
 import graphics.textInput.Regexes;
+import write.Writable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ import java.util.regex.Pattern;
 /**
  * Represents a mathematical function as a binary tree where each node is an Expression-object
  */
-public class Expression {
+public class Expression implements Writable {
     private String expression;
     private Expression leftChild;
     private Expression rightChild;

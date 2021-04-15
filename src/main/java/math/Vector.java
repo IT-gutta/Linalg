@@ -1,11 +1,12 @@
 package math;
 
 import graphics.*;
+import write.Writable;
 
 import java.io.Serializable;
 import java.util.stream.DoubleStream;
 
-public class Vector implements Transformable, Serializable {
+public class Vector implements Transformable, Writable {
 
     private double[] vector;
 

@@ -130,16 +130,9 @@ public class App extends Application {
      */
     public static void saveToFile(){
         try {
-            FileOutputStream fos = new FileOutputStream(App.class.getResource("current_save.txt").toExternalForm().replace("file:/", ""), false);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            for(Object o : DefinedVariables.getVBox().getChildren())
-                oos.writeObject(o);
-
-            oos.writeObject(null);
-            oos.flush();
-
-            oos.close();
-            fos.close();
+            FileOutputStream fos = new FileOutputStream(, false);
+            BufferedWriter bw = new BufferedWriter(new FileWriter(App.class.getResource("current_save.txt").toExternalForm().replace("file:/", "")));
+            bw.
         }catch(Exception e){
             e.printStackTrace();
         }

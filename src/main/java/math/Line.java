@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Represents a mathematical line
  */
-public class Line implements Transformable, Serializable {
+public class Line implements Transformable, Writable {
     //TODO fix toString
     private VariableContainer<Line> wrapper;
     private final Point start;

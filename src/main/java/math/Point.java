@@ -1,11 +1,13 @@
 package math;
 
+import write.Writable;
+
 import java.io.Serializable;
 
 /**
  * Represents a mathematical point
  */
-public class Point implements Transformable, Serializable {
+public class Point implements Transformable, Writable {
     private final double[] point;
 
     public Point(double... args){
