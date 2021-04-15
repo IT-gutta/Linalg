@@ -19,10 +19,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import math.Differentiator;
+import write.Writable;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  * JavaFX Application which handles the layout of the GUI
@@ -130,9 +134,17 @@ public class App extends Application {
      */
     public static void saveToFile(){
         try {
-            FileOutputStream fos = new FileOutputStream(, false);
-            BufferedWriter bw = new BufferedWriter(new FileWriter(App.class.getResource("current_save.txt").toExternalForm().replace("file:/", "")));
-            bw.
+            BufferedWriter bw = new BufferedWriter(new FileWriter("/"+App.class.getResource("current_save.txt").toExternalForm().replace("file:/", ""), false));
+
+            for(VariableContainer variableContainer : DefinedVariables.getVBox().
+                    getChildren().stream().
+                    map(node -> (VariableContainer) node).
+                    filter(var -> var.getVariable() instanceof Writable).
+                    collect(Collectors.toList())){
+                bw.write(variableContainer.toFile()+"\n");
+            }
+            bw.flush();
+            bw.close();
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -142,23 +154,13 @@ public class App extends Application {
      * Loads the application state to a file
      */
     public static void loadFromFile(){
-        try {
-            FileInputStream fis = new FileInputStream(App.class.getResource("current_save.txt").toExternalForm().replace("file:/", ""));
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            List<VariableContainer> list = new ArrayList<>();
-            //get all objects
-            VariableContainer v = (VariableContainer) ois.readObject();
-            do{
-                list.add(v);
-                v = (VariableContainer) ois.readObject();
-            } while(v != null);
-
+        try(Scanner sc = new Scanner(new File("/"+App.class.getResource("current_save.txt").toExternalForm().replace("file:/", "")))){
             DefinedVariables.getVBox().getChildren().clear();
-            DefinedVariables.getVBox().getChildren().addAll(list);
-
-            fis.close();
-            ois.close();
-
+            while(sc.hasNextLine()){
+                String[] info = sc.nextLine().split("---");
+                System.out.println(Arrays.toString(info));
+                DefinedVariables.addFromFile(info[0], info[1], info[2]);
+            }
         }catch(Exception e){
             e.printStackTrace();
         }

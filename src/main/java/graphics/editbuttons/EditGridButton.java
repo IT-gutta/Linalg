@@ -10,7 +10,5 @@ public class EditGridButton extends GenericEditButton {
     public EditGridButton(VariableContainer<Grid2D> variableContainer){
         super(variableContainer);
         this.variableContainer = variableContainer;
-
-        addMenuItem(MenuItems.interpolateMenuItem(variableContainer));
     }
 }

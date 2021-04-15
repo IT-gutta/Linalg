@@ -6,12 +6,14 @@ import javafx.scene.canvas.GraphicsContext;
 import math.Matrix;
 import math.Vector;
 import math.Vectors;
+import math2d.Point2;
 import math2d.Vector2;
+import write.Writable;
 
 /**
  * Represents a graphical two dimensional vector
  */
-public class Vector2D extends Render2D implements Interpolatable {
+public class Vector2D extends Render2D implements Interpolatable, Writable {
     private Interpolator interpolator;
     private Vector2 vector2;
 
@@ -104,5 +106,15 @@ public class Vector2D extends Render2D implements Interpolatable {
      */
     public Vector2 getVector(){
         return vector2;
+    }
+
+    @Override
+    public String writeString() {
+        return "canvas2d.Vector2D---"+this.vector2.getX()+" "+this.vector2.getY();
+    }
+    //load from file string
+    public Vector2D(String fileString){
+        String[] xy = fileString.split(" ");
+        this.vector2 = new Vector2(Double.parseDouble(xy[0]), Double.parseDouble(xy[1]));
     }
 }

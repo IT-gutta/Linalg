@@ -4,11 +4,14 @@ import canvas2d.CanvasRenderer2D;
 import canvas2d.Render2D;
 import javafx.scene.canvas.GraphicsContext;
 import math.Expression;
+import write.Writable;
+
+import java.nio.file.Watchable;
 
 /**
  * Represents a graphical function from R to R
  */
-public class Mapping extends Render2D {
+public class Mapping extends Render2D implements Writable {
     //TODO fix problems related to rendering
     private final double start;
     private final double end;
@@ -68,6 +71,11 @@ public class Mapping extends Render2D {
 
             prev = x;
         }
+    }
+
+    @Override
+    public String writeString() {
+        return "canvas2d.Mapping---"+expression.writeString();
     }
 
 }

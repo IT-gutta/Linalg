@@ -1,8 +1,12 @@
 package math;
 
 import graphics.VariableContainer;
+import write.Writable;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Represents a mathematical line
@@ -21,6 +25,10 @@ public class Line implements Transformable, Writable {
     public Line(double pointX, double pointY, double directionX, double directionY){
         start = new Point(pointX, pointY);
         direction = new Vector(directionX, directionY);
+    }
+
+    public int getDimensions(){
+        return direction.getDimensions();
     }
 
     /**
@@ -68,4 +76,29 @@ public class Line implements Transformable, Writable {
     public void transform(Matrix matrix) {
         //skriv kode her
     }
+
+    @Override
+    public String writeString() {
+        StringBuilder string = new StringBuilder("math.Line---" + getDimensions());
+        for(double d:start.getPoint())
+            string.append(d).append(" ");
+        for(double d:direction.getVector())
+            string.append(d).append(" ");
+        return string.toString();
+    }
+
+    //From file
+    public Line(String fileString){
+        String[] nums = fileString.split(" ");
+        int length = Integer.parseInt(nums[0]);
+        double[] p = new double[(nums.length-1)/2];
+        double[] v = new double[(nums.length-1)/2];
+        for(int i = 1; i<(nums.length-1)/2+1; i++)
+            p[i-1] = Double.parseDouble(nums[i]);
+        for(int i = (nums.length-1)/2+1; i<nums.length; i++)
+            p[i-(nums.length-1)/2+1] = Double.parseDouble(nums[i]);
+        start = new Point(p);
+        direction = new Vector(v);
+    }
+
 }

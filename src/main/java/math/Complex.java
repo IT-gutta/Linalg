@@ -143,12 +143,14 @@ public class Complex implements Writable {
 
     @Override
     public String writeString() {
-        return null;
+        return "math.Complex---"+re+" "+im;
     }
 
-    @Override
-    public void readString(String string) {
-
+    public Complex(String fileString){
+        this.re = Double.parseDouble(fileString.split(" ")[0]);
+        this.im = Double.parseDouble(fileString.split(" ")[1]);
+        setPolarFromStandard();
     }
+
 }
 

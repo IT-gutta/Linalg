@@ -11,8 +11,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import canvas2d.Mapping;
+import write.Writable;
 
 import java.io.Serializable;
+import java.io.Writer;
 
 /**
  * Handles the textual representation of mathematical variables in the GUI
@@ -176,5 +178,14 @@ public class VariableContainer<T> extends HBox implements Serializable {
     public void setVariable(T variable){
         this.variable = variable;
         contentField.setText(variable.toString());
+    }
+
+    /**
+     * Gets the string representation to be stores in the txt save file
+     */
+    public String toFile(){
+        if(variable instanceof Writable)
+            return name+"---"+((Writable)variable).writeString();
+        return null;
     }
 }

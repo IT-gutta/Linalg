@@ -5,14 +5,16 @@ import javafx.scene.canvas.GraphicsContext;
 import math.Line;
 import math.Matrix;
 import math.Point;
+import write.Writable;
 
+import java.nio.file.Watchable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Represents a graphical two dimensional line
  */
-public class Line2D extends Render2D implements Interpolatable {
+public class Line2D extends Render2D implements Interpolatable, Writable {
     private Vector2D direction;
     private Point2D start;
     private Line line;
@@ -169,5 +171,18 @@ public class Line2D extends Render2D implements Interpolatable {
     @Override
     public String toString(){
         return "Start: " + start + ", Direction: " + direction;
+    }
+
+    @Override
+    public String writeString() {
+        return "canvas2d.Line2D---"+start.getPoint().getX()+" "+start.getPoint().getY()+" "+direction.getVector().getX()+" "+direction.getVector().getY();
+    }
+
+    //load from file string
+    public Line2D(String fileString){
+        String[] nums = fileString.split(" ");
+        this.start = new Point2D(Double.parseDouble(nums[0]), Double.parseDouble(nums[1]));
+        this.direction= new Vector2D(Double.parseDouble(nums[2]), Double.parseDouble(nums[3]));
+        this.line = new Line(start.getPoint(), direction.getVector());
     }
 }

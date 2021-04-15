@@ -235,7 +235,6 @@ public class Vector implements Transformable, Writable {
         return Points.fromVector(this);
     }
 
-
     /**
      * Transforms the Vector with a Matrix
      */
@@ -244,7 +243,20 @@ public class Vector implements Transformable, Writable {
         //skriv kode her
     }
 
+    @Override
+    public String writeString() {
+        StringBuilder str = new StringBuilder("math.Vector---");
+        for(Double d:vector)
+            str.append(d).append(" ");
+        return str.toString();
+    }
 
-
-
+    //from file
+    public Vector(String fileString){
+        String[] nums = fileString.split(" ");
+        this.vector = new double[nums.length-1];
+        for(int i = 0; i < nums.length-1; i++){
+            this.vector[i] = Double.parseDouble(nums[i]);
+        }
+    }
 }

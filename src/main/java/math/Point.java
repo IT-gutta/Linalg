@@ -66,4 +66,21 @@ public class Point implements Transformable, Writable {
     public void transform(Matrix m){
         //skriv kode her
     }
+
+    @Override
+    public String writeString() {
+        StringBuilder str = new StringBuilder("math.Point---");
+        for(Double d:point)
+            str.append(d).append(" ");
+        return str.toString();
+    }
+
+    //from file
+    public Point(String fileString){
+        String[] nums = fileString.split(" ");
+        this.point = new double[nums.length-1];
+        for(int i = 0; i < nums.length-1; i++){
+            this.point[i] = Double.parseDouble(nums[i]);
+        }
+    }
 }
