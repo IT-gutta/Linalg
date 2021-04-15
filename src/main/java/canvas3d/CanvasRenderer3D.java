@@ -67,13 +67,13 @@ public abstract class CanvasRenderer3D {
 //        InfiniteTerrain infiniteTerrain = new InfiniteTerrain();
 //        DefinedVariables.add(infiniteTerrain, "terrain");
 
-        Vector3D v1 = new Vector3D(1, 0, -1);
+        /*Vector3D v1 = new Vector3D(1, 0, -1);
         Vector3D v2 = new Vector3D(1, Math.sqrt(2), 1);
         Vector3D v3 = new Vector3D(1, -Math.sqrt(2), 1);
 
         DefinedVariables.add(v1, "v1");
         DefinedVariables.add(v2, "v2");
-        DefinedVariables.add(v3, "v3");
+        DefinedVariables.add(v3, "v3");*/
 
 
         AnimationTimer animationTimer = new AnimationTimer() {

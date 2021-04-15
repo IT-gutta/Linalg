@@ -28,6 +28,7 @@ public class Differentiator {
         d.fixExpression();
         d.simplify();
         d.fixExpression();
+        d.setOriginalInput(d.getExpression());
         return d;
     }
     /**

@@ -1,6 +1,7 @@
 package math;
 
 import math3d.Vector3;
+import write.Writable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Represents a mathematical matrix
  */
-public class Matrix implements Serializable {
+public class Matrix implements Writable {
     //TODO fix matrix-matrix multiplication!
     private double[][] matrix;
     private int width;
@@ -365,6 +366,28 @@ public class Matrix implements Serializable {
             str += "\n";
         }
         return str;
+    }
+
+    @Override
+    public String writeString() {
+        StringBuilder string = new StringBuilder("math.Matrix---" + width+" ");
+        for(double[] r:matrix){
+            for(double d: r){
+                string.append(d).append(" ");
+            }
+        }
+        return string.toString();
+    }
+
+    //From file
+    public Matrix(String fileString){
+        String[] nums = fileString.split(" ");
+        width = (int)Double.parseDouble(nums[0]);
+        height = (nums.length-1)/width;
+        matrix = new double[height][width];
+        for(int i = 1; i < nums.length; i++){
+            set((i-1)/width, (i-1)%width, Double.parseDouble(nums[i]));
+        }
     }
 
     public static void main(String[] args) {

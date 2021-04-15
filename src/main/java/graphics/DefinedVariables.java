@@ -5,6 +5,8 @@ import canvas3d.Render3D;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -131,5 +133,18 @@ public abstract class DefinedVariables {
      */
     public static void updateText(){
        vbox.getChildren().forEach(n -> ((VariableContainer) n).updateContentText());
+    }
+
+
+
+    public static void addFromFile(String name, String className, String variable){
+        try {
+            Class<?> clazz = Class.forName(className);
+            Constructor<?> constructor = clazz.getConstructor(String.class);
+
+            vbox.getChildren().add(new VariableContainer<>(constructor.newInstance(variable), name));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

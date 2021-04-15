@@ -1,6 +1,7 @@
 package math;
 
 import graphics.textInput.Regexes;
+import write.Writable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +15,8 @@ import java.util.regex.Pattern;
 /**
  * Represents a mathematical function as a binary tree where each node is an Expression-object
  */
-public class Expression {
+public class Expression implements Writable {
+    private String originalInput;
     private String expression;
     private Expression leftChild;
     private Expression rightChild;
@@ -30,6 +32,7 @@ public class Expression {
 
 
     public Expression(String input) throws IllegalArgumentException{
+        originalInput = input;
 
         if(!checkInput(input))
             throw new IllegalArgumentException();
@@ -40,6 +43,10 @@ public class Expression {
         constants.put("pi", Math.PI); constants.put("e", Math.E);
 
         findChildren();
+    }
+
+    public void setOriginalInput(String input){
+        originalInput = input;
     }
 
     /**
@@ -508,6 +515,13 @@ public class Expression {
         rightChild.fixExpression();
         expression = "("+leftChild+operator+rightChild+")";
     }
+
+    @Override
+    public String writeString() {
+        return originalInput;
+    }
+
+
 
     public static void main(String[] args) {
         Expression root = new Expression("-cos(x)+7*x");

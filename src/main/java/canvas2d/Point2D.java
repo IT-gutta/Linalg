@@ -6,11 +6,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import math.*;
 import math2d.Point2;
+import write.Writable;
 
 /**
  * Represents a graphical two dimensional point
  */
-public class Point2D extends Render2D implements Interpolatable {
+public class Point2D extends Render2D implements Interpolatable, Writable {
     private Interpolator interpolator;
     private Point2 point2;
 
@@ -75,6 +76,16 @@ public class Point2D extends Render2D implements Interpolatable {
      */
     public Point2 getPoint(){
         return point2;
+    }
+
+    @Override
+    public String writeString() {
+        return "canvas2d.Point2D---"+this.point2.getX()+" "+this.point2.getY();
+    }
+    //load from file string
+    public Point2D(String fileString){
+        String[] xy = fileString.split(" ");
+        this.point2 = new Point2(Double.parseDouble(xy[0]), Double.parseDouble(xy[1]));
     }
 }
 

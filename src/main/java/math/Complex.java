@@ -1,11 +1,13 @@
 package math;
 
+import write.Writable;
+
 import java.io.Serializable;
 
 /**
  * Represents a complex number and contains methods that correlate to operations on complex numbers
  */
-public class Complex implements Serializable {
+public class Complex implements Writable {
     private double re;
     private double im;
     private double length;
@@ -138,5 +140,17 @@ public class Complex implements Serializable {
     public void setAngle(double angle) {
         this.angle = angle;
     }
+
+    @Override
+    public String writeString() {
+        return "math.Complex---"+re+" "+im;
+    }
+
+    public Complex(String fileString){
+        this.re = Double.parseDouble(fileString.split(" ")[0]);
+        this.im = Double.parseDouble(fileString.split(" ")[1]);
+        setPolarFromStandard();
+    }
+
 }
 

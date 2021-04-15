@@ -3,11 +3,12 @@ package canvas2d;
 import graphics.*;
 import javafx.scene.canvas.GraphicsContext;
 import math.*;
+import write.Writable;
 
 /**
  * Represents a graphical two dimensional line segment
  */
-public class LineSegment2D extends Render2D implements Interpolatable {
+public class LineSegment2D extends Render2D implements Interpolatable, Writable {
     private final Point2D start;
     private final Point2D end;
     private Interpolator interpolator;
@@ -56,5 +57,17 @@ public class LineSegment2D extends Render2D implements Interpolatable {
     @Override
     public String toString(){
         return "Start: " + start.toString() + "\tEnd: " + end.toString();
+    }
+
+    @Override
+    public String writeString() {
+        return "canvas2d.LineSegment2D---"+start.getPoint().getX()+" "+start.getPoint().getY()+end.getPoint().getX()+" "+end.getPoint().getY();
+    }
+
+    //Loading string from file
+    public LineSegment2D(String fileString){
+        String[] nums = fileString.split(" ");
+        this.start = new Point2D(Double.parseDouble(nums[0]), Double.parseDouble(nums[1]));
+        this.end = new Point2D(Double.parseDouble(nums[2]), Double.parseDouble(nums[3]));
     }
 }
