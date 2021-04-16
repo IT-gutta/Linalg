@@ -189,6 +189,8 @@ public class Vector implements Transformable, Writable {
      * Returns the angle between the Vector and a given vector
      */
     public double angle(Vector v){
+        if(getDimensions()!=v.getDimensions())
+            throw new IllegalArgumentException();
         return Math.acos(this.dot(v)/(this.getMagnitude()*v.getMagnitude()));
     }
 
