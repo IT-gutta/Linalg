@@ -56,9 +56,8 @@ public class GenericEditButton extends MenuButton {
      * Deletes the variables which is associated with this GenericEditButton
      */
     public void delete(){
-        System.out.println("Trying to delete: " + variableContainer.getName());
         hide();
-        System.out.println(variableContainer.delete());
+        variableContainer.delete();
     }
 
 
