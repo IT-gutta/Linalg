@@ -5,9 +5,11 @@ import canvas2d.Vector2D;
 import canvas3d.Point3D;
 import canvas3d.Vector3D;
 import graphics.DefinedVariables;
+import graphics.ModalWindow;
 import graphics.VariableContainer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import math.*;
@@ -38,9 +40,10 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
     @Override
     public void handle(ActionEvent actionEvent) {
         boolean legal = false;
+        boolean message = false;
         String inp = inputField.getText().replace(" ", "");
         //Check for var declaration statement
-        if(Pattern.matches(Regexes.varDec+".*", inp)){
+        if(Pattern.matches(Regexes.varDec+".+", inp)){
             //Vector n
             if(Pattern.matches(Regexes.varDec+Regexes.vectorN(), inp)){
                 m = Pattern.compile(Regexes.varDec+Regexes.vectorN()).matcher(inp);
@@ -130,16 +133,16 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
             }
             if(!legal){
                     m = Pattern.compile(Regexes.varDec+"(.*)").matcher(inp);
-                    if(m.find()){
+                    if(m.find() && !m.group(2).contains("x")){
                         try{
                             Expression e = new Expression(m.group(2));
                             DefinedVariables.add(new VariableContainer<Double>(e.evaluate(0), m.group(1)));
+                            legal = true;
                         }
                         catch (Exception e){
-                            errorField.setText(e.getMessage());
+//                            errorField.setText(e.getMessage());
                         }
                     }
-                    legal = true;
             }
             //check for triFunction input
             for(InputMapTriFunc map: OperatorMaps.triFuncMaps){
@@ -157,7 +160,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                                 legal = true;
                             }
                             catch (Exception e){
-                                errorField.setText(e.getMessage());
+//                                errorField.setText(e.getMessage());
                             }
                         }
                     }
@@ -178,7 +181,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                                 legal = true;
                             }
                             catch (Exception e){
-                                errorField.setText(e.getMessage());
+//                                errorField.setText(e.getMessage());
                             }
                         }
                     }
@@ -197,7 +200,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                                 DefinedVariables.add(new VariableContainer<>(map.apply(f, map.getInput().getClass().cast(a.getMath())), m.group(1)));
                             }
                             catch (Exception e){
-                                errorField.setText(e.getMessage());
+//                                errorField.setText(e.getMessage());
                             }
                         }
                     }
@@ -207,23 +210,41 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
         //function declaration
         else if(Pattern.matches(Regexes.funDec+".*", inp)){
             m = Pattern.compile(Regexes.funDec+"derivative\\("+Regexes.varName+"\\)").matcher(inp);
-            if(m.find()){
-                System.out.println(m.group(2));
-                Expression e = Differentiator.derivative((Expression)DefinedVariables.get(m.group(2)).getMath());
-                System.out.println(e);
-                DefinedVariables.add(new VariableContainer(new Mapping(e), m.group(1)));
+            try {
+                if(m.find()){
+                    System.out.println(m.group(2));
+                    Expression e = Differentiator.derivative((Expression)DefinedVariables.get(m.group(2)).getMath());
+                    System.out.println(e);
+                    DefinedVariables.add(new VariableContainer(new Mapping(e), m.group(1)));
+                    legal = true;
+                }
+            }
+            catch (Exception e){
+                ModalWindow.alert("Differentiation unsuccessful", AlertType.ERROR);
+                message = true;
             }
             try{
                 m = Pattern.compile(Regexes.funDec+"(.*)").matcher(inp);
-                if(m.find())
+                if(m.find()){
                     DefinedVariables.add(new VariableContainer<Mapping>(new Mapping(m.group(2)), m.group(1)));
+                    legal = true;
+                }
             }
             catch (Exception e){
-                errorField.setText(e.getMessage());
+                if(!legal && !message)
+                    ModalWindow.alert("The function you entered is invalid", AlertType.ERROR);
+                message = true;
             }
+        }
+        else{
+            ModalWindow.alert("The declaration you entered is invalid", AlertType.ERROR);
+            message = true;
         }
         if(legal)
             inputField.clear();
+        else if(!message)
+            ModalWindow.alert("The value provided for the declaration is invalid", AlertType.ERROR);
+
     }
 }
 
