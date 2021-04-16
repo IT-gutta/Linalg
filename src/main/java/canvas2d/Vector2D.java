@@ -21,6 +21,10 @@ public class Vector2D extends Render2D implements Interpolatable, Writable {
         this.vector2 = new Vector2(x, y);
     }
 
+    public Vector2D(Vector2 v){
+        this.vector2 = v;
+    }
+
     /**
      * Renders the vector onto the 2D canvas
      */

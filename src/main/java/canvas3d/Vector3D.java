@@ -2,6 +2,7 @@ package canvas3d;
 
 import graphics.Interpolator;
 import math.Matrix;
+import math2d.Vector2;
 import math3d.Vector3;
 /**
  * A 3D vector which is rendered to the canvas as a Mesh which looks like an arrow, and is scaled according to the
@@ -15,6 +16,13 @@ public class Vector3D extends Mesh {
     public Vector3D(double x, double y, double z){
         super("vectorfix.obj", Vector3.ZERO(), 1);
         vector3 = new Vector3(x, y, z);
+        setScale(vector3.getMagnitude()/2);
+        setForward(vector3);
+    }
+
+    public Vector3D(Vector3 v){
+        super("vectorfix.obj", Vector3.ZERO(), 1);
+        this.vector3 = v;
         setScale(vector3.getMagnitude()/2);
         setForward(vector3);
     }

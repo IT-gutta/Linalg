@@ -12,6 +12,7 @@ public class Point2 extends Point implements Serializable {
         super(x, y);
     }
 
+
     /**
      * Returns the x coordinate of the point
      */

@@ -1,5 +1,9 @@
 package graphics.textInput;
 
+import canvas2d.Point2D;
+import canvas2d.Vector2D;
+import canvas3d.Point3D;
+import canvas3d.Vector3D;
 import graphics.DefinedVariables;
 import graphics.VariableContainer;
 import javafx.event.ActionEvent;
@@ -41,7 +45,13 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
             if(Pattern.matches(Regexes.varDec+Regexes.vectorN(), inp)){
                 m = Pattern.compile(Regexes.varDec+Regexes.vectorN()).matcher(inp);
                 if(m.find()){
-                    DefinedVariables.add(new VariableContainer<>(new Vector(InputParser.vectorN(m.group(2))), m.group(1)));
+                    Vector v = new Vector(InputParser.vectorN(m.group(2)));
+                    if(v.getDimensions()==2)
+                        DefinedVariables.add(new VariableContainer<>(new Vector2D(v.toVector2()), m.group(1)));
+                    else if(v.getDimensions()==3)
+                        DefinedVariables.add(new VariableContainer<>(new Vector3D(v.toVector3()), m.group(1)));
+                    else
+                        DefinedVariables.add(new VariableContainer<>(v, m.group(1)));
                     legal = true;
                 }
             }
@@ -49,7 +59,13 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
             if(Pattern.matches(Regexes.varDec+Regexes.pointN(), inp)){
                 m = Pattern.compile(Regexes.varDec+Regexes.pointN()).matcher(inp);
                 if(m.find()){
-                    DefinedVariables.add(new VariableContainer<>(new Point(InputParser.vectorN(m.group(2))), m.group(1)));
+                    Point p = new Point(InputParser.vectorN(m.group(2)));
+                    if(p.getDimensions()==2)
+                        DefinedVariables.add(new VariableContainer<>(new Point2D(p.toPoint2()), m.group(1)));
+                    else if(p.getDimensions()==3)
+                        DefinedVariables.add(new VariableContainer<>(new Point3D(p.toPoint3()), m.group(1)));
+                    else
+                        DefinedVariables.add(new VariableContainer<>(p, m.group(1)));
                     legal = true;
                 }
             }

@@ -4,6 +4,7 @@ import canvas2d.CanvasPane2D;
 import canvas2d.CanvasRenderer2D;
 import canvas3d.CanvasPane3D;
 import canvas3d.CanvasRenderer3D;
+import graphics.AlertWindow;
 import graphics.DefinedVariables;
 import graphics.ToolBar;
 import graphics.VariableContainer;
@@ -35,6 +36,11 @@ public class App extends Application {
     //TODO add the ability to select objects in the graphics window
     //TODO add save functionality (save all variables in a file)
     private static Scene scene;
+    private static Stage stage;
+
+    public static Stage getStage(){
+        return stage;
+    }
 
     /**
      * The start method instantiates the canvaspanes, and starts the canvas animation loops, as well as
@@ -42,8 +48,9 @@ public class App extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
+        this.stage = stage;
         VBox root = new VBox();
-
+        stage.setMaximized(true);
         Differentiator.fillDerivatives();
 
         //2d canvas initialization
@@ -74,6 +81,7 @@ public class App extends Application {
 
         SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane2D, canvasPane3D);
         splitPane.prefHeightProperty().bind(root.heightProperty());
+        splitPane.setDividerPositions(0.3,0.9);
         //SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane2D);
 
 
@@ -94,6 +102,7 @@ public class App extends Application {
         stage.setMinWidth(500);
 
         stage.show();
+//        AlertWindow.newAlert("Invalid input");
     }
     /**
      * Stops the javafx application and terminates gui

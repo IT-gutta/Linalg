@@ -1,5 +1,7 @@
 package math;
 
+import math2d.Point2;
+import math3d.Point3;
 import write.Writable;
 
 import java.io.Serializable;
@@ -58,6 +60,17 @@ public class Point implements Transformable, Writable {
         return Vectors.fromPoint(this);
     }
 
+    public Point2 toPoint2(){
+        if(getDimensions()!=2)
+            throw new IllegalArgumentException("Dimension must be 2");
+        return new Point2(getElement(0), getElement(1));
+    }
+
+    public Point3 toPoint3(){
+        if(getDimensions()!=3)
+            throw new IllegalArgumentException("Dimension must be 3");
+        return new Point3(getElement(0), getElement(1), getElement(2));
+    }
 
     /**
      * Transforms the Point with a Matrix
@@ -78,8 +91,8 @@ public class Point implements Transformable, Writable {
     //from file
     public Point(String fileString){
         String[] nums = fileString.split(" ");
-        this.point = new double[nums.length-1];
-        for(int i = 0; i < nums.length-1; i++){
+        this.point = new double[nums.length];
+        for(int i = 0; i < nums.length; i++){
             this.point[i] = Double.parseDouble(nums[i]);
         }
     }

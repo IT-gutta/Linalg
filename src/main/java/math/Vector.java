@@ -1,6 +1,9 @@
 package math;
 
+import canvas2d.Vector2D;
 import graphics.*;
+import math2d.Vector2;
+import math3d.Vector3;
 import write.Writable;
 
 import java.io.Serializable;
@@ -235,6 +238,18 @@ public class Vector implements Transformable, Writable {
         return Points.fromVector(this);
     }
 
+    public Vector2 toVector2(){
+        if(getDimensions()!=2)
+            throw new IllegalArgumentException("Dimension must be 2");
+        return new Vector2(getElement(0), getElement(1));
+    }
+
+    public Vector3 toVector3(){
+        if(getDimensions()!=3)
+            throw new IllegalArgumentException("Dimension must be 3");
+        return new Vector3(getElement(0), getElement(1), getElement(2));
+    }
+
     /**
      * Transforms the Vector with a Matrix
      */
@@ -254,8 +269,8 @@ public class Vector implements Transformable, Writable {
     //from file
     public Vector(String fileString){
         String[] nums = fileString.split(" ");
-        this.vector = new double[nums.length-1];
-        for(int i = 0; i < nums.length-1; i++){
+        this.vector = new double[nums.length];
+        for(int i = 0; i < nums.length; i++){
             this.vector[i] = Double.parseDouble(nums[i]);
         }
     }

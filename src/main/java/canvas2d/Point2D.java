@@ -19,6 +19,10 @@ public class Point2D extends Render2D implements Interpolatable, Writable {
         this.point2 = new Point2(x, y);
     }
 
+    public Point2D(Point2 p){
+        this.point2 = p;
+    }
+
 
     @Override
     public void startInterpolation(Matrix m, int millis) {
@@ -78,6 +82,10 @@ public class Point2D extends Render2D implements Interpolatable, Writable {
         return point2;
     }
 
+    @Override
+    public String toString(){
+        return point2.toString();
+    }
     @Override
     public String writeString() {
         return "canvas2d.Point2D---"+this.point2.getX()+" "+this.point2.getY();
