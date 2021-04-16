@@ -80,8 +80,8 @@ public class VariableContainer<T> extends HBox implements Serializable {
     /**
      * Deletes the variable container
      */
-    public void delete(){
-        DefinedVariables.remove(getName());
+    public boolean delete(){
+        return DefinedVariables.remove(getName());
     }
 
     /**

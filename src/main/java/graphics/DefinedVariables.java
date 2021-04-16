@@ -142,7 +142,7 @@ public abstract class DefinedVariables {
             Class<?> clazz = Class.forName(className);
             Constructor<?> constructor = clazz.getConstructor(String.class);
 
-            vbox.getChildren().add(new VariableContainer<>(constructor.newInstance(variable), name));
+            add(new VariableContainer<>(constructor.newInstance(variable), name));
         } catch (Exception e) {
             e.printStackTrace();
         }
