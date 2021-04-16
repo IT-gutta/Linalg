@@ -5,15 +5,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 
 // Dette er en hjelpeklasse for å enkelt kunne opprette nye dialog-vinduer med kun ett input-felt
-public class SimpleTextDialog extends TextInputDialog{
-    public SimpleTextDialog(String title, String headerText, String label, Node... extras){
+public class SimpleDialog extends TextInputDialog{
+    public SimpleDialog(String header, Node... extras){
         super();
-        setHeaderText(headerText);
-        setContentText(label);
-        setTitle(title);
+        setContentText("Enter name: ");
+        setHeaderText(header);
 
         setGraphic(new HBox(extras));
 

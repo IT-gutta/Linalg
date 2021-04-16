@@ -1,6 +1,7 @@
 package graphics;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -23,7 +24,7 @@ public abstract class ModalWindow {
         alert.showAndWait();
     }
 
-    public static void alert(String message, Alert.AlertType alertType){
+    public static void alert(String message, AlertType alertType){
         Alert alert = new Alert(alertType, message);
         alert.setHeaderText("An exception was thrown");
         alert.setTitle("Warning");
