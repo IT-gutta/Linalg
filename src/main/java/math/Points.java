@@ -23,6 +23,8 @@ public abstract class Points {
      * Returns the difference of two Points
      */
     public static Point subtract(Point p1, Point p2){
+        if(p1.getDimensions()!= p2.getDimensions())
+            throw new IllegalArgumentException("Dimension must be equal");
         return add(p1, scale(p2, -1));
     }
 
@@ -37,6 +39,8 @@ public abstract class Points {
      * Returns the sum of two Points
      */
     public static Point add(Point p1, Point p2){
+        if(p1.getDimensions()!= p2.getDimensions())
+            throw new IllegalArgumentException("Dimension must be equal");
         return fromVector(Vectors.add(toVector(p1), toVector(p2)));
     }
 

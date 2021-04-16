@@ -124,6 +124,8 @@ public class Complex implements Writable {
      * Sets the length of the Complex
      */
     public void setLength(double length) {
+        if(length<0)
+            throw new IllegalArgumentException("Length can not be negative");
         this.length = length;
     }
 

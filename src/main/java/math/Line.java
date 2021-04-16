@@ -18,6 +18,8 @@ public class Line implements Transformable, Writable {
     private final Vector direction;
 
     public Line(Point p, Vector v){
+        if(p.getDimensions()!=v.getDimensions())
+            throw new IllegalArgumentException("Point and vector must be of equal dimension");
         start = p;
         direction = v;
     }

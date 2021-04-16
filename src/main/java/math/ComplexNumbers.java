@@ -19,6 +19,8 @@ public class ComplexNumbers {
      * Returns a Complex from length and angle
      */
     public static Complex fromPolar(double length, double angle){
+        if(length<0)
+            throw new IllegalArgumentException("Length can not be negative");
         var c = new Complex(0,0);
         c.setLength(length);
         c.setAngle(angle);

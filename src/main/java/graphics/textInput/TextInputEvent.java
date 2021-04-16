@@ -181,7 +181,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                                 legal = true;
                             }
                             catch (Exception e){
-                                
+
                             }
                         }
                     }
