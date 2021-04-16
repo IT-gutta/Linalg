@@ -4,7 +4,6 @@ import canvas2d.CanvasPane2D;
 import canvas2d.CanvasRenderer2D;
 import canvas3d.CanvasPane3D;
 import canvas3d.CanvasRenderer3D;
-import graphics.AlertWindow;
 import graphics.DefinedVariables;
 import graphics.ToolBar;
 import graphics.VariableContainer;
@@ -23,9 +22,7 @@ import math.Differentiator;
 import write.Writable;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 

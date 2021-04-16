@@ -7,8 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Linalg" />
-        <module name="LinalgVisualizer(fxml)" />
         <module name="LinalgVisualizer" />
+        <module name="LinalgVisualizer(fxml)" />
       </profile>
     </annotationProcessing>
   </component>
