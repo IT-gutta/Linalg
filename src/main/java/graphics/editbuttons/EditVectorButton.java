@@ -1,6 +1,7 @@
 package graphics.editbuttons;
 
 import graphics.DoubleFormatter;
+import graphics.SimpleDialog;
 import graphics.VariableContainer;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
@@ -22,23 +23,15 @@ public class EditVectorButton extends GenericEditButton {
 
         MenuItem edit = new MenuItem("Edit", new ImageView(new Image(App.resourceURL("images/hammer.png"))));
         edit.setOnAction(actionEvent -> {
-            clearDialog();
 
-            var vectorInput = new HBox();
             TextField[] coordInputs = new TextField[variableContainer.getVariable().getDimensions()];
             for(int i = 0; i < coordInputs.length; i++){
                 coordInputs[i] = DoubleFormatter.getTextField(variableContainer.getVariable().getElement(i));
             }
 
+            SimpleDialog dialog = new SimpleDialog("Edit vector name and entries", coordInputs);
+
             dialog.getEditor().setText(getContainer().getName());
-
-            vectorInput.getChildren().add(new Text("Enter x, y :   "));
-            vectorInput.getChildren().addAll(coordInputs);
-
-            dialog.setGraphic(vectorInput);
-            dialog.setHeaderText("Edit vector");
-            dialog.setContentText("Enter name:");
-
 
             dialog.showAndWait().ifPresent(response ->{
                 for(int i = 0; i < coordInputs.length; i++){

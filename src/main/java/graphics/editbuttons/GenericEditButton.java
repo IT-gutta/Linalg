@@ -6,11 +6,10 @@ import canvas2d.LineSegment2D;
 import canvas2d.Point2D;
 import graphics.Icons;
 import graphics.Interpolatable;
+import graphics.SimpleDialog;
 import graphics.VariableContainer;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextInputDialog;
-import javafx.stage.Modality;
 import math.*;
 import regex.RegexUtils;
 
@@ -20,7 +19,6 @@ import regex.RegexUtils;
  */
 public class GenericEditButton extends MenuButton {
     private final VariableContainer variableContainer;
-    protected TextInputDialog dialog;
 
     public GenericEditButton(VariableContainer variableContainer){
         super("");
@@ -58,30 +56,20 @@ public class GenericEditButton extends MenuButton {
      * Deletes the variables which is associated with this GenericEditButton
      */
     public void delete(){
+        hide();
         variableContainer.delete();
     }
-    /**
-     * Clears the modal window / modal dialog which is used for requesting input from user
-     */
-    protected void clearDialog(){
-        dialog = new TextInputDialog("");
-        dialog.initModality(Modality.APPLICATION_MODAL);
-    }
+
 
     /**
      * Handles the process of changing a name based on input from user
      */
     protected void handleChangeName(boolean isRetry){
-        clearDialog();
-
-
+        SimpleDialog dialog;
         if(isRetry)
-            dialog.setHeaderText("Illegal name. Try again.");
+            dialog = new SimpleDialog("Illegal name. Try again.");
         else
-            dialog.setHeaderText("Change Name");
-
-        dialog.setContentText("Name: ");
-
+            dialog = new SimpleDialog("Change name.");
         dialog.showAndWait().ifPresent(response ->{
             try{
                 String name = dialog.getEditor().getText();
