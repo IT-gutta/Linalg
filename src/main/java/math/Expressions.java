@@ -26,6 +26,8 @@ public class Expressions {
      * Returns the quotient of two doubles
      */
     public static double division(double a, double b){
+        if(b==0)
+            throw new ArithmeticException("Can not divide by zero");
         return a/b;
     }
     /**

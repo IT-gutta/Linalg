@@ -67,6 +67,8 @@ public class Utils {
      * Returns the logarithm base 2 of a double
      */
     public static double log2(double num){
+        if(num<=0)
+            throw new IllegalArgumentException("Logarithm unsupported");
         return Math.log(num) / Math.log(2);
     }
 }

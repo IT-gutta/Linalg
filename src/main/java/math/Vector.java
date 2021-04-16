@@ -34,6 +34,8 @@ public class Vector implements Transformable, Writable {
      * Returns a given element
      */
     public double getElement(int index){
+        if(index>=vector.length)
+            throw new IllegalArgumentException("Index out of bounds");
         return vector[index];
     }
 
@@ -41,6 +43,8 @@ public class Vector implements Transformable, Writable {
      * Sets a given element
      */
     public void setElement(int index, double value){
+        if(index>=vector.length)
+            throw new IllegalArgumentException("Index out of bounds");
         vector[index] = value;
     }
 
@@ -59,6 +63,8 @@ public class Vector implements Transformable, Writable {
      * Sets the magnitude of the Vector
      */
     public void setMagnitude(double m){
+        if(m<0)
+            throw new IllegalArgumentException("Length can not be negative");
         double sum = 0;
         for(double element:vector){
             sum+=Math.pow(element,2);

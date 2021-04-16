@@ -27,6 +27,8 @@ public class Point implements Transformable, Writable {
      * Returns a given element
      */
     public double getElement(int i){
+        if(i>=point.length)
+            throw new IllegalArgumentException("Index out of bounds");
         return point[i];
     }
 
@@ -34,6 +36,8 @@ public class Point implements Transformable, Writable {
      * Sets a given element
      */
     public void setElement(int i, double d){
+        if(i>=point.length)
+            throw new IllegalArgumentException("Index out of bounds");
         point[i] = d;
     }
 

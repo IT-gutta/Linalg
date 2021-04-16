@@ -35,7 +35,7 @@ public class Expression implements Writable {
         originalInput = input;
 
         if(!checkInput(input))
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("The input does not translate to a legal function");
         this.expression = input;
 
         dddOps.put("+", Expressions::sum);dddOps.put("-", Expressions::difference); dddOps.put("*", Expressions::product); dddOps.put("/", Expressions::division); dddOps.put("^", Math::pow);
@@ -288,7 +288,7 @@ public class Expression implements Writable {
             operator = m.group(1);
             return m.group(2);
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("The input does not translate to a legal function");
     }
 
     /**
