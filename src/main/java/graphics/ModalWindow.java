@@ -1,13 +1,14 @@
 package graphics;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.linalgfx.App;
 
-public abstract class AlertWindow {
+public abstract class ModalWindow {
     public static void newAlert(String message){
         Stage alert = new Stage();
         alert.setHeight(100);
@@ -19,6 +20,13 @@ public abstract class AlertWindow {
         alert.setScene(scene);
         alert.initOwner(App.getStage());
         alert.initModality(Modality.APPLICATION_MODAL);
+        alert.showAndWait();
+    }
+
+    public static void alert(String message, Alert.AlertType alertType){
+        Alert alert = new Alert(alertType, message);
+        alert.setHeaderText("An exception was thrown");
+        alert.setTitle("Warning");
         alert.showAndWait();
     }
 }
