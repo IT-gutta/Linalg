@@ -147,4 +147,10 @@ public abstract class DefinedVariables {
             e.printStackTrace();
         }
     }
+
+
+    public static void clear(){
+        vbox.getChildren().clear();
+        map.clear();
+    }
 }

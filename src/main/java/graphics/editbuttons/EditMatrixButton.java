@@ -3,9 +3,7 @@ package graphics.editbuttons;
 import graphics.Icons;
 import graphics.ModalWindow;
 import graphics.VariableContainer;
-import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextInputControl;
 import math.Matrix;
 /**
  * MenuButton with MenuItems (options) for editing 2x2 matrices
@@ -21,7 +19,7 @@ public class EditMatrixButton extends GenericEditButton {
                 variableContainer.getVariable().invert();
             }
             catch (Exception e){
-                ModalWindow.alert("Matrix cannot be inverted. The determinant is 0.", Alert.AlertType.ERROR);
+                ModalWindow.alert("Matrix cannot be inverted. The determinant is 0.", javafx.scene.control.Alert.AlertType.ERROR);
             }
         });
 

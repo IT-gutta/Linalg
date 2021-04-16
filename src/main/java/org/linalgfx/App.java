@@ -4,26 +4,23 @@ import canvas2d.CanvasPane2D;
 import canvas2d.CanvasRenderer2D;
 import canvas3d.CanvasPane3D;
 import canvas3d.CanvasRenderer3D;
-import graphics.DefinedVariables;
+import graphics.*;
 import graphics.ToolBar;
-import graphics.VariableContainer;
 import graphics.textInput.OperatorMaps;
 import graphics.textInput.TextInputEvent;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import math.Differentiator;
+import regex.RegexUtils;
 import write.Writable;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -139,32 +136,75 @@ public class App extends Application {
      * Saves the application state to a file
      */
     public static void saveToFile(){
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("/"+App.class.getResource("current_save.txt").toExternalForm().replace("file:/", ""), false));
-
-            for(VariableContainer variableContainer : DefinedVariables.getVBox().
-                    getChildren().stream().
-                    map(node -> (VariableContainer) node).
-                    filter(var -> var.getVariable() instanceof Writable).
-                    collect(Collectors.toList())){
-                bw.write(variableContainer.toFile()+"\n");
+        SimpleDialog dialog = new SimpleDialog("Are you sure you want to continue?\nOnly 2D canvas variables and mathematical variables will be saved.\nEnter file name below.");
+        dialog.showAndWait().ifPresent(result ->{
+            if(!RegexUtils.isValidName(dialog.getEditor().getText())) {
+                ModalWindow.alert("The file name is invalid. Try again", Alert.AlertType.ERROR);
+                saveToFile();
+                return;
             }
-            bw.flush();
-            bw.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+
+            try {
+                File file = new File("/"+App.class.getResource("saves").toExternalForm().replace("file:/", ""), dialog.getEditor().getText()+".txt");
+
+                //if file exists, excecute script inside if statement, else it creates a new file, and skips if statement
+                if(!file.createNewFile()) {
+                    Optional<ButtonType> alertResult = ModalWindow.alert("The file already exists, do you want to override?", Alert.AlertType.WARNING);
+                    if(!alertResult.isPresent() || alertResult.get() == ButtonType.CANCEL) //alert has been canceled
+                        return;
+                }
+
+
+                BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+
+                for(VariableContainer variableContainer : DefinedVariables.getVBox().
+                        getChildren().stream().
+                        map(node -> (VariableContainer) node).
+                        filter(var -> var.getVariable() instanceof Writable).
+                        collect(Collectors.toList())){
+                    bw.write(variableContainer.toFile()+"\n");
+                }
+                bw.flush();
+                bw.close();
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        });
     }
 
     /**
      * Loads the application state to a file
      */
     public static void loadFromFile(){
-        try(Scanner sc = new Scanner(new File("/"+App.class.getResource("current_save.txt").toExternalForm().replace("file:/", "")))){
-            DefinedVariables.getVBox().getChildren().clear();
+        File[] saves = new File("/"+App.class.getResource("saves").toExternalForm().replace("file:/", "")).listFiles();
+        Map<String, File> savesMap = new HashMap<>();
+        ComboBox<String> comboBox = new ComboBox<>();
+        for(int i = 0; i < saves.length; i++){
+            if(saves[i].isFile()) {
+                savesMap.put(saves[i].getName(), saves[i]);
+                comboBox.getItems().add(saves[i].getName());
+            }
+        }
+        if(comboBox.getItems().size() == 0){
+            ModalWindow.alert("There are no saves for you to load.\nPlease create one before loading from file.", Alert.AlertType.INFORMATION);
+            return;
+        }
+
+        comboBox.getSelectionModel().selectFirst();
+
+        Alert alert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to continue?\nOnly the variables from the file will be loaded, all other variables will be removed!\nSelect file to load from: ");
+        alert.getDialogPane().setGraphic(comboBox);
+
+        Optional<ButtonType> alertResult = alert.showAndWait();
+        if(!alertResult.isPresent()) //alert has been canceled
+            return;
+
+
+        try(Scanner sc = new Scanner(savesMap.get(comboBox.getValue()))){
+            DefinedVariables.clear();
             while(sc.hasNextLine()){
                 String[] info = sc.nextLine().split("---");
-                System.out.println(Arrays.toString(info));
                 DefinedVariables.addFromFile(info[0], info[1], info[2]);
             }
         }catch(Exception e){
