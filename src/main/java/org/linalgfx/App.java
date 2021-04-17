@@ -30,11 +30,7 @@ public class App extends Application {
     //TODO add the ability to select objects in the graphics window
     //TODO add save functionality (save all variables in a file)
     private static Scene scene;
-    private static Stage stage;
 
-    public static Stage getStage(){
-        return stage;
-    }
 
     /**
      * The start method instantiates the canvaspanes, and starts the canvas animation loops, as well as
@@ -42,7 +38,6 @@ public class App extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        this.stage = stage;
         VBox root = new VBox();
         stage.setMaximized(true);
         Differentiator.fillDerivatives();
@@ -168,7 +163,7 @@ public class App extends Application {
                 bw.close();
 
             } catch (Exception e){
-                ModalWindow.alert("An error occured while trying to save file. Make sure to have the folder Applications/Linalg/saves created under your home directory", Alert.AlertType.ERROR);
+                ModalWindow.alert("An error occured while trying to save file. Make sure to have the folder Applic ations/Linalg/saves created under your home directory", Alert.AlertType.ERROR);
                 e.printStackTrace();
             }
         });
