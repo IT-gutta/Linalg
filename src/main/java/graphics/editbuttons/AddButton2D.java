@@ -30,7 +30,6 @@ public class AddButton2D extends MenuButton {
         MenuItem vector = new MenuItem("Vector 2D", Icons.of("vector.png", 20));
         vector.getStyleClass().add("new-menu-item");
         vector.setOnAction(actionEvent -> {
-            var vectorInput = new HBox();
             TextField xInput = DoubleFormatter.getTextField();
             TextField yInput = DoubleFormatter.getTextField();
 
