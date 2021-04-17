@@ -9,6 +9,8 @@ import graphics.ToolBar;
 import graphics.textInput.OperatorMaps;
 import graphics.textInput.TextInputEvent;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -43,39 +45,39 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;
-        VBox root = new VBox();
+//        VBox root = new VBox();
         stage.setMaximized(true);
         Differentiator.fillDerivatives();
 
         //2d canvas initialization
-        CanvasPane2D canvasPane2D = new CanvasPane2D(16*30, 9*30);
-        Canvas canvas2D = canvasPane2D.getCanvas();
-        GraphicsContext graphicsContext2D = canvas2D.getGraphicsContext2D();
-        CanvasRenderer2D.setCanvas(canvas2D);
-        CanvasRenderer2D.setGraphicsContext(graphicsContext2D);
-        CanvasRenderer2D.setUnitSize(40);
-        CanvasRenderer2D.start();
+//        CanvasPane2D canvasPane2D = new CanvasPane2D(16*30, 9*30);
+//        Canvas canvas2D = canvasPane2D.getCanvas();
+//        GraphicsContext graphicsContext2D = canvas2D.getGraphicsContext2D();
+//        CanvasRenderer2D.setCanvas(canvas2D);
+//        CanvasRenderer2D.setGraphicsContext(graphicsContext2D);
+//        CanvasRenderer2D.setUnitSize(40);
+//        CanvasRenderer2D.start();
 
         //3d canvas initialization
-        CanvasPane3D canvasPane3D = new CanvasPane3D(16*30, 9*30);
-        Canvas canvas3D = canvasPane3D.getCanvas();
-        GraphicsContext graphicsContext3D = canvas3D.getGraphicsContext2D();
-        CanvasRenderer3D.setCanvas(canvas3D);
-        CanvasRenderer3D.setGraphicsContext(graphicsContext3D);
-        CanvasRenderer3D.start();
+//        CanvasPane3D canvasPane3D = new CanvasPane3D(16*30, 9*30);
+//        Canvas canvas3D = canvasPane3D.getCanvas();
+//        GraphicsContext graphicsContext3D = canvas3D.getGraphicsContext2D();
+//        CanvasRenderer3D.setCanvas(canvas3D);
+//        CanvasRenderer3D.setGraphicsContext(graphicsContext3D);
+//        CanvasRenderer3D.start();
 
-        DefinedVariables.getScrollPane().getStyleClass().add("variables");
+//        DefinedVariables.getScrollPane().getStyleClass().add("variables");
 
-        Label label = new Label("Input: ");
-        TextField textField = new TextField();
-        ToolBar toolBar = new ToolBar();
-        Label error = new Label("");
-        error.getStyleClass().add("error");
-        textField.setOnAction(new TextInputEvent(textField, error));
+//        Label label = new Label("Input: ");
+//        TextField textField = new TextField();
+//        ToolBar toolBar = new ToolBar();
+//        Label error = new Label("");
+//        error.getStyleClass().add("error");
+//        textField.setOnAction(new TextInputEvent(textField));
 
-        SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane2D, canvasPane3D);
-        splitPane.prefHeightProperty().bind(root.heightProperty());
-        splitPane.setDividerPositions(0.3,0.9);
+//        SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane2D, canvasPane3D);
+//        splitPane.prefHeightProperty().bind(root.heightProperty());
+//        splitPane.setDividerPositions(0.3,0.9);
         //SplitPane splitPane = new SplitPane(DefinedVariables.getScrollPane(), canvasPane2D);
 
 
@@ -85,10 +87,12 @@ public class App extends Application {
         DefinedVariables.getScrollPane().setMinWidth(150);
 
 
-        root.getChildren().addAll(toolBar, error, textField, splitPane);
+//        root.getChildren().addAll(toolBar, error, textField, splitPane);
 
 
-        scene = new Scene(root);
+//        scene = new Scene(root);
+        Parent root2 = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("program.fxml")));
+        scene = new Scene(root2);
         scene.getStylesheets().add(resourceURL("stylesheets/style.css"));
         stage.setScene(scene);
 

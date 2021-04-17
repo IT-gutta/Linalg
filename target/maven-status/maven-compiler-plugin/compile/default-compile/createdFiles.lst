@@ -40,6 +40,7 @@ math\ComplexNumbers.class
 math\Vectors.class
 terraingeneration\InfiniteTerrain.class
 graphics\editbuttons\EditMatrixButton.class
+org\linalgfx\ProgramController.class
 canvas2d\CanvasRenderer2D$1.class
 canvas3d\Vector3D.class
 canvas2d\Render2D.class

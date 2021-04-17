@@ -9,13 +9,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import math.*;
 import terraingeneration.PerlinNoiseMap;
+import write.Writable;
 
 import java.text.DecimalFormat;
 
 /**
  * Handles rendering of 2D objects onto the canvas
  */
-public abstract class CanvasRenderer2D {
+public abstract class CanvasRenderer2D{
     private static Canvas canvas;
     private static GraphicsContext graphicsContext;
     private static double offsetX;

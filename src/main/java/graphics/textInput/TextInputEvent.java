@@ -24,13 +24,11 @@ import java.util.regex.Pattern;
 public class TextInputEvent implements EventHandler<ActionEvent>{
 
     private final TextField inputField;
-    private final Label errorField;
     private Matcher m;
 
 
-    public TextInputEvent(TextField inputField, Label errorField) {
+    public TextInputEvent(TextField inputField) {
         this.inputField = inputField;
-        this.errorField = errorField;
     }
 
     /**
