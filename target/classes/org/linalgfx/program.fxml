@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.canvas.Canvas?>
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.linalgfx.ProgramController" fx:id="root">
+    <HBox fx:id="toolBar"/>
+    <TextField fx:id="inputField" promptText="Enter input"/>
+    <SplitPane fx:id="splitPane">
+<!--        <ScrollPane fx:id="variableList"/>-->
+<!--        <Canvas fx:id="canvas2D"/>-->
+<!--        <Canvas fx:id="canvas3D"/>-->
+    </SplitPane>
+</VBox>
