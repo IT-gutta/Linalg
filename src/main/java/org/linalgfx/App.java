@@ -149,7 +149,7 @@ public class App extends Application {
             }
 
             try {
-                File file = new File("/"+App.class.getResource("saves").toExternalForm().replace("file:/", ""), dialog.getEditor().getText()+".txt");
+                File file = new File(System.getProperty("user.home")+"/Applications/Linalg/saves", dialog.getEditor().getText()+".txt");
 
                 //if file exists, excecute script inside if statement, else it creates a new file, and skips if statement
                 if(!file.createNewFile()) {
@@ -172,6 +172,7 @@ public class App extends Application {
                 bw.close();
 
             } catch (Exception e){
+                ModalWindow.alert("An error occured while trying to save file. Make sure to have the folder Applications/Linalg/saves created under your home directory", Alert.AlertType.ERROR);
                 e.printStackTrace();
             }
         });
@@ -181,7 +182,13 @@ public class App extends Application {
      * Loads the application state to a file
      */
     public static void loadFromFile(){
-        File[] saves = new File("/"+App.class.getResource("saves").toExternalForm().replace("file:/", "")).listFiles();
+        File dir = new File(System.getProperty("user.home")+"/Applications/Linalg/saves");
+        File[] saves = dir.listFiles();
+        if(saves == null) {
+            ModalWindow.alert("An error occured while trying to fetch saved files. Make sure to have the folder Applications/Linalg/saves created under your home directory", Alert.AlertType.ERROR);
+            throw new IllegalStateException("Files er null");
+        }
+
         Map<String, File> savesMap = new HashMap<>();
         ComboBox<String> comboBox = new ComboBox<>();
         for(int i = 0; i < saves.length; i++){

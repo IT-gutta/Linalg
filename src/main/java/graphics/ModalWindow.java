@@ -10,8 +10,8 @@ import java.util.Optional;
 public abstract class ModalWindow {
     public static Optional<ButtonType> alert(String message, AlertType alertType){
         Alert alert = new Alert(alertType, message);
-        alert.setHeaderText("An exception was thrown");
-        alert.setTitle("Warning");
+        alert.setHeaderText(alertType.name());
+        alert.setTitle(alertType.name());
         return alert.showAndWait();
     }
 }

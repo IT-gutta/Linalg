@@ -14,7 +14,8 @@ public abstract class Icons {
      */
     public static ImageView of(String fileName, double size){
         try {
-            ImageView imageView = new ImageView(new Image(App.resourceURL("images/" + fileName)));
+            String url = App.resourceURL("images/" + fileName);
+            ImageView imageView = new ImageView(new Image(url));
             imageView.setFitHeight(size);
             imageView.setFitWidth(size);
             return imageView;
