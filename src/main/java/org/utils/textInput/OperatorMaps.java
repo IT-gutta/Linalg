@@ -31,31 +31,41 @@ public abstract class OperatorMaps {
     public static void fillOpMaps(){
         edddOps.put("sum", TriFunctions.seriesEval);
         triFuncMaps.add(edddOps);
-        vvvOps.put("add", Vectors::add);vvvOps.put("subtract", Vectors::subtract);
+
+        vvvOps.put("add", Vectors::add);vvvOps.put("subtract", Vectors::subtract); vvvOps.put("cross", Vectors::cross);
         biFuncMaps.add(vvvOps);
+
         vvdOps.put("dot", Vectors::dot); vvdOps.put("angle", Vectors::angle);
         biFuncMaps.add(vvdOps);
+
         vdvOps.put("scale", Vectors::scale);
         biFuncMaps.add(vdvOps);
+
         vmvOps.put("transform", Vectors::transform);
         biFuncMaps.add(vmvOps);
+
         mmmOps.put("product", Matrices::product);
         biFuncMaps.add(mmmOps);
+
         mvvOps.put("solve", Solver::solveLinSys);
         biFuncMaps.add(mvvOps);
+
         pmpOps.put("transform", Points::transform);
         biFuncMaps.add(pmpOps);
+
         pppOps.put("add", Points::add);pppOps.put("subtract", Points::subtract);
         biFuncMaps.add(pppOps);
+
         cccOps.put("add", ComplexNumbers::add);cccOps.put("multiply", ComplexNumbers::multiply);
         biFuncMaps.add(cccOps);
+
         cdcOps.put("pow", ComplexNumbers::pow);
         biFuncMaps.add(cdcOps);
+
         vdOps.put("abs", Vectors::getMagnitude);
         funcMaps.add(vdOps);
+
         mmOps.put("inverse", Solver::invertedMatrix);
         funcMaps.add(mmOps);
-//        eeOps.put("derivative", Differentiator::derivative);
-//        funcMaps.add(eeOps);
     }
 }

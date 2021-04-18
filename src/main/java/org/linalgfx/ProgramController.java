@@ -33,7 +33,6 @@ public class ProgramController {
     private TextField inputField;
     @FXML
     private SplitPane splitPane;
-
     @FXML
     private CheckBox cameraMode;
 
@@ -59,7 +58,6 @@ public class ProgramController {
         DefinedVariables.getScrollPane().getStyleClass().add("variables");
         DefinedVariables.getScrollPane().setMinWidth(150);
 
-        inputField = new TextField();
         inputField.setOnAction(new TextInputEvent(inputField));
 
         splitPane.getItems().addAll(DefinedVariables.getScrollPane(), canvasPane2D, canvasPane3D);
