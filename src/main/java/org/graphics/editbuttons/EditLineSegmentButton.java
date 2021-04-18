@@ -10,7 +10,5 @@ public class EditLineSegmentButton extends GenericEditButton{
     public EditLineSegmentButton(VariableContainer<LineSegment2D> variableContainer){
         super(variableContainer);
         this.variableContainer = variableContainer;
-
-        addMenuItem(MenuItems.interpolateMenuItem(variableContainer));
     }
 }

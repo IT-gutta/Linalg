@@ -79,8 +79,6 @@ public class ProgramController {
         savesDirectory = new File(System.getProperty("user.home") + "/Applications/Linalg/saves");
         if(!savesDirectory.exists())
             savesDirectory.mkdirs();
-
-        System.out.println(savesDirectory.exists());
     }
 
     @FXML

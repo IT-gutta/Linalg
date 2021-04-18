@@ -1,5 +1,7 @@
 package org.graphics.editbuttons;
 
+import javafx.scene.control.Alert;
+import org.graphics.ModalWindow;
 import org.utils.DoubleFormatter;
 import org.graphics.SimpleDialog;
 import org.graphics.VariableContainer;
@@ -43,13 +45,16 @@ public class EditVectorButton extends GenericEditButton {
                     return;
 
                 try{
-                    if(!RegexUtils.isValidName(name))
-                        throw new IllegalArgumentException("Illegal name.");
+                    if(!RegexUtils.isValidName(name)) {
+                        ModalWindow.alert("The name is invalid! Name must start with a letter, and cant include any spaces.", Alert.AlertType.ERROR);
+                        handleChangeName();
+                    }
 
                     getContainer().setName(name);
                 }
                 catch (IllegalArgumentException e){
-                    handleChangeName(true);
+                    ModalWindow.alert("That name is already in use!", Alert.AlertType.ERROR);
+                    handleChangeName();
                 }
             });
         });

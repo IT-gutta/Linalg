@@ -1,10 +1,12 @@
 package org.graphics.editbuttons;
 
+import javafx.scene.control.Alert;
 import org.canvas2d.Grid2D;
 import org.canvas2d.Line2D;
 import org.canvas2d.LineSegment2D;
 import org.canvas2d.Point2D;
 import org.graphics.Icons;
+import org.graphics.ModalWindow;
 import org.utils.Interpolatable;
 import org.graphics.SimpleDialog;
 import org.graphics.VariableContainer;
@@ -34,7 +36,7 @@ public class GenericEditButton extends MenuButton {
 
         MenuItem changeNameButton = new MenuItem("Edit Name", Icons.of("changename.png", 20));
         changeNameButton.setOnAction(ev ->{
-            handleChangeName(false);
+            handleChangeName();
         });
 
         getItems().addAll(deleteButton, changeNameButton);
@@ -64,26 +66,26 @@ public class GenericEditButton extends MenuButton {
     /**
      * Handles the process of changing a name based on input from user
      */
-    protected void handleChangeName(boolean isRetry){
-        SimpleDialog dialog;
-        if(isRetry)
-            dialog = new SimpleDialog("Illegal name. Try again.");
-        else
-            dialog = new SimpleDialog("Change name.");
+    protected void handleChangeName(){
+        SimpleDialog dialog = new SimpleDialog("Change name");
+        dialog.getEditor().setText(getContainer().getName());
         dialog.showAndWait().ifPresent(response ->{
             try{
                 String name = dialog.getEditor().getText();
 
-                if(!RegexUtils.isValidName(name))
-                    throw new IllegalArgumentException("Illegal name.");
-
                 if(getContainer().getName().equals(name))
                     return;
+
+                if(!RegexUtils.isValidName(name)) {
+                    ModalWindow.alert("The name is invalid! Name must start with a letter, and cant include any spaces.", Alert.AlertType.ERROR);
+                    handleChangeName();
+                }
 
                 variableContainer.setName(name);
             }
             catch (IllegalArgumentException e){
-                handleChangeName(true);
+                ModalWindow.alert("That name is already in use!", Alert.AlertType.ERROR);
+                handleChangeName();
             }
         });
     }

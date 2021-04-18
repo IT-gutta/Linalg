@@ -10,7 +10,5 @@ public class EditPointButton extends GenericEditButton{
     public EditPointButton(VariableContainer<Point2D> variableContainer){
         super(variableContainer);
         this.variableContainer = variableContainer;
-
-        addMenuItem(MenuItems.interpolateMenuItem(variableContainer));
     }
 }

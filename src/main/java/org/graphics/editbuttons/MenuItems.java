@@ -1,5 +1,7 @@
 package org.graphics.editbuttons;
 
+import javafx.scene.control.Alert;
+import org.graphics.ModalWindow;
 import org.linalgfx.DefinedVariables;
 import org.graphics.Icons;
 import org.utils.Interpolatable;
@@ -28,8 +30,14 @@ public abstract class MenuItems {
                 String name = dialog.getEditor().getText();
                 if(DefinedVariables.contains(name)){
                     VariableContainer v = DefinedVariables.get(name);
-                    if(v.getVariable() instanceof Matrix)
-                        variableContainer.getVariable().startInterpolation((Matrix) v.getVariable(), 2000);
+                    if(v.getVariable() instanceof Matrix) {
+                        try {
+                            variableContainer.getVariable().startInterpolation((Matrix) v.getVariable(), 2000);
+                        }catch (IllegalArgumentException e){
+                            ModalWindow.alert("Could not transform: "+ variableContainer.getName() + " using the matrix: " + name + "\nError message: "+e.getMessage(), Alert.AlertType.ERROR);
+                        }
+
+                    }
                 }
             });
         });

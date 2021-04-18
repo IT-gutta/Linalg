@@ -10,7 +10,5 @@ public class EditLineButton extends GenericEditButton {
     public EditLineButton(VariableContainer<Line2D> variableContainer) {
         super(variableContainer);
         this.variableContainer = variableContainer;
-
-        addMenuItem(MenuItems.interpolateMenuItem(variableContainer));
     }
 }

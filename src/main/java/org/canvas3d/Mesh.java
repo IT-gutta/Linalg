@@ -32,7 +32,7 @@ public class Mesh extends Render3D{
 
         currentScale = scale;
 
-        try(Scanner sc = new Scanner(new File(getClass().getResource(relativePath).toExternalForm().replace("file:/", "")))){
+        try(Scanner sc = new Scanner(new File(getClass().getResource(relativePath).toExternalForm().replace("file:", "")))){
 
             List<Vector3> vertices = new ArrayList<>();
             List<Triangle> triangles = new ArrayList<>();
