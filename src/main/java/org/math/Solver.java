@@ -8,7 +8,6 @@ import java.util.HashMap;
  * Handles the solving of linear algebra problems
  */
 public class Solver {
-    //TODO Matrix
     /**
      * Returns the Matrix reduced to row echelon form
      */

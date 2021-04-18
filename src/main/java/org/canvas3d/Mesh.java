@@ -18,7 +18,6 @@ public class Mesh extends Render3D{
     protected double scaleY = 1;
     protected double scaleZ = 1;
 
-    //TODO vector arrow mesh based on magnitude
     public Mesh(Vector3 position){
         super(position);
     }

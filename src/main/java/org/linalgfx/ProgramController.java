@@ -169,7 +169,7 @@ public class ProgramController {
         else {
             CanvasRenderer3D.cameraMode = CanvasRenderer3D.CameraMode.STANDARD;
             //when using this mode, cant allow elevation because of a bug with roll
-            CanvasRenderer3D.getCamera().getPosition().setY(0);
+            CanvasRenderer3D.getCamera().setPosition(new Vector3(5, 0, 5));
             CanvasRenderer3D.getCamera().pointAt(Vector3.ZERO());
         }
     }

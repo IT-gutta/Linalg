@@ -12,8 +12,7 @@ import java.util.*;
  * JavaFX Application which handles the layout of the GUI
  */
 public class App extends Application {
-    //TODO add the ability to select objects in the graphics window
-    //TODO add save functionality (save all variables in a file)
+
 
 
     /**

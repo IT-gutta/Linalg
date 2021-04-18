@@ -18,9 +18,6 @@ import org.math3d.Vector4;
  * cores in a gpu compared to a cpu
  */
 public class GraphicsContext3D {
-    //TODO fix rasterizer when outside canvas
-    //TODO optimize rasterizer
-    //TODO implement coloring / texturing
     private GraphicsContext graphicsContext2D;
     private Camera3D camera;
     private double[] depthBuffer;

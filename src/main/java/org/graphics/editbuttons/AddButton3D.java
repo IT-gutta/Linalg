@@ -18,7 +18,6 @@ import org.terraingeneration.InfiniteTerrain;
  * for creating different types of 3D elements (vectors, points etc.)
  */
 public class AddButton3D extends MenuButton {
-    //TODO Add support for more variables (grid, linesegment and more) in the new menu window
 
     public AddButton3D() {
         super("Add 3D shape");

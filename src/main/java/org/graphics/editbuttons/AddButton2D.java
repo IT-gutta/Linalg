@@ -20,7 +20,6 @@ import org.utils.RegexUtils;
  * for creating different types of 2D elements (vectors, points etc.)
  */
 public class AddButton2D extends MenuButton {
-    //TODO Add support for more variables (grid, linesegment and more) in the new menu window
 
     public AddButton2D() {
         super("Add 2D Shape");

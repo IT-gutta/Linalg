@@ -380,7 +380,7 @@ public class Matrix implements Writable {
 
     @Override
     public String writeString() {
-        StringBuilder string = new StringBuilder("math.Matrix---" + width+" ");
+        StringBuilder string = new StringBuilder("org.math.Matrix---" + width+" ");
         for(double[] r:matrix){
             for(double d: r){
                 string.append(d).append(" ");

@@ -10,8 +10,6 @@ import org.math3d.Vector4;
  * Responable for translating points in 3D space and return their projected version on the canvas, including depth-information
  */
 public class Camera3D extends Render3D{
-    //TODO fix cameraMovement
-    //TODO implement some sort of clipping of the triangles (when they are at the edge of canvas)
     private final double fov = Math.PI/2;
     private final double zFar = 50; // bestemmer rendering distance
     private final double zNear = 0.1; //bestemmer rendering closest distance
