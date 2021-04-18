@@ -123,3 +123,12 @@
 .check-box:selected .box {
     -fx-background-color: #28a3f4;
 }
+
+#root{
+    -fx-spacing: 5px;
+}
+
+#inputField{
+    -fx-padding: 5px;
+    -fx-max-width: 500px;
+}

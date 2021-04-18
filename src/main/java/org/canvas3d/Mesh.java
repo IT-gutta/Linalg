@@ -1,5 +1,6 @@
 package org.canvas3d;
 
+import org.linalgfx.Writable;
 import org.math3d.Vector3;
 
 import java.io.File;
@@ -12,8 +13,9 @@ import java.util.Scanner;
 /**
  * Render3D which holds a mesh (set of vertices and triangles) which can be rendered to the canvas
  */
-public class Mesh extends Render3D{
+public class Mesh extends Render3D implements Writable {
     protected double currentScale;
+    private String relativePath;
     protected double scaleX = 1;
     protected double scaleY = 1;
     protected double scaleZ = 1;
@@ -28,6 +30,7 @@ public class Mesh extends Render3D{
      */
     public Mesh(String relativePath, Vector3 position, double scale){
         super(position);
+        this.relativePath = relativePath;
 
         currentScale = scale;
 
@@ -81,5 +84,14 @@ public class Mesh extends Render3D{
     @Override
     public Object getMath() {
         return null;
+    }
+
+    @Override
+    public String writeString(){
+        return "org.canvas3d.Mesh---"+relativePath+"::"+position+"::"+currentScale;
+    }
+    //from file
+    public Mesh(String fileString){
+        this(fileString.split("::")[0], Vector3.valueOf(fileString.split("::")[1]), Double.parseDouble(fileString.split("::")[2]));
     }
 }

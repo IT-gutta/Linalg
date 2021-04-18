@@ -23,7 +23,7 @@ public class Vector implements Transformable, Writable {
     public String toString(){
         String s = "";
         for(double element:vector){
-            s+=Double.toString(element)+", ";
+            s+=element+", ";
         }
         return "["+s.substring(0,s.length()-2)+"]";
     }

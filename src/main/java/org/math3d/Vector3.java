@@ -10,12 +10,13 @@ import java.io.Serializable;
 /**
  * Represents a three dimensional vector
  */
-public class Vector3 extends Vector implements Serializable {
+public class Vector3 extends Vector {
     public Vector3(double... args){
         super(args);
         if(args.length != 3)
             throw new IllegalArgumentException("Illegal dimension");
     }
+
 
     /**
      * Returns the x coordinate of the vector
@@ -186,6 +187,13 @@ public class Vector3 extends Vector implements Serializable {
     }
 
     /**
+     * Creates a new vector3 from a string format
+     */
+    public static Vector3 valueOf(String string){
+        String[] nums = string.substring(1, string.length()-1).split(", ");
+        return new Vector3(Double.parseDouble(nums[0]), Double.parseDouble(nums[1]), Double.parseDouble(nums[2]));
+    }
+    /**
      * Returns a Vector3 with coordinates [0,1,0]
      */
     public static Vector3 UP() {
@@ -212,4 +220,7 @@ public class Vector3 extends Vector implements Serializable {
     public static Vector3 ZERO(){
         return new Vector3(0, 0, 0);
     }
+
+
+
 }

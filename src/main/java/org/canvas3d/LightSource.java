@@ -1,15 +1,14 @@
 package org.canvas3d;
 
+import org.linalgfx.Writable;
 import org.math3d.Vector3;
 /**
  * A light source which is used to calculate illumination of the 3D objects
  * necessary to make it look 3d
  */
-public class LightSource extends Render3D{
-    private Mesh lightBulb;
+public class LightSource extends Sphere{
     public LightSource(Vector3 position){
-        super(position);
-        //lightBulb = Mesh.fromFile("light.obj", position);
+        super(position, 1d);
     }
 
     /**
@@ -40,5 +39,14 @@ public class LightSource extends Render3D{
     @Override
     public String toString(){
         return position.toString();
+    }
+
+    @Override
+    public String writeString() {
+        return "org.canvas3d.LightSource---"+position;
+    }
+
+    public LightSource(String fileString){
+        this(Vector3.valueOf(fileString));
     }
 }

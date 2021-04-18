@@ -2,8 +2,10 @@ package org.linalgfx;
 
 import org.canvas2d.CanvasPane2D;
 import org.canvas2d.CanvasRenderer2D;
+import org.canvas3d.Camera3D;
 import org.canvas3d.CanvasPane3D;
 import org.canvas3d.CanvasRenderer3D;
+import org.canvas3d.LightSource;
 import org.graphics.*;
 import org.utils.textInput.OperatorMaps;
 import org.utils.textInput.TextInputEvent;
@@ -20,6 +22,7 @@ import org.utils.RegexUtils;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -54,9 +57,12 @@ public class ProgramController {
         CanvasRenderer3D.setGraphicsContext(graphicsContext3D);
         CanvasRenderer3D.start();
 
+        DefinedVariables.add(new LightSource(new Vector3(0, 10000, 0)), "Sun");
+
 
         DefinedVariables.getScrollPane().getStyleClass().add("variables");
         DefinedVariables.getScrollPane().setMinWidth(150);
+
 
         inputField.setOnAction(new TextInputEvent(inputField));
 
@@ -101,13 +107,17 @@ public class ProgramController {
 
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
 
-                for (VariableContainer variableContainer : DefinedVariables.getVBox().
+                DefinedVariables.getVBox().
                         getChildren().stream().
                         map(node -> (VariableContainer) node).
-                        filter(var -> var.getVariable() instanceof Writable).
-                        collect(Collectors.toList())) {
-                    bw.write(variableContainer.toFile() + "\n");
-                }
+                        filter(var -> var.getVariable() instanceof Writable).forEach(variableContainer -> {
+                    try {
+                        bw.write(variableContainer.toFile() + "\n");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+
                 bw.flush();
                 bw.close();
 

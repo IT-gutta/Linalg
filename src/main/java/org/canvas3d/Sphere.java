@@ -23,4 +23,14 @@ public class Sphere extends Mesh{
     public String toString(){
         return "Center: " + position + ", Radius: " + currentScale;
     }
+
+
+    @Override
+    public String writeString(){
+        return "org.canvas3d.Sphere---"+position+"::"+currentScale;
+    }
+
+    public Sphere(String fileString){
+        this(Vector3.valueOf(fileString.split("::")[0]), Double.parseDouble(fileString.split("::")[1]));
+    }
 }

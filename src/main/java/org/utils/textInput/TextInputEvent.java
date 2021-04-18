@@ -64,7 +64,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                     if(p.getDimensions()==2)
                         DefinedVariables.add(new VariableContainer<>(new Point2D(p.toPoint2()), m.group(1)));
                     else if(p.getDimensions()==3)
-                        DefinedVariables.add(new VariableContainer<>(new Point3D(p.toPoint3()), m.group(1)));
+                        DefinedVariables.add(new VariableContainer<>(new Point3D(p.getElement(0), p.getElement(1), p.getElement(2)), m.group(1)));
                     else
                         DefinedVariables.add(new VariableContainer<>(p, m.group(1)));
                     legal = true;
@@ -247,7 +247,6 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
             inputField.clear();
         else if(!message)
             ModalWindow.alert("The value provided for the declaration is invalid", AlertType.ERROR);
-
     }
 }
 

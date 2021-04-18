@@ -1,5 +1,6 @@
 package org.canvas3d;
 
+import org.linalgfx.Writable;
 import org.utils.Interpolatable;
 import org.utils.Interpolator;
 import javafx.scene.paint.Color;
@@ -13,7 +14,7 @@ import java.io.Serializable;
  * This class contains a name, position, vectors that describe how the object is rotated i space
  * and all the triangles and vertices that the rendered object contains
  */
-public abstract class Render3D implements Interpolatable, Serializable  {
+public abstract class Render3D implements Interpolatable{
     protected String name;
     protected Vector3 position;
     protected Vector3 forward;
