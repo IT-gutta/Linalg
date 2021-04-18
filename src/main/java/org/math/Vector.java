@@ -2,7 +2,8 @@ package org.math;
 
 import org.math2d.Vector2;
 import org.math3d.Vector3;
-import org.write.Writable;
+import org.utils.Utils;
+import org.linalgfx.Writable;
 
 import java.util.stream.DoubleStream;
 

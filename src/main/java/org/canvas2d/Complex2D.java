@@ -1,10 +1,10 @@
 package org.canvas2d;
 
-import org.graphics.Interpolatable;
+import org.utils.Interpolatable;
 import javafx.scene.canvas.GraphicsContext;
 import org.math.Complex;
 import org.math.Matrix;
-import org.write.Writable;
+import org.linalgfx.Writable;
 
 public class Complex2D extends Render2D implements Interpolatable, Writable {
     Complex complex;

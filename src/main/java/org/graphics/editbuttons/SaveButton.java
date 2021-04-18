@@ -1,14 +1,14 @@
 package org.graphics.editbuttons;
 
-import org.graphics.DefinedVariables;
+import org.linalgfx.DefinedVariables;
 import org.graphics.ModalWindow;
 import org.graphics.SimpleDialog;
 import org.graphics.VariableContainer;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import org.regex.RegexUtils;
-import org.write.Writable;
+import org.utils.RegexUtils;
+import org.linalgfx.Writable;
 
 import java.io.BufferedWriter;
 import java.io.File;

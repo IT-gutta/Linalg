@@ -1,13 +1,13 @@
 package org.canvas2d;
 
-import org.graphics.Interpolatable;
-import org.graphics.Interpolator;
+import org.utils.Interpolatable;
+import org.utils.Interpolator;
 import javafx.scene.canvas.GraphicsContext;
 import org.math.Matrix;
 import org.math.Vector;
 import org.math.Vectors;
 import org.math2d.Vector2;
-import org.write.Writable;
+import org.linalgfx.Writable;
 
 /**
  * Represents a graphical two dimensional vector

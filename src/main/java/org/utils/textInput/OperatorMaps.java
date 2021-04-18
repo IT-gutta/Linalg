@@ -1,13 +1,14 @@
-package org.graphics.textInput;
+package org.utils.textInput;
 
 import org.math.*;
+import org.utils.TriFunctions;
 
 import java.util.ArrayList;
 
 public abstract class OperatorMaps {
-    static final ArrayList<InputMapTriFunc> triFuncMaps = new ArrayList<>();
-    static final ArrayList<InputMapBiFunc> biFuncMaps = new ArrayList<>();
-    static final ArrayList<InputMapFunc> funcMaps = new ArrayList<>();
+    public static final ArrayList<InputMapTriFunc> triFuncMaps = new ArrayList<>();
+    public static final ArrayList<InputMapBiFunc> biFuncMaps = new ArrayList<>();
+    public static final ArrayList<InputMapFunc> funcMaps = new ArrayList<>();
     private static final InputMapTriFunc<Expression, Double, Double, Double> edddOps = new InputMapTriFunc<>(new Expression("0"),0d,0d, 0d);
     private static final InputMapBiFunc<Vector, Vector, Vector> vvvOps = new InputMapBiFunc<>(new Vector(),new Vector(),new Vector());
     private static final InputMapBiFunc<Vector, Vector, Double> vvdOps = new InputMapBiFunc<>(new Vector(),new Vector(),0d);

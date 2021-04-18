@@ -1,6 +1,6 @@
 package org.math;
 
-import org.write.Writable;
+import org.linalgfx.Writable;
 
 /**
  * Represents a complex number and contains methods that correlate to operations on complex numbers

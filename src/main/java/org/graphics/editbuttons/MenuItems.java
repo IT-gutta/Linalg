@@ -1,8 +1,8 @@
 package org.graphics.editbuttons;
 
-import org.graphics.DefinedVariables;
+import org.linalgfx.DefinedVariables;
 import org.graphics.Icons;
-import org.graphics.Interpolatable;
+import org.utils.Interpolatable;
 import org.graphics.VariableContainer;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;

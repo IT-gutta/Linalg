@@ -1,6 +1,6 @@
-package org.graphics.textInput;
+package org.utils.textInput;
 
-import org.math.TriFunction;
+import org.utils.TriFunction;
 
 import java.util.HashMap;
 

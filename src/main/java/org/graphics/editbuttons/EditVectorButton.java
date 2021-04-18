@@ -1,6 +1,6 @@
 package org.graphics.editbuttons;
 
-import org.graphics.DoubleFormatter;
+import org.utils.DoubleFormatter;
 import org.graphics.SimpleDialog;
 import org.graphics.VariableContainer;
 import javafx.scene.control.MenuItem;
@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.math.Vector;
 import org.linalgfx.App;
-import org.regex.RegexUtils;
+import org.utils.RegexUtils;
 /**
  * MenuButton with MenuItems (options) for editing mathematical or 2D vectors
  */

@@ -1,7 +1,7 @@
 package org.math;
 
-import org.graphics.textInput.Regexes;
-import org.write.Writable;
+import org.utils.textInput.Regexes;
+import org.linalgfx.Writable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -411,7 +411,7 @@ public class Expression implements Writable {
                 }
                 if(leftChild.isLeaf() && rightChild.isLeaf()){
                     System.out.println(expression);
-                    if(Pattern.matches(Regexes.posFlNum, leftChild.getExpression()) && Pattern.matches(Regexes.posFlNum, rightChild.getExpression())){
+                    if(Pattern.matches(Regexes.POS_FL_NUM, leftChild.getExpression()) && Pattern.matches(Regexes.POS_FL_NUM, rightChild.getExpression())){
                         resetNode(Double.toString(Double.parseDouble(leftChild.getExpression())*Double.parseDouble(rightChild.getExpression())));
                         return true;
                     }
@@ -427,7 +427,7 @@ public class Expression implements Writable {
                     return true;
                 }
                 if(leftChild.isLeaf() && rightChild.isLeaf()){
-                    if(Pattern.matches(Regexes.posFlNum, leftChild.getExpression()) && Pattern.matches(Regexes.posFlNum, rightChild.getExpression())){
+                    if(Pattern.matches(Regexes.POS_FL_NUM, leftChild.getExpression()) && Pattern.matches(Regexes.POS_FL_NUM, rightChild.getExpression())){
                         resetNode(Double.toString(Double.parseDouble(leftChild.getExpression())/Double.parseDouble(rightChild.getExpression())));
                         return true;
                     }
@@ -443,7 +443,7 @@ public class Expression implements Writable {
                     return true;
                 }
                 if(leftChild.isLeaf() && rightChild.isLeaf()){
-                    if(Pattern.matches(Regexes.posFlNum, leftChild.getExpression()) && Pattern.matches(Regexes.posFlNum, rightChild.getExpression())){
+                    if(Pattern.matches(Regexes.POS_FL_NUM, leftChild.getExpression()) && Pattern.matches(Regexes.POS_FL_NUM, rightChild.getExpression())){
                        resetNode(Double.toString(Double.parseDouble(leftChild.getExpression())+Double.parseDouble(rightChild.getExpression())));
                         return true;
                     }
@@ -460,7 +460,7 @@ public class Expression implements Writable {
                     return true;
                 }
                 if(leftChild.isLeaf() && rightChild.isLeaf()){
-                    if(Pattern.matches(Regexes.posFlNum, leftChild.getExpression()) && Pattern.matches(Regexes.posFlNum, rightChild.getExpression())){
+                    if(Pattern.matches(Regexes.POS_FL_NUM, leftChild.getExpression()) && Pattern.matches(Regexes.POS_FL_NUM, rightChild.getExpression())){
                         resetNode(Double.toString(Double.parseDouble(leftChild.getExpression())-Double.parseDouble(rightChild.getExpression())));
                         return true;
                     }
@@ -484,7 +484,7 @@ public class Expression implements Writable {
                     return true;
                 }
                 if(leftChild.isLeaf() && rightChild.isLeaf()){
-                    if(Pattern.matches(Regexes.posFlNum, leftChild.getExpression()) && Pattern.matches(Regexes.posFlNum, rightChild.getExpression())){
+                    if(Pattern.matches(Regexes.POS_FL_NUM, leftChild.getExpression()) && Pattern.matches(Regexes.POS_FL_NUM, rightChild.getExpression())){
                        resetNode(Double.toString(Math.pow(Double.parseDouble(leftChild.getExpression()),Double.parseDouble(rightChild.getExpression()))));
                         return true;
                     }

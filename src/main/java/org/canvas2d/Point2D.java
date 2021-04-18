@@ -1,12 +1,12 @@
 package org.canvas2d;
 
-import org.graphics.Interpolatable;
-import org.graphics.Interpolator;
+import org.utils.Interpolatable;
+import org.utils.Interpolator;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import org.math.*;
 import org.math2d.Point2;
-import org.write.Writable;
+import org.linalgfx.Writable;
 
 /**
  * Represents a graphical two dimensional point

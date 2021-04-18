@@ -2,7 +2,7 @@ package org.math;
 
 import org.math2d.Point2;
 import org.math3d.Point3;
-import org.write.Writable;
+import org.linalgfx.Writable;
 
 /**
  * Represents a mathematical point

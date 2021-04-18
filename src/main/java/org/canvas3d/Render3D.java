@@ -1,7 +1,7 @@
 package org.canvas3d;
 
-import org.graphics.Interpolatable;
-import org.graphics.Interpolator;
+import org.utils.Interpolatable;
+import org.utils.Interpolator;
 import javafx.scene.paint.Color;
 import org.math.Matrix;
 import org.math3d.Vector3;

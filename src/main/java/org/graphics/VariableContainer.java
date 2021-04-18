@@ -11,7 +11,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import org.canvas2d.Mapping;
-import org.write.Writable;
+import org.linalgfx.DefinedVariables;
+import org.linalgfx.Writable;
 
 import java.io.Serializable;
 

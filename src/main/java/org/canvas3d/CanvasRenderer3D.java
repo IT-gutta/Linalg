@@ -1,6 +1,6 @@
 package org.canvas3d;
 
-import org.graphics.DefinedVariables;
+import org.linalgfx.DefinedVariables;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

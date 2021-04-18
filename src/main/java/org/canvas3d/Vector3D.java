@@ -1,6 +1,6 @@
 package org.canvas3d;
 
-import org.graphics.Interpolator;
+import org.utils.Interpolator;
 import org.math.Matrix;
 import org.math3d.Vector3;
 /**

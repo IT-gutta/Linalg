@@ -1,4 +1,4 @@
-package org.graphics.textInput;
+package org.utils.textInput;
 
 import java.util.HashMap;
 import java.util.function.BiFunction;

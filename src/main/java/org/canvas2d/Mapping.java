@@ -2,7 +2,7 @@ package org.canvas2d;
 
 import javafx.scene.canvas.GraphicsContext;
 import org.math.Expression;
-import org.write.Writable;
+import org.linalgfx.Writable;
 
 /**
  * Represents a graphical function from R to R

@@ -1,10 +1,10 @@
-package org.graphics.textInput;
+package org.utils.textInput;
 
 import org.canvas2d.Point2D;
 import org.canvas2d.Vector2D;
 import org.canvas3d.Point3D;
 import org.canvas3d.Vector3D;
-import org.graphics.DefinedVariables;
+import org.linalgfx.DefinedVariables;
 import org.graphics.ModalWindow;
 import org.graphics.VariableContainer;
 import javafx.event.ActionEvent;
@@ -40,10 +40,10 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
         boolean message = false;
         String inp = inputField.getText().replace(" ", "");
         //Check for var declaration statement
-        if(Pattern.matches(Regexes.varDec+".+", inp)){
+        if(Pattern.matches(Regexes.VAR_DEC +".+", inp)){
             //Vector n
-            if(Pattern.matches(Regexes.varDec+Regexes.vectorN(), inp)){
-                m = Pattern.compile(Regexes.varDec+Regexes.vectorN()).matcher(inp);
+            if(Pattern.matches(Regexes.VAR_DEC +Regexes.vectorN(), inp)){
+                m = Pattern.compile(Regexes.VAR_DEC +Regexes.vectorN()).matcher(inp);
                 if(m.find()){
                     Vector v = new Vector(InputParser.vectorN(m.group(2)));
                     if(v.getDimensions()==2)
@@ -56,8 +56,8 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                 }
             }
             //Point n
-            if(Pattern.matches(Regexes.varDec+Regexes.pointN(), inp)){
-                m = Pattern.compile(Regexes.varDec+Regexes.pointN()).matcher(inp);
+            if(Pattern.matches(Regexes.VAR_DEC +Regexes.pointN(), inp)){
+                m = Pattern.compile(Regexes.VAR_DEC +Regexes.pointN()).matcher(inp);
                 if(m.find()){
                     Point p = new Point(InputParser.vectorN(m.group(2)));
                     if(p.getDimensions()==2)
@@ -70,16 +70,16 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                 }
             }
             //Matrix n*m
-            if(Pattern.matches(Regexes.varDec+Regexes.matrix(), inp)){
-                m = Pattern.compile(Regexes.varDec+Regexes.matrix()).matcher(inp);
+            if(Pattern.matches(Regexes.VAR_DEC +Regexes.matrix(), inp)){
+                m = Pattern.compile(Regexes.VAR_DEC +Regexes.matrix()).matcher(inp);
                 if(m.find()){
                     DefinedVariables.add(new VariableContainer<>(new Matrix(InputParser.matrixMN(m.group(2))), m.group(1)));
                     legal = true;
                 }
             }
             //Complex
-            if(Pattern.matches(Regexes.varDec+Regexes.complex(), inp)){
-                m = Pattern.compile(Regexes.varDec+Regexes.complex()).matcher(inp);
+            if(Pattern.matches(Regexes.VAR_DEC +Regexes.complex(), inp)){
+                m = Pattern.compile(Regexes.VAR_DEC +Regexes.complex()).matcher(inp);
                 if(m.find()){
                     for(int i = 0; i<m.groupCount(); i++){
                         System.out.println(i+": "+m.group(i));
@@ -118,8 +118,8 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                 }
             }
             //Double from function
-            if(Pattern.matches(Regexes.varDec+Regexes.varName+"\\("+Regexes.varName+"\\)", inp)) {
-                m = Pattern.compile(Regexes.varDec+Regexes.varName+"\\("+Regexes.varName+"\\)").matcher(inp);
+            if(Pattern.matches(Regexes.VAR_DEC +Regexes.VAR_NAME +"\\("+Regexes.VAR_NAME +"\\)", inp)) {
+                m = Pattern.compile(Regexes.VAR_DEC +Regexes.VAR_NAME +"\\("+Regexes.VAR_NAME +"\\)").matcher(inp);
                 if (m.find()) {
                     System.out.println(1);
                     Expression f = (Expression) DefinedVariables.get(m.group(2)).getMath();
@@ -129,7 +129,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                 }
             }
             if(!legal){
-                    m = Pattern.compile(Regexes.varDec+"(.*)").matcher(inp);
+                    m = Pattern.compile(Regexes.VAR_DEC +"(.*)").matcher(inp);
                     if(m.find() && !m.group(2).contains("x")){
                         try{
                             Expression e = new Expression(m.group(2));
@@ -145,7 +145,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
             for(InputMapTriFunc map: OperatorMaps.triFuncMaps){
                 for(Object o:map.getMap().keySet()){
                     String f = (String)o;
-                    String func = Regexes.varDec+f+"\\("+Regexes.varName+","+Regexes.varName+","+Regexes.varName+"\\)";
+                    String func = Regexes.VAR_DEC +f+"\\("+Regexes.VAR_NAME +","+Regexes.VAR_NAME +","+Regexes.VAR_NAME +"\\)";
                     m = Pattern.compile(func).matcher(inp);
                     if(m.find()){
                         VariableContainer a = DefinedVariables.get(m.group(2));
@@ -167,7 +167,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
             for(InputMapBiFunc map: OperatorMaps.biFuncMaps){
                 for(Object o:map.getMap().keySet()){
                     String f = (String)o;
-                    String func = Regexes.varDec+f+"\\("+Regexes.varName+","+Regexes.varName+"\\)";
+                    String func = Regexes.VAR_DEC +f+"\\("+Regexes.VAR_NAME +","+Regexes.VAR_NAME +"\\)";
                     m = Pattern.compile(func).matcher(inp);
                     if(m.find()){
                         VariableContainer a = DefinedVariables.get(m.group(2));
@@ -188,7 +188,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
             for(InputMapFunc map: OperatorMaps.funcMaps){
                 for(Object o:map.getMap().keySet()){
                     String f = (String)o;
-                    String func = Regexes.varDec+f+"\\("+Regexes.varName+"\\)";
+                    String func = Regexes.VAR_DEC +f+"\\("+Regexes.VAR_NAME +"\\)";
                     m = Pattern.compile(func).matcher(inp);
                     if(m.find()){
                         VariableContainer a = DefinedVariables.get(m.group(2));
@@ -205,8 +205,8 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
             }
         }
         //function declaration
-        else if(Pattern.matches(Regexes.funDec+".*", inp)){
-            m = Pattern.compile(Regexes.funDec+"derivative\\("+Regexes.varName+"\\)").matcher(inp);
+        else if(Pattern.matches(Regexes.FUN_DEC +".*", inp)){
+            m = Pattern.compile(Regexes.FUN_DEC +"derivative\\("+Regexes.VAR_NAME +"\\)").matcher(inp);
             try {
                 if(m.find()){
                     System.out.println(m.group(2));
@@ -221,7 +221,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                 message = true;
             }
             try{
-                m = Pattern.compile(Regexes.funDec+"(.*)").matcher(inp);
+                m = Pattern.compile(Regexes.FUN_DEC +"(.*)").matcher(inp);
                 if(m.find()){
                     DefinedVariables.add(new VariableContainer<Mapping>(new Mapping(m.group(2)), m.group(1)));
                     legal = true;

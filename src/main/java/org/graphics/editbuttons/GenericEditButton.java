@@ -5,13 +5,13 @@ import org.canvas2d.Line2D;
 import org.canvas2d.LineSegment2D;
 import org.canvas2d.Point2D;
 import org.graphics.Icons;
-import org.graphics.Interpolatable;
+import org.utils.Interpolatable;
 import org.graphics.SimpleDialog;
 import org.graphics.VariableContainer;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import org.math.*;
-import org.regex.RegexUtils;
+import org.utils.RegexUtils;
 
 /**
  * Generic menubutton which has basic editing functionality for all DefinedVariables, which include editing name and deleting element

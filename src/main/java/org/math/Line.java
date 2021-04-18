@@ -1,7 +1,7 @@
 package org.math;
 
 import org.graphics.VariableContainer;
-import org.write.Writable;
+import org.linalgfx.Writable;
 
 /**
  * Represents a mathematical line

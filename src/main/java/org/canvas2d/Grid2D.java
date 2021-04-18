@@ -1,10 +1,10 @@
 package org.canvas2d;
 
-import org.graphics.Interpolatable;
+import org.utils.Interpolatable;
 import javafx.scene.canvas.GraphicsContext;
 import org.math.Matrix;
 import org.math.Vector;
-import org.write.Writable;
+import org.linalgfx.Writable;
 
 /**
  * Represents a two dimensional grid

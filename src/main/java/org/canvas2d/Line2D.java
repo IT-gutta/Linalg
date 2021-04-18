@@ -1,11 +1,11 @@
 package org.canvas2d;
 
-import org.graphics.Interpolatable;
+import org.utils.Interpolatable;
 import javafx.scene.canvas.GraphicsContext;
 import org.math.Line;
 import org.math.Matrix;
 import org.math.Point;
-import org.write.Writable;
+import org.linalgfx.Writable;
 
 import java.util.ArrayList;
 import java.util.List;

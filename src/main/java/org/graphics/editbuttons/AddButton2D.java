@@ -7,12 +7,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.linalgfx.DefinedVariables;
 import org.math.Complex;
 import org.math.Matrix;
 import org.canvas2d.Line2D;
 import org.canvas2d.Point2D;
 import org.canvas2d.Vector2D;
-import org.regex.RegexUtils;
+import org.utils.DoubleFormatter;
+import org.utils.RegexUtils;
 /**
  * The button to press for adding new elements in the 2D canvas, fills up the MenuItem list with clickable menuItems
  * for creating different types of 2D elements (vectors, points etc.)

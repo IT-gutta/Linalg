@@ -6,9 +6,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.linalgfx.DefinedVariables;
 import org.math.Matrix;
 import org.math3d.Vector3;
-import org.regex.RegexUtils;
+import org.utils.DoubleFormatter;
+import org.utils.RegexUtils;
 import org.terraingeneration.InfiniteTerrain;
 
 /**

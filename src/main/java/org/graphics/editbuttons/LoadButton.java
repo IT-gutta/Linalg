@@ -1,6 +1,6 @@
 package org.graphics.editbuttons;
 
-import org.graphics.DefinedVariables;
+import org.linalgfx.DefinedVariables;
 import org.graphics.ModalWindow;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;

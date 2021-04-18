@@ -1,9 +1,10 @@
 package org.canvas2d;
 
-import org.graphics.*;
 import javafx.scene.canvas.GraphicsContext;
 import org.math.*;
-import org.write.Writable;
+import org.utils.Interpolatable;
+import org.utils.Interpolator;
+import org.linalgfx.Writable;
 
 /**
  * Represents a graphical two dimensional line segment

@@ -1,9 +1,10 @@
-package org.graphics;
+package org.linalgfx;
 
 import org.canvas2d.Render2D;
 import org.canvas3d.Render3D;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import org.graphics.VariableContainer;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;

@@ -1,12 +1,13 @@
 package org.canvas2d;
 
-import org.graphics.DefinedVariables;
+import org.linalgfx.DefinedVariables;
 import org.graphics.VariableContainer;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import org.math.*;
+import org.utils.Utils;
 
 import java.text.DecimalFormat;
 

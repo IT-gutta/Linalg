@@ -1,4 +1,4 @@
-package org.math;
+package org.utils;
 
 import java.util.function.IntToDoubleFunction;
 import java.util.function.IntUnaryOperator;

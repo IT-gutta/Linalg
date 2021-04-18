@@ -1,6 +1,6 @@
 package org.canvas3d;
 
-import org.graphics.DefinedVariables;
+import org.linalgfx.DefinedVariables;
 import org.math.Matrix;
 import org.math3d.Vector3;
 import org.math3d.Vector4;

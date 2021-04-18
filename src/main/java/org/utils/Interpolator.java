@@ -1,4 +1,4 @@
-package org.graphics;
+package org.utils;
 
 import org.canvas2d.CanvasRenderer2D;
 

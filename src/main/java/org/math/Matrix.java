@@ -1,6 +1,6 @@
 package org.math;
 
-import org.write.Writable;
+import org.linalgfx.Writable;
 
 import java.util.ArrayList;
 

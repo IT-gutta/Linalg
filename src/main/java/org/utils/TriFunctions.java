@@ -1,4 +1,7 @@
-package org.math;
+package org.utils;
+
+import org.math.Expression;
+import org.utils.TriFunction;
 
 /**
  * Contains operations that use the TriFunction interface

@@ -1,4 +1,4 @@
-package org.graphics;
+package org.utils;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
