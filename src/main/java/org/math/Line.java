@@ -75,7 +75,7 @@ public class Line implements Transformable, Writable {
 
     @Override
     public String writeString() {
-        StringBuilder string = new StringBuilder("math.Line---" + getDimensions());
+        StringBuilder string = new StringBuilder("org.math.Line---" + getDimensions());
         for(double d:start.getPoint())
             string.append(d).append(" ");
         for(double d:direction.getVector())

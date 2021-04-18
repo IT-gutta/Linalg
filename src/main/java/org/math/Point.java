@@ -84,7 +84,7 @@ public class Point implements Transformable, Writable {
 
     @Override
     public String writeString() {
-        StringBuilder str = new StringBuilder("math.Point---");
+        StringBuilder str = new StringBuilder("org.math.Point---");
         for(Double d:point)
             str.append(d).append(" ");
         return str.toString();

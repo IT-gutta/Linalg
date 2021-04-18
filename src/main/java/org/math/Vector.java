@@ -266,7 +266,7 @@ public class Vector implements Transformable, Writable {
 
     @Override
     public String writeString() {
-        StringBuilder str = new StringBuilder("math.Vector---");
+        StringBuilder str = new StringBuilder("org.math.Vector---");
         for(Double d:vector)
             str.append(d).append(" ");
         return str.toString();
