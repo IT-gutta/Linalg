@@ -13,6 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import org.math.*;
 import org.canvas2d.Mapping;
+import org.math3d.Vector3;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -82,7 +83,6 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                 m = Pattern.compile(Regexes.VAR_DEC +Regexes.complex()).matcher(inp);
                 if(m.find()){
                     for(int i = 0; i<m.groupCount(); i++){
-                        System.out.println(i+": "+m.group(i));
                     }
                     double re = 1;
                     double im = 0;
@@ -121,7 +121,6 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
             if(Pattern.matches(Regexes.VAR_DEC +Regexes.VAR_NAME +"\\("+Regexes.VAR_NAME +"\\)", inp)) {
                 m = Pattern.compile(Regexes.VAR_DEC +Regexes.VAR_NAME +"\\("+Regexes.VAR_NAME +"\\)").matcher(inp);
                 if (m.find()) {
-                    System.out.println(1);
                     Expression f = (Expression) DefinedVariables.get(m.group(2)).getMath();
                     Double x = (Double)DefinedVariables.get(m.group(3)).getMath();
                     DefinedVariables.add(new VariableContainer<Double>(f.evaluate(x), m.group(1)));
@@ -151,7 +150,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                         VariableContainer a = DefinedVariables.get(m.group(2));
                         VariableContainer b = DefinedVariables.get(m.group(3));
                         VariableContainer c = DefinedVariables.get(m.group(4));
-                        if(a.getMath().getClass().equals(map.getInput1().getClass()) && b.getMath().getClass().equals(map.getInput2().getClass()) && c.getMath().getClass().equals(map.getInput3().getClass())){
+                        if((map.getInput1().getClass().isInstance(a.getMath())) && (map.getInput2().getClass().isInstance(b.getMath())) && (map.getInput3().getClass().isInstance(c.getMath()))){
                             try{
                                 DefinedVariables.add(new VariableContainer<>(map.apply(f, map.getInput1().getClass().cast(a.getMath()), map.getInput2().getClass().cast(b.getMath()), map.getInput3().getClass().cast(c.getMath())), m.group(1)));
                                 legal = true;
@@ -170,10 +169,19 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                     String func = Regexes.VAR_DEC +f+"\\("+Regexes.VAR_NAME +","+Regexes.VAR_NAME +"\\)";
                     m = Pattern.compile(func).matcher(inp);
                     if(m.find()){
+                        System.out.println(f);
                         VariableContainer a = DefinedVariables.get(m.group(2));
                         VariableContainer b = DefinedVariables.get(m.group(3));
-                        if(a.getMath().getClass().equals(map.getInput1().getClass()) && b.getMath().getClass().equals(map.getInput2().getClass())){
+                        System.out.println(a);
+                        System.out.println(b);
+                        System.out.println(a.getMath().getClass());
+                        System.out.println(map.getInput1().getClass());
+                        System.out.println(b.getMath().getClass());
+                        System.out.println(map.getInput2().getClass());
+                        if((map.getInput1().getClass().isInstance(a.getMath())) && (map.getInput2().getClass().isInstance(b.getMath()))){
                             try{
+                                System.out.println(a);
+                                System.out.println(b);
                                 DefinedVariables.add(new VariableContainer<>(map.apply(f, map.getInput1().getClass().cast(a.getMath()), map.getInput2().getClass().cast(b.getMath())), m.group(1)));
                                 legal = true;
                             }
@@ -192,7 +200,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                     m = Pattern.compile(func).matcher(inp);
                     if(m.find()){
                         VariableContainer a = DefinedVariables.get(m.group(2));
-                        if(a.getMath().getClass().equals(map.getInput().getClass())){
+                        if((map.getInput().getClass().isInstance(a.getMath()))){
                             try{
                                 DefinedVariables.add(new VariableContainer<>(map.apply(f, map.getInput().getClass().cast(a.getMath())), m.group(1)));
                             }
@@ -209,9 +217,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
             m = Pattern.compile(Regexes.FUN_DEC +"derivative\\("+Regexes.VAR_NAME +"\\)").matcher(inp);
             try {
                 if(m.find()){
-                    System.out.println(m.group(2));
                     Expression e = Differentiator.derivative((Expression)DefinedVariables.get(m.group(2)).getMath());
-                    System.out.println(e);
                     DefinedVariables.add(new VariableContainer(new Mapping(e), m.group(1)));
                     legal = true;
                 }

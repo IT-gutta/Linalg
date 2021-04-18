@@ -73,6 +73,10 @@ public class Vectors {
         return new Vector(d);
     }
 
+    public static Vector cross(Vector v, Vector u){
+        return v.cross(u);
+    }
+
     /**
      * Returns the dot product a matrix and a Vector
      */

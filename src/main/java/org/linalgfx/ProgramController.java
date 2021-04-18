@@ -36,7 +36,6 @@ public class ProgramController {
     private TextField inputField;
     @FXML
     private SplitPane splitPane;
-
     @FXML
     private CheckBox cameraMode;
 

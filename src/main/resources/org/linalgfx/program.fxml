@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import org.graphics.editbuttons.AddButton2D?>
-<?import org.graphics.editbuttons.AddButton3D?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import graphics.editbuttons.AddButton2D?>
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.linalgfx.ProgramController" fx:id="root">
     <HBox fx:id="toolBar"><AddButton2D/><AddButton3D/>
         <Button styleClass="gradient-button" onAction="#saveToFile">Save state</Button>
