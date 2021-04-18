@@ -1,4 +1,4 @@
-package math2d;
+package org.math2d;
 
 import org.junit.jupiter.api.BeforeEach;
 

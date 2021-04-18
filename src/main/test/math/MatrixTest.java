@@ -1,4 +1,4 @@
-package math;
+package org.math;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;

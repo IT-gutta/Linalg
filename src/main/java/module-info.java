@@ -4,4 +4,5 @@ module org.linalgfx {
 
     opens org.linalgfx to javafx.fxml;
     exports org.linalgfx;
+    exports org.graphics.editbuttons;
 }

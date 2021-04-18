@@ -1,4 +1,4 @@
-package math3d;
+package org.math3d;
 
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;

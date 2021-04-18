@@ -1,4 +1,4 @@
-package graphics.textInput;
+package org.graphics.textInput;
 
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
