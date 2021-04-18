@@ -173,7 +173,26 @@ public class AddButton3D extends MenuButton {
             });
         });
 
-        getItems().addAll(infiniteTerrain, vector, matrix, point, cube, sphere);
+        //lightbulb
+        MenuItem lightBulb = new MenuItem("Light Bulb", Icons.of("lightbulb.png", 20));
+        lightBulb.getStyleClass().add("new-menu-item");
+        lightBulb.setOnAction(actionEvent -> {
+            TextField xInput = DoubleFormatter.getTextField();
+            TextField yInput = DoubleFormatter.getTextField();
+            TextField zInput = DoubleFormatter.getTextField();
+
+            SimpleDialog dialog = new SimpleDialog("Light Bulb", new Text("Position:\t"), xInput, yInput, zInput);
+
+            dialog.showAndWait().ifPresent(response ->{
+
+                if(!RegexUtils.isValidName(dialog.getEditor().getText()))
+                    return;
+
+                DefinedVariables.add(new LightSource(new Vector3((double) xInput.getTextFormatter().getValue(), (double) yInput.getTextFormatter().getValue(), (double) zInput.getTextFormatter().getValue())), dialog.getEditor().getText());
+            });
+        });
+
+        getItems().addAll(infiniteTerrain, vector, matrix, point, cube, sphere, lightBulb);
     }
 }
 

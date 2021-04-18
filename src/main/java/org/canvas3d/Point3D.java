@@ -15,14 +15,23 @@ public class Point3D extends Mesh{
         this.point = new Vector3(x, y, z);
         setPosition(this.point);
     }
-    public Point3D(Point3 p){
+    public Point3D(Vector3 p){
         super("lowpoly_sphere.obj", Vector3.ZERO(), scale);
-        this.point = p.toVector().toVector3();
+        this.point = p;
         setPosition(this.point);
     }
 
     @Override
     public String toString(){
         return Points.fromVector(point).toString();
+    }
+
+    @Override
+    public String writeString(){
+        return "org.canvas3d.Point3D---"+point;
+    }
+
+    public Point3D(String fileString){
+        this(Vector3.valueOf(fileString));
     }
 }

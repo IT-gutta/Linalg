@@ -10,18 +10,17 @@ import org.math3d.Vector4;
  * Responable for translating points in 3D space and return their projected version on the canvas, including depth-information
  */
 public class Camera3D extends Render3D{
+
     private final double fov = Math.PI/2;
     private final double zFar = 50; // bestemmer rendering distance
     private final double zNear = 0.1; //bestemmer rendering closest distance
 
-    private final LightSource lightSource;
+
 
     private Matrix projectionMatrix;
     private Matrix lookAtMatrix;
     public Camera3D(){
         super(new Vector3(0, 0, -6), Vector3.FORWARD(), Vector3.UP());
-        lightSource = new LightSource(new Vector3(0, 100000, 0));
-        DefinedVariables.add(lightSource, "LightBulb");
     }
 
     /**
@@ -124,12 +123,10 @@ public class Camera3D extends Render3D{
         out[0] *= CanvasRenderer3D.getCanvasWidth() / 2;
         out[1] *= CanvasRenderer3D.getCanvasHeight() / 2;
 
-        //System.out.println("width" + CanvasRenderer3D.getCanvasWidth());
 
         return new Vector4(out);
     }
 
-    public LightSource getLightSource(){return lightSource;}
     public double getRenderingDistance(){
         return zFar;
     }
@@ -139,6 +136,7 @@ public class Camera3D extends Render3D{
     public String toString(){
         return position.toString();
     }
+
 
 
     //KEYPRESSES and movement

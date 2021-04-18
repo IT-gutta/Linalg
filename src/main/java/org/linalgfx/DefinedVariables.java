@@ -1,9 +1,11 @@
 package org.linalgfx;
 
+import javafx.scene.control.Alert;
 import org.canvas2d.Render2D;
 import org.canvas3d.Render3D;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import org.graphics.ModalWindow;
 import org.graphics.VariableContainer;
 
 import java.lang.reflect.Constructor;
@@ -66,8 +68,10 @@ public abstract class DefinedVariables {
      * Adds a VariableContainer
      */
     public static void add(VariableContainer variableContainer){
-        if(contains(variableContainer) || map.containsKey(variableContainer.getName()))
+        if(contains(variableContainer) || map.containsKey(variableContainer.getName())) {
+            ModalWindow.alert("The variable name is already in use! Use another name.", Alert.AlertType.ERROR);
             return;
+        }
         vbox.getChildren().add(variableContainer);
         map.put(variableContainer.getName(), variableContainer);
     }

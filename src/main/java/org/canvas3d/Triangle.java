@@ -170,7 +170,11 @@ public class Triangle implements Serializable {
      * Returns the brightness of a point and a normal vector by using the LightSource brightness method
      */
     private double brightness(Vector3 point, Vector3 normal){
-        return Math.sqrt(CanvasRenderer3D.getCamera().getLightSource().getBrightness(point, normal)) * 0.8 + 0.1;
+        double bright = 0;
+        for(LightSource lightSource : CanvasRenderer3D.getLightSources()){
+            bright += lightSource.getBrightness(point, normal) * 0.8 + 0.1;
+        }
+        return Math.min(bright, 1);
     }
 
     /**

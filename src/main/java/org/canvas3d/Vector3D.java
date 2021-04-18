@@ -74,4 +74,13 @@ public class Vector3D extends Mesh {
     public String toString(){
         return vector3.toString();
     }
+
+    @Override
+    public String writeString(){
+        return "org.canvas3d.Vector3D---"+vector3;
+    }
+
+    public Vector3D(String fileString){
+        this(Vector3.valueOf(fileString));
+    }
 }

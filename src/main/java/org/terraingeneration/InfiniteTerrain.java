@@ -3,6 +3,7 @@ package org.terraingeneration;
 import org.canvas3d.CanvasRenderer3D;
 import org.canvas3d.GraphicsContext3D;
 import org.canvas3d.Render3D;
+import org.linalgfx.Writable;
 import org.math3d.Vector3;
 
 import java.util.HashMap;
@@ -51,4 +52,6 @@ public class InfiniteTerrain extends Render3D {
     public Object getMath() {
         return null;
     }
+
+
 }

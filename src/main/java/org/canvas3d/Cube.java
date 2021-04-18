@@ -13,4 +13,13 @@ public class Cube extends Mesh{
     public void beforeRender() {
 
     }
+
+    @Override
+    public String writeString(){
+        return "org.canvas3d.Cube---"+position+"::"+currentScale;
+    }
+
+    public Cube(String fileString){
+        this(Vector3.valueOf(fileString.split("::")[0]), Double.parseDouble(fileString.split("::")[1]));
+    }
 }
