@@ -4,13 +4,11 @@ import javafx.scene.paint.Color;
 import org.math3d.Line3;
 import org.math3d.Vector3;
 
-import java.io.Serializable;
-
 /**
  * Triangle, used in every mesh drawn to the 3D canvas
  * Keeps track of corners and color/material info
  */
-public class Triangle implements Serializable {
+public class Triangle {
     private Vector3[] vertices;
     private Color[] adjustedColors = new Color[3];
     private Material material;
@@ -71,11 +69,11 @@ public class Triangle implements Serializable {
      */
     public void render(GraphicsContext3D gc, Vector3 origin, Vector3 forward, Vector3 up, Vector3 right){
 
-        Vector3 pos1 = Vector3.add(origin, Vector3.scale(right, vertices[0].getX()), Vector3.scale(up, vertices[0].getY()), Vector3.scale(forward, vertices[0].getZ()));
-        Vector3 pos2 = Vector3.add(origin, Vector3.scale(right, vertices[1].getX()), Vector3.scale(up, vertices[1].getY()), Vector3.scale(forward, vertices[1].getZ()));
-        Vector3 pos3 = Vector3.add(origin, Vector3.scale(right, vertices[2].getX()), Vector3.scale(up, vertices[2].getY()), Vector3.scale(forward, vertices[2].getZ()));
+        Vector3 pos1 = Vector3.sum(origin, Vector3.scale(right, vertices[0].getX()), Vector3.scale(up, vertices[0].getY()), Vector3.scale(forward, vertices[0].getZ()));
+        Vector3 pos2 = Vector3.sum(origin, Vector3.scale(right, vertices[1].getX()), Vector3.scale(up, vertices[1].getY()), Vector3.scale(forward, vertices[1].getZ()));
+        Vector3 pos3 = Vector3.sum(origin, Vector3.scale(right, vertices[2].getX()), Vector3.scale(up, vertices[2].getY()), Vector3.scale(forward, vertices[2].getZ()));
 
-        Vector3 normal = Vector3.cross(Vector3.subtract(pos2, pos1), Vector3.subtract(pos3, pos1));
+        Vector3 normal = Vector3.cross(Vector3.difference(pos2, pos1), Vector3.difference(pos3, pos1));
 
         if(!facingCamera(normal, pos1))
             return;
@@ -93,12 +91,12 @@ public class Triangle implements Serializable {
         //simple fill color
         else if(material != null){
 
-            gc.setFill(material.getColor(brightness(Vector3.scale(Vector3.add(pos1, pos2, pos3), 0.33333333), normal)));
+            gc.setFill(material.getColor(brightness(Vector3.scale(Vector3.sum(pos1, pos2, pos3), 0.33333333), normal)));
             gc.fillTriangle(pos1, pos2, pos3);
         }
         //simple grayscale fill based on brightness from lightSource
         else {
-            Color fill = Color.grayRgb((int) (255 * brightness(Vector3.scale(Vector3.add(pos1, pos2, pos3), 0.33333333), normal)));
+            Color fill = Color.grayRgb((int) (255 * brightness(Vector3.scale(Vector3.sum(pos1, pos2, pos3), 0.33333333), normal)));
             gc.setFill(fill);
             gc.fillTriangle(pos1, pos2, pos3);
         }
@@ -110,7 +108,7 @@ public class Triangle implements Serializable {
      */
     public boolean facingCamera(Vector3 normal, Vector3 arbitraryPointOnTriangle){
         try {
-            return normal.dot(Vector3.subtract(arbitraryPointOnTriangle, CanvasRenderer3D.getCamera().position)) < 0;
+            return normal.dot(Vector3.difference(arbitraryPointOnTriangle, CanvasRenderer3D.getCamera().position)) < 0;
         }
         catch (Exception e){
             System.out.println("FEIL I FACING CAMERA FUNKSJONEN!");
@@ -124,7 +122,7 @@ public class Triangle implements Serializable {
      */
     public Vector3 getAbsoluteNormal(){
         try {
-            return Vector3.cross(Vector3.subtract(vertices[1], vertices[0]), Vector3.subtract(vertices[2], vertices[0]));
+            return Vector3.cross(Vector3.difference(vertices[1], vertices[0]), Vector3.difference(vertices[2], vertices[0]));
         }
         catch (Exception e){
             System.out.println("Error i getNormal funksjonen");
@@ -159,7 +157,7 @@ public class Triangle implements Serializable {
      * Returns the midpoint/average point of the corners
      */
     private Vector3 getAverage(){
-        return Vector3.scale(Vector3.add(vertices[0], vertices[1], vertices[2]), 0.3333333333);
+        return Vector3.scale(Vector3.sum(vertices[0], vertices[1], vertices[2]), 0.3333333333);
     }
 
     public Vector3[] getVertices(){

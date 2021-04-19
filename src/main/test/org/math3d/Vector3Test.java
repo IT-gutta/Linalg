@@ -3,7 +3,6 @@ package org.math3d;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.math.Vector;
 
 public class Vector3Test {
     Vector3 vector3;
@@ -95,18 +94,18 @@ public class Vector3Test {
         Assertions.assertTrue(cross.equals(Vector3.RIGHT()));
     }
     @Test
-    public void subtract() {
+    public void difference() {
         vector3 = new Vector3(4, -2, 3);
         Vector3 other = new Vector3(4, -3, 4.5);
         Vector3 expected = new Vector3(0, 1, -1.5);
-        Assertions.assertTrue(Vector3.subtract(vector3, other).equals(expected));
+        Assertions.assertTrue(Vector3.difference(vector3, other).equals(expected));
     }
 
     @Test
-    public void add() {
+    public void sum() {
         vector3 = new Vector3(4, -2, 3);
         Vector3 other = new Vector3(4, -3, 4.5);
         Vector3 expected = new Vector3(0, 1, -1.5);
-        Assertions.assertTrue(Vector3.subtract(vector3, other).equals(expected));
+        Assertions.assertTrue(Vector3.difference(vector3, other).equals(expected));
     }
 }

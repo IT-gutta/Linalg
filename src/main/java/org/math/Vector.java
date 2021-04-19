@@ -32,8 +32,6 @@ public class Vector implements Transformable, Writable {
      * Returns a given element
      */
     public double getElement(int index){
-        if(index>=vector.length)
-            throw new IllegalArgumentException("Index out of bounds");
         return vector[index];
     }
 
@@ -41,8 +39,6 @@ public class Vector implements Transformable, Writable {
      * Sets a given element
      */
     public void setElement(int index, double value){
-        if(index>=vector.length)
-            throw new IllegalArgumentException("Index out of bounds");
         vector[index] = value;
     }
 
@@ -92,7 +88,7 @@ public class Vector implements Transformable, Writable {
     /**
      * Returns the sum of the Vector and a given Vector
      */
-    public Vector add(Vector v) throws IllegalArgumentException {
+    public void add(Vector v) throws IllegalArgumentException {
         if(v.getDimensions()!=this.getDimensions())
             throw new IllegalArgumentException("The number of dimensions must be 2");
         else{
@@ -100,20 +96,18 @@ public class Vector implements Transformable, Writable {
                 vector[i]+=v.getElement(i);
             }
         }
-        return this;
     }
 
     /**
      * Returns the difference of the Vector and a given Vector
      */
-    public Vector sub(Vector v) throws IllegalArgumentException {
+    public void sub(Vector v) throws IllegalArgumentException {
         if(v.getDimensions()!=this.getDimensions())
             throw new IllegalArgumentException("The number of dimensions must be equal");
 
         for(int i = 0; i<vector.length; i++){
             vector[i]-=v.getElement(i);
         }
-        return this;
     }
 
     /**

@@ -14,12 +14,12 @@ import org.canvas2d.Mapping;
 import org.linalgfx.DefinedVariables;
 import org.linalgfx.Writable;
 
-import java.io.Serializable;
+
 
 /**
  * Handles the textual representation of mathematical variables in the GUI
  */
-public class VariableContainer<T> extends HBox implements Serializable {
+public class VariableContainer<T> extends HBox  {
     private T variable;
     private String name;
     private final transient Text contentField;
