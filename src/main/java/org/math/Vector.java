@@ -199,8 +199,10 @@ public class Vector implements Transformable, Writable {
         if(this.getDimensions()!=v.getDimensions())
             return false;
 
+        double tol = 0.00000001;
+
         for(int i = 0; i<vector.length; i++){
-            if(vector[i]!=v.getElement(i))
+            if(Math.abs(vector[i]-v.getElement(i)) > tol)
                 return false;
         }
         return true;
