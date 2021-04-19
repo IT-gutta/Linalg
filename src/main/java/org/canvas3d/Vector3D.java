@@ -15,7 +15,7 @@ public class Vector3D extends Mesh {
     public Vector3D(double x, double y, double z){
         super("vectorfix.obj", Vector3.ZERO(), 1);
         vector3 = new Vector3(x, y, z);
-        setScale(vector3.getMagnitude()/2);
+        setScale(vector3.getMagnitude());
         setForward(vector3);
     }
 
