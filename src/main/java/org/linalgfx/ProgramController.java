@@ -2,13 +2,12 @@ package org.linalgfx;
 
 import org.canvas2d.CanvasPane2D;
 import org.canvas2d.CanvasRenderer2D;
-import org.canvas3d.Camera3D;
 import org.canvas3d.CanvasPane3D;
 import org.canvas3d.CanvasRenderer3D;
 import org.canvas3d.LightSource;
 import org.graphics.*;
-import org.utils.textInput.OperatorMaps;
-import org.utils.textInput.TextInputEvent;
+import org.textInput.OperatorMaps;
+import org.textInput.TextInputEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -27,7 +26,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class ProgramController {
     @FXML

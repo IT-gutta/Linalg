@@ -1,4 +1,4 @@
-package org.utils.textInput;
+package org.textInput;
 
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;

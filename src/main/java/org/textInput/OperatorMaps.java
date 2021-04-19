@@ -1,4 +1,4 @@
-package org.utils.textInput;
+package org.textInput;
 
 import org.math.*;
 import org.utils.TriFunctions;

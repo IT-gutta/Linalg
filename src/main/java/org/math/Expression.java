@@ -1,6 +1,6 @@
 package org.math;
 
-import org.utils.textInput.Regexes;
+import org.textInput.Regexes;
 import org.linalgfx.Writable;
 
 import java.util.ArrayList;

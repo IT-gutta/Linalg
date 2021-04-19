@@ -1,4 +1,4 @@
-package org.utils.textInput;
+package org.textInput;
 
 /**
  * Handles parsing of some inputs
