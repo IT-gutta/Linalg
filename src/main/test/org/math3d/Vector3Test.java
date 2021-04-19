@@ -44,7 +44,6 @@ public class Vector3Test {
         System.out.println(cross);
         Assertions.assertEquals(true, cross.equals(Vector3.RIGHT()));
     }
-org.math2d
     @Test
     public void subtract() {
     }
