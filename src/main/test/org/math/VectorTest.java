@@ -4,12 +4,20 @@ import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class VectorTest {
+    private Vector vector1;
+    private Vector vector2;
+
     @Test
     public void constructorTest(){
         Vector v1 = new Vector(1,2,3,4,5);
         assertEquals(v1.getDimensions(), 5);
         assertEquals(v1.getElement(0), 1);
         assertEquals(v1.getElement(3), 4);
+    }
+
+    @Test
+    public void getMagnitude(){
+
     }
 
     @Test
@@ -40,8 +48,9 @@ public class VectorTest {
     public void calculationTest(){
         Vector v1 = new Vector(1,2);
         Vector v2 = new Vector(-9,5);
-        assertTrue(v1.add(v2).equals(new Vector(-8, 7)));
-        assertTrue(v1.sub(v2).equals(new Vector(1,2)));
+        v1.add(v2);
+        assertTrue(v1.equals(new Vector(-8, 7)));
+        assertTrue(v1.equals(new Vector(1,2)));
         assertEquals(v1.dot(v2), 1);
         assertTrue(v1.hasSameDimensions(v2));
         Vector v3 = new Vector(1,0);

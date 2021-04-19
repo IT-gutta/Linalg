@@ -1,6 +1,5 @@
 package org.canvas3d;
 
-import org.linalgfx.Writable;
 import org.utils.Interpolatable;
 import org.utils.Interpolator;
 import javafx.scene.paint.Color;
@@ -8,7 +7,7 @@ import org.math.Matrix;
 import org.math3d.Vector3;
 import org.terraingeneration.TerrainChunk;
 
-import java.io.Serializable;
+
 /**
  * Is inherited by all classes that can be rendered onto the 3D canvas
  * This class contains a name, position, vectors that describe how the object is rotated i space
@@ -69,7 +68,7 @@ public abstract class Render3D implements Interpolatable{
             this.up = Vector3.scale(this.forward, -1);
 
         else{
-            this.up = Vector3.subtract(up, Vector3.scale(f, f.dot(up))).normalized();
+            this.up = Vector3.difference(up, Vector3.scale(f, f.dot(up))).normalized();
         }
 
         this.forward = Vector3.copy(f);
@@ -88,7 +87,7 @@ public abstract class Render3D implements Interpolatable{
      * Sets the forward vectors such that the object points at the given input vector
      */
     public void pointAt(Vector3 target){
-        setForward(Vector3.subtract(target, position));
+        setForward(Vector3.difference(target, position));
     }
 
     /**
@@ -144,19 +143,19 @@ public abstract class Render3D implements Interpolatable{
      * Moves the object along its forward vector based on the scalar
      */
     public void moveForward(double scalar){
-        position = Vector3.add(position, Vector3.scale(forward, scalar));
+        position = Vector3.sum(position, Vector3.scale(forward, scalar));
     }
     /**
      * Moves the object along its right vector based on the scalar
      */
     public void moveRight(double scalar){
-        position = Vector3.add(position, Vector3.scale(right, scalar));
+        position = Vector3.sum(position, Vector3.scale(right, scalar));
     }
     /**
      * Moves the object along its up vector based on the scalar
      */
     public void moveUp(double scalar){
-        position = Vector3.add(position, Vector3.scale(up, scalar));
+        position = Vector3.sum(position, Vector3.scale(up, scalar));
     }
 
     /**

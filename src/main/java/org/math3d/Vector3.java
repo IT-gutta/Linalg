@@ -5,7 +5,7 @@ import org.math.Matrix;
 import org.math.Vector;
 import org.math.Vectors;
 
-import java.io.Serializable;
+
 
 /**
  * Represents a three dimensional vector
@@ -143,34 +143,21 @@ public class Vector3 extends Vector {
     /**
      * Returns the difference of two vectors
      */
-    public static Vector3 subtract(Vector3 v1, Vector3 v2) throws IllegalArgumentException {
-        if(v1.getDimensions() != v2.getDimensions())
-            throw new IllegalArgumentException("Vectors must have same dimensions");
-
-        double[] u = new double[3];
-
-        for(int i = 0; i<3; i++){
-            u[i] = v1.getElement(i) - v2.getElement(i);
-        }
-        if(Double.isNaN(u[0])) {
-            System.out.println("bjarte");
-            System.out.println(v2);
-            throw new IllegalArgumentException("Input cant have NaN as an element");
-        }
-        return new Vector3(u);
+    public static Vector3 difference(Vector3 v1, Vector3 v2) {
+        return new Vector3(v1.getX() - v2.getX(), v1.getY() - v2.getY(), v1.getZ() - v2.getZ());
     }
 
     /**
      * Returns the sum of two vectors
      */
-    public static Vector3 add(Vector3 v1, Vector3 v2){
+    public static Vector3 sum(Vector3 v1, Vector3 v2){
         return new Vector3(v1.getX() + v2.getX(), v1.getY() + v2.getY(), v1.getZ() + v2.getZ());
     }
 
     /**
      * Returns the sum of vectors
      */
-    public static Vector3 add(Vector3... vecs){
+    public static Vector3 sum(Vector3... vecs){
         double[] u = vecs[0].getVector().clone();
         for(int i = 1; i < vecs.length; i++){
             for(int j = 0; j < vecs[0].getDimensions(); j++)

@@ -2,12 +2,12 @@ package org.math2d;
 
 import org.math.Point;
 
-import java.io.Serializable;
+
 
 /**
  * Represents a two dimensional point
  */
-public class Point2 extends Point implements Serializable {
+public class Point2 extends Point  {
     public Point2(double x, double y){
         super(x, y);
     }

@@ -1,11 +1,11 @@
 package org.math3d;
 
-import java.io.Serializable;
+
 
 /**
  * Represents a three dimensional line
  */
-public class Line3 implements Serializable {
+public class Line3 {
     private final Vector3 point;
     private final Vector3 direction;
 

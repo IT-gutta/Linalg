@@ -3,12 +3,12 @@ package org.canvas2d;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 
-import java.io.Serializable;
+
 
 /**
  * Is inherited by all classes that can be rendered onto the 2D canvas
  */
-public abstract class Render2D implements Serializable {
+public abstract class Render2D  {
     protected String name;
     protected Paint paint;
     private boolean isHidden = false;
