@@ -1,6 +1,5 @@
 package org.canvas3d;
 
-import org.linalgfx.Writable;
 import org.math3d.Vector3;
 /**
  * A light source which is used to calculate illumination of the 3D objects
@@ -15,7 +14,7 @@ public class LightSource extends Sphere{
      * Returns the brightness of a point (surface) based on the normalvector (how much the surface is facing the light source
      */
     public double getBrightness(Vector3 point, Vector3 normalPolygon){
-        Vector3 delta = Vector3.subtract(position, point);
+        Vector3 delta = Vector3.difference(position, point);
         if(delta.getX() == 0d && delta.getY() == 0d && delta.getZ() == 0d)
             return 1;
         double dot = delta.normalized().dot(normalPolygon.normalized());

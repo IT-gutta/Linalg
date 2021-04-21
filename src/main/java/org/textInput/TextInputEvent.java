@@ -1,4 +1,4 @@
-package org.utils.textInput;
+package org.textInput;
 
 import org.canvas2d.Point2D;
 import org.canvas2d.Vector2D;
@@ -13,7 +13,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import org.math.*;
 import org.canvas2d.Mapping;
-import org.math3d.Vector3;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

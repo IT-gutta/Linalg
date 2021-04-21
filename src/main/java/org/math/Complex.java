@@ -24,28 +24,35 @@ public class Complex implements Writable {
         setPolarFromStandard();
     }
 
-
     /**
      * Returns the sum of the Complex the method is called on and the one given as input
      */
-    public Complex add(Complex other){
-        return ComplexNumbers.add(this, other);
+    public void add(Complex other){
+        Complex z = ComplexNumbers.add(this, other);
+        setRe(z.getRe());
+        setIm(z.getIm());
+        setPolarFromStandard();
     }
 
     /**
      * Returns the product of the Complex the method is called on and the one given as input
      */
-    public Complex multiply(Complex other){
-        return ComplexNumbers.multiply(this, other);
+    public void multiply(Complex other){
+        Complex z = ComplexNumbers.multiply(this, other);
+        setRe(z.getRe());
+        setIm(z.getIm());
+        setPolarFromStandard();
     }
 
     /**
      * Returns the the Complex to the power of the argument
      */
-    public Complex pow(double exponent){
+    public void pow(double exponent){
         double l = Math.pow(this.length, exponent);
         double a = this.angle * exponent;
-        return ComplexNumbers.fromPolar(l, a);
+        setLength(l);
+        setAngle(a);
+        setStandardFromPolar();
     }
 
     /**
@@ -59,9 +66,11 @@ public class Complex implements Writable {
      * Sets the fields relevant to polar representation
      */
     public void setPolarFromStandard(){
-        length = Math.sqrt(Math.abs(re) + Math.abs(im));
-        if(re >= 0)
+        length = Math.sqrt(Math.pow(re, 2) + Math.pow(im, 2));
+        if(re > 0)
             angle = Math.atan(im / re);
+        else if(re==0)
+            angle = 0;
         else
             angle = Math.atan(im / re) + Math.PI;
     }
@@ -95,6 +104,7 @@ public class Complex implements Writable {
      */
     public void setRe(double re) {
         this.re = re;
+        setPolarFromStandard();
     }
 
     /**
@@ -109,6 +119,7 @@ public class Complex implements Writable {
      */
     public void setIm(double im) {
         this.im = im;
+        setPolarFromStandard();
     }
 
     /**
@@ -125,6 +136,7 @@ public class Complex implements Writable {
         if(length<0)
             throw new IllegalArgumentException("Length can not be negative");
         this.length = length;
+        setStandardFromPolar();
     }
 
     /**
@@ -139,6 +151,7 @@ public class Complex implements Writable {
      */
     public void setAngle(double angle) {
         this.angle = angle;
+        setStandardFromPolar();
     }
 
     @Override

@@ -2,12 +2,12 @@ package org.math2d;
 
 import org.math.Vector;
 
-import java.io.Serializable;
+
 
 /**
  * Represents a two dimensional vector
  */
-public class Vector2 extends Vector implements Serializable {
+public class Vector2 extends Vector  {
     public Vector2(double x, double y){
         super(x, y);
     }

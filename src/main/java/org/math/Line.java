@@ -7,7 +7,6 @@ import org.linalgfx.Writable;
  * Represents a mathematical line
  */
 public class Line implements Transformable, Writable {
-    private VariableContainer<Line> wrapper;
     private final Point start;
     private final Vector direction;
 

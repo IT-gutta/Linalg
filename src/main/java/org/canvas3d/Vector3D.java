@@ -15,7 +15,7 @@ public class Vector3D extends Mesh {
     public Vector3D(double x, double y, double z){
         super("vectorfix.obj", Vector3.ZERO(), 1);
         vector3 = new Vector3(x, y, z);
-        setScale(vector3.getMagnitude()/2);
+        setScale(vector3.getMagnitude());
         setForward(vector3);
     }
 
@@ -62,7 +62,7 @@ public class Vector3D extends Mesh {
             triangle.render(gc, position, forward, up, right);
         }
 
-        gc.fillText(name, Vector3.add(vector3, Vector3.scale(forward, 0.1)));
+        gc.fillText(name, Vector3.sum(vector3, Vector3.scale(forward, 0.1)));
     }
 
     @Override
