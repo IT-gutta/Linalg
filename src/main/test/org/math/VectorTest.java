@@ -1,5 +1,6 @@
 package org.math;
 
+import org.TestUtils;
 import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,30 +10,39 @@ public class VectorTest {
 
     @Test
     public void constructorTest(){
-        Vector v1 = new Vector(1,2,3,4,5);
-        assertEquals(v1.getDimensions(), 5);
-        assertEquals(v1.getElement(0), 1);
-        assertEquals(v1.getElement(3), 4);
+        vector1 = new Vector(1,2,3,4,5);
+        assertEquals(vector1.getDimensions(), 5);
+        assertEquals(vector1.getElement(0), 1);
+        assertEquals(vector1.getElement(3), 4);
     }
 
     @Test
     public void getMagnitude(){
-
+        vector1 = new Vector(1,2,3);
+        TestUtils.assertApproximate(Math.sqrt(14), vector2.getMagnitude());
     }
 
     @Test
-    public void alteringOperationsTest(){
-        Vector v1 = new Vector(1,3,-2);
-        v1.scale(2);
-        assertEquals(v1.getElement(1), 6);
-        v1.addDimensions(5,7);
-        assertEquals(v1.getDimensions(), 5);
-        assertEquals(v1.getElement(4), 7);
-        Vector v2 = new Vector(3,4);
-        v2.setMagnitude(10);
-        assertEquals(v2.getElement(0),6);
-        v2.setElement(0, 4);
-        assertEquals(v2.getElement(0), 4);
+    public void addDimensions(){
+        vector1 = new Vector(1,3,-2);
+        vector1.addDimensions(5,7);
+        assertEquals(5, vector1.getDimensions());
+        assertEquals(7, vector1.getElement(4));
+    }
+
+    @Test
+    public void setMagnitude(){
+        vector1 = new Vector(3,4);
+        vector1.setMagnitude(10);
+        assertEquals(vector1.getElement(0),6);
+        vector1.setElement(0, 4);
+        assertEquals(vector1.getElement(0), 4);
+    }
+    @Test
+    public void scale(){
+        vector1 = new Vector(1,3,-2);
+        vector1.scale(2);
+        assertEquals(vector1.getElement(1), 6);
     }
 
     @Test
