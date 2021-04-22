@@ -8,7 +8,7 @@ import org.linalgfx.Writable;
 import java.util.Arrays;
 import java.util.stream.DoubleStream;
 
-public class Vector implements Transformable, Writable {
+public class Vector implements Transformable, Writable, Editable {
 
     private double[] vector;
 
@@ -154,7 +154,7 @@ public class Vector implements Transformable, Writable {
      * Returns the Vector as an array
      */
     public double[] getVector(){
-        return vector;
+        return Arrays.copyOf(vector, vector.length);
     }
 
     /**
@@ -198,10 +198,8 @@ public class Vector implements Transformable, Writable {
         if(this.getDimensions()!=v.getDimensions())
             return false;
 
-        double tol = 0.00000001;
-
         for(int i = 0; i<vector.length; i++){
-            if(Math.abs(vector[i]-v.getElement(i)) > tol)
+            if(Math.abs(vector[i]-v.getElement(i)) > Utils.TOLERANCE)
                 return false;
         }
         return true;
@@ -259,7 +257,7 @@ public class Vector implements Transformable, Writable {
      */
     @Override
     public void transform(Matrix m){
-        //skriv kode her
+        vector = m.transform(vector);
     }
 
     @Override
@@ -277,5 +275,15 @@ public class Vector implements Transformable, Writable {
         for(int i = 0; i < nums.length; i++){
             this.vector[i] = Double.parseDouble(nums[i]);
         }
+    }
+
+    @Override
+    public double[] getCopy() {
+        return getVector();
+    }
+
+    @Override
+    public void set(double[] doubles) {
+        vector = Arrays.copyOf(doubles, doubles.length);
     }
 }

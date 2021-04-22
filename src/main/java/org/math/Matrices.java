@@ -21,7 +21,9 @@ public class Matrices {
      * Returns the product of two Matrices
      */
     public static Matrix product(Matrix m1, Matrix m2){
-        return m1.multiply(m2);
+        Matrix matrix1 = new Matrix(m1.getMatrix());
+        matrix1.multiply(m2);
+        return matrix1;
     }
 
     /**
@@ -55,5 +57,9 @@ public class Matrices {
             }
         }
         return new Matrix(newMatrix);
+    }
+
+    public static double det(Matrix m){
+        return m.det();
     }
 }

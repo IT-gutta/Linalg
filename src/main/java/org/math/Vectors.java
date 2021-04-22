@@ -1,6 +1,7 @@
 package org.math;
 
 import org.graphics.VariableContainer;
+import org.math3d.Vector3;
 
 import java.util.stream.Stream;
 

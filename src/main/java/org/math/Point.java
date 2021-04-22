@@ -4,21 +4,23 @@ import org.math2d.Point2;
 import org.math3d.Point3;
 import org.linalgfx.Writable;
 
+import java.util.Arrays;
+
 /**
  * Represents a mathematical point
  */
-public class Point implements Transformable, Writable {
-    private final double[] point;
+public class Point implements Transformable, Writable, Editable {
+    private double[] point;
 
     public Point(double... args){
-        point = args;
+        point = Arrays.copyOf(args, args.length);
     }
 
     /**
      * Returns the point as a an array
      */
     public double[] getPoint(){
-        return point;
+        return Arrays.copyOf(point, point.length);
     }
 
     /**
@@ -79,7 +81,7 @@ public class Point implements Transformable, Writable {
      */
     @Override
     public void transform(Matrix m){
-        //skriv kode her
+        point = m.transform(point);
     }
 
     @Override
@@ -97,5 +99,15 @@ public class Point implements Transformable, Writable {
         for(int i = 0; i < nums.length; i++){
             this.point[i] = Double.parseDouble(nums[i]);
         }
+    }
+
+    @Override
+    public double[] getCopy() {
+        return getPoint();
+    }
+
+    @Override
+    public void set(double[] doubles) {
+        point = Arrays.copyOf(doubles, doubles.length);
     }
 }

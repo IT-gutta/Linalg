@@ -8,12 +8,14 @@ import org.math.*;
 import org.math2d.Point2;
 import org.linalgfx.Writable;
 
+import java.util.Arrays;
+
 /**
  * Represents a graphical two dimensional point
  */
-public class Point2D extends Render2D implements Interpolatable, Writable {
+public class Point2D extends Render2D implements Interpolatable, Writable, Editable {
     private Interpolator interpolator;
-    private Point2 point2;
+    private final Point2 point2;
 
     public Point2D(double x, double y){
         this.point2 = new Point2(x, y);
@@ -94,6 +96,17 @@ public class Point2D extends Render2D implements Interpolatable, Writable {
     public Point2D(String fileString){
         String[] xy = fileString.split(" ");
         this.point2 = new Point2(Double.parseDouble(xy[0]), Double.parseDouble(xy[1]));
+    }
+
+
+    @Override
+    public double[] getCopy() {
+        return point2.getCopy();
+    }
+
+    @Override
+    public void set(double[] doubles) {
+        point2.set(doubles);
     }
 }
 

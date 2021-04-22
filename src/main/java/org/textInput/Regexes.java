@@ -9,6 +9,7 @@ public class Regexes {
     public static final String VAR_NAME = "(\\w[0-9a-zA-Z_]*)";
     public static final String VAR_DEC = "(\\w[0-9a-zA-Z_]*)=";
     public static final String FUN_DEC = "(\\w[0-9a-zA-Z_]*)\\(x\\)=";
+    public static final String FUNC_NAME = "(abs|cos|sin|tan|log)";
 
     private static String list(int n, String s){
         String r = s;
