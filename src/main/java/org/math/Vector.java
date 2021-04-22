@@ -259,7 +259,7 @@ public class Vector implements Transformable, Writable {
      */
     @Override
     public void transform(Matrix m){
-        //skriv kode her
+        vector = m.transform(vector);
     }
 
     @Override

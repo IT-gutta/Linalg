@@ -20,6 +20,9 @@ public class VectorTest {
     public void getMagnitude(){
         vector1 = new Vector(1,2,3);
         TestUtils.assertApproximate(Math.sqrt(14), vector1.getMagnitude());
+
+        vector1 = new Vector(3,4);
+        TestUtils.assertApproximate(5d, vector1.getMagnitude());
     }
 
     @Test
@@ -35,8 +38,8 @@ public class VectorTest {
         vector1 = new Vector(3,4);
         vector1.setMagnitude(10);
         assertEquals(6, vector1.getElement(0));
-        vector1.setElement(0, 4);
-        assertEquals(4, vector1.getElement(0));
+
+        assertThrows(IllegalArgumentException.class, () -> vector1.setMagnitude(-1));
     }
 
     @Test
@@ -47,11 +50,10 @@ public class VectorTest {
     }
 
     @Test
-    public void getterTest(){
+    public void setterTest(){
         vector1 = new Vector(3,4);
-        vector2 = new Vector(2,4);
-        TestUtils.assertApproximate(5d, vector1.getMagnitude());
-        assertEquals(2, vector2.factorize());
+        vector1.setElement(0, 4);
+        assertEquals(4, vector1.getElement(0));
     }
 
 
@@ -62,13 +64,31 @@ public class VectorTest {
         vector1.add(vector2);
         assertTrue(vector1.equals(new Vector(-8, 7)));
         assertFalse(vector1.equals(new Vector(1,2)));
+
+        vector1 = new Vector(1, 3, 2);
+        assertThrows(IllegalArgumentException.class, () -> vector1.add(vector2));
+    }
+
+    @Test
+    public void sub(){
+        vector1 = new Vector(1,2);
+        vector2 = new Vector(-9,5);
+        vector1.sub(vector2);
+        assertTrue(vector1.equals(new Vector(10, -3)));
+        assertFalse(vector1.equals(new Vector(1,2)));
+
+        vector1 = new Vector(1, 3, 2);
+        assertThrows(IllegalArgumentException.class, () -> vector1.sub(vector2));
     }
 
     @Test
     public void dot(){
         vector1 = new Vector(1,2);
         vector2 = new Vector(-9,5);
-        assertEquals(vector1.dot(vector2), 1);
+        assertEquals(1, vector1.dot(vector2));
+
+        vector1 = new Vector(1, 3, 2);
+        assertThrows(IllegalArgumentException.class, () -> vector1.dot(vector2));
     }
 
     @Test
@@ -98,6 +118,9 @@ public class VectorTest {
         vector2 = new Vector(3,0);
         assertTrue(vector1.isParallel(vector2));
         assertFalse(vector1.isParallel(new Vector(1, 2)));
+
+        vector1 = new Vector(1, 2, 3);
+        assertThrows(IllegalArgumentException.class, () -> vector1.isParallel(vector2));
     }
 
     @Test
@@ -112,5 +135,30 @@ public class VectorTest {
         vector1.addDimensions(2);
         vector2.addDimensions(-5);
         assertTrue(vector1.cross(vector2).equals(new Vector(-2,5,1)));
+    }
+
+    @Test
+    public void factorize(){
+        vector2 = new Vector(2,4);
+        assertEquals(2, vector2.factorize());
+        vector1 = new Vector(1.2, 3.4);
+        assertThrows(IllegalArgumentException.class, () -> vector1.factorize());
+    }
+
+    @Test
+    public void equals(){
+        vector1 = new Vector(40);//length 40, all entries are 0
+        vector2 = new Vector(40);
+
+        for(int i = 0; i < 40; i++){
+            double number = Math.random()*100;
+            double randomDelta = (Math.random()-0.5)*0.0000000001;
+            vector1.setElement(i, number);
+            vector2.setElement(i, number + randomDelta);
+        }
+        assertTrue(vector1.equals(vector2));
+
+        vector2.setElement(0, -18);
+        assertFalse(vector1.equals(vector2));
     }
 }
