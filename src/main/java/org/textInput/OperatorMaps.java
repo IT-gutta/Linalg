@@ -1,6 +1,7 @@
 package org.textInput;
 
 import org.math.*;
+import org.math3d.Vector3;
 import org.utils.TriFunctions;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public abstract class OperatorMaps {
         edddOps.put("sum", TriFunctions.seriesEval);
         triFuncMaps.add(edddOps);
 
-        vvvOps.put("add", Vectors::add);vvvOps.put("subtract", Vectors::subtract); vvvOps.put("cross", Vectors::cross);
+        vvvOps.put("add", Vectors::add);vvvOps.put("subtract", Vectors::subtract);vvvOps.put("cross", Vectors::cross);
         biFuncMaps.add(vvvOps);
 
         vvdOps.put("dot", Vectors::dot); vvdOps.put("angle", Vectors::angle);
@@ -67,5 +68,6 @@ public abstract class OperatorMaps {
 
         mmOps.put("inverse", Solver::invertedMatrix);
         funcMaps.add(mmOps);
+
     }
 }
