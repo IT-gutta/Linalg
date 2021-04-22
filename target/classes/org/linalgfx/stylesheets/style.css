@@ -137,3 +137,8 @@
     -fx-padding: 5px;
     -fx-max-width: 500px;
 }
+
+.meshList{
+    -fx-spacing: 5px;
+    -fx-background-color: blue;
+}

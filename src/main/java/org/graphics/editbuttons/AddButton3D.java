@@ -13,6 +13,9 @@ import org.utils.DoubleFormatter;
 import org.utils.RegexUtils;
 import org.terraingeneration.InfiniteTerrain;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * The button to press for adding new elements in the 3D canvas, fills up the MenuItem list with clickable menuItems
  * for creating different types of 3D elements (vectors, points etc.)
@@ -26,22 +29,33 @@ public class AddButton3D extends MenuButton {
         getStyleClass().add("new-menu-button");
 
 
-        MenuItem infiniteTerrain = new MenuItem("Mesh");
-        infiniteTerrain.getStyleClass().add("new-menu-item");
-        infiniteTerrain.setOnAction(actionEvent -> {
+        MenuItem meshItem = new MenuItem("Mesh");
+        meshItem.getStyleClass().add("new-menu-item");
+        meshItem.setOnAction(actionEvent -> {
 
 
             //Creates a set of radiobuttons to pick what mesh to create
-            RadioButton terrain = new RadioButton("Infinite Terrain");
-            RadioButton chevrolet = new RadioButton("Chevrolet");
-
-            SimpleDialog dialog = new SimpleDialog("Select Mesh to add to canvas", terrain, chevrolet);
-
             ToggleGroup toggleGroup = new ToggleGroup();
+            RadioButton terrain = new RadioButton("Infinite Terrain");
+            VBox vBox = new VBox(terrain);
+            vBox.setStyle("-fx-spacing: 5px;");
             terrain.setToggleGroup(toggleGroup);
             terrain.setSelected(true);
-            chevrolet.setToggleGroup(toggleGroup);
 
+            Map<String, String> nameToFileMap = new HashMap<>();
+            nameToFileMap.put("Chevrolet", "chevrolet.obj");
+            nameToFileMap.put("Dragon", "dragon.obj");
+
+
+
+
+            nameToFileMap.forEach( (key, value) -> {
+                RadioButton rb = new RadioButton(key);
+                vBox.getChildren().add(rb);
+                rb.setToggleGroup(toggleGroup);
+            });
+
+            SimpleDialog dialog = new SimpleDialog("Select Mesh to add to canvas", vBox);
 
 
             dialog.showAndWait().ifPresent(response ->{
@@ -51,10 +65,10 @@ public class AddButton3D extends MenuButton {
 
                 if(selected.equals("Infinite Terrain"))
                     DefinedVariables.add(new InfiniteTerrain(), dialog.getEditor().getText());
-                else if(selected.equals("Chevrolet"))
-                    DefinedVariables.add(new Mesh("chevrolet.obj", Vector3.ZERO(), 1), dialog.getEditor().getText());
+
                 else
-                    throw new IllegalArgumentException("Did not understand: "+ selected);
+                    DefinedVariables.add(new Mesh(nameToFileMap.get(selected), Vector3.ZERO(), 1), dialog.getEditor().getText());
+
             });
         });
 
@@ -192,7 +206,7 @@ public class AddButton3D extends MenuButton {
             });
         });
 
-        getItems().addAll(infiniteTerrain, vector, matrix, point, cube, sphere, lightBulb);
+        getItems().addAll(meshItem, vector, matrix, point, cube, sphere, lightBulb);
     }
 }
 

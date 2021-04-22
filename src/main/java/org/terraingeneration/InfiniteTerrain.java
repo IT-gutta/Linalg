@@ -21,7 +21,8 @@ public class InfiniteTerrain extends Render3D {
 
     @Override
     public void render(GraphicsContext3D gc){
-        double viewDistance = CanvasRenderer3D.getCamera().getRenderingDistance();
+        //double viewDistance = CanvasRenderer3D.getCamera().getRenderingDistance();
+        double viewDistance = 50;
         int currentChunkX = (int) Math.round(CanvasRenderer3D.getCamera().getPosition().getX() / chunkSize);
         int currentChunkZ = (int) Math.round(CanvasRenderer3D.getCamera().getPosition().getZ() / chunkSize);
 
