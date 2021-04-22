@@ -40,7 +40,7 @@ public class VariableContainer<T> extends HBox  {
         HBox nameWrapper = new HBox(nameField, contentField);
         nameWrapper.getStyleClass().add("variable-text");
 
-        GenericEditButton editButton = GenericEditButton.getEditButton(this);
+        GenericEditButton editButton = new GenericEditButton(this);
         ShowHideButton showHideButton = new ShowHideButton(variable);
 
         colorPicker = new ColorPicker(Color.BLACK);

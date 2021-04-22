@@ -5,6 +5,7 @@ import java.util.function.IntUnaryOperator;
 import java.util.stream.IntStream;
 
 public class Utils {
+    public static double TOLERANCE = 0.0000001;
     /**
      * Returns the greatest common factor of two integers
      */
