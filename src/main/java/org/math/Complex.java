@@ -165,5 +165,9 @@ public class Complex implements Writable {
         setPolarFromStandard();
     }
 
+
+    public boolean equals(Complex other){
+        return im == other.im && re == other.re;
+    }
 }
 

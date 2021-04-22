@@ -14,6 +14,9 @@ public class VectorTest {
         assertEquals(vector1.getDimensions(), 5);
         assertEquals(vector1.getElement(0), 1);
         assertEquals(vector1.getElement(3), 4);
+
+        vector1 = new Vector();
+        assertEquals(0, vector1.getDimensions());
     }
 
     @Test
@@ -21,8 +24,11 @@ public class VectorTest {
         vector1 = new Vector(1,2,3);
         TestUtils.assertApproximate(Math.sqrt(14), vector1.getMagnitude());
 
-        vector1 = new Vector(3,4);
+        vector1 = new Vector(-3,4);
         TestUtils.assertApproximate(5d, vector1.getMagnitude());
+
+        vector1 = new Vector(0, 0);
+        assertEquals(0, vector1.getMagnitude());
     }
 
     @Test
@@ -47,13 +53,28 @@ public class VectorTest {
         vector1 = new Vector(1,3,-2);
         vector1.scale(2);
         assertEquals(6, vector1.getElement(1));
+
+        vector1 = new Vector(3, 4, 1);
+        vector1.scale(0);
+        for(int i = 0; i < vector1.getDimensions(); i++){
+            assertEquals(0, vector1.getElement(i));
+        }
     }
 
     @Test
-    public void setterTest(){
+    public void setElement(){
         vector1 = new Vector(3,4);
         vector1.setElement(0, 4);
         assertEquals(4, vector1.getElement(0));
+    }
+
+    @Test
+    public void getElement(){
+        vector1 = new Vector(1d);
+        assertEquals(1, vector1.getElement(0));
+
+        vector2 = new Vector();
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> vector2.getElement(0));
     }
 
 

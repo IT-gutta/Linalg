@@ -3,6 +3,7 @@ package org.math;
 import org.math2d.Point2;
 import org.math3d.Point3;
 import org.linalgfx.Writable;
+import org.utils.Utils;
 
 import java.util.Arrays;
 
@@ -99,6 +100,20 @@ public class Point implements Transformable, Writable, Editable {
         for(int i = 0; i < nums.length; i++){
             this.point[i] = Double.parseDouble(nums[i]);
         }
+    }
+
+    /**
+     * Returns true if the Point is equivalent to another point, else false
+     */
+    public boolean equals(Point p){
+        if(this.getDimensions()!=p.getDimensions())
+            return false;
+
+        for(int i = 0; i<point.length; i++){
+            if(point[i] != p.getElement(i))
+                return false;
+        }
+        return true;
     }
 
     @Override

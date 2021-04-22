@@ -41,7 +41,7 @@ public abstract class Points {
     public static Point add(Point p1, Point p2){
         if(p1.getDimensions()!= p2.getDimensions())
             throw new IllegalArgumentException("Dimension must be equal");
-        return fromVector(Vectors.add(toVector(p1), toVector(p2)));
+        return fromVector(Vectors.sum(toVector(p1), toVector(p2)));
     }
 
     /**
