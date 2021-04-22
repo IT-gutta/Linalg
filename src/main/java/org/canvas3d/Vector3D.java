@@ -88,18 +88,18 @@ public class Vector3D extends Mesh implements Editable {
     }
 
     @Override
-    public void set(double[] doubles) {
+    public void set(double[] doubles){
         updateMesh(new Vector3(doubles));
         vector3.set(doubles);
     }
 
-    private void updateMesh(Vector3 vector3){
-        setScale(vector3.getMagnitude());
+    private void updateMesh(Vector3 vector3) throws IllegalArgumentException{
         try {
             setForward(vector3);
+            setScale(vector3.getMagnitude());
         }catch (IllegalArgumentException e){
             ModalWindow.alert("Cant have a 0 magnitude 3D vector in the canvas.", Alert.AlertType.ERROR);
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Cant have a 0 magnitude 3D vector in the canvas.");
         }
     }
 }

@@ -1,7 +1,6 @@
 package org.graphics.editbuttons;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.graphics.ModalWindow;
@@ -13,8 +12,6 @@ import org.math.Editable;
 import org.utils.DoubleFormatter;
 import org.utils.Interpolatable;
 import org.graphics.VariableContainer;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextInputDialog;
 import org.math.Matrix;
 import org.utils.RegexUtils;
 
@@ -26,7 +23,7 @@ public abstract class MenuItems {
      * Returns a new MenuItem which has the functionality to interpolate the given variable
      * Takes in only variables which have underlying 2D or 3D objects which are interpolatable
      */
-    public static MenuItem interpolateMenuItem(VariableContainer<? extends Interpolatable> variableContainer){
+    public static MenuItem interpolate(VariableContainer<? extends Interpolatable> variableContainer){
         MenuItem transform = new MenuItem("Transform", Icons.of("transform.png", 20));
         transform.setOnAction(actionEvent ->{
             TextInputDialog dialog = new TextInputDialog();
@@ -53,7 +50,7 @@ public abstract class MenuItems {
         return transform;
     }
 
-    public static MenuItem editDoubleArrayMenuItem(VariableContainer<? extends Editable> variableContainer){
+    public static MenuItem editDoubleArray(VariableContainer<? extends Editable> variableContainer){
         MenuItem edit = new MenuItem("Edit", new ImageView(new Image(App.resourceURL("images/hammer.png"))));
         double[] doubles = variableContainer.getVariable().getCopy();
         edit.setOnAction(actionEvent ->{
@@ -92,5 +89,18 @@ public abstract class MenuItems {
         );});
 
         return edit;
+    }
+
+    public static MenuItem invertMatrix(VariableContainer<Matrix> variableContainer){
+        MenuItem invert = new MenuItem("Invert", Icons.of("inverse.png", 20));
+        invert.setOnAction(actionEvent ->{
+            try{
+                variableContainer.getVariable().invert();
+            }
+            catch (Exception e){
+                ModalWindow.alert("Matrix cannot be inverted. The determinant is 0.", javafx.scene.control.Alert.AlertType.ERROR);
+            }
+        });
+        return invert;
     }
 }

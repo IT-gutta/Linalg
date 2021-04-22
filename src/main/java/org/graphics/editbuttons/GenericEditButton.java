@@ -1,12 +1,8 @@
 package org.graphics.editbuttons;
 
 import javafx.scene.control.Alert;
-import org.canvas2d.*;
-import org.canvas3d.Point3D;
-import org.canvas3d.Vector3D;
 import org.graphics.Icons;
 import org.graphics.ModalWindow;
-import org.math3d.Vector3;
 import org.utils.Interpolatable;
 import org.graphics.SimpleDialog;
 import org.graphics.VariableContainer;
@@ -44,10 +40,13 @@ public class GenericEditButton extends MenuButton {
 
         //if transformable
         if(variableContainer.getVariable() instanceof Interpolatable)
-            addMenuItem(MenuItems.interpolateMenuItem(variableContainer));
+            addMenuItem(MenuItems.interpolate(variableContainer));
 
         if(variableContainer.getVariable() instanceof Editable)
-            addMenuItem(MenuItems.editDoubleArrayMenuItem(variableContainer ));
+            addMenuItem(MenuItems.editDoubleArray(variableContainer));
+
+        if(variableContainer.getVariable() instanceof Matrix)
+            addMenuItem(MenuItems.invertMatrix(variableContainer));
     }
 
     /**
@@ -96,26 +95,5 @@ public class GenericEditButton extends MenuButton {
 
     public VariableContainer getContainer(){
         return variableContainer;
-    }
-
-    /**
-     * Static function for returning a specialized editButton based on what type of variable is in the input
-     */
-    public static <T> GenericEditButton getEditButton(VariableContainer<T> variableContainer){
-
-        if(variableContainer.getVariable() instanceof Matrix)
-            return new EditMatrixButton((VariableContainer<Matrix>) variableContainer);
-
-        if(variableContainer.getVariable() instanceof Line2D)
-            return new EditLineButton((VariableContainer<Line2D>) variableContainer);
-
-        if(variableContainer.getVariable() instanceof Grid2D)
-            return new EditGridButton((VariableContainer<Grid2D>) variableContainer);
-
-        if(variableContainer.getVariable() instanceof LineSegment2D)
-            return new EditLineSegmentButton((VariableContainer<LineSegment2D>) variableContainer);
-
-
-        return new GenericEditButton(variableContainer);
     }
 }
