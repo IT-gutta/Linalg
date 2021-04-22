@@ -33,7 +33,7 @@ public class Matrices {
         double[][] newMatrix = new double[matrix.getHeight()][matrix.getWidth()];
         for(int y = 0; y < newMatrix.length; y++){
             for(int x = 0; x < newMatrix.length; x++){
-                newMatrix[y][x] += matrix.get(y, x);
+                newMatrix[y][x] = matrix.get(y, x)*s;
             }
         }
         return new Matrix(newMatrix);
@@ -60,6 +60,11 @@ public class Matrices {
     }
 
     public static double det(Matrix m){
-        return m.det();
+        try{
+            return m.det();
+        }
+        catch (Exception e){
+            throw new IllegalArgumentException("Matrix must be quadratic");
+        }
     }
 }
