@@ -58,4 +58,8 @@ public class Matrices {
         }
         return new Matrix(newMatrix);
     }
+
+    public static double det(Matrix m){
+        return m.det();
+    }
 }
