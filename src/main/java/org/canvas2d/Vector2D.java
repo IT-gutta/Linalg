@@ -1,5 +1,6 @@
 package org.canvas2d;
 
+import org.math.Editable;
 import org.utils.Interpolatable;
 import org.utils.Interpolator;
 import javafx.scene.canvas.GraphicsContext;
@@ -12,9 +13,9 @@ import org.linalgfx.Writable;
 /**
  * Represents a graphical two dimensional vector
  */
-public class Vector2D extends Render2D implements Interpolatable, Writable {
+public class Vector2D extends Render2D implements Interpolatable, Writable, Editable {
     private Interpolator interpolator;
-    private Vector2 vector2;
+    private final Vector2 vector2;
 
     public Vector2D(double x, double y){
         this.vector2 = new Vector2(x, y);
@@ -119,5 +120,15 @@ public class Vector2D extends Render2D implements Interpolatable, Writable {
     public Vector2D(String fileString){
         String[] xy = fileString.split(" ");
         this.vector2 = new Vector2(Double.parseDouble(xy[0]), Double.parseDouble(xy[1]));
+    }
+
+    @Override
+    public double[] getCopy() {
+        return vector2.getCopy();
+    }
+
+    @Override
+    public void set(double[] doubles) {
+        vector2.set(doubles);
     }
 }

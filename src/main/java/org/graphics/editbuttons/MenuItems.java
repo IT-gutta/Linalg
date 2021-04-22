@@ -1,14 +1,22 @@
 package org.graphics.editbuttons;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.graphics.ModalWindow;
+import org.graphics.SimpleDialog;
+import org.linalgfx.App;
 import org.linalgfx.DefinedVariables;
 import org.graphics.Icons;
+import org.math.Editable;
+import org.utils.DoubleFormatter;
 import org.utils.Interpolatable;
 import org.graphics.VariableContainer;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
 import org.math.Matrix;
+import org.utils.RegexUtils;
 
 /**
  * Abstract helper class for different MenuItems
@@ -43,5 +51,46 @@ public abstract class MenuItems {
         });
 
         return transform;
+    }
+
+    public static MenuItem editDoubleArrayMenuItem(VariableContainer<? extends Editable> variableContainer){
+        MenuItem edit = new MenuItem("Edit", new ImageView(new Image(App.resourceURL("images/hammer.png"))));
+        double[] doubles = variableContainer.getVariable().getCopy();
+        edit.setOnAction(actionEvent ->{
+            TextField[] coordInputs = new TextField[doubles.length];
+            for(int i = 0; i < coordInputs.length; i++){
+                coordInputs[i] = DoubleFormatter.getTextField(doubles[i]);
+            }
+
+            SimpleDialog dialog = new SimpleDialog("Edit name and element entries", coordInputs);
+
+            dialog.getEditor().setText(variableContainer.getName());
+
+            dialog.showAndWait().ifPresent(response -> {
+                for (int i = 0; i < coordInputs.length; i++) {
+                    doubles[i] = (double) coordInputs[i].getTextFormatter().getValue();
+                }
+
+                variableContainer.getVariable().set(doubles);
+                
+                
+                String name = dialog.getEditor().getText();
+                if (name.equals(variableContainer.getName()))
+                    return;
+
+                try {
+                    if (!RegexUtils.isValidName(name)) {
+                        ModalWindow.alert("The name is invalid! Name must start with a letter, and cant include any spaces.", Alert.AlertType.ERROR);
+                        return;
+                    }
+
+                    variableContainer.setName(name);
+                } catch (IllegalArgumentException e) {
+                    ModalWindow.alert("That name is already in use!", Alert.AlertType.ERROR);
+                }
+            }
+        );});
+
+        return edit;
     }
 }

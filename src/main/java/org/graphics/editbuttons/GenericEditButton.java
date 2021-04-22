@@ -1,12 +1,12 @@
 package org.graphics.editbuttons;
 
 import javafx.scene.control.Alert;
-import org.canvas2d.Grid2D;
-import org.canvas2d.Line2D;
-import org.canvas2d.LineSegment2D;
-import org.canvas2d.Point2D;
+import org.canvas2d.*;
+import org.canvas3d.Point3D;
+import org.canvas3d.Vector3D;
 import org.graphics.Icons;
 import org.graphics.ModalWindow;
+import org.math3d.Vector3;
 import org.utils.Interpolatable;
 import org.graphics.SimpleDialog;
 import org.graphics.VariableContainer;
@@ -45,6 +45,9 @@ public class GenericEditButton extends MenuButton {
         //if transformable
         if(variableContainer.getVariable() instanceof Interpolatable)
             addMenuItem(MenuItems.interpolateMenuItem(variableContainer));
+
+        if(variableContainer.getVariable() instanceof Editable)
+            addMenuItem(MenuItems.editDoubleArrayMenuItem(variableContainer ));
     }
 
     /**
@@ -99,8 +102,6 @@ public class GenericEditButton extends MenuButton {
      * Static function for returning a specialized editButton based on what type of variable is in the input
      */
     public static <T> GenericEditButton getEditButton(VariableContainer<T> variableContainer){
-        if(variableContainer.getVariable() instanceof Vector)
-            return new EditVectorButton((VariableContainer<Vector>) variableContainer);
 
         if(variableContainer.getVariable() instanceof Matrix)
             return new EditMatrixButton((VariableContainer<Matrix>) variableContainer);
@@ -114,8 +115,6 @@ public class GenericEditButton extends MenuButton {
         if(variableContainer.getVariable() instanceof LineSegment2D)
             return new EditLineSegmentButton((VariableContainer<LineSegment2D>) variableContainer);
 
-        if(variableContainer.getVariable() instanceof Point2D)
-            return new EditPointButton((VariableContainer<Point2D>) variableContainer);
 
         return new GenericEditButton(variableContainer);
     }

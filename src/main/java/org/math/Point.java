@@ -9,7 +9,7 @@ import java.util.Arrays;
 /**
  * Represents a mathematical point
  */
-public class Point implements Transformable, Writable {
+public class Point implements Transformable, Writable, Editable {
     private double[] point;
 
     public Point(double... args){
@@ -20,7 +20,7 @@ public class Point implements Transformable, Writable {
      * Returns the point as a an array
      */
     public double[] getPoint(){
-        return point;
+        return Arrays.copyOf(point, point.length);
     }
 
     /**
@@ -99,5 +99,15 @@ public class Point implements Transformable, Writable {
         for(int i = 0; i < nums.length; i++){
             this.point[i] = Double.parseDouble(nums[i]);
         }
+    }
+
+    @Override
+    public double[] getCopy() {
+        return getPoint();
+    }
+
+    @Override
+    public void set(double[] doubles) {
+        point = Arrays.copyOf(doubles, doubles.length);
     }
 }
