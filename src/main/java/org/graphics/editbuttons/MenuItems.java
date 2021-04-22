@@ -44,6 +44,8 @@ public abstract class MenuItems {
 
                     }
                 }
+                else
+                    ModalWindow.alert("That matrix is not defined!", Alert.AlertType.ERROR);
             });
         });
 
