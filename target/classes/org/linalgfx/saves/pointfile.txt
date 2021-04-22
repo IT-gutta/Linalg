@@ -1,4 +1,0 @@
-grid---canvas2d.Grid2D---1.0 0.0 0.0 1.0 0.0 0.0 5 5 1.0 1.0
-p---canvas2d.Point2D---1.0 2.0
-m---math.Vector---1.0 2.0 3.0 4.0 
-v---math.Vector---1.0 2.0 3.0 4.0 
