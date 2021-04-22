@@ -26,7 +26,7 @@ public class Utils {
      * Returns true if a double is a whole number, else false
      */
     public static boolean isWhole(double n){
-        return (int)Math.floor(n)==(int)n;
+        return Math.floor(n) ==n;
     }
 
     /**

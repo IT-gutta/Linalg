@@ -6,7 +6,7 @@ import org.linalgfx.Writable;
 /**
  * Represents a mathematical line
  */
-public class Line implements Transformable, Writable {
+public class Line implements Writable {
     private final Point start;
     private final Vector direction;
 
@@ -64,13 +64,6 @@ public class Line implements Transformable, Writable {
         return "Start: " + start + ", Direction: " + direction;
     }
 
-    /**
-     * Transforms a Line given a Matrix
-     */
-    @Override
-    public void transform(Matrix matrix) {
-        //skriv kode her
-    }
 
     @Override
     public String writeString() {

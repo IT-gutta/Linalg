@@ -43,6 +43,7 @@ public class Vector4 extends Vector{
         return getElement(3);
     }
 
+
     /**
      * Sets the x coordinate of the vector
      */
