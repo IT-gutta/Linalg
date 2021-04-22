@@ -53,7 +53,7 @@ public class ComplexNumbers {
      * Returns the a Complex to the power given as argument
      */
     public static Complex pow(Complex z, double exponent){
-        var c = copyOf(z);
+        Complex c = copyOf(z);
         c.pow(exponent);
         return c;
     }
