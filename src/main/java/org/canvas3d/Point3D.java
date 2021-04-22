@@ -2,6 +2,8 @@ package org.canvas3d;
 
 import org.math.Editable;
 import org.math.Points;
+import org.math.Vector;
+import org.math.Vectors;
 import org.math3d.Vector3;
 
 /**
@@ -19,6 +21,11 @@ public class Point3D extends Mesh implements Editable {
         super("lowpoly_sphere.obj", Vector3.ZERO(), scale);
         this.point3 = p;
         setPosition(this.point3);
+    }
+
+    @Override
+    public Object getMath() {
+        return Vectors.toPoint(point3).toPoint3();
     }
 
     @Override

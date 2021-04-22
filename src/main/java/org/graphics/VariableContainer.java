@@ -19,7 +19,7 @@ import org.linalgfx.Writable;
 /**
  * Handles the textual representation of mathematical variables in the GUI
  */
-public class VariableContainer<T> extends HBox  {
+public class VariableContainer<T> extends HBox {
     private T variable;
     private String name;
     private final transient Text contentField;

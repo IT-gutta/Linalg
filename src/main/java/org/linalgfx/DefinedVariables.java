@@ -80,22 +80,22 @@ public abstract class DefinedVariables {
             return;
         }
         if(variableContainer.getMath() instanceof Vector){
-            if(((Vector) variableContainer.getMath()).getVector().length==3){
+            if(((Vector) variableContainer.getMath()).getDimensions()==3){
                 variableContainer = new VariableContainer<Vector3D>(new Vector3D(((Vector) variableContainer.getMath()).toVector3()), variableContainer.getName());
             }
-            if(((Vector) variableContainer.getMath()).getVector().length==2){
+            else if(((Vector) variableContainer.getMath()).getDimensions()==2){
                 variableContainer = new VariableContainer<Vector2D>(new Vector2D(((Vector) variableContainer.getMath()).toVector2()), variableContainer.getName());
             }
 
         }if(variableContainer.getMath() instanceof Point){
-            if(((Point) variableContainer.getMath()).getPoint().length==3){
+            if(((Point) variableContainer.getMath()).getDimensions()==3){
                 variableContainer = new VariableContainer<Point3D>(new Point3D(((Point) variableContainer.getMath()).toVector().toVector3()), variableContainer.getName());
             }
-            if(((Point) variableContainer.getMath()).getPoint().length==2){
+            else if(((Point) variableContainer.getMath()).getDimensions()==2){
                 variableContainer = new VariableContainer<Point2D>(new Point2D(((Point) variableContainer.getMath()).toPoint2()), variableContainer.getName());
             }
-
         }
+
         vbox.getChildren().add(variableContainer);
         map.put(variableContainer.getName(), variableContainer);
     }
