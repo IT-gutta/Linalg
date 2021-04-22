@@ -43,12 +43,6 @@ public class Vector4 extends Vector{
         return getElement(3);
     }
 
-    /**
-     * Returns Vector as an array
-     */
-    public double[] getVector(){
-        return getVector();
-    }
 
     /**
      * Sets the x coordinate of the vector

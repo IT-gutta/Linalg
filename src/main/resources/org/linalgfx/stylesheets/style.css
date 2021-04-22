@@ -100,6 +100,7 @@
 }
 
 .gradient-button:hover{
+    -fx-cursor: hand;
     -fx-background-color:
             linear-gradient(darkslategrey, darkolivegreen);
 }
@@ -122,6 +123,10 @@
 
 .check-box:selected .box {
     -fx-background-color: #28a3f4;
+}
+
+.check-box:hover{
+    -fx-cursor: hand;
 }
 
 #root{
