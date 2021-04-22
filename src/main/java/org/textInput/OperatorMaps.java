@@ -24,6 +24,7 @@ public abstract class OperatorMaps {
     private static final InputMapBiFunc<Expression, Double, Double> eddOps = new InputMapBiFunc<>(new Expression("0"),0d, 0d);
     private static final InputMapFunc<Vector, Double> vdOps = new InputMapFunc<>(new Vector(), 0d);
     private static final InputMapFunc<Matrix, Matrix> mmOps = new InputMapFunc<>(new Matrix(), new Matrix());
+    private static final InputMapFunc<Matrix, Double> mdOps = new InputMapFunc<>(new Matrix(), 0d);
     private static final InputMapFunc<Expression, Expression> eeOps = new InputMapFunc<>(new Expression("0"), new Expression("0"));
 
     /**
@@ -68,6 +69,9 @@ public abstract class OperatorMaps {
 
         mmOps.put("inverse", Solver::invertedMatrix);
         funcMaps.add(mmOps);
+
+        mdOps.put("det", Matrices::det);
+        funcMaps.add(mdOps);
 
     }
 }
