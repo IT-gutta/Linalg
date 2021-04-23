@@ -3,6 +3,7 @@ package org.math;
 import org.linalgfx.Writable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Represents a mathematical matrix
@@ -67,8 +68,8 @@ public class Matrix implements Writable {
      * Inverts a 2x2 Matrix
      */
     public void invert2x2(){
-        double determinant = matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0];
-        if(determinant <= 0.0000001)
+        double determinant = det();
+        if(Math.abs(determinant) <= 0.0000001)
             throw new IllegalStateException("Matrix is not invertible");
         double s = 1d / determinant;
 
@@ -113,7 +114,7 @@ public class Matrix implements Writable {
     /**
      * Returns the product of the Matrix and another Matrix
      */
-    public Matrix multiply(Matrix other){
+    public void multiply(Matrix other){
         if(width != other.height)
             throw new IllegalArgumentException("Illegal size of matrices");
         double[][] m = new double[height][other.width];
@@ -123,20 +124,24 @@ public class Matrix implements Writable {
                 m[y][x] = new Vector(getRow(y)).dot(new Vector(other.getColumn(x)));
             }
         }
-        return new Matrix(m);
+        matrix = m;
+        height = m.length;
+        width = m[0].length;
     }
 
     /**
      * Returns the Matrix as a two-dimensional array
      */
     public double[][] getMatrix(){
-        return matrix;
+        return matrix.clone();
     }
 
     /**
      * Returns the specified column as an array
      */
     public double[] getColumn(int columnNumber){
+        if(columnNumber>=getWidth())
+            throw new IllegalArgumentException("Index out of bounds");
         double[] col = new double[height];
         for(int i = 0; i < height; i++){
             col[i] = get(i, columnNumber);
@@ -159,6 +164,8 @@ public class Matrix implements Writable {
      * Returns the determinant of the Matrix
      */
     public double det(){
+        if(getWidth()!=getHeight())
+            throw new IllegalStateException("Matrix must be quadratic");
         if(width==1){
             return matrix[0][0];
         }
@@ -204,7 +211,7 @@ public class Matrix implements Writable {
     public double[] getRow(int row)throws IllegalArgumentException{
         if(row>=height)
             throw new IllegalArgumentException("Index out of bounds");
-        return matrix[row];
+        return matrix[row].clone();
     }
 
     /**
@@ -235,7 +242,7 @@ public class Matrix implements Writable {
      * Swaps the position of two rows
      */
     public void swapRows(int row1, int row2) throws IllegalArgumentException{
-        if(row1>=width || row2>=width)
+        if(row1>=height || row2>=height)
             throw new IllegalArgumentException();
         double[] r1 = matrix[row1]; double[] r2 = matrix[row2];
         matrix[row1] = r2; matrix[row2] = r1;
@@ -263,10 +270,10 @@ public class Matrix implements Writable {
     public void append(Matrix m){
         if(height!=m.getHeight())
             throw new IllegalArgumentException("Illegal dimension");
-        double[][] newM = new double[height][2*height];
+        double[][] newM = new double[height][width+m.getWidth()];
         for(int i = 0; i<height; i++){
-            System.arraycopy(this.getRow(i),0,newM[i], 0, height);
-            System.arraycopy(m.getRow(i),0,newM[i], height, height);
+            System.arraycopy(this.getRow(i),0,newM[i], 0, width);
+            System.arraycopy(m.getRow(i),0,newM[i], width, m.getWidth());
         }
         width+=m.getWidth();
         matrix = newM;
@@ -276,6 +283,8 @@ public class Matrix implements Writable {
      * Returns true if the Matrix is an identity Matrix, else false
      */
     public boolean isIdentityMatrix(){
+        if(width!=height)
+            return false;
         for(int i = 0; i<height; i++){
             for(int j = 0; j<height; j++){
                 if(i==j){
@@ -317,22 +326,6 @@ public class Matrix implements Writable {
                 return false;
         }
         return true;
-    }
-
-    /**
-     * ??
-     */
-    public ArrayList<Vector> getBasisVectors(){
-        ArrayList<Vector> vectors = new ArrayList<>();
-        for(int x = 0; x < width; x++){
-            var vec = new Vector();
-            for(int y = 0; y < height; y++){
-                vec.setElement(y, get(y, x));
-            }
-            vectors.add(vec);
-        }
-
-        return vectors;
     }
 
     /**

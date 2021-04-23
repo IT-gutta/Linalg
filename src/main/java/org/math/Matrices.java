@@ -21,7 +21,9 @@ public class Matrices {
      * Returns the product of two Matrices
      */
     public static Matrix product(Matrix m1, Matrix m2){
-        return m1.multiply(m2);
+        Matrix matrix1 = new Matrix(m1.getMatrix());
+        matrix1.multiply(m2);
+        return matrix1;
     }
 
     /**
@@ -31,7 +33,7 @@ public class Matrices {
         double[][] newMatrix = new double[matrix.getHeight()][matrix.getWidth()];
         for(int y = 0; y < newMatrix.length; y++){
             for(int x = 0; x < newMatrix.length; x++){
-                newMatrix[y][x] += matrix.get(y, x);
+                newMatrix[y][x] = matrix.get(y, x)*s;
             }
         }
         return new Matrix(newMatrix);
@@ -55,5 +57,14 @@ public class Matrices {
             }
         }
         return new Matrix(newMatrix);
+    }
+
+    public static double det(Matrix m){
+        try{
+            return m.det();
+        }
+        catch (Exception e){
+            throw new IllegalArgumentException("Matrix must be quadratic");
+        }
     }
 }

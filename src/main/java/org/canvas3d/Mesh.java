@@ -74,6 +74,27 @@ public class Mesh extends Render3D implements Writable {
         currentScale = scale;
     }
 
+    public void setScaleX(double scale){
+        for (Vector3 vertex : vertices) {
+            vertex.setX(vertex.getX() * scale / scaleX);
+        }
+        scaleX = scale;
+    }
+
+    public void setScaleY(double scale){
+        for (Vector3 vertex : vertices) {
+            vertex.setY(vertex.getY() * scale / scaleY);
+        }
+        scaleY = scale;
+    }
+
+    public void setScaleZ(double scale){
+        for (Vector3 vertex : vertices) {
+            vertex.setZ(vertex.getZ() * scale / scaleZ);
+        }
+        scaleZ = scale;
+    }
+
 
 
     @Override

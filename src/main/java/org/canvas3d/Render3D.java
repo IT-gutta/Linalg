@@ -276,26 +276,22 @@ public abstract class Render3D implements Interpolatable{
         double[] startForward = forward.getVector();
         double[] startRight = right.getVector();
         double[] startUp = up.getVector();
-        double[] startPosition = position.getVector();
 
         double[] endForward = m.transform(startForward);
         double[] endRight = m.transform(startRight);
         double[] endUp = m.transform(startUp);
-        double[] endPosition = m.transform(startPosition);
 
-        double[] starts = new double[12];
-        double[] ends = new double[12];
+        double[] starts = new double[9];
+        double[] ends = new double[9];
 
         for(int i = 0; i < 3; i++){
             starts[i] = startForward[i];
             starts[3 + i] = startRight[i];
             starts[6 + i] = startUp[i];
-            starts[9 + i] = startPosition[i];
 
             ends[i] = endForward[i];
             ends[3 + i] = endRight[i];
             ends[6 + i] = endUp[i];
-            ends[9 + i] = endPosition[i];
         }
         interpolator = new Interpolator(millis, starts, ends);
     }
@@ -318,9 +314,6 @@ public abstract class Render3D implements Interpolatable{
             up.setX(interpolator.get(6));
             up.setY(interpolator.get(7));
             up.setZ(interpolator.get(8));
-            position.setX(interpolator.get(9));
-            position.setY(interpolator.get(10));
-            position.setZ(interpolator.get(11));
 
             if(interpolator.isFinished())
                 interpolator = null;

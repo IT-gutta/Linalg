@@ -1,10 +1,6 @@
 package org.graphics.editbuttons;
 
 import javafx.scene.control.Alert;
-import org.canvas2d.Grid2D;
-import org.canvas2d.Line2D;
-import org.canvas2d.LineSegment2D;
-import org.canvas2d.Point2D;
 import org.graphics.Icons;
 import org.graphics.ModalWindow;
 import org.utils.Interpolatable;
@@ -44,7 +40,13 @@ public class GenericEditButton extends MenuButton {
 
         //if transformable
         if(variableContainer.getVariable() instanceof Interpolatable)
-            addMenuItem(MenuItems.interpolateMenuItem(variableContainer));
+            addMenuItem(MenuItems.interpolate(variableContainer));
+
+        if(variableContainer.getVariable() instanceof Editable)
+            addMenuItem(MenuItems.editDoubleArray(variableContainer));
+
+        if(variableContainer.getVariable() instanceof Matrix)
+            addMenuItem(MenuItems.invertMatrix(variableContainer));
     }
 
     /**
@@ -93,30 +95,5 @@ public class GenericEditButton extends MenuButton {
 
     public VariableContainer getContainer(){
         return variableContainer;
-    }
-
-    /**
-     * Static function for returning a specialized editButton based on what type of variable is in the input
-     */
-    public static <T> GenericEditButton getEditButton(VariableContainer<T> variableContainer){
-        if(variableContainer.getVariable() instanceof Vector)
-            return new EditVectorButton((VariableContainer<Vector>) variableContainer);
-
-        if(variableContainer.getVariable() instanceof Matrix)
-            return new EditMatrixButton((VariableContainer<Matrix>) variableContainer);
-
-        if(variableContainer.getVariable() instanceof Line2D)
-            return new EditLineButton((VariableContainer<Line2D>) variableContainer);
-
-        if(variableContainer.getVariable() instanceof Grid2D)
-            return new EditGridButton((VariableContainer<Grid2D>) variableContainer);
-
-        if(variableContainer.getVariable() instanceof LineSegment2D)
-            return new EditLineSegmentButton((VariableContainer<LineSegment2D>) variableContainer);
-
-        if(variableContainer.getVariable() instanceof Point2D)
-            return new EditPointButton((VariableContainer<Point2D>) variableContainer);
-
-        return new GenericEditButton(variableContainer);
     }
 }

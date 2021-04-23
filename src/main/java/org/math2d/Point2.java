@@ -1,5 +1,6 @@
 package org.math2d;
 
+import org.math.Editable;
 import org.math.Point;
 
 
@@ -7,7 +8,7 @@ import org.math.Point;
 /**
  * Represents a two dimensional point
  */
-public class Point2 extends Point  {
+public class Point2 extends Point {
     public Point2(double x, double y){
         super(x, y);
     }

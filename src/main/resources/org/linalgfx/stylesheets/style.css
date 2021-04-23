@@ -100,6 +100,7 @@
 }
 
 .gradient-button:hover{
+    -fx-cursor: hand;
     -fx-background-color:
             linear-gradient(darkslategrey, darkolivegreen);
 }
@@ -124,6 +125,10 @@
     -fx-background-color: #28a3f4;
 }
 
+.check-box:hover{
+    -fx-cursor: hand;
+}
+
 #root{
     -fx-spacing: 5px;
 }
@@ -131,4 +136,9 @@
 #inputField{
     -fx-padding: 5px;
     -fx-max-width: 500px;
+}
+
+.meshList{
+    -fx-spacing: 5px;
+    -fx-background-color: blue;
 }

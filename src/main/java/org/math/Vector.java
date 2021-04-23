@@ -5,14 +5,15 @@ import org.math3d.Vector3;
 import org.utils.Utils;
 import org.linalgfx.Writable;
 
+import java.util.Arrays;
 import java.util.stream.DoubleStream;
 
-public class Vector implements Transformable, Writable {
+public class Vector implements Transformable, Writable, Editable {
 
     private double[] vector;
 
     public Vector(double... args){
-        vector = args;
+        vector = Arrays.copyOf(args, args.length);
     }
 
     public Vector(int length){
@@ -63,7 +64,7 @@ public class Vector implements Transformable, Writable {
         for(double element:vector){
             sum+=Math.pow(element,2);
         }
-        double scale = Math.sqrt(m/sum); //Dette stemmer vel ikke??
+        double scale = m/Math.sqrt(sum);
         for(int i = 0; i<vector.length; i++){
             vector[i]*=scale;
         }
@@ -153,7 +154,7 @@ public class Vector implements Transformable, Writable {
      * Returns the Vector as an array
      */
     public double[] getVector(){
-        return vector;
+        return Arrays.copyOf(vector, vector.length);
     }
 
     /**
@@ -182,7 +183,11 @@ public class Vector implements Transformable, Writable {
      */
     public double angle(Vector v){
         if(getDimensions()!=v.getDimensions())
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Vectors must have same dimension!");
+
+        if(this.getMagnitude()==0 || v.getMagnitude()==0)
+            throw new IllegalArgumentException("Vector cant be 0-vector!");
+
         return Math.acos(this.dot(v)/(this.getMagnitude()*v.getMagnitude()));
     }
 
@@ -193,10 +198,8 @@ public class Vector implements Transformable, Writable {
         if(this.getDimensions()!=v.getDimensions())
             return false;
 
-        double tol = 0.00000001;
-
         for(int i = 0; i<vector.length; i++){
-            if(Math.abs(vector[i]-v.getElement(i)) > tol)
+            if(Math.abs(vector[i]-v.getElement(i)) > Utils.TOLERANCE)
                 return false;
         }
         return true;
@@ -209,19 +212,16 @@ public class Vector implements Transformable, Writable {
         if(!this.hasSameDimensions(v))
             throw new IllegalArgumentException("Vectors must have same dimensions");
 
-        double x = v.getElement(0);
-        int j = 0;
-        while(x == 0d){
-            j++;
-            if(j >= this.getDimensions())
-                return true;
-
-            x = v.getElement(j);
+        int i = 0;
+        while(getElement(i) == 0 && v.getElement(i) == 0){
+            i++;
         }
-        double scale = vector[j]/x;
-
-        for(int i = 1; i<this.getDimensions(); i++){
-            if(scale*v.getElement(i)==vector[i]) return false;
+        double scale = getElement(i)/v.getElement(i);
+        double tol = Math.pow(10, -6);
+        while(i < getDimensions()){
+            if(getElement(i) == 0 && v.getElement(i) != 0 || getElement(i) != 0 && v.getElement(i) == 0 || Math.abs(getElement(i)/v.getElement(i) - scale) > tol)
+                return false;
+            i++;
         }
         return true;
     }
@@ -257,7 +257,7 @@ public class Vector implements Transformable, Writable {
      */
     @Override
     public void transform(Matrix m){
-        //skriv kode her
+        vector = m.transform(vector);
     }
 
     @Override
@@ -275,5 +275,15 @@ public class Vector implements Transformable, Writable {
         for(int i = 0; i < nums.length; i++){
             this.vector[i] = Double.parseDouble(nums[i]);
         }
+    }
+
+    @Override
+    public double[] getCopy() {
+        return getVector();
+    }
+
+    @Override
+    public void set(double[] doubles) {
+        vector = Arrays.copyOf(doubles, doubles.length);
     }
 }

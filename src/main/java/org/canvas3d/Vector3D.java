@@ -1,5 +1,8 @@
 package org.canvas3d;
 
+import javafx.scene.control.Alert;
+import org.graphics.ModalWindow;
+import org.math.Editable;
 import org.utils.Interpolator;
 import org.math.Matrix;
 import org.math3d.Vector3;
@@ -7,23 +10,19 @@ import org.math3d.Vector3;
  * A 3D vector which is rendered to the canvas as a Mesh which looks like an arrow, and is scaled according to the
  * magnitude of the vector
  */
-public class Vector3D extends Mesh {
+public class Vector3D extends Mesh implements Editable {
     private Interpolator interpolator;
-    private Vector3 vector3;
+    private final Vector3 vector3;
 
 
     public Vector3D(double x, double y, double z){
-        super("vectorfix.obj", Vector3.ZERO(), 1);
-        vector3 = new Vector3(x, y, z);
-        setScale(vector3.getMagnitude());
-        setForward(vector3);
+        this(new Vector3(x, y, z));
     }
 
     public Vector3D(Vector3 v){
         super("vectorfix.obj", Vector3.ZERO(), 1);
         this.vector3 = v;
-        setScale(vector3.getMagnitude()/2);
-        setForward(vector3);
+        updateMesh(vector3);
     }
 
     @Override
@@ -41,8 +40,7 @@ public class Vector3D extends Mesh {
             vector3.setY(interpolator.get(1));
             vector3.setZ(interpolator.get(2));
 
-            setScale(vector3.getMagnitude()/2);
-            setForward(vector3);
+            updateMesh(vector3);
 
             if(interpolator.isFinished())
                 interpolator = null;
@@ -82,5 +80,26 @@ public class Vector3D extends Mesh {
 
     public Vector3D(String fileString){
         this(Vector3.valueOf(fileString));
+    }
+
+    @Override
+    public double[] getCopy() {
+        return vector3.getCopy();
+    }
+
+    @Override
+    public void set(double[] doubles){
+        updateMesh(new Vector3(doubles));
+        vector3.set(doubles);
+    }
+
+    private void updateMesh(Vector3 vector3) throws IllegalArgumentException{
+        try {
+            setForward(vector3);
+            setScaleZ(vector3.getMagnitude());
+        }catch (IllegalArgumentException e){
+            ModalWindow.alert("Cant have a 0 magnitude 3D vector in the canvas.", Alert.AlertType.ERROR);
+            throw new IllegalArgumentException("Cant have a 0 magnitude 3D vector in the canvas.");
+        }
     }
 }

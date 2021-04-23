@@ -12,7 +12,7 @@ import org.math3d.Vector4;
 public class Camera3D extends Render3D{
 
     private final double fov = Math.PI/2;
-    private final double zFar = 50; // bestemmer rendering distance
+    private final double zFar = 500; // bestemmer rendering distance
     private final double zNear = 0.1; //bestemmer rendering closest distance
 
 

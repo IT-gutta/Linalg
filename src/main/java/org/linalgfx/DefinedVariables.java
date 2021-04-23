@@ -1,12 +1,19 @@
 package org.linalgfx;
 
 import javafx.scene.control.Alert;
+import org.canvas2d.Point2D;
 import org.canvas2d.Render2D;
+import org.canvas2d.Vector2D;
+import org.canvas3d.Point3D;
 import org.canvas3d.Render3D;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import org.canvas3d.Vector3D;
 import org.graphics.ModalWindow;
 import org.graphics.VariableContainer;
+import org.math.Point;
+import org.math.Vector;
+import org.math3d.Vector3;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
@@ -72,6 +79,23 @@ public abstract class DefinedVariables {
             ModalWindow.alert("The variable name is already in use! Use another name.", Alert.AlertType.ERROR);
             return;
         }
+        if(variableContainer.getMath() instanceof Vector){
+            if(((Vector) variableContainer.getMath()).getDimensions()==3){
+                variableContainer = new VariableContainer<Vector3D>(new Vector3D(((Vector) variableContainer.getMath()).toVector3()), variableContainer.getName());
+            }
+            else if(((Vector) variableContainer.getMath()).getDimensions()==2){
+                variableContainer = new VariableContainer<Vector2D>(new Vector2D(((Vector) variableContainer.getMath()).toVector2()), variableContainer.getName());
+            }
+
+        }if(variableContainer.getMath() instanceof Point){
+            if(((Point) variableContainer.getMath()).getDimensions()==3){
+                variableContainer = new VariableContainer<Point3D>(new Point3D(((Point) variableContainer.getMath()).toVector().toVector3()), variableContainer.getName());
+            }
+            else if(((Point) variableContainer.getMath()).getDimensions()==2){
+                variableContainer = new VariableContainer<Point2D>(new Point2D(((Point) variableContainer.getMath()).toPoint2()), variableContainer.getName());
+            }
+        }
+
         vbox.getChildren().add(variableContainer);
         map.put(variableContainer.getName(), variableContainer);
     }
