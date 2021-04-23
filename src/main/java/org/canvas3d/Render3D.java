@@ -1,5 +1,6 @@
 package org.canvas3d;
 
+import org.math.Editable;
 import org.utils.Interpolatable;
 import org.utils.Interpolator;
 import javafx.scene.paint.Color;
@@ -13,7 +14,7 @@ import org.terraingeneration.TerrainChunk;
  * This class contains a name, position, vectors that describe how the object is rotated i space
  * and all the triangles and vertices that the rendered object contains
  */
-public abstract class Render3D implements Interpolatable{
+public abstract class Render3D implements Interpolatable, Editable {
     protected String name;
     protected Vector3 position;
     protected Vector3 forward;
@@ -318,5 +319,15 @@ public abstract class Render3D implements Interpolatable{
             if(interpolator.isFinished())
                 interpolator = null;
         }
+    }
+
+    @Override
+    public double[] getCopy() {
+        return position.getCopy();
+    }
+
+    @Override
+    public void set(double[] doubles) {
+        position.set(doubles);
     }
 }
