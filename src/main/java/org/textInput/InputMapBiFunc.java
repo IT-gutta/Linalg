@@ -1,13 +1,14 @@
 package org.textInput;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.BiFunction;
 
 /**
  * Represents families of functions that share similar types of input and output with two inputs
  */
 public class InputMapBiFunc<A, B, C>{
-    private HashMap<String, BiFunction<A, B, C>> map;
+    private Map<String, BiFunction<A, B, C>> map;
     private A input1;
     private B input2;
     private C output;
@@ -28,7 +29,7 @@ public class InputMapBiFunc<A, B, C>{
     /**
      * Returns the map of functions
      */
-    public HashMap<String,BiFunction<A,B,C>> getMap(){
+    public Map<String,BiFunction<A,B,C>> getMap(){
         return map;
     }
 

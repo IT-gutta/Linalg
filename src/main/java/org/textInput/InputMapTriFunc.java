@@ -3,12 +3,13 @@ package org.textInput;
 import org.utils.TriFunction;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents families of functions that share similar types of input and output with three inputs
  */
 public class InputMapTriFunc<A,B,C,D>{
-    private final HashMap<String, TriFunction<A, B, C, D>> map;
+    private final Map<String, TriFunction<A, B, C, D>> map;
     private final A input1;
     private final B input2;
     private final C input3;
@@ -32,7 +33,7 @@ public class InputMapTriFunc<A,B,C,D>{
     /**
      * Returns the map of functions
      */
-    public HashMap<String,TriFunction<A,B,C,D>> getMap(){
+    public Map<String,TriFunction<A,B,C,D>> getMap(){
         return map;
     }
 

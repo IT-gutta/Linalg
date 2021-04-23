@@ -1,8 +1,6 @@
 package org.math;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Handles the solving of linear algebra problems
@@ -12,7 +10,7 @@ public class Solver {
      * Returns the Matrix reduced to row echelon form
      */
     public static Matrix toReducedRowEchelon(Matrix m){
-        HashMap<Integer, ArrayList<Integer>> pivotIndexes = new HashMap<>();
+        Map<Integer, List<Integer>> pivotIndexes;
         while(!m.isRowEchelon()){
             //find pivot indexes
             pivotIndexes = findPivotIndexes(m);
@@ -58,10 +56,10 @@ public class Solver {
     /**
      * Returns a mapping from an index to a list of indexes representing the pivot indexes of a Matrix
      */
-    private static HashMap<Integer, ArrayList<Integer>> findPivotIndexes(Matrix m){
-        HashMap<Integer, ArrayList<Integer>> pivotIndexes = new HashMap<>();
+    private static Map<Integer, List<Integer>> findPivotIndexes(Matrix m){
+        Map<Integer, List<Integer>> pivotIndexes = new HashMap<>();
         for(int i = 0; i<m.getHeight(); i++)
-            pivotIndexes.put(i, new ArrayList<Integer>());
+            pivotIndexes.put(i, new ArrayList<>());
         for(int i = 0; i<m.getHeight(); i++){
             for(int j = 0; j<m.getHeight(); j++){
                 if(m.get(i,j)!=0){

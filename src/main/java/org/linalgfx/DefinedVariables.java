@@ -16,8 +16,7 @@ import org.math.Vector;
 import org.math3d.Vector3;
 
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -145,14 +144,14 @@ public abstract class DefinedVariables {
     /**
      * Returns all VariableContainers with a variable which is an instance of Render2D
      */
-    public static List<VariableContainer<Render2D>> get2DRenderables(){
+    public static Collection<VariableContainer<Render2D>> get2DRenderables(){
         return vbox.getChildren().stream().map(node -> (VariableContainer) node).filter(v -> v.getVariable() instanceof Render2D && !((Render2D) v.getVariable()).isHidden()).map(v -> (VariableContainer<Render2D>) v).collect(Collectors.toList());
     }
 
     /**
      * Returns all VariableContainers with a variable which is an instance of Render3D
      */
-    public static List<VariableContainer<Render3D>> get3DRenderables(){
+    public static Collection<VariableContainer<Render3D>> get3DRenderables(){
         return vbox.getChildren().stream().map(node -> (VariableContainer) node).filter(v -> v.getVariable() instanceof Render3D && !((Render3D) v.getVariable()).isHidden()).map(v -> (VariableContainer<Render3D>) v).collect(Collectors.toList());
     }
 

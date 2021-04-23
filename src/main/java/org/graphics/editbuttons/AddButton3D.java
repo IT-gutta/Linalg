@@ -15,6 +15,7 @@ import org.terraingeneration.InfiniteTerrain;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map;
 
 /**
  * The button to press for adding new elements in the 3D canvas, fills up the MenuItem list with clickable menuItems

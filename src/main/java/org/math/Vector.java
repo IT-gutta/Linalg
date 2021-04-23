@@ -13,7 +13,7 @@ public class Vector implements Transformable, Writable, Editable {
     private double[] vector;
 
     public Vector(double... args){
-        vector = Arrays.copyOf(args, args.length);
+        vector = args.clone();
     }
 
     public Vector(int length){
@@ -154,7 +154,7 @@ public class Vector implements Transformable, Writable, Editable {
      * Returns the Vector as an array
      */
     public double[] getVector(){
-        return Arrays.copyOf(vector, vector.length);
+        return vector.clone();
     }
 
     /**
@@ -284,6 +284,6 @@ public class Vector implements Transformable, Writable, Editable {
 
     @Override
     public void set(double[] doubles) {
-        vector = Arrays.copyOf(doubles, doubles.length);
+        vector = doubles.clone();
     }
 }

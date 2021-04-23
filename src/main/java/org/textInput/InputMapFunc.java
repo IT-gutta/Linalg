@@ -1,13 +1,14 @@
 package org.textInput;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
  * Represents families of functions that share similar types of input and output with one input
  */
 public class InputMapFunc<A,B> {
-    private HashMap<String, Function<A, B>> map;
+    private Map<String, Function<A, B>> map;
     private A input;
     private B output;
     public InputMapFunc(A a, B b){
@@ -26,7 +27,7 @@ public class InputMapFunc<A,B> {
     /**
      * Returns the map of functions
      */
-    public HashMap<String,Function<A,B>> getMap(){
+    public Map<String,Function<A,B>> getMap(){
         return map;
     }
 

@@ -2,7 +2,7 @@ package org.math;
 
 import org.linalgfx.Writable;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 
 /**
@@ -15,7 +15,7 @@ public class Matrix implements Writable {
     private int height;
 
     public Matrix(double[][] matrix){
-        this.matrix = matrix;
+        this.matrix = matrix.clone();
         width = matrix[0].length;
         height = matrix.length;
     }
@@ -67,7 +67,7 @@ public class Matrix implements Writable {
     /**
      * Inverts a 2x2 Matrix
      */
-    public void invert2x2(){
+    public void invert2x2() throws IllegalStateException{
         double determinant = det();
         if(Math.abs(determinant) <= 0.0000001)
             throw new IllegalStateException("Matrix is not invertible");
@@ -92,7 +92,7 @@ public class Matrix implements Writable {
     /**
      * Returns the product of the Matrix and a Vector represented by an array
      */
-    public double[] transform(double[] coords){
+    public double[] transform(double[] coords) throws IllegalArgumentException{
         if(coords.length!=width)
             throw new IllegalArgumentException("Illegal dimension");
         double[][] allColumns = getAllColumns();
@@ -114,7 +114,7 @@ public class Matrix implements Writable {
     /**
      * Returns the product of the Matrix and another Matrix
      */
-    public void multiply(Matrix other){
+    public void multiply(Matrix other) throws IllegalArgumentException{
         if(width != other.height)
             throw new IllegalArgumentException("Illegal size of matrices");
         double[][] m = new double[height][other.width];
@@ -139,9 +139,7 @@ public class Matrix implements Writable {
     /**
      * Returns the specified column as an array
      */
-    public double[] getColumn(int columnNumber){
-        if(columnNumber>=getWidth())
-            throw new IllegalArgumentException("Index out of bounds");
+    public double[] getColumn(int columnNumber) throws IndexOutOfBoundsException{
         double[] col = new double[height];
         for(int i = 0; i < height; i++){
             col[i] = get(i, columnNumber);
@@ -197,9 +195,7 @@ public class Matrix implements Writable {
     /**
      * Scales a given row by a double
      */
-    public void scaleRow(int row, double scale) throws IllegalArgumentException{
-        if(row>=height)
-            throw new IllegalArgumentException("Index out of bounds");
+    public void scaleRow(int row, double scale) throws IndexOutOfBoundsException{
         for(int i = 0; i<width; i++){
             matrix[row][i]*=scale;
         }
@@ -208,18 +204,14 @@ public class Matrix implements Writable {
     /**
      * Returns a given row as an array
      */
-    public double[] getRow(int row)throws IllegalArgumentException{
-        if(row>=height)
-            throw new IllegalArgumentException("Index out of bounds");
+    public double[] getRow(int row)throws IndexOutOfBoundsException{
         return matrix[row].clone();
     }
 
     /**
      * Returns a given row scaled by a double as an array
      */
-    public double[] getScaledRow(int row, double scale) throws IllegalArgumentException{
-        if(row>=height)
-            throw new IllegalArgumentException("Index out of bounds");
+    public double[] getScaledRow(int row, double scale) throws IndexOutOfBoundsException{
         double[] scaledRow = new double[getWidth()];
         for(int i = 0; i<width; i++){
             scaledRow[i] = Math.round(Math.pow(10,10)*matrix[row][i]*scale)/Math.pow(10,10);
@@ -230,9 +222,7 @@ public class Matrix implements Writable {
     /**
      * Adds a row onto another row
      */
-    public void addRowToRow(int row1, double[] row2) throws IllegalArgumentException{
-        if(row1>=height || width!=row2.length)
-            throw new IllegalArgumentException("Index out of bounds");
+    public void addRowToRow(int row1, double[] row2) throws IndexOutOfBoundsException{
         for(int i = 0; i<width; i++){
             matrix[row1][i]+=row2[i];
         }
@@ -241,9 +231,7 @@ public class Matrix implements Writable {
     /**
      * Swaps the position of two rows
      */
-    public void swapRows(int row1, int row2) throws IllegalArgumentException{
-        if(row1>=height || row2>=height)
-            throw new IllegalArgumentException();
+    public void swapRows(int row1, int row2) throws IndexOutOfBoundsException{
         double[] r1 = matrix[row1]; double[] r2 = matrix[row2];
         matrix[row1] = r2; matrix[row2] = r1;
     }
@@ -251,7 +239,7 @@ public class Matrix implements Writable {
     /**
      * Appends a Vector to the right side of the Matrix
      */
-    public void append(Vector v){
+    public void append(Vector v) throws IllegalArgumentException{
         if(v.getDimensions()!=height)
             throw new IllegalArgumentException("Illegal dimension");
         for(int i = 0; i<height; i++){
@@ -267,7 +255,7 @@ public class Matrix implements Writable {
     /**
      * Appends a Matrix to the right side of the Matrix
      */
-    public void append(Matrix m){
+    public void append(Matrix m) throws IllegalArgumentException{
         if(height!=m.getHeight())
             throw new IllegalArgumentException("Illegal dimension");
         double[][] newM = new double[height][width+m.getWidth()];
@@ -331,18 +319,14 @@ public class Matrix implements Writable {
     /**
      * Returns the element in a given position
      */
-    public double get(int y, int x){
-        if(y>=height || x>=width)
-            throw new IllegalArgumentException("Index out of bounds");
+    public double get(int y, int x) throws IndexOutOfBoundsException{
         return matrix[y][x];
     }
 
     /**
      * Sets the element in a given position
      */
-    public void set(int y, int x, double value){
-        if(y>=height || x>=width)
-            throw new IllegalArgumentException("Index out of bounds");
+    public void set(int y, int x, double value) throws IndexOutOfBoundsException{
         matrix[y][x] = value;
     }
 
