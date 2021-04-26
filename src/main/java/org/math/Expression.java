@@ -5,6 +5,8 @@ import org.linalgfx.Writable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -21,12 +23,12 @@ public class Expression implements Writable {
     private String operator;
     private boolean isPositive = true;
     private boolean isLeaf = true;
-    private final HashMap<Character, Expression> children = new HashMap<>();
-    private final HashMap<Character, Character> oppositeChild = new HashMap<>();
+    private final Map<Character, Expression> children = new HashMap<>();
+    private final Map<Character, Character> oppositeChild = new HashMap<>();
 
-    private final HashMap<String, BiFunction<Double, Double, Double>> dddOps = new HashMap<>();
-    private final HashMap<String, Function<Double, Double>> ddOps = new HashMap<>();
-    private final HashMap<String, Double> constants = new HashMap<>();
+    private final Map<String, BiFunction<Double, Double, Double>> dddOps = new HashMap<>();
+    private final Map<String, Function<Double, Double>> ddOps = new HashMap<>();
+    private final Map<String, Double> constants = new HashMap<>();
 
 
     public Expression(String input) throws IllegalArgumentException{
@@ -220,11 +222,11 @@ public class Expression implements Writable {
      * Splits the expression into two new Expressions and an operator
      */
     private String[] splitExpression(){
-        ArrayList<Integer> plus = new ArrayList<>();
-        ArrayList<Integer> minus = new ArrayList<>();
-        ArrayList<Integer> times = new ArrayList<>();
-        ArrayList<Integer> divide = new ArrayList<>();
-        ArrayList<Integer> exponent = new ArrayList<>();
+        List<Integer> plus = new ArrayList<>();
+        List<Integer> minus = new ArrayList<>();
+        List<Integer> times = new ArrayList<>();
+        List<Integer> divide = new ArrayList<>();
+        List<Integer> exponent = new ArrayList<>();
         String lc = "";
         String rc = "";
         int bracketDepth = 0;

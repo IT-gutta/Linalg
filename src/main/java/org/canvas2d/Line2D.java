@@ -9,6 +9,7 @@ import org.linalgfx.Writable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.List;
 
 /**
  * Represents a graphical two dimensional line

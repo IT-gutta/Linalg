@@ -8,6 +8,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
 import java.text.DecimalFormat;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -87,6 +88,6 @@ public abstract class CanvasRenderer3D {
     }
 
 
-    public static List<LightSource> getLightSources(){return DefinedVariables.get3DRenderables().stream().filter(var -> var.getVariable() instanceof LightSource).map(var -> (LightSource)var.getVariable()).collect(Collectors.toList());}
+    public static Collection<LightSource> getLightSources(){return DefinedVariables.get3DRenderables().stream().filter(var -> var.getVariable() instanceof LightSource).map(var -> (LightSource)var.getVariable()).collect(Collectors.toList());}
 
 }

@@ -14,14 +14,14 @@ public class Point implements Transformable, Writable, Editable {
     private double[] point;
 
     public Point(double... args){
-        point = Arrays.copyOf(args, args.length);
+        point = args.clone();
     }
 
     /**
      * Returns the point as a an array
      */
     public double[] getPoint(){
-        return Arrays.copyOf(point, point.length);
+        return point.clone();
     }
 
     /**
@@ -123,6 +123,6 @@ public class Point implements Transformable, Writable, Editable {
 
     @Override
     public void set(double[] doubles) {
-        point = Arrays.copyOf(doubles, doubles.length);
+        point = doubles.clone();
     }
 }

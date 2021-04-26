@@ -7,16 +7,17 @@ import org.linalgfx.Writable;
 import org.math3d.Vector3;
 
 import java.util.HashMap;
+import java.util.Map;
 /**
  * Infinite 3D terrain that automatically generates new chunks or loads previously generated ones near the position of the player/camera
  */
 public class InfiniteTerrain extends Render3D {
-    private HashMap<String, TerrainChunk> terrainChunkHashMap;
+    private Map<String, TerrainChunk> terrainChunkMap;
     public final int chunkSize = 16;
     private final double divRoot2 = 1/Math.sqrt(2);
     private final PerlinNoiseMap perlinNoiseMap = new PerlinNoiseMap();
     public InfiniteTerrain(){
-        this.terrainChunkHashMap = new HashMap<>();
+        this.terrainChunkMap = new HashMap<>();
     }
 
     @Override
@@ -31,13 +32,13 @@ public class InfiniteTerrain extends Render3D {
         for(int x = currentChunkX - numberOfChunksXZ; x <= currentChunkX + numberOfChunksXZ; x++){
             for(int z = currentChunkZ - numberOfChunksXZ; z <= currentChunkZ + numberOfChunksXZ; z++){
                 String stringKey = ""+x+z;
-                if(terrainChunkHashMap.containsKey(stringKey))
-                    terrainChunkHashMap.get(stringKey).render(gc);
+                if(terrainChunkMap.containsKey(stringKey))
+                    terrainChunkMap.get(stringKey).render(gc);
                 else{
-                    //System.out.println(terrainChunkHashMap.size() + ", " + stringKey);
+                    //System.out.println(terrainChunkMap.size() + ", " + stringKey);
                     TerrainChunk newChunk = new TerrainChunk(new Vector3(x*chunkSize, 0, z*chunkSize), chunkSize, perlinNoiseMap);
                     newChunk.render(gc);
-                    terrainChunkHashMap.put(stringKey, newChunk);
+                    terrainChunkMap.put(stringKey, newChunk);
                     CanvasRenderer3D.chunksSpawnedCount++;
                 }
             }

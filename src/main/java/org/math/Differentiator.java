@@ -1,15 +1,16 @@
 package org.math;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Handles differentiation of an Expression-object
  */
 public class Differentiator {
-    private static final HashMap<String, String> derivatives = new HashMap<>();
+    private static final Map<String, String> derivatives = new HashMap<>();
 
     /**
-     * Fills known derivatives into a hashmap
+     * Fills known derivatives into a Map
      */
     public static void fillDerivatives(){
         derivatives.put("sin", "cos($)");

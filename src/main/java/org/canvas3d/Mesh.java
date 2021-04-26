@@ -5,10 +5,8 @@ import org.math3d.Vector3;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Render3D which holds a mesh (set of vertices and triangles) which can be rendered to the canvas

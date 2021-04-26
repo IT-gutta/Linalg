@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import org.math.*;
 import org.canvas2d.Mapping;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -247,5 +248,3 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
     }
 }
 
-//TODO Add more functions
-//TODO Add derivatives
