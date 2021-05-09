@@ -152,6 +152,7 @@ public class TextInputEvent implements EventHandler<ActionEvent>{
                     String func = Regexes.VAR_DEC +f+"\\("+Regexes.VAR_NAME +","+Regexes.VAR_NAME +","+Regexes.VAR_NAME +"\\)";
                     m = Pattern.compile(func).matcher(inp);
                     if(m.find()){
+                        System.out.println(m.group(3));
                         VariableContainer a = DefinedVariables.get(m.group(2));
                         VariableContainer b = DefinedVariables.get(m.group(3));
                         VariableContainer c = DefinedVariables.get(m.group(4));

@@ -22,6 +22,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         try {
+            System.out.println(getClass().getResource("program.fxml"));
             Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("program.fxml"))));
             scene.getStylesheets().add(resourceURL("stylesheets/style.css"));
             stage.setScene(scene);
